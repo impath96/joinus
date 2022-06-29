@@ -30,6 +30,9 @@
 
     <!-- Template Stylesheet -->
     <link href="${PageContext.request.contextPath }/resources/css/style.css" rel="stylesheet">
+    
+    <!-- hsb css -->
+    <link href="${PageContext.request.contextPath }/resources/css/hsb.css" rel="stylesheet">
 </head>
 
 <body>
