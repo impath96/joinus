@@ -7,3 +7,11 @@
 .clubWrite_buttonMargin {
 	margin-top: 3.5rem !important;
 }
+
+.clubWrite_photoSpan {
+	text-align: left;
+}
+
+.clubWrite_photoGroup {
+	text-align: left;
+}

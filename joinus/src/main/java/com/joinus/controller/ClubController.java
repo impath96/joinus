@@ -19,4 +19,17 @@ public class ClubController {
 		log.info(" writeGet() 호출 ");
 	}
 	
+	@RequestMapping(value = "/write", method = RequestMethod.POST)
+	public void writePost() {
+		log.info(" writePost() 호출 ");
+	}
+	
+	
+	// http://localhost:8088/club/list
+	// 게시글리스트
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public void listGet() {
+		log.info(" listGet() 호출 ");
+	}
+	
 }

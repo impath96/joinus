@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.joinus.mapper.ClubMapper">
+	
+	<insert id="writeBoard">
+		insert into club_board (board_type_no,club_board_title,club_board_content,club_board_photo)
+		values(#{board_type_no},#{club_board_title},#{club_board_content},#{club_board_photo})
+	</insert>
+	
+</mapper> 
