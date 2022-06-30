@@ -9,24 +9,80 @@
 	<div class="container">
 		<div class="row g-5">
 
-			<div>
+			<div style="margin-bottom: 2em;">
 				<button type="button" class="btn btn-primary">공지</button>
 				<button type="button" class="btn btn-primary">자유글</button>
 				<button type="button" class="btn btn-primary">정모후기</button>
 			</div>
 
 
-			<div class="wow fadeIn" data-wow-delay="0.1s">
-				<div class="d-flex align-items-center mb-4">
-					<div class="btn-lg-square bg-primary rounded-circle me-3">
-						<i class="fa fa-users text-white"></i>
-					</div>
-					<h1 class="mb-0" data-toggle="counter-up">3453</h1>
+			<div class="wow fadeIn">
+			<img src="/resources/img/airplaneSky.jpg" style="border-radius: 10px; float: left; width: 200px; height: 150px; margin-right: 2em;">
+				<div>
+					<h3 style="margin-top: 0.5em;">제목</h3>
 				</div>
-				<h5 class="mb-3">Happy Customers</h5>
-				<span>Tempor erat elitr rebum at clita. Diam dolor diam ipsum
-					sit</span>
+				<h5 class="mb-3" style="display: inline-block;">Happy Customers</h5><br>
+				<span>Tempor erat elitr rebum at clita. Diam dolor diam ipsumsit</span>
+<!-- 				<img src="/resources/img/airplaneSky.jpg" style="border-radius: 10px; float: right; width: 200px; height: 150px;"> -->
 			</div>
+			
+			<hr>
+			
+			<div class="wow fadeIn">
+				<div>
+<!-- 					<div class="btn-lg-square bg-primary rounded-circle me-3"> -->
+<!-- 						<i class="fa fa-users text-white"></i> -->
+<!-- 					</div> -->
+					<h3>제목</h3>
+				</div>
+				<h5 class="mb-3" style="display: inline-block;">Happy Customers</h5><br>
+				<span>Tempor erat elitr rebum at clita. Diam dolor diam ipsumsit</span>
+<!-- 				<img src="/resources/img/airplaneSky.jpg" style="border-radius: 10px; float: right; width: 200px; height: 150px;"> -->
+			</div>
+			
+			<hr>
+			
+			<div class="wow fadeIn">
+				<div>
+<!-- 					<div class="btn-lg-square bg-primary rounded-circle me-3"> -->
+<!-- 						<i class="fa fa-users text-white"></i> -->
+<!-- 					</div> -->
+					<h3>제목</h3>
+				</div>
+				<h5 class="mb-3" style="display: inline-block;">Happy Customers</h5><br>
+				<span>Tempor erat elitr rebum at clita. Diam dolor diam ipsumsit</span>
+<!-- 				<img src="/resources/img/airplaneSky.jpg" style="border-radius: 10px; float: right; width: 200px; height: 150px;"> -->
+			</div>
+			
+			<div class="wow fadeIn">
+				<div>
+<!-- 					<div class="btn-lg-square bg-primary rounded-circle me-3"> -->
+<!-- 						<i class="fa fa-users text-white"></i> -->
+<!-- 					</div> -->
+					<h3>제목</h3>
+				</div>
+				<h5 class="mb-3" style="display: inline-block;">Happy Customers</h5><br>
+				<span>Tempor erat elitr rebum at clita. Diam dolor diam ipsumsit</span>
+<!-- 				<img src="/resources/img/airplaneSky.jpg" style="border-radius: 10px; float: right; width: 200px; height: 150px;"> -->
+			</div>
+			
+			<div class="wow fadeIn">
+				<div>
+<!-- 					<div class="btn-lg-square bg-primary rounded-circle me-3"> -->
+<!-- 						<i class="fa fa-users text-white"></i> -->
+<!-- 					</div> -->
+					<h3>제목</h3>
+				</div>
+				<h5 class="mb-3" style="display: inline-block;">Happy Customers</h5><br>
+				<span>Tempor erat elitr rebum at clita. Diam dolor diam ipsumsit</span>
+<!-- 				<img src="/resources/img/airplaneSky.jpg" style="border-radius: 10px; float: right; width: 200px; height: 150px;"> -->
+			</div>
+			
+			
+			
+			
+			
+			
 		</div>
 	</div>
 </div>
