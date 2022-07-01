@@ -6,8 +6,8 @@
 <mapper namespace="com.joinus.mapper.ClubMapper">
 	
 	<insert id="writeBoard">
-		insert into club_board (board_type_no,club_board_title,club_board_content,club_board_photo)
-		values(#{board_type_no},#{club_board_title},#{club_board_content},#{club_board_photo})
+		insert into club_board (club_no,member_no,board_type_no,club_board_title,club_board_content,club_board_photo)
+		values(#{club_no},#{member_no},#{board_type_no},#{club_board_title},#{club_board_content},#{club_board_photo})
 	</insert>
 	
 </mapper> 

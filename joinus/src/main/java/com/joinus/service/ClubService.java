@@ -1,5 +1,9 @@
 package com.joinus.service;
 
-public interface ClubService {
+import com.joinus.domain.ClubBoardVo;
 
+public interface ClubService {
+	
+	public void boardWrite(ClubBoardVo vo);
+	
 }

@@ -101,9 +101,7 @@
 				<h1 class="clubWrite_mb-4">게시글</h1>
 
 
-				<form name="fr"
-					action="${pageContext.request.contextPath }/club/write"
-					method="post" enctype="multipart/form-data">
+				<form name="fr" action="${pageContext.request.contextPath }/club/write" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="count" id="count" value="">
 					<div class="row g-3">
 						<div class="col-md-4">
