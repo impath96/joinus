@@ -21,6 +21,8 @@ public class ClubController {
 	
 	private static final Logger log = LoggerFactory.getLogger(ClubController.class);
 	
+	// test
+	
 	// 서비스 객체 주입
 	@Inject
 	private ClubService service;
