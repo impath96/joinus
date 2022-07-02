@@ -80,7 +80,7 @@ public class ClubController {
 	
 	
 	@RequestMapping(value = "/boardWrite", method = RequestMethod.POST)
-	public void boardWritePost(ClubBoardVo vo) {
+	public String boardWritePost(ClubBoardVo vo) {
 		log.info(" boardWritePost() 호출 ");
 		
 		
@@ -90,7 +90,7 @@ public class ClubController {
 		service.writeBoard(vo);
 		log.info(" 글쓰기 완료! ");
 		
-//		return "redirect:/club/boardList";
+		return "redirect:/club/boardList?club_no=1";
 	}
 	
 	
