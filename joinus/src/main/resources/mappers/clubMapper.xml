@@ -107,5 +107,15 @@
 </select>
 
 
-
-</mapper>
+	
+	<insert id="writeBoard">
+		insert into club_board (club_no,member_no,board_type_no,club_board_title,club_board_content,club_board_photo)
+		values(#{club_no},#{member_no},#{board_type_no},#{club_board_title},#{club_board_content},#{club_board_photo})
+	</insert>
+	
+<!-- 	<select id="getBoardListAll" resultType="ClubBoardVo"> -->
+<!-- 		select * from club_board where club_no = #{club_no} -->
+<!-- 	</select> -->
+	
+	
+</mapper> 

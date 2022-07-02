@@ -1,8 +1,12 @@
 package com.joinus.persistence;
 
-import org.springframework.stereotype.Repository;
 
-@Repository
+import com.joinus.domain.MemberVo;
+
 public interface MemberDao {
+	
+	public MemberVo selectMember(String email);
 
+	public void insertMember(MemberVo socialMember);
+	
 }

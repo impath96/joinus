@@ -11,6 +11,10 @@ import org.springframework.stereotype.Service;
 import com.joinus.domain.ClubMemberVo;
 import com.joinus.domain.ClubTotalBean;
 import com.joinus.persistence.ClubDao;
+import org.springframework.stereotype.Service;
+
+import com.joinus.domain.ClubBoardVo;
+import com.joinus.persistence.ClubDao;
 
 @Service
 public class ClubServiceImpl implements ClubService{
@@ -49,4 +53,21 @@ public class ClubServiceImpl implements ClubService{
 	}
 
 
+
+	
+
+	@Override
+	public void writeBoard(ClubBoardVo vo) {
+		dao.writeBoard(vo);
+		
+	}
+
+//	@Override
+//	public List<ClubBoardVo> getBoardListAll(Integer club_no) {
+//		return dao.getBoardListAll(club_no);
+//	}
+	
+	
+	
+	
 }

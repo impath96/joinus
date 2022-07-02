@@ -9,9 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.joinus.domain.ClubMemberVo;
+import com.joinus.domain.ClubBoardVo;
 import com.joinus.domain.ClubTotalBean;
-import com.joinus.domain.MembersVo;
 
 @Repository
 public class ClubDaoImpl implements ClubDao{
@@ -58,4 +57,28 @@ public class ClubDaoImpl implements ClubDao{
 		return result;
 	}
 
+//=======================허수빈=============================================================
+	
+
+	@Override
+	public void writeBoard(ClubBoardVo vo) {
+		log.info(" write() 호출 ");
+		
+		// 정보 전달받아서 mapper를 통해 db저장
+		sqlSession.insert(NAMESPACE+".writeBoard", vo);
+		
+	}
+
+	@Override
+	public List<ClubBoardVo> getBoardListAll(Integer club_no) {
+		log.info(" getBoardListAll() 호출 ");
+		
+		return sqlSession.selectList(NAMESPACE+".getBoardListAll", club_no);
+	}
+	
+	
+	
+	
+	
+	
 }
