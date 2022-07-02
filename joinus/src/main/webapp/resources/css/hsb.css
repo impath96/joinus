@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+.clubWrite_mb-4 {
+	margin-bottom: 3.5rem !important;
+}
+
+.clubWrite_buttonMargin {
+	margin-top: 3.5rem !important;
+}
+
+.clubWrite_photoSpan {
+	text-align: left;
+}
+
+.clubWrite_photoGroup {
+	text-align: left;
+}
+
+.clubList_likeCnt {
+	margin-right: 1em;
+	color: #51cc82;
+}
+
+.clubList_commentCnt {
+	margin-right: 1em;
+	color: #51cc82;
+}
