@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.joinus.mapper.ClubMapper">
+
+<!-- 조인할 테이블 1-1 -->
+<resultMap type="ClubMemberRoleVo" id="roleMap">
+	<id property="club_role_no" column="club_role_no"/>
+	<id property="club_role_name" column="club_role_name"/> 
+</resultMap>
+
+<!-- 조인할 테이블 1-2 -->
+<resultMap type="MembersVo" id="membersMap">
+   <id property="member_no" column="member_no"/>
+   <id property="member_email" column="member_email"/>
+   <id property="member_pass" column="member_pass"/>
+   <id property="member_name" column="member_name"/>
+   <id property="member_tel" column="member_tel"/>
+   <id property="member_image" column="member_image"/>
+   <id property="member_regdate" column="member_regdate"/>
+   <id property="member_role" column="member_role"/>
+</resultMap>
+
+<!-- 조인한 맵 만들어주기 1 -->
+<resultMap type="ClubTotalBean" id="ClubMemberListMap">
+	<collection property="membersVo" resultMap="membersMap"/>
+	<collection property="clubMemberRoleVo" resultMap="roleMap"/>
+</resultMap>
+
+<!-- 조인할 테이블 2-1 -->
+<resultMap type="InterestVo" id="interestMap">
+   <id property="interest_no" column="interest_no"/>
+   <id property="interest_icon" column="interest_icon"/>
+   <id property="interest_name" column="interest_name"/>
+</resultMap>
+
+<!-- 조인할 테이블 2-2 -->
+<resultMap type="ClubInterestVo" id="clubInterestMap">
+   <id property="club_interest_no" column="club_interest_no"/>
+   <id property="club_no" column="club_no"/>
+   <id property="interest_no" column="interest_no"/>
+   <id property="interest_detail_no" column="interest_detail_no"/>
+</resultMap>
+
+<!-- 조인할 테이블 2-3 -->
+<resultMap type="ClubVo" id="clubMap">
+   <id property="club_no" column="club_no"/>
+   <id property="club_name" column="club_name"/>
+   <id property="club_content" column="club_content"/>
+   <id property="club_image" column="club_image"/>
+</resultMap>
+
+<!--  조인할 테이블 2-4 -->
+<resultMap type="ClubGradeVo" id="clubGradeMap">
+   <id property="club_grade_no" column="clubclub_grade_no_no"/>
+   <id property="club_no" column="club_no"/>
+   <id property="club_grade" column="club_grade"/>
+</resultMap>
+
+<!-- 조인한 맵 만들어주기 2 -->
+<resultMap type="ClubTotalBean" id="ClubListMap">
+	<collection property="clubInterestVo" resultMap="clubInterestMap"/>
+	<collection property="interestVo" resultMap="interestMap"/>
+	<collection property="clubVo" resultMap="clubMap"/>
+	<collection property="clubGradeVo" resultMap="clubGradeMap"/>
+	
+</resultMap>
+
+<select id="ClubMemberList" resultMap="ClubMemberListMap">
+	<![CDATA[
+	select m.member_no,m.member_name, m.member_image, c.club_no, c.club_role_no, cr.club_role_name
+	from club_memberlist c 
+    join members m 
+    	on (m.member_no = c.member_no)
+	join club_member_role cr
+		on(c.club_role_no = cr.club_role_no)
+	where club_no = #{club_no} 
+	order by club_role_name asc
+	]]>
+</select>
+
+<select id="ClubList" resultMap="ClubListMap">
+	    select c.club_no, c.club_name, c.club_content, c.club_image, ci.interest_no, i.interest_name,i.interest_icon,cg.club_grade_rate
+    from club c
+	join club_interest ci
+        on(c.club_no = ci.club_no)
+    join interest i
+		on(ci.interest_no = i.interest_no)
+	join club_grade cg
+		on(c.club_no = cg.club_no)
+	where ci.interest_no = #{interest_no}
+	order by club_no asc
+</select>
+
+<select id="ClubListAll" resultMap="ClubListMap">
+	    select c.club_no, c.club_name, c.club_content, c.club_image, ci.interest_no, i.interest_name,i.interest_icon,cg.club_grade_rate
+    from club c
+	join club_interest ci
+        on(c.club_no = ci.club_no)
+    join interest i
+		on(ci.interest_no = i.interest_no)
+	join club_grade cg
+		on(c.club_no = cg.club_no)
+	order by club_grade_rate desc
+</select>
+
+
+
+</mapper>
