@@ -1,6 +1,7 @@
 package com.joinus.domain;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.Data;
 

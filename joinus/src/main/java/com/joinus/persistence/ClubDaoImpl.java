@@ -10,17 +10,55 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.joinus.domain.ClubBoardVo;
+import com.joinus.domain.ClubTotalBean;
 
 @Repository
-public class ClubDaoImpl implements ClubDao {
+public class ClubDaoImpl implements ClubDao{
 	
-	private static final Logger log = LoggerFactory.getLogger(ClubDaoImpl.class);
-	
-	// 디비연결 및 mapper 연결처리 객체
 	@Inject
 	private SqlSession sqlSession;
 	
-	static final String NAMESPACE = "com.joinus.mapper.ClubMapper";
+	static final String NAMESPACE ="com.joinus.mapper.ClubMapper";
+	
+	private static final Logger log = LoggerFactory.getLogger(ClubDaoImpl.class);
+
+	@Override
+	public List<ClubTotalBean> clubMemberList(int club_no) {
+		
+		log.info("clubMemberList() - 호출");
+		
+		List<ClubTotalBean> result = sqlSession.selectList(NAMESPACE+".ClubMemberList",club_no);
+		
+		//log.info(result+"");
+		
+		return result;
+	}
+	
+	
+	@Override
+	public List<ClubTotalBean> clubList(int interest_no) {
+		
+		List<ClubTotalBean> result = sqlSession.selectList(NAMESPACE+".ClubList",interest_no);
+		
+		//log.info(result+"");
+		
+		return result;
+		
+	}
+
+
+	@Override
+	public List<ClubTotalBean> clubList() {
+		
+		List<ClubTotalBean> result = sqlSession.selectList(NAMESPACE+".ClubListAll");
+		
+		//log.info(result+"");
+		
+		return result;
+	}
+
+//=======================허수빈=============================================================
+	
 
 	@Override
 	public void writeBoard(ClubBoardVo vo) {

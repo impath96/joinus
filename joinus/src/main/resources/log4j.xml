@@ -15,6 +15,18 @@
 		<level value="info" />
 	</logger>
 	
+	<logger name="com.joinus.domain">
+		<level value="info" />
+	</logger>
+	
+	<logger name="com.joinus.persistence">
+		<level value="info" />
+	</logger>
+	
+	<logger name="com.joinus.service">
+		<level value="info" />
+	</logger>
+	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
 		<level value="info" />
