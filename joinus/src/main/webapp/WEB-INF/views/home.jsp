@@ -10,5 +10,9 @@
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
+
+<p>${requestTokenObject }</p>
+<p>${userProfile }</p>
+	
 </body>
 </html>

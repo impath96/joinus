@@ -1,8 +1,10 @@
 package com.joinus.service;
 
-import org.springframework.stereotype.Service;
+import com.joinus.domain.MemberVo;
 
-@Service
 public interface MemberService {
+	
+	MemberVo 회원찾기(String member);
+	void 회원가입();
 
 }
