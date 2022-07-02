@@ -1,12 +1,12 @@
 package com.joinus.persistence;
 
 
-import com.joinus.domain.MemberVo;
+import com.joinus.domain.MembersVo;
 
 public interface MemberDao {
 	
-	public MemberVo selectMember(String email);
+	public MembersVo selectMember(String email);
 
-	public void insertMember(MemberVo socialMember);
+	public void insertMember(MembersVo socialMember);
 	
 }

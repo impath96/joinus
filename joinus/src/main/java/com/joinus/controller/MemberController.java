@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.joinus.auth.OauthService;
-import com.joinus.domain.MemberVo;
+import com.joinus.domain.MembersVo;
 import com.joinus.service.MemberService;
 
 @RequestMapping(value="/member/*")
@@ -54,7 +53,7 @@ public class MemberController {
 	@RequestMapping(value="/signin", method = RequestMethod.POST)
 	public String signIn(@RequestParam("email") String email, @RequestParam("password") String password, HttpSession session, Model model) {
 		// 1) 입력받은 정보를 통해 실제 가입된 회원인지 확인
-		MemberVo member = memberService.회원찾기(email);
+		MembersVo member = memberService.회원찾기(email);
 		
 		// 만약 member가 null -> 이메일이나 비밀번호가 틀렸다는 의미 
 		if(member == null) {
@@ -75,7 +74,7 @@ public class MemberController {
 		
 		// 1) 이미 가입되어져 있는 회원일 경우 바로 로그인 처리
 		// 2) 만약 가입되어있지 않은 회원일 경우 추가 정보 입력 처리
-		MemberVo resultMember = oauthService.oauthLogin(service, code);
+		MembersVo resultMember = oauthService.oauthLogin(service, code);
 		
 		if(session.getAttribute("member") == null) {
 			
@@ -87,7 +86,7 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/requiredInfo")
-	public String requiredInfo(@ModelAttribute("member") MemberVo member, Model model) {
+	public String requiredInfo(@ModelAttribute("member") MembersVo member, Model model) {
 		model.addAttribute("member", member);
 		return "/member/requiredInfo";
 	}

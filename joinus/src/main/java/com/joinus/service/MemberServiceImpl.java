@@ -4,7 +4,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import com.joinus.domain.MemberVo;
+import com.joinus.domain.MembersVo;
 import com.joinus.persistence.MemberDao;
 
 @Service
@@ -14,7 +14,7 @@ public class MemberServiceImpl implements MemberService {
 	MemberDao MemberDao;
 	
 	@Override
-	public MemberVo 회원찾기(String member) {
+	public MembersVo 회원찾기(String member) {
 
 		return MemberDao.selectMember(member);
 	}

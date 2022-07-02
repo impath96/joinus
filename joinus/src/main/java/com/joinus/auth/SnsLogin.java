@@ -2,7 +2,6 @@ package com.joinus.auth;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,7 +12,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import com.joinus.domain.MemberVo;
+import com.joinus.domain.MembersVo;
 
 public abstract class SnsLogin {
 
@@ -29,7 +28,7 @@ public abstract class SnsLogin {
 	
 
 	// 인증 코드를 통해 소셜(구글, 카카오)로부터 회원 정보 획득
-	public MemberVo requestSocialMember(String code) {
+	public MembersVo requestSocialMember(String code) {
 
 		// 1) 인증 코드로 access_token 찾기
 		String accessToken = requestAccessToken(code);
@@ -39,7 +38,7 @@ public abstract class SnsLogin {
 	}
 
 	// 받아온 access_token을 가지고 소셜에게 회원 정보 요청
-	private MemberVo requestMemberInfo(String accessToken) {
+	private MembersVo requestMemberInfo(String accessToken) {
 		
 		// 회원정보 요청 
 		ResponseEntity<String> tokenResponse = restTemplate.exchange(apiServerUrl, HttpMethod.POST,
@@ -93,5 +92,5 @@ public abstract class SnsLogin {
 	
 	// access_token으로 받아온 데이터 형식이 다를 수도 있음.
 	// 또는 받아오는 데이터가 다를수도 있음.
-	abstract protected MemberVo parseSocialMember(ResponseEntity<String> response);
+	abstract protected MembersVo parseSocialMember(ResponseEntity<String> response);
 }

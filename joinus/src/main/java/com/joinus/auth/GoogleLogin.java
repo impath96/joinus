@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.joinus.domain.MemberVo;
+import com.joinus.domain.MembersVo;
 
 import lombok.Getter;
 @Getter
@@ -69,7 +69,7 @@ public class GoogleLogin extends SnsLogin{
 	}
 
 	@Override
-	protected MemberVo parseSocialMember(ResponseEntity<String> response) {
+	protected MembersVo parseSocialMember(ResponseEntity<String> response) {
 		ObjectMapper objectMapper = new ObjectMapper();
 		GoogleProfile googleProfile = null;
 		try {
@@ -84,7 +84,7 @@ public class GoogleLogin extends SnsLogin{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		MemberVo socialMember = MemberVo.builder()
+		MembersVo socialMember = MembersVo.builder()
 				.member_email(googleProfile.getEmail())
 				.member_name(googleProfile.getName())
 				.member_type(SERVICE)

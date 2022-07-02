@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.joinus.domain.MemberVo;
+import com.joinus.domain.MembersVo;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
@@ -23,13 +23,13 @@ public class MemberDaoImpl implements MemberDao {
 	private static final String NAMESPACE = "com.joinus.mapper.MemberMapper";
 	
 	@Override
-	public MemberVo selectMember(String email) {
+	public MembersVo selectMember(String email) {
 
 		return sqlSession.selectOne(NAMESPACE+".selectMember", email);
 	}
 
 	@Override
-	public void insertMember(MemberVo socialMember) {
+	public void insertMember(MembersVo socialMember) {
 
 		sqlSession.insert(NAMESPACE+".insertMember", socialMember);
 	}

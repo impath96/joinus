@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.joinus.domain.MemberVo;
+import com.joinus.domain.MembersVo;
 
 import lombok.Getter;
 
@@ -67,7 +67,7 @@ public class KakaoLogin extends SnsLogin {
 	}
 
 	@Override
-	protected MemberVo parseSocialMember(ResponseEntity<String> response) {
+	protected MembersVo parseSocialMember(ResponseEntity<String> response) {
 		ObjectMapper objectMapper = new ObjectMapper();
 		KakaoProfile kakaoProfile = null;
 		try {
@@ -96,7 +96,7 @@ public class KakaoLogin extends SnsLogin {
 		 * */
 		
 		// 이메일, 이미지, 이름, 소셜로그인 유저 
-		MemberVo socialMember = MemberVo.builder()
+		MembersVo socialMember = MembersVo.builder()
 				.member_email(kakaoProfile.getKakao_account().getEmail())
 				.member_image(kakaoProfile.getProperties().getThumbnail_image())
 				.member_name(kakaoProfile.getProperties().getNickname())
