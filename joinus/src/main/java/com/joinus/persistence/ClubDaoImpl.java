@@ -1,5 +1,7 @@
 package com.joinus.persistence;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -21,13 +23,22 @@ public class ClubDaoImpl implements ClubDao {
 	static final String NAMESPACE = "com.joinus.mapper.ClubMapper";
 
 	@Override
-	public void boardWrite(ClubBoardVo vo) {
+	public void writeBoard(ClubBoardVo vo) {
 		log.info(" write() 호출 ");
 		
 		// 정보 전달받아서 mapper를 통해 db저장
 		sqlSession.insert(NAMESPACE+".writeBoard", vo);
 		
 	}
+
+	@Override
+	public List<ClubBoardVo> getBoardListAll(Integer club_no) {
+		log.info(" getBoardListAll() 호출 ");
+		
+		return sqlSession.selectList(NAMESPACE+".getBoardListAll", club_no);
+	}
+	
+	
 	
 	
 	

@@ -1,5 +1,7 @@
 package com.joinus.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
@@ -23,34 +25,45 @@ public class ClubController {
 	@Inject
 	private ClubService service;
 	
+	// 파라미터를 전달하고 싶을 때는 보내주는 주소와 받는 주소 모두 다 modelAttribute를 사용해야 함
 	// ?뒤에 숫자는 모임고유번호(일단 임의로 주소줄에서 받아오기)
-	// http://localhost:8088/club/write?club_no=1
+	// http://localhost:8088/club/boardWrite?club_no=1
 	// 게시판글쓰기
-	@RequestMapping(value = "/write", method = RequestMethod.GET)
-	public void writeGet(@ModelAttribute("club_no") int club_no) {
-		log.info(" writeGet() 호출 ");
+	@RequestMapping(value = "/boardWrite", method = RequestMethod.GET)
+	public void boardWriteGet(@ModelAttribute("club_no") int club_no, HttpSession session) {
+		log.info(" boardWriteGet() 호출 ");
+		log.info(" club_no : "+club_no);
+		
+		session.setAttribute("member_no", 1);
+		log.info("세션에 저장된 member_no : "+session.getAttribute("member_no"));
 		
 	}
 	
-	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String writePost(ClubBoardVo vo) {
-		log.info(" writePost() 호출 ");
+	
+	@RequestMapping(value = "/boardWrite", method = RequestMethod.POST)
+	public void boardWritePost(ClubBoardVo vo) {
+		log.info(" boardWritePost() 호출 ");
+		
 		
 		// 전달된 정보 저장(글쓰기 정보)
 		log.info("글쓰기 정보 : "+vo);
 		
-		service.boardWrite(vo);
+		service.writeBoard(vo);
 		log.info(" 글쓰기 완료! ");
 		
-		return "redirect:/club/list";
+//		return "redirect:/club/boardList";
 	}
 	
 	
-	// http://localhost:8088/club/list
+	// http://localhost:8088/club/boardList?club_no=1
 	// 게시글리스트
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public void listGet() {
-		log.info(" listGet() 호출 ");
+	@RequestMapping(value = "/boardList", method = RequestMethod.GET)
+	public void boardListGet(@ModelAttribute("club_no") int club_no) {
+		log.info(" boardListGet() 호출 ");
+		log.info("club_no : "+club_no);
+		
+//		List<ClubBoardVo> boardList = service.getBoardListAll(club_no);
+//		log.info("boardList : "+boardList);
 	}
 	
 }

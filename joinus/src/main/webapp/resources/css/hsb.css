@@ -15,3 +15,13 @@
 .clubWrite_photoGroup {
 	text-align: left;
 }
+
+.clubList_likeCnt {
+	margin-right: 1em;
+	color: #51cc82;
+}
+
+.clubList_commentCnt {
+	margin-right: 1em;
+	color: #51cc82;
+}

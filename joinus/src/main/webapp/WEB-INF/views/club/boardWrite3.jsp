@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ include file="../include/header.jsp"%>
 
@@ -8,32 +9,15 @@
 <script type="text/javascript">
 	//alert('js사용!');
 	
-	var count = 0;
-	var addCount;
-	
 	// jQuery
 	$(document).ready(function() {
 
 		// 파일추가버튼
 		$('#addPhoto').click(function() {
 			
-			for(var i=0; i<=count; i++){
-				
-				if(!document.getElementsByName("photo"+i)[0]){
-// 					alert('for문의 if절 만족');
-					addCount = i;
-// 					alert('for문의 if절 끝 addCount : '+addCount);
-					break;
-				}
-				else{
-					addCount = count;
-				}
-			}
-				
-				var str = "<span><input type='file' name='photo"+addCount+"' style='display: inline; margin-bottom:8px;'></span><br>";
-				
-				$('#photoGroup').append(str);
-				count++;
+			var str = "<span><input type='file' name='photo' id='photo' style='display: inline; margin-bottom:8px;'></span><br>";
+			$('#photoGroup').append(str);
+			$('#addBlock').hide();
 
 		});	// 파일추가
 		
@@ -54,32 +38,17 @@
 				return false;
 			}
 			
-			$('#count').val(count);
-			
 			// post로 넘겨서 count 값 검사해서 0일때 0아닐때 각각 처리해야 할듯?
-			if(count == 0){
-// 				alert('count==0');
-				$('form').attr({
-					enctype: ''
-				});
-				
-			}
-// 			else {
-// 				alert('버튼');
-// 				for(var i=0; i<count; i+++){
-// 					if(document.getElementsByName("photo"+i)[0].value == ''){
-// 						alert('파일없음');
-// 						$('form').attr({
-// 							enctype: ''
-// 						});
-// 					}
-// 				}
-				
-// 				return false;
+// 			if(count == 0){
+// // 				alert('count==0');
+// 				$('form').attr({
+// 					enctype: ''
+// 				});
 // 			}
 			
+			alert(document.getElementById("photo").files[0].name);
 			
-			
+// 			return false;
 			
 		}); //등록버튼
 		
@@ -100,9 +69,9 @@
 				<h6 class="text-primary">JoinUs</h6>
 				<h1 class="clubWrite_mb-4">게시글</h1>
 
-
-				<form name="fr" action="${pageContext.request.contextPath }/club/write" method="post" enctype="multipart/form-data">
-					<input type="hidden" name="count" id="count" value="">
+				<form name="fr" action="${pageContext.request.contextPath }/club/boardWrite" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="club_no" value="${club_no }">
+					<input type="hidden" name="member_no" value="${sessionScope.member_no }">
 					<div class="row g-3">
 						<div class="col-md-4">
 							<select class="form-select" style="height: 55px;"
@@ -132,20 +101,19 @@
 
 
 
-						<!-- 						<span style="text-align: left;" class="clubWrite_fileSpan"> -->
-						<span class="clubWrite_photoSpan">
+						<!-- <span style="text-align: left;" class="clubWrite_fileSpan"> -->
+						<span class="clubWrite_photoSpan" id="addBlock">
 							<button type="button" class="btn btn-primary" id="addPhoto">파일추가</button>
-						</span> <span id="photoGroup" class="clubWrite_photoGroup"> </span>
-
+						</span>
+						<span id="photoGroup" class="clubWrite_photoGroup"> </span>
+						
 
 
 
 
 						<div class="col-12 clubWrite_buttonMargin">
-							<!-- 							<button class="btn btn-primary rounded-pill py-3 px-5" type="submit">등록</button> -->
-							<input type="submit"
-								class="btn btn-primary rounded-pill py-3 px-5" id="subBtn"
-								value="등록">
+							<!-- <button class="btn btn-primary rounded-pill py-3 px-5" type="submit">등록</button> -->
+							<input type="submit" class="btn btn-primary rounded-pill py-3 px-5" id="subBtn" value="등록">
 						</div>
 					</div>
 				</form>
