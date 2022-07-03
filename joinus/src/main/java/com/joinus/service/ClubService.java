@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.joinus.domain.ClubMemberVo;
 import com.joinus.domain.ClubTotalBean;
+import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardVo;
 
 @Service
@@ -25,6 +26,8 @@ public interface ClubService {
 	
 	public void writeBoard(ClubBoardVo vo);
 	
-	public List<ClubBoardVo> getBoardListAll(Integer club_no);
+	public List<BoardTotalBean> getBoardListAll(Integer club_no);
+	
+	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no);
 	
 }

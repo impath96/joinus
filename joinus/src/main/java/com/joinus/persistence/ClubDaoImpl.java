@@ -1,6 +1,8 @@
 package com.joinus.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -9,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardVo;
 import com.joinus.domain.ClubTotalBean;
 
@@ -70,11 +73,24 @@ public class ClubDaoImpl implements ClubDao{
 	}
 
 	@Override
-	public List<ClubBoardVo> getBoardListAll(Integer club_no) {
+	public List<BoardTotalBean> getBoardListAll(Integer club_no) {
 		log.info(" getBoardListAll() 호출 ");
 		
 		return sqlSession.selectList(NAMESPACE+".getBoardListAll", club_no);
 	}
+
+	@Override
+	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no) {
+		log.info(" getBoardList() 호출 ");
+		
+		Map<String, Integer> param = new HashMap<String, Integer>();
+		param.put("club_no", club_no);
+		param.put("board_type_no", board_type_no);
+		
+		return sqlSession.selectList(NAMESPACE+".getBoardList", param);
+	}
+	
+	
 	
 	
 	

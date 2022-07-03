@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.joinus.domain.ClubMemberVo;
 import com.joinus.domain.ClubTotalBean;
+import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardVo;
 
 public interface ClubDao {
@@ -25,6 +26,8 @@ public interface ClubDao {
 	public void writeBoard(ClubBoardVo vo);
 	
 	// 모임고유값에 따른 게시글리스트
-	public List<ClubBoardVo> getBoardListAll(Integer club_no);
+	public List<BoardTotalBean> getBoardListAll(Integer club_no);
+	
+	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no);
 	//=========================허수빈========================
 }

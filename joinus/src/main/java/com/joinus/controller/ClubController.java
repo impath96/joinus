@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardVo;
 import com.joinus.service.ClubService;
 
@@ -86,23 +87,32 @@ public class ClubController {
 		
 		// 전달된 정보 저장(글쓰기 정보)
 		log.info("글쓰기 정보 : "+vo);
+//		log.info("club_no : "+vo.getClub_no());
+		int club_no = vo.getClub_no();
 		
 		service.writeBoard(vo);
 		log.info(" 글쓰기 완료! ");
 		
-		return "redirect:/club/boardList?club_no=1";
+		return "redirect:/club/boardList?club_no="+club_no;
 	}
 	
 	
 	// http://localhost:8088/club/boardList?club_no=1
+	// http://localhost:8088/club/boardList?club_no=1&board_type_no=2
 	// 게시글리스트
 	@RequestMapping(value = "/boardList", method = RequestMethod.GET)
-	public void boardListGet(@ModelAttribute("club_no") int club_no) {
+	public void boardListGet(@ModelAttribute("club_no") String club_no, @ModelAttribute("board_type_no") String board_type_no, Model model) {
 		log.info(" boardListGet() 호출 ");
 		log.info("club_no : "+club_no);
+		log.info("board_type_no : "+board_type_no);
 		
-		List<ClubBoardVo> boardList = service.getBoardListAll(club_no);
-		log.info("boardList : "+boardList);
+		model.addAttribute("club_no", club_no);
+		
+		if(board_type_no.isEmpty()) {
+			model.addAttribute("boardList", service.getBoardListAll(Integer.parseInt(club_no)));
+		} else {
+			model.addAttribute("boardList", service.getBoardList(Integer.parseInt(club_no), Integer.parseInt(board_type_no)));
+		}
 	}
 
 	

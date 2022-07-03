@@ -68,6 +68,29 @@
 	
 </resultMap>
 
+<!-- boardList(MembersVo, ClubBoardVo) -->
+<!-- <resultMap type="MembersVo" id="membersMap"> -->
+<!-- 	<id property="member_no" column="member_no"/> -->
+<!-- 	<id property="member_name" column="member_name"/> -->
+<!-- </resultMap> -->
+
+<resultMap type="ClubBoardVo" id="boardMap">
+	<id property="club_board_no" column="club_board_no"/>
+	<id property="club_no" column="club_no"/>
+	<id property="board_type_no" column="board_type_no"/>
+	<id property="member_no" column="member_no"/>
+	<id property="club_board_title" column="club_board_title"/>
+	<id property="club_board_content" column="club_board_content"/>
+	<id property="club_board_photo" column="club_board_photo"/>
+	<id property="club_board_date" column="club_board_date"/>
+	<id property="club_board_like" column="club_board_like"/>
+</resultMap>
+
+<resultMap type="BoardTotalBean" id="boardListMap">
+	<collection property="membersVo" resultMap="membersMap"/>
+	<collection property="clubBoardVo" resultMap="boardMap" />
+</resultMap>
+
 <select id="ClubMemberList" resultMap="ClubMemberListMap">
 	<![CDATA[
 	select m.member_no,m.member_name, m.member_image, c.club_no, c.club_role_no, cr.club_role_name
@@ -113,9 +136,26 @@
 		values(#{club_no},#{member_no},#{board_type_no},#{club_board_title},#{club_board_content},#{club_board_photo})
 	</insert>
 	
-	<select id="getBoardListAll" resultType="ClubBoardVo">
-		select * from club_board where club_no = #{club_no}
+<!-- 	<select id="getBoardListAll" resultType="ClubBoardVo"> -->
+<!-- 		select * from club_board where club_no = #{club_no} -->
+<!-- 	</select> -->
+	
+	<select id="getBoardListAll" resultMap="boardListMap">
+		select b.club_board_no, m.member_name, b.club_board_title, b.club_board_content, b.club_board_photo, b.club_board_date, b.club_board_like
+		from club_board b
+		join members m
+			on b.member_no = m.member_no
+		where b.club_no = #{club_no}
+		order by club_board_no desc
 	</select>
 	
+	<select id="getBoardList" resultMap="boardListMap">
+		select b.club_board_no, m.member_name, b.club_board_title, b.club_board_content, b.club_board_photo, b.club_board_date, b.club_board_like
+		from club_board b
+		join members m
+			on b.member_no = m.member_no
+		where b.club_no = #{club_no} and b.board_type_no = #{board_type_no}
+		order by club_board_no desc
+	</select>
 	
 </mapper> 

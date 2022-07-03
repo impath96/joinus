@@ -13,6 +13,7 @@ import com.joinus.domain.ClubTotalBean;
 import com.joinus.persistence.ClubDao;
 import org.springframework.stereotype.Service;
 
+import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardVo;
 import com.joinus.persistence.ClubDao;
 
@@ -63,8 +64,13 @@ public class ClubServiceImpl implements ClubService{
 	}
 
 	@Override
-	public List<ClubBoardVo> getBoardListAll(Integer club_no) {
+	public List<BoardTotalBean> getBoardListAll(Integer club_no) {
 		return dao.getBoardListAll(club_no);
+	}
+
+	@Override
+	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no) {
+		return dao.getBoardList(club_no, board_type_no);
 	}
 	
 	
