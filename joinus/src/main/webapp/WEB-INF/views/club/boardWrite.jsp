@@ -4,8 +4,7 @@
 
 <%@ include file="../include/header.jsp"%>
 
-<script
-	src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script type="text/javascript">
 	//alert('js사용!');
 	
