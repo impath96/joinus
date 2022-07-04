@@ -3,7 +3,7 @@ package com.joinus.domain;
 import lombok.Data;
 
 @Data
-public class InterestVo {
+public class InterestsVo {
 
 	private int interest_no;
 	private String interest_icon;

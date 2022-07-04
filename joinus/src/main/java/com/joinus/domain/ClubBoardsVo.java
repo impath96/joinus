@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 import lombok.Data;
 
 @Data
-public class ClubBoardVo {
+public class ClubBoardsVo {
 	
 	private int club_board_no;
 	private int club_no;
@@ -14,12 +14,10 @@ public class ClubBoardVo {
 	private int member_no;
 	private String club_board_title;
 	private String club_board_content;
-	private String club_board_photo;
+	private String club_board_image;
 	private Date club_board_date;
+	private Date club_board_updatedate;
 	private int club_board_like;
-	//private String club_board_comment;
-	
-	
-	
+	private int comment_cnt;
 	
 }

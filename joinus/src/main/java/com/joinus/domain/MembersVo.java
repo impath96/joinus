@@ -14,8 +14,9 @@ public class MembersVo {
 	private String member_tel;
 	private String member_image;
 	private Date member_regdate;
-	private int member_role;
-	
+	private String member_authority;
+	private String member_signup_type;
+	private String member_status;
 	
 	
 

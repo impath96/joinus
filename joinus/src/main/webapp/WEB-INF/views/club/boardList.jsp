@@ -33,24 +33,24 @@
 
 			<div style="margin-bottom: 2em;">
 				<button type="button" class="btn btn-primary" id="all">전체</button>
-				<button type="button" class="btn btn-primary" id="notice">공지</button>
+				<button type="button" class="btn btn-primary" id="notice">공지사항</button>
 				<button type="button" class="btn btn-primary" id="free">자유글</button>
 				<button type="button" class="btn btn-primary" id="review">정모후기</button>
 			</div>
 
 
 			<c:forEach var="board" items="${boardList }">
-				<div class="wow fadeIn">
+				<div class="wow fadeIn" onclick="location.href='/club/boardWrite?club_no=${club_no}';" style="cursor: pointer;">
 				<img src="/resources/img/airplaneSky.jpg" style="border-radius: 10px; float: left; width: 200px; height: 150px; margin-right: 2em;">
 	<!-- 				<div> -->
 	<!-- 					<h3 style="margin-top: 0.5em;">제목</h3> -->
 	<!-- 				</div> -->
-					<h5 class="mb-3" style="display: inline-block;">${board.clubBoardVo.club_board_title }</h5><br>
-					<span style="color: black;">${board.clubBoardVo.club_board_content }</span>
+					<h5 class="mb-3" style="display: inline-block;">${board.clubBoardsVo.club_board_title }</h5><br>
+					<p style="color: black; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp:2; -webkit-box-orient: vertical;">${board.clubBoardsVo.club_board_content }</p>
 					<div style="margin-top: 0.5em;">${board.membersVo.member_name }</div>
-					<div>${board.clubBoardVo.club_board_date }</div>
-					<i class="fa fa-regular fa-thumbs-up"></i> <span class="clubList_likeCnt">${board.clubBoardVo.club_board_like }</span>
-					<i class="fa fa-regular fa-comment"></i> <span class="clubList_commentCnt">10</span>
+					<div>${board.clubBoardsVo.club_board_date }</div>
+					<i class="fa fa-regular fa-thumbs-up"></i> <span class="clubList_likeCnt">${board.clubBoardsVo.club_board_like }</span>
+					<i class="fa fa-regular fa-comment"></i> <span class="clubList_commentCnt">${board.clubBoardsVo.comment_cnt }</span>
 				</div>
 				<hr>
 			</c:forEach>

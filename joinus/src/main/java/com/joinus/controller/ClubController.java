@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.joinus.domain.BoardTotalBean;
-import com.joinus.domain.ClubBoardVo;
+import com.joinus.domain.ClubBoardsVo;
 import com.joinus.service.ClubService;
 
 
@@ -33,33 +33,33 @@ public class ClubController {
 	
 	//http://localhost:8088/club/clubList
 	//http://localhost:8088/club/clubList?interest_no=2
-	@RequestMapping(value="/clubList", method = RequestMethod.GET)
-	public void clubList(@ModelAttribute("interest_no") String interest_no, Model model) {
-		log.info("interest_no : "+interest_no);	
-		
-		if(interest_no.isEmpty()) {
-			model.addAttribute("clubList", service.clubList());
-			log.info("clubList() 호출");
-		}else{
-			model.addAttribute("clubList", service.clubList(Integer.parseInt(interest_no)));
-			log.info("clubList(no) 호출");
-		}
-	}
+//	@RequestMapping(value="/clubList", method = RequestMethod.GET)
+//	public void clubList(@ModelAttribute("interest_no") String interest_no, Model model) {
+//		log.info("interest_no : "+interest_no);	
+//		
+//		if(interest_no.isEmpty()) {
+//			model.addAttribute("clubList", service.clubList());
+//			log.info("clubList() 호출");
+//		}else{
+//			model.addAttribute("clubList", service.clubList(Integer.parseInt(interest_no)));
+//			log.info("clubList(no) 호출");
+//		}
+//	}
 	
 	//http://localhost:8088/club/clubMember?club_no=1
-	@RequestMapping(value="/clubMember", method = RequestMethod.GET)
-	public void clubMember(Model model, int club_no) {
-		log.info("clubMember() 호출");
-		
-		club_no = 1;
-		model.addAttribute("clubMemberList",service.clubMemberListAll(club_no));
-	}
+//	@RequestMapping(value="/clubMember", method = RequestMethod.GET)
+//	public void clubMember(Model model, int club_no) {
+//		log.info("clubMember() 호출");
+//		
+//		club_no = 1;
+//		model.addAttribute("clubMemberList",service.clubMemberListAll(club_no));
+//	}
 	
 	//http://localhost:8088/club/clubMeeting
-	@RequestMapping(value="/clubMeeting", method = RequestMethod.GET)
-	public void clubMeeting() {
-		log.info("clubMeeting() 호출");
-	}
+//	@RequestMapping(value="/clubMeeting", method = RequestMethod.GET)
+//	public void clubMeeting() {
+//		log.info("clubMeeting() 호출");
+//	}
 	
 	
 	
@@ -81,7 +81,7 @@ public class ClubController {
 	
 	
 	@RequestMapping(value = "/boardWrite", method = RequestMethod.POST)
-	public String boardWritePost(ClubBoardVo vo) {
+	public String boardWritePost(ClubBoardsVo vo) {
 		log.info(" boardWritePost() 호출 ");
 		
 		
@@ -110,6 +110,7 @@ public class ClubController {
 		
 		if(board_type_no.isEmpty()) {
 			model.addAttribute("boardList", service.getBoardListAll(Integer.parseInt(club_no)));
+			
 		} else {
 			model.addAttribute("boardList", service.getBoardList(Integer.parseInt(club_no), Integer.parseInt(board_type_no)));
 		}
