@@ -15,11 +15,11 @@
 	$(document).ready(function() {
 
 		// 파일추가버튼
-		$('#addPhoto').click(function() {
+		$('#addImage').click(function() {
 			
 			for(var i=0; i<=count; i++){
 				
-				if(!document.getElementsByName("photo"+i)[0]){
+				if(!document.getElementsByName("image"+i)[0]){
 // 					alert('for문의 if절 만족');
 					addCount = i;
 // 					alert('for문의 if절 끝 addCount : '+addCount);
@@ -30,9 +30,9 @@
 				}
 			}
 				
-				var str = "<span><input type='file' name='photo"+addCount+"' style='display: inline; margin-bottom:8px;'></span><br>";
+				var str = "<span><input type='file' name='image"+addCount+"' style='display: inline; margin-bottom:8px;'></span><br>";
 				
-				$('#photoGroup').append(str);
+				$('#imageGroup').append(str);
 				count++;
 
 		});	// 파일추가
@@ -111,7 +111,7 @@
 								<option selected value="">게시글 카테고리</option>
 								<option value="1">자유글</option>
 								<option value="2">정모후기</option>
-								<option value="3">공지</option>
+								<option value="3">공지사항</option>
 							</select>
 						</div>
 						<div class="col-md-8">
@@ -134,10 +134,10 @@
 
 
 						<!-- <span style="text-align: left;" class="clubWrite_fileSpan"> -->
-						<span class="clubWrite_photoSpan">
-							<button type="button" class="btn btn-primary" id="addPhoto">파일추가</button>
+						<span class="clubWrite_imageSpan">
+							<button type="button" class="btn btn-primary" id="addImage">파일추가</button>
 						</span>
-						<span id="photoGroup" class="clubWrite_photoGroup"> </span>
+						<span id="imageGroup" class="clubWrite_imageGroup"> </span>
 						
 						
 						

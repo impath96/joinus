@@ -18,6 +18,6 @@ public class ClubBoardsVo {
 	private Date club_board_date;
 	private Date club_board_updatedate;
 	private int club_board_like;
-	private int comment_cnt;
+	private int club_board_commentcnt;
 	
 }

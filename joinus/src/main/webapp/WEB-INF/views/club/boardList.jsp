@@ -21,6 +21,9 @@
 		$('#review').click(function(){
 			$(location).attr('href','/club/boardList?club_no=${club_no}&board_type_no=2');
 		});
+		$('#write').click(function(){
+			$(location).attr('href','/club/boardWrite?club_no=${club_no}');
+		});
 	});
 
 </script>
@@ -36,6 +39,7 @@
 				<button type="button" class="btn btn-primary" id="notice">공지사항</button>
 				<button type="button" class="btn btn-primary" id="free">자유글</button>
 				<button type="button" class="btn btn-primary" id="review">정모후기</button>
+				<button type="button" class="btn btn-primary" id="write" style="float: right;">글쓰기</button>
 			</div>
 
 
@@ -50,7 +54,7 @@
 					<div style="margin-top: 0.5em;">${board.membersVo.member_name }</div>
 					<div>${board.clubBoardsVo.club_board_date }</div>
 					<i class="fa fa-regular fa-thumbs-up"></i> <span class="clubList_likeCnt">${board.clubBoardsVo.club_board_like }</span>
-					<i class="fa fa-regular fa-comment"></i> <span class="clubList_commentCnt">${board.clubBoardsVo.comment_cnt }</span>
+					<i class="fa fa-regular fa-comment"></i> <span class="clubList_commentCnt">${board.clubBoardsVo.club_board_commentcnt }</span>
 				</div>
 				<hr>
 			</c:forEach>

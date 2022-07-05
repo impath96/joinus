@@ -7,6 +7,7 @@ package com.joinus.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -74,14 +75,14 @@ public class ClubController {
 		log.info(" boardWriteGet() 호출 ");
 		log.info(" club_no : "+club_no);
 		
-		session.setAttribute("member_no", 1);
+		session.setAttribute("member_no", 11);
 		log.info("세션에 저장된 member_no : "+session.getAttribute("member_no"));
 		
 	}
 	
 	
 	@RequestMapping(value = "/boardWrite", method = RequestMethod.POST)
-	public String boardWritePost(ClubBoardsVo vo) {
+	public String boardWritePost(ClubBoardsVo vo, HttpServletRequest request) {
 		log.info(" boardWritePost() 호출 ");
 		
 		
