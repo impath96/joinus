@@ -4,76 +4,7 @@
 
 <%@ include file="../include/header.jsp"%>
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-<script type="text/javascript">
-	//alert('js사용!');
-	
-	var count = 0;
-	
-	// jQuery
-	$(document).ready(function() {
 
-		// 파일추가버튼
-		$('#addPhoto').click(function() {
-			
-			count++;
-			
-			var str = "<span><input type='file' name='file' id='file' style='display: inline; margin-bottom:8px;'></span><br>";
-			
-			$('#photoGroup').append(str);
-			$('#addPhoto').hide();
-
-		});	// 파일추가
-		
-		
-		// 등록버튼
-		$('#subBtn').click(function(){
-// 			alert('@@@@@@@@@@@@@@');
-			
-			if(document.fr.board_type_no.value == ''){
-				document.fr.board_type_no.focus();
-				return false;
-			}
-			if(!document.fr.club_board_title.value){
-				document.fr.club_board_title.focus();
-				return false;
-			}
-			if(!document.fr.club_board_content.value){
-				document.fr.club_board_content.focus();
-				return false;
-			}
-			
-			$('#count').val(count);
-			
-			
-			if(count == 0){
-				// 파일 X
-// 				alert('count==0');
-				$('form').attr({
-					action: '${pageContext.request.contextPath }/club/boardWrite',
-					enctype: ''
-				});
-				
-			} else {
-				// 파일 O
-// 				alert('count!=0');
-				alert(document.getElementById("file").files[0].name);
-				$('form').attr({
-					action: '${pageContext.request.contextPath }/club/boardFileWrite'
-				});
-				
-			}
-			
-// 			alert('!!!!!!!!!!!!!!!!!!!!');
-		}); //등록버튼
-		
-
-	});	// jQuery
-	
-	// JS
-	
-	
-</script>
 
 
 <div class="container-fluid bg-light overflow-hidden px-lg-0">
@@ -84,8 +15,7 @@
 				<h6 class="text-primary">JoinUs</h6>
 				<h1 class="clubWrite_mb-4">게시글</h1>
 
-				<form name="fr" action="" method="post" enctype="multipart/form-data">
-					<input type="hidden" name="count" id="count" value="">
+				<form name="fr" action="${pageContext.request.contextPath }/club/boardWrite" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="club_no" value="${club_no }">
 					<input type="hidden" name="member_no" value="${sessionScope.member_no }">
 					<div class="row g-3">
@@ -114,16 +44,8 @@
 							</div>
 						</div>
 
+						<input type="file" name="file">
 
-
-
-						<!-- <span style="text-align: left;" class="clubWrite_fileSpan"> -->
-						<span class="clubWrite_photoSpan">
-							<button type="button" class="btn btn-primary" id="addPhoto">파일추가</button>
-						</span>
-						<span id="photoGroup" class="clubWrite_photoGroup"> </span>
-						
-						
 						
 						<div class="col-12 clubWrite_buttonMargin">
 							<input type="submit"
