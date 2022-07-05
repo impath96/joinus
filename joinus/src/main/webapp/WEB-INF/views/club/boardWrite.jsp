@@ -9,7 +9,6 @@
 	//alert('js사용!');
 	
 	var count = 0;
-	var addCount;
 	
 	// jQuery
 	$(document).ready(function() {
@@ -17,6 +16,7 @@
 		// 파일추가버튼
 		$('#addImage').click(function() {
 			
+<<<<<<< HEAD
 			for(var i=0; i<=count; i++){
 				
 				if(!document.getElementsByName("image"+i)[0]){
@@ -34,12 +34,21 @@
 				
 				$('#imageGroup').append(str);
 				count++;
+=======
+			count++;
+			
+			var str = "<span><input type='file' name='file' id='file' style='display: inline; margin-bottom:8px;'></span><br>";
+			
+			$('#photoGroup').append(str);
+			$('#addPhoto').hide();
+>>>>>>> 2cdc62da9acaf0daacde06f0c3d3be4409873b56
 
 		});	// 파일추가
 		
 		
 		// 등록버튼
 		$('#subBtn').click(function(){
+// 			alert('@@@@@@@@@@@@@@');
 			
 			if(document.fr.board_type_no.value == ''){
 				document.fr.board_type_no.focus();
@@ -56,31 +65,26 @@
 			
 			$('#count').val(count);
 			
-			// post로 넘겨서 count 값 검사해서 0일때 0아닐때 각각 처리해야 할듯?
+			
 			if(count == 0){
+				// 파일 X
 // 				alert('count==0');
 				$('form').attr({
+					action: '${pageContext.request.contextPath }/club/boardWrite',
 					enctype: ''
 				});
 				
-			}
-// 			else {
-// 				alert('버튼');
-// 				for(var i=0; i<count; i+++){
-// 					if(document.getElementsByName("photo"+i)[0].value == ''){
-// 						alert('파일없음');
-// 						$('form').attr({
-// 							enctype: ''
-// 						});
-// 					}
-// 				}
+			} else {
+				// 파일 O
+// 				alert('count!=0');
+				alert(document.getElementById("file").files[0].name);
+				$('form').attr({
+					action: '${pageContext.request.contextPath }/club/boardFileWrite'
+				});
 				
-// 				return false;
-// 			}
+			}
 			
-			
-			
-			
+// 			alert('!!!!!!!!!!!!!!!!!!!!');
 		}); //등록버튼
 		
 
@@ -100,7 +104,7 @@
 				<h6 class="text-primary">JoinUs</h6>
 				<h1 class="clubWrite_mb-4">게시글</h1>
 
-				<form name="fr" action="${pageContext.request.contextPath }/club/boardWrite" method="post" enctype="multipart/form-data">
+				<form name="fr" action="" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="count" id="count" value="">
 					<input type="hidden" name="club_no" value="${club_no }">
 					<input type="hidden" name="member_no" value="${sessionScope.member_no }">
@@ -120,7 +124,7 @@
 									name="club_board_title" placeholder="title"> <label
 									for="club_board_title">제목</label>
 							</div>
-						</div>
+						</div> 
 						<div class="col-12">
 							<div class="form-floating">
 								<textarea class="form-control" placeholder="content"
@@ -142,7 +146,6 @@
 						
 						
 						<div class="col-12 clubWrite_buttonMargin">
-							<!-- 							<button class="btn btn-primary rounded-pill py-3 px-5" type="submit">등록</button> -->
 							<input type="submit"
 								class="btn btn-primary rounded-pill py-3 px-5" id="subBtn"
 								value="등록">

@@ -4,10 +4,15 @@ package com.joinus.controller;
 
 
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+<<<<<<< HEAD
+=======
+import javax.servlet.http.HttpServletResponse;
+>>>>>>> 2cdc62da9acaf0daacde06f0c3d3be4409873b56
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -17,10 +22,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.service.ClubService;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 
 @Controller
@@ -80,19 +89,71 @@ public class ClubController {
 		
 	}
 	
-	
+	// 파일 X
 	@RequestMapping(value = "/boardWrite", method = RequestMethod.POST)
+<<<<<<< HEAD
 	public String boardWritePost(ClubBoardsVo vo, HttpServletRequest request) {
+=======
+	public String boardWritePost(ClubBoardsVo vo, @RequestParam("count") int count) {
+>>>>>>> 2cdc62da9acaf0daacde06f0c3d3be4409873b56
 		log.info(" boardWritePost() 호출 ");
 		
 		
 		// 전달된 정보 저장(글쓰기 정보)
 		log.info("글쓰기 정보 : "+vo);
+		log.info("count : "+count);
+		
+		service.writeBoard(vo);
+		log.info(" 글쓰기(파일X) 완료! ");
+		
+		int club_no = vo.getClub_no();
+		
+		return "redirect:/club/boardList?club_no="+club_no;
+	}
+	
+	// 파일 O
+	@RequestMapping(value = "/boardFileWrite", method = RequestMethod.POST)
+	public String boardFileWritePost(ClubBoardsVo vo, @RequestParam("count") int count, HttpServletRequest request, MultipartFile file) {
+		log.info(" boardFileWritePost() 호출 ");
+		
+		// 1) 파일 업로드
+		// - 가상의 업로드 폴더 설정 upload 폴더 생성
+		String path = request.getRealPath("/upload");
+		log.info(" 파일 저장 경로 : "+path);
+		
+		
+		log.info("파일명 : "+file.getOriginalFilename()); 
+		
+		// 업로드 파일 크기(10MB)
+//		int maxSize = 10 * 1024 * 1024;
+		
+//		MultipartRequest multi = null;
+		
+//		try {
+//			multi = new MultipartRequest(
+//						request,
+//						path,
+//						maxSize,
+//						"UTF-8",
+//						new DefaultFileRenamePolicy()
+//					);
+//			
+//			log.info(multi.getFilesystemName("file")); // 파일이름
+//			
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+		
+		// 전달된 정보 저장(글쓰기 정보)
+		log.info("글쓰기 정보 : "+vo);
+		log.info("count : "+count);
+		log.info("request 파일 : "+request.getParameter("file"));
+		log.info("request count : "+request.getParameter("count"));
 //		log.info("club_no : "+vo.getClub_no());
 		int club_no = vo.getClub_no();
 		
-		service.writeBoard(vo);
-		log.info(" 글쓰기 완료! ");
+		
+		
 		
 		return "redirect:/club/boardList?club_no="+club_no;
 	}
