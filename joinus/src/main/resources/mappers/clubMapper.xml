@@ -138,7 +138,7 @@
 	</insert>
 	
 	<select id="getBoardListAll" resultMap="boardListMap">
-		select m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_like, b.club_board_commentcnt
+		select b.club_board_no, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_like, b.club_board_commentcnt
 		from club_boards b
 		join members m
 			on b.member_no = m.member_no
@@ -147,7 +147,7 @@
 	</select>
 	
 	<select id="getBoardList" resultMap="boardListMap">
-		select m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_like, b.club_board_commentcnt
+		select b.club_board_no, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_like, b.club_board_commentcnt
 		from club_boards b
 		join members m
 			on b.member_no = m.member_no

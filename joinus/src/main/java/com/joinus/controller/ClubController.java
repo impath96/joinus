@@ -4,22 +4,27 @@ package com.joinus.controller;
 
 
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.awt.image.renderable.ParameterBlock;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-<<<<<<< HEAD
-=======
 import javax.servlet.http.HttpServletResponse;
->>>>>>> 2cdc62da9acaf0daacde06f0c3d3be4409873b56
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,8 +33,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.service.ClubService;
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 
 @Controller
@@ -78,84 +81,100 @@ public class ClubController {
 	// 파라미터를 전달하고 싶을 때는 보내주는 주소와 받는 주소 모두 다 modelAttribute를 사용해야 함
 	// ?뒤에 숫자는 모임고유번호(일단 임의로 주소줄에서 받아오기)
 	// http://localhost:8088/club/boardWrite?club_no=1
+	// http://localhost:8088/club/{club_no}/boards/new
+	// http://localhost:8088/club/1/boards/new
 	// 게시판글쓰기
-	@RequestMapping(value = "/boardWrite", method = RequestMethod.GET)
-	public void boardWriteGet(@ModelAttribute("club_no") int club_no, HttpSession session) {
+	@RequestMapping(value = "/{club_no}/boards/new", method = RequestMethod.GET)
+	public String boardWriteGet(@PathVariable("club_no") Integer club_no, HttpSession session) {
 		log.info(" boardWriteGet() 호출 ");
 		log.info(" club_no : "+club_no);
 		
 		session.setAttribute("member_no", 11);
 		log.info("세션에 저장된 member_no : "+session.getAttribute("member_no"));
 		
+		return "/club/boards/boardWrite";
 	}
 	
 	// 파일 X
-	@RequestMapping(value = "/boardWrite", method = RequestMethod.POST)
-<<<<<<< HEAD
-	public String boardWritePost(ClubBoardsVo vo, HttpServletRequest request) {
-=======
-	public String boardWritePost(ClubBoardsVo vo, @RequestParam("count") int count) {
->>>>>>> 2cdc62da9acaf0daacde06f0c3d3be4409873b56
+	@RequestMapping(value = "/{club_no}/boards/new", method = RequestMethod.POST)
+	public String boardWritePost(ClubBoardsVo vo) {
 		log.info(" boardWritePost() 호출 ");
 		
 		
 		// 전달된 정보 저장(글쓰기 정보)
 		log.info("글쓰기 정보 : "+vo);
-		log.info("count : "+count);
+//		log.info("count : "+count);
 		
 		service.writeBoard(vo);
 		log.info(" 글쓰기(파일X) 완료! ");
 		
 		int club_no = vo.getClub_no();
 		
-		return "redirect:/club/boardList?club_no="+club_no;
+		return "redirect:/club/"+club_no+"/boards";
 	}
 	
 	// 파일 O
-	@RequestMapping(value = "/boardFileWrite", method = RequestMethod.POST)
-	public String boardFileWritePost(ClubBoardsVo vo, @RequestParam("count") int count, HttpServletRequest request, MultipartFile file) {
+	@RequestMapping(value = "/{club_no}/boards/fileNew", method = RequestMethod.POST)
+	public String boardFileWritePost(ClubBoardsVo vo, HttpServletRequest request, MultipartFile file) {
 		log.info(" boardFileWritePost() 호출 ");
 		
 		// 1) 파일 업로드
 		// - 가상의 업로드 폴더 설정 upload 폴더 생성
-		String path = request.getRealPath("/upload");
-		log.info(" 파일 저장 경로 : "+path);
+		ServletContext ctx = request.getServletContext();
+		String realPath = ctx.getRealPath("/resources/upload");
+		log.info(" 파일 저장 경로 : "+realPath);
+		
+		// realPath 경로에 파일업로드하기 위한 폴더가 있는지 확인
+		File savePath = new File(realPath);
+		if(!savePath.exists()) {
+			savePath.mkdirs(); // 없으면 경로에 폴더를 만들어줌
+		}
 		
 		
-		log.info("파일명 : "+file.getOriginalFilename()); 
+		String fileName = file.getOriginalFilename();
+		log.info("파일명 : "+fileName);
 		
-		// 업로드 파일 크기(10MB)
-//		int maxSize = 10 * 1024 * 1024;
+		String fullPath = realPath;
 		
-//		MultipartRequest multi = null;
+//		realPath += File.separator + fileName;
+//		File savefile = new File(realPath);
 		
-//		try {
-//			multi = new MultipartRequest(
-//						request,
-//						path,
-//						maxSize,
-//						"UTF-8",
-//						new DefaultFileRenamePolicy()
-//					);
-//			
-//			log.info(multi.getFilesystemName("file")); // 파일이름
-//			
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		fullPath += File.separator + fileName;
+		File saveFile = new File(fullPath);
 		
+		// 경로+파일명
+//		log.info("@@@@@@@@@최종 fullPath : "+fullPath);
+		
+		// 파일 저장
+		try {
+			
+			file.transferTo(saveFile);
+			
+			// 썸네일
+			File thumbnailFile = new File(realPath, "sm_"+fileName);
+			BufferedImage bo_image = ImageIO.read(saveFile);
+			BufferedImage bt_image = new BufferedImage(200, 150, BufferedImage.TYPE_INT_RGB);
+			Graphics2D graphic = bt_image.createGraphics();
+			graphic.drawImage(bo_image, 0, 0, 200, 150, null);
+			ImageIO.write(bt_image, "jpg", thumbnailFile);
+			
+			
+		} catch (IllegalStateException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		vo.setClub_board_image(fileName);
 		// 전달된 정보 저장(글쓰기 정보)
-		log.info("글쓰기 정보 : "+vo);
-		log.info("count : "+count);
-		log.info("request 파일 : "+request.getParameter("file"));
-		log.info("request count : "+request.getParameter("count"));
-//		log.info("club_no : "+vo.getClub_no());
+//		log.info("글쓰기 정보 : "+vo);
+		
+		service.writeBoard(vo);
+		log.info(" 글쓰기(파일O) 완료! ");
+		
 		int club_no = vo.getClub_no();
 		
-		
-		
-		
-		return "redirect:/club/boardList?club_no="+club_no;
+		return "redirect:/club/"+club_no+"/boards";
 	}
 	
 	
@@ -176,6 +195,16 @@ public class ClubController {
 		} else {
 			model.addAttribute("boardList", service.getBoardList(Integer.parseInt(club_no), Integer.parseInt(board_type_no)));
 		}
+	}
+	
+	/// http://localhost:8088/club/{club_no}/boards/{club_board_no}
+	/// http://localhost:8088/club/1/boards/1
+	// 게시글 상세보기
+	@RequestMapping(value = "/{club_no}/boards/{club_board_no}", method = RequestMethod.GET)
+	public void boardGet(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no) {
+		log.info(" boardGet() 호출 ");
+		
+		
 	}
 
 	
