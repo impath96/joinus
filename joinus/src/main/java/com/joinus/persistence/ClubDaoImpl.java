@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.joinus.domain.ClubBoardVo;
+import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubTotalBean;
 
 @Repository
@@ -61,7 +61,7 @@ public class ClubDaoImpl implements ClubDao{
 	
 
 	@Override
-	public void writeBoard(ClubBoardVo vo) {
+	public void writeBoard(ClubBoardsVo vo) {
 		log.info(" write() 호출 ");
 		
 		// 정보 전달받아서 mapper를 통해 db저장
@@ -70,7 +70,7 @@ public class ClubDaoImpl implements ClubDao{
 	}
 
 	@Override
-	public List<ClubBoardVo> getBoardListAll(Integer club_no) {
+	public List<ClubBoardsVo> getBoardListAll(Integer club_no) {
 		log.info(" getBoardListAll() 호출 ");
 		
 		return sqlSession.selectList(NAMESPACE+".getBoardListAll", club_no);

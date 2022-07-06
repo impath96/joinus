@@ -6,7 +6,7 @@
 <mapper namespace="com.joinus.mapper.ClubMapper">
 
 <!-- 조인할 테이블 1-1 -->
-<resultMap type="ClubMemberRoleVo" id="roleMap">
+<resultMap type="ClubMemberRolesVo" id="roleMap">
 	<id property="club_role_no" column="club_role_no"/>
 	<id property="club_role_name" column="club_role_name"/> 
 </resultMap>
@@ -26,18 +26,18 @@
 <!-- 조인한 맵 만들어주기 1 -->
 <resultMap type="ClubTotalBean" id="ClubMemberListMap">
 	<collection property="membersVo" resultMap="membersMap"/>
-	<collection property="clubMemberRoleVo" resultMap="roleMap"/>
+	<collection property="clubMemberRolesVo" resultMap="roleMap"/>
 </resultMap>
 
 <!-- 조인할 테이블 2-1 -->
-<resultMap type="InterestVo" id="interestMap">
+<resultMap type="InterestsVo" id="interestMap">
    <id property="interest_no" column="interest_no"/>
    <id property="interest_icon" column="interest_icon"/>
    <id property="interest_name" column="interest_name"/>
 </resultMap>
 
 <!-- 조인할 테이블 2-2 -->
-<resultMap type="ClubInterestVo" id="clubInterestMap">
+<resultMap type="ClubInterestsVo" id="clubInterestMap">
    <id property="club_interest_no" column="club_interest_no"/>
    <id property="club_no" column="club_no"/>
    <id property="interest_no" column="interest_no"/>
@@ -45,7 +45,7 @@
 </resultMap>
 
 <!-- 조인할 테이블 2-3 -->
-<resultMap type="ClubVo" id="clubMap">
+<resultMap type="ClubsVo" id="clubMap">
    <id property="club_no" column="club_no"/>
    <id property="club_name" column="club_name"/>
    <id property="club_content" column="club_content"/>
@@ -53,7 +53,7 @@
 </resultMap>
 
 <!--  조인할 테이블 2-4 -->
-<resultMap type="ClubGradeVo" id="clubGradeMap">
+<resultMap type="ClubGradesVo" id="clubGradeMap">
    <id property="club_grade_no" column="clubclub_grade_no_no"/>
    <id property="club_no" column="club_no"/>
    <id property="club_grade" column="club_grade"/>
@@ -61,20 +61,20 @@
 
 <!-- 조인한 맵 만들어주기 2 -->
 <resultMap type="ClubTotalBean" id="ClubListMap">
-	<collection property="clubInterestVo" resultMap="clubInterestMap"/>
-	<collection property="interestVo" resultMap="interestMap"/>
-	<collection property="clubVo" resultMap="clubMap"/>
-	<collection property="clubGradeVo" resultMap="clubGradeMap"/>
+	<collection property="clubInterestsVo" resultMap="clubInterestMap"/>
+	<collection property="interestsVo" resultMap="interestMap"/>
+	<collection property="clubsVo" resultMap="clubMap"/>
+	<collection property="clubGradesVo" resultMap="clubGradeMap"/>
 	
 </resultMap>
 
 <select id="ClubMemberList" resultMap="ClubMemberListMap">
 	<![CDATA[
 	select m.member_no,m.member_name, m.member_image, c.club_no, c.club_role_no, cr.club_role_name
-	from club_memberlist c 
+	from club_members c 
     join members m 
     	on (m.member_no = c.member_no)
-	join club_member_role cr
+	join club_member_roles cr
 		on(c.club_role_no = cr.club_role_no)
 	where club_no = #{club_no} 
 	order by club_role_name asc
@@ -83,12 +83,12 @@
 
 <select id="ClubList" resultMap="ClubListMap">
 	    select c.club_no, c.club_name, c.club_content, c.club_image, ci.interest_no, i.interest_name,i.interest_icon,cg.club_grade_rate
-    from club c
-	join club_interest ci
+    from clubs c
+	join club_interests ci
         on(c.club_no = ci.club_no)
-    join interest i
+    join interests i
 		on(ci.interest_no = i.interest_no)
-	join club_grade cg
+	join club_grades cg
 		on(c.club_no = cg.club_no)
 	where ci.interest_no = #{interest_no}
 	order by club_no asc
@@ -96,12 +96,12 @@
 
 <select id="ClubListAll" resultMap="ClubListMap">
 	    select c.club_no, c.club_name, c.club_content, c.club_image, ci.interest_no, i.interest_name,i.interest_icon,cg.club_grade_rate
-    from club c
-	join club_interest ci
+    from clubs c
+	join club_interests ci
         on(c.club_no = ci.club_no)
-    join interest i
+    join interests i
 		on(ci.interest_no = i.interest_no)
-	join club_grade cg
+	join club_grades cg
 		on(c.club_no = cg.club_no)
 	order by club_grade_rate desc
 </select>
@@ -109,7 +109,7 @@
 
 	
 	<insert id="writeBoard">
-		insert into club_board (club_no,member_no,board_type_no,club_board_title,club_board_content,club_board_photo)
+		insert into club_boards (club_no,member_no,board_type_no,club_board_title,club_board_content,club_board_photo)
 		values(#{club_no},#{member_no},#{board_type_no},#{club_board_title},#{club_board_content},#{club_board_photo})
 	</insert>
 	

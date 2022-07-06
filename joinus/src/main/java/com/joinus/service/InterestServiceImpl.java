@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.joinus.domain.InterestVo;
+import com.joinus.domain.InterestsVo;
 import com.joinus.persistence.InterestDao;
 
 
@@ -20,7 +20,7 @@ public class InterestServiceImpl implements InterestService {
 	private static final Logger log = LoggerFactory.getLogger(InterestServiceImpl.class);
 
 	@Override
-	public List<InterestVo> selectInterestAll() {
+	public List<InterestsVo> selectInterestAll() {
 		log.info("interest-service : 주 관심사 전체 조회");
 		return interestDao.selectInterestAll();
 	}

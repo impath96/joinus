@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.joinus.domain.ClubBoardVo;
+import com.joinus.domain.ClubBoardsVo;
 import com.joinus.service.ClubService;
 
 
@@ -75,7 +75,7 @@ public class ClubController {
 	
 	
 	@RequestMapping(value = "/boardWrite", method = RequestMethod.POST)
-	public void boardWritePost(ClubBoardVo vo) {
+	public void boardWritePost(ClubBoardsVo vo) {
 		log.info(" boardWritePost() 호출 ");
 		
 		

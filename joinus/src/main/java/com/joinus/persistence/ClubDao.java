@@ -3,9 +3,8 @@ package com.joinus.persistence;
 
 import java.util.List;
 
-import com.joinus.domain.ClubMemberVo;
+import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubTotalBean;
-import com.joinus.domain.ClubBoardVo;
 
 public interface ClubDao {
 	
@@ -22,9 +21,9 @@ public interface ClubDao {
 	
 	//=========================허수빈========================
 	// 글쓰기
-	public void writeBoard(ClubBoardVo vo);
+	public void writeBoard(ClubBoardsVo vo);
 	
 	// 모임고유값에 따른 게시글리스트
-	public List<ClubBoardVo> getBoardListAll(Integer club_no);
+	public List<ClubBoardsVo> getBoardListAll(Integer club_no);
 	//=========================허수빈========================
 }

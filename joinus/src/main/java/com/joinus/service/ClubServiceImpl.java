@@ -8,12 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.joinus.domain.ClubMemberVo;
+import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubTotalBean;
-import com.joinus.persistence.ClubDao;
-import org.springframework.stereotype.Service;
-
-import com.joinus.domain.ClubBoardVo;
 import com.joinus.persistence.ClubDao;
 
 @Service
@@ -57,7 +53,7 @@ public class ClubServiceImpl implements ClubService{
 	
 
 	@Override
-	public void writeBoard(ClubBoardVo vo) {
+	public void writeBoard(ClubBoardsVo vo) {
 		dao.writeBoard(vo);
 		
 	}
