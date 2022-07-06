@@ -33,6 +33,40 @@
     
     <!-- hsb css -->
     <link href="${PageContext.request.contextPath }/resources/css/hsb.css" rel="stylesheet">
+    
+    <style type="text/css">
+    	.service-item {
+    		height : 100%;
+    	}
+    	.service-icon {
+    		margin : 24px 24px 0 0;
+    	}
+    	.service-content {
+    		padding-top : 0.75rem;
+    	}
+    	.bottom-right {
+    		position : absolute;
+    		font-size : 1.25rem;
+    		right : 16px;
+    		bottom : 8px;
+    	}
+    	.club_item {
+    		font-size : 1.25rem;
+    	}
+    	.club_name {
+    		overflow : hidden;
+    		text-overflow : ellipsis;
+    		-webkit-line-clamp: 1;
+    		-webkit-box-orient: vertical;
+    		white-space: nowrap;
+    		display: inline-block;
+    	}
+    	.finished_time {
+		    margin-left: auto;
+		    text-align: right;
+		    white-space: nowrap;
+    	}
+    </style>
 </head>
 
 <body>

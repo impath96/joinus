@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../include/header.jsp"%>
 <body>
 	<!-- Contact Start -->
@@ -10,10 +10,10 @@
 				<div class="p-lg-5 ps-lg-0" align="center">
 					<h6 class="text-primary">Grouping</h6>
 					<h1 class="mb-4">추가정보(필수)</h1>
-					<form action="/member/selectInfo", method="post">
+					<form action="/member/signup" name="form" method="post">
 						<div class="col-12">
 							<div class="form-floating" style="width: 50%;">
-								<input type="text" class="form-control" id="location" name="member_location"
+								<input type="text" class="form-control" id="location" name="location_name"
 									placeholder="주소" onclick="sample4_execDaumPostcode()" > <label for="location">주소</label>
 							</div>
 						</div>
@@ -21,10 +21,21 @@
 						<div class="col-12">
 							<div class="form-floating" style="width: 50%;">
 								<input type="tel" class="form-control" id="tel" name="member_tel"
-									placeholder="Subject"> <label for="subject">전화번호</label>
+									placeholder="전화번호"> <label for="subject">전화번호</label>
 							</div>
 						</div>
 						<br>
+						<div class="col-12">
+							<div class="form-floating" style="width:50%;">
+								<select name = "interest" id="interest" class="form-select form-select-lg mb-3 pt-2" aria-label="interest">
+		  							<option selected>관심사 선택</option>
+		  							<c:forEach var="interest" items="${interestList}">
+										<option value="${interest.interest_no }">${interest.interest_name }</option>
+		  							</c:forEach>
+									
+								</select>
+							</div>
+						</div>
 						<div class="col-12">
 							<input type="submit" value="다음"
 								class="btn btn-primary rounded-pill py-3 px-5">

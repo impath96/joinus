@@ -10,7 +10,7 @@
 				<div class="p-lg-5 ps-lg-0" align="center">
 					<h6 class="text-primary">Grouping</h6>
 					<h1 class="mb-4">추가정보(선택)</h1>
-					<form action="/member/mypage", method="post">
+					<form action="/member/mypage" method="post">
 						<div class="col-12">
 							<div class="form-floating" style="width: 50%;">
 								<input type="text" class="form-control" id="location" name="member_location"

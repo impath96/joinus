@@ -121,7 +121,7 @@ public class ClubController {
 	public void boardWriteGet(@ModelAttribute("club_no") int club_no, HttpSession session) {
 		log.info(" boardWriteGet() 호출 ");
 		log.info(" club_no : "+club_no);
-		
+	
 		session.setAttribute("member_no", 1);
 		log.info("세션에 저장된 member_no : "+session.getAttribute("member_no"));
 		
