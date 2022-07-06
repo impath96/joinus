@@ -1,8 +1,5 @@
 package com.joinus.controller;
-
-
-
-
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -12,11 +9,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.joinus.domain.ClubBoardVo;
-import com.joinus.service.ClubService;
+import com.joinus.domain.ClubBoardsVo;
+import com.joinus.domain.ClubTotalBean;
+import com.joinus.domain.ClubsVo;
+import com.joinus.service.Clubservice;
 
 
 @Controller
@@ -25,7 +26,7 @@ public class ClubController {
 	
 
 	@Inject
-	private ClubService service;
+	private Clubservice service;
 	
 	private static final Logger log = LoggerFactory.getLogger(ClubController.class);
 	
@@ -35,7 +36,8 @@ public class ClubController {
 	public void clubList(@ModelAttribute("interest_no") String interest_no, Model model) {
 		log.info("interest_no : "+interest_no);	
 		
-		if(interest_no.isBlank()) {
+		
+		if(interest_no.isEmpty()) {
 			model.addAttribute("clubList", service.clubList());
 			log.info("clubList() 호출");
 		}else{
@@ -44,13 +46,35 @@ public class ClubController {
 		}
 	}
 	
-	//http://localhost:8088/club/clubMember?club_no=1
-	@RequestMapping(value="/clubMember", method = RequestMethod.GET)
-	public void clubMember(Model model, int club_no) {
+	//http://localhost:8088/club/1/clubMembers
+	@RequestMapping(value="/{club_no}/clubMembers", method = RequestMethod.GET)
+	public String clubMember(Model model,
+							@PathVariable("club_no") Integer club_no) throws Exception{
 		log.info("clubMember() 호출");
 		
-		club_no = 1;
+		
+		
+//		String member_email =(String)session.getAttribute("id");
+		
+		String member_email="aaa@gmail.com";
+		
+		int result;
+		
+		if(member_email.equals(service.checkBoss(club_no))) {
+			result = 1;
+		}else {
+			result = 0;
+		}
+		
+		
+		List<ClubsVo> clubInfo = service.clubInfo(club_no);
+		
+		log.info("result : "+result);
+		model.addAttribute("clubInfo", clubInfo);
 		model.addAttribute("clubMemberList",service.clubMemberListAll(club_no));
+		model.addAttribute("result", result);
+		
+		return "/club/clubMembers";
 	}
 	
 	//http://localhost:8088/club/clubMeeting
@@ -59,6 +83,32 @@ public class ClubController {
 		log.info("clubMeeting() 호출");
 	}
 	
+	//http://localhost:8088/club/1/clubMember/ban
+	@RequestMapping(value="/{club_no}/clubMembers/ban", method=RequestMethod.GET)
+	public String clubMemberBan(@ModelAttribute("member_no") Integer member_no,
+			@PathVariable("club_no") Integer club_no,
+			RedirectAttributes rttr) {
+		
+		log.info("ban 호출");
+		
+		service.clubBan(member_no);
+		log.info("ban 완료");
+		
+		rttr.addFlashAttribute("BAN","BANOK");
+		
+		return "redirect:/club/{club_no}/clubMembers";
+		
+	}
+	@RequestMapping(value="/clubMembers/auth", method=RequestMethod.GET)
+	public String clubMemberAuth(@ModelAttribute("member_no") Integer member_no, RedirectAttributes rttr) {
+		
+		log.info("auth 호출");
+		service.clubAuth(member_no);
+		
+		
+		return "redirect:/club/clubMembers";
+		
+	}
 	
 	
 	
@@ -79,7 +129,7 @@ public class ClubController {
 	
 	
 	@RequestMapping(value = "/boardWrite", method = RequestMethod.POST)
-	public void boardWritePost(ClubBoardVo vo) {
+	public void boardWritePost(ClubBoardsVo vo) {
 		log.info(" boardWritePost() 호출 ");
 		
 		

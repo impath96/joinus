@@ -1,14 +1,16 @@
 package com.joinus.domain;
 
+import java.sql.Date;
 import java.sql.Timestamp;
-
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Builder
+
+@NoArgsConstructor
 @Data
 public class MemberVo {
-
+	
 	private Integer member_no;
 	private String member_email;
 	private String member_pass;
@@ -19,6 +21,8 @@ public class MemberVo {
 	private Timestamp member_regdate;
 	private Integer member_role;
 	private String member_type;
+	
+	
 	
 
 }

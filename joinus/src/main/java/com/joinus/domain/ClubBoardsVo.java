@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 import lombok.Data;
 
 @Data
-public class ClubBoardVo {
+public class ClubBoardsVo {
 	
 	private int club_board_no;
 	private int club_no;
@@ -19,9 +19,9 @@ public class ClubBoardVo {
 	private int club_board_like;
 	//private String club_board_comment;
 	
-	public ClubBoardVo() {}
+	public ClubBoardsVo() {}
 	// alt shift s + o
-	public ClubBoardVo(int club_board_no, int club_no, int member_no, int board_type_no, String club_board_title,
+	public ClubBoardsVo(int club_board_no, int club_no, int member_no, int board_type_no, String club_board_title,
 			String club_board_content, String club_board_photo, Date club_board_date, int club_board_like) {
 		super();
 		this.club_board_no = club_board_no;

@@ -59,10 +59,7 @@
     <!-- Projects Start -->
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                <h6 class="text-primary">Our Projects</h6>
-                <h1 class="mb-4">관심사</h1>
-            </div>
+
             <div class="row mt-n2 wow fadeInUp" data-wow-delay="0.3s">
                 <div class="col-12 text-center">
                     <ul class="list-inline mb-5" id="portfolio-flters">
@@ -79,6 +76,11 @@
                 </div>
             </div>
             
+         <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+         	<a href="${PageContext.request.contextPath }/club/new">
+            	<h3 class="mb-4">모임 만들기 <i class="fa fa-arrow-right ms-3"></i> </h3>
+         	</a>
+         </div>
 			          <div class="row g-4">
 			    <c:forEach var = "vo" items="${clubList }">
                 <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
@@ -88,10 +90,10 @@
                         <div class="position-relative p-4 pt-0">
                             <div class="service-icon">
                             <!-- 클럽관심사 아이콘  -->
-                                <i class="${vo.interestVo.interest_icon } fa-3x"></i>
+                                <i class="${vo.interestsVo.interest_icon } fa-3x"></i>
                             </div>
-                            <h4 class="mb-3">${vo.clubVo.club_name }</h4>
-                            <p>${vo.clubVo.club_content }</p>
+                            <h4 class="mb-3">${vo.clubsVo.club_name }</h4>
+                            <p>${vo.clubsVo.club_content }</p>
                             <a class="small fw-medium" href="">클럽 상세 페이지<i class="fa fa-arrow-right ms-2"></i></a>
                         </div>
                     </div>

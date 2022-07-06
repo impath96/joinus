@@ -3,16 +3,19 @@ package com.joinus.domain;
 import lombok.Data;
 
 @Data
-public class ClubVo {
+public class ClubsVo {
 	
 	private int club_no;
 	private String club_name;
 	private String club_content;
 	private String club_image;
 	
-	public ClubVo() {}
+	public ClubsVo() {
+		
+	}
+	
 	// alt shift s + o
-	public ClubVo(int club_no, String club_name, String club_content, String club_image) {
+	public ClubsVo(int club_no, String club_name, String club_content, String club_image) {
 		super();
 		this.club_no = club_no;
 		this.club_name = club_name;

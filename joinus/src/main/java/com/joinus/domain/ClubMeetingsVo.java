@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 import lombok.Data;
 
 @Data
-public class ClubMeetingVo {
+public class ClubMeetingsVo {
 
 	private int club_meeting_no;
 	private int club_no;

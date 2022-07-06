@@ -8,16 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.joinus.domain.ClubMemberVo;
 import com.joinus.domain.ClubTotalBean;
+import com.joinus.domain.ClubsVo;
 import com.joinus.persistence.ClubDao;
-import org.springframework.stereotype.Service;
 
-import com.joinus.domain.ClubBoardVo;
-import com.joinus.persistence.ClubDao;
+import com.joinus.domain.ClubBoardsVo;
 
 @Service
-public class ClubServiceImpl implements ClubService{
+public class ClubServiceImpl implements Clubservice{
 	
 	private static final Logger log = LoggerFactory.getLogger(ClubServiceImpl.class);
 	
@@ -48,19 +46,54 @@ public class ClubServiceImpl implements ClubService{
 	public List<ClubTotalBean> clubList() {
 		
 		log.info("clubList() 호출");
-		
 		return dao.clubList();
 	}
 
-
-
+	@Override
+	public List<ClubsVo> clubInfo(int club_no) {
+		
+		
+		return dao.clubInfo(club_no);
+	}
 	
+	@Override
+	public String checkBoss(int club_no) {
+		log.info("clubBoss() 호출");
+		return dao.clubBoss(club_no);
+	}
 
 	@Override
-	public void writeBoard(ClubBoardVo vo) {
+	public void clubBan(int member_no) {
+		
+		dao.clubBan(member_no);
+		
+	}
+	
+	
+	@Override
+	public void clubAuth(Integer member_no) {
+		dao.clubAuth(member_no);
+	}
+	
+	//===================================================================
+
+	@Override
+	public void writeBoard(ClubBoardsVo vo) {
 		dao.writeBoard(vo);
 		
 	}
+
+
+
+
+
+
+
+
+
+
+
+
 
 //	@Override
 //	public List<ClubBoardVo> getBoardListAll(Integer club_no) {

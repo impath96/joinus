@@ -5,13 +5,14 @@ import lombok.Data;
 @Data
 public class ClubTotalBean {
 
-	private MembersVo membersVo;
-	private ClubMemberRoleVo clubMemberRoleVo;
+	private MemberVo membersVo;
+	private ClubMemberRolesVo clubMemberRoleVo;
+	private ClubMembersVo clubMembersVo;
 	
-	private ClubInterestVo clubInterestVo;
-	private InterestVo interestVo;
-	private ClubVo clubVo;
-	private ClubGradeVo clubGradeVo;
+	private ClubInterestsVo clubInterestsVo;
+	private InterestsVo interestsVo;
+	private ClubsVo clubsVo;
+	private ClubGradesVo clubGradesVo;
 	
 	
 	

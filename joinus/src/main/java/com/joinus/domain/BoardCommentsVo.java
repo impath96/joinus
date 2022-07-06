@@ -3,7 +3,7 @@ package com.joinus.domain;
 import lombok.Data;
 
 @Data
-public class BoardCommentVo {
+public class BoardCommentsVo {
 	
 	private int board_comment_no;
 	private int club_board_no;

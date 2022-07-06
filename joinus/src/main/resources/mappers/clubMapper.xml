@@ -6,38 +6,43 @@
 <mapper namespace="com.joinus.mapper.ClubMapper">
 
 <!-- 조인할 테이블 1-1 -->
-<resultMap type="ClubMemberRoleVo" id="roleMap">
+<resultMap type="ClubMemberRolesVo" id="roleMap">
 	<id property="club_role_no" column="club_role_no"/>
 	<id property="club_role_name" column="club_role_name"/> 
 </resultMap>
 
 <!-- 조인할 테이블 1-2 -->
-<resultMap type="MembersVo" id="membersMap">
+<resultMap type="MemberVo" id="membersMap">
    <id property="member_no" column="member_no"/>
    <id property="member_email" column="member_email"/>
    <id property="member_pass" column="member_pass"/>
    <id property="member_name" column="member_name"/>
+   <id property="member_location" column="member_location"/>
    <id property="member_tel" column="member_tel"/>
    <id property="member_image" column="member_image"/>
    <id property="member_regdate" column="member_regdate"/>
    <id property="member_role" column="member_role"/>
+   <id property="member_type" column="member_type"/>
 </resultMap>
 
-<!-- 조인한 맵 만들어주기 1 -->
-<resultMap type="ClubTotalBean" id="ClubMemberListMap">
-	<collection property="membersVo" resultMap="membersMap"/>
-	<collection property="clubMemberRoleVo" resultMap="roleMap"/>
+<resultMap type="ClubMembersVo" id="clubMembersMap">
+   <id property="club_memberlist_no" column="club_memberlist_no"/>
+   <id property="club_no" column="club_no"/>
+   <id property="member_no" column="member_no"/>
+   <id property="club_role_no" column="club_role_no"/>
+   <id property="club_member_regdate" column="club_member_regdate"/>
 </resultMap>
+
 
 <!-- 조인할 테이블 2-1 -->
-<resultMap type="InterestVo" id="interestMap">
+<resultMap type="InterestsVo" id="interestMap">
    <id property="interest_no" column="interest_no"/>
    <id property="interest_icon" column="interest_icon"/>
    <id property="interest_name" column="interest_name"/>
 </resultMap>
 
 <!-- 조인할 테이블 2-2 -->
-<resultMap type="ClubInterestVo" id="clubInterestMap">
+<resultMap type="ClubInterestsVo" id="clubInterestMap">
    <id property="club_interest_no" column="club_interest_no"/>
    <id property="club_no" column="club_no"/>
    <id property="interest_no" column="interest_no"/>
@@ -45,7 +50,7 @@
 </resultMap>
 
 <!-- 조인할 테이블 2-3 -->
-<resultMap type="ClubVo" id="clubMap">
+<resultMap type="ClubsVo" id="clubsMap">
    <id property="club_no" column="club_no"/>
    <id property="club_name" column="club_name"/>
    <id property="club_content" column="club_content"/>
@@ -53,42 +58,55 @@
 </resultMap>
 
 <!--  조인할 테이블 2-4 -->
-<resultMap type="ClubGradeVo" id="clubGradeMap">
+<resultMap type="ClubGradesVo" id="clubGradeMap">
    <id property="club_grade_no" column="clubclub_grade_no_no"/>
    <id property="club_no" column="club_no"/>
    <id property="club_grade" column="club_grade"/>
 </resultMap>
 
+<!-- 조인한 맵 만들어주기 1 -->
+<resultMap type="ClubTotalBean" id="ClubMemberListMap">
+	<collection property="membersVo" resultMap="membersMap"/>
+	<collection property="clubMemberRoleVo" resultMap="roleMap"/>
+	<collection property="clubMembersVo" resultMap="clubMembersMap"/>
+</resultMap>
+
 <!-- 조인한 맵 만들어주기 2 -->
 <resultMap type="ClubTotalBean" id="ClubListMap">
-	<collection property="clubInterestVo" resultMap="clubInterestMap"/>
-	<collection property="interestVo" resultMap="interestMap"/>
-	<collection property="clubVo" resultMap="clubMap"/>
-	<collection property="clubGradeVo" resultMap="clubGradeMap"/>
+	<collection property="clubInterestsVo" resultMap="clubInterestMap"/>
+	<collection property="interestsVo" resultMap="interestMap"/>
+	<collection property="clubsVo" resultMap="clubsMap"/>
+	<collection property="clubGradesVo" resultMap="clubGradeMap"/>
 	
 </resultMap>
 
 <select id="ClubMemberList" resultMap="ClubMemberListMap">
 	<![CDATA[
-	select m.member_no,m.member_name, m.member_image, c.club_no, c.club_role_no, cr.club_role_name
-	from club_memberlist c 
+	select m.member_no,m.member_name, m.member_image, c.club_no, c.club_role_no, c.club_member_regdate, cr.club_role_name
+	from club_members c 
     join members m 
-    	on (m.member_no = c.member_no)
-	join club_member_role cr
+    	on(m.member_no = c.member_no)
+	join club_member_roles cr
 		on(c.club_role_no = cr.club_role_no)
 	where club_no = #{club_no} 
 	order by club_role_name asc
 	]]>
 </select>
 
+<select id="ClubInfo" resultType="ClubsVo">
+	select club_name, club_capacity, club_content, club_image, club_regdate, club_no
+	from clubs
+	where club_no = #{club_no}
+</select>
+
 <select id="ClubList" resultMap="ClubListMap">
 	    select c.club_no, c.club_name, c.club_content, c.club_image, ci.interest_no, i.interest_name,i.interest_icon,cg.club_grade_rate
-    from club c
-	join club_interest ci
+    from clubs c
+	join club_interests ci
         on(c.club_no = ci.club_no)
-    join interest i
+    join interests i
 		on(ci.interest_no = i.interest_no)
-	join club_grade cg
+	join club_grades cg
 		on(c.club_no = cg.club_no)
 	where ci.interest_no = #{interest_no}
 	order by club_no asc
@@ -96,15 +114,66 @@
 
 <select id="ClubListAll" resultMap="ClubListMap">
 	    select c.club_no, c.club_name, c.club_content, c.club_image, ci.interest_no, i.interest_name,i.interest_icon,cg.club_grade_rate
-    from club c
-	join club_interest ci
+    from clubs c
+	join club_interests ci
         on(c.club_no = ci.club_no)
-    join interest i
+    join interests i
 		on(ci.interest_no = i.interest_no)
-	join club_grade cg
+	join club_grades cg
 		on(c.club_no = cg.club_no)
 	order by club_grade_rate desc
 </select>
+
+<select id="ClubBoss" resultType="string">
+	select member_email
+		from members
+		where member_no = (select member_no 
+								from club_members
+								where club_no = #{club_no} and club_role_no = 2)
+
+</select>
+
+<select id="ClubBan" resultType="ClubMembersVo">
+	select club_no, member_no, club_member_regdate
+	from club_members
+	where member_no = #{member_no}
+	
+</select>
+
+<insert id="VanMemberInsert" parameterType="java.util.List">
+
+	<foreach collection="list" item="item" separator=",">
+	insert into club_ban_members (club_no,member_no,club_member_regdate) values
+	(#{item.club_no}, #{item.member_no}, #{item.club_member_regdate})
+	</foreach>
+</insert>
+
+<delete id="ClubMemberBan">
+	delete from club_members
+	where  member_no = #{member_no}
+</delete>
+
+<update id="ClubMemberAuth1">
+	update club_members
+	set club_role_no = 1
+	where club_role_no = 2
+</update>
+
+<update id="ClubMemberAuth2">
+	update club_members
+	set club_role_no = 2
+	where member_no = #{member_no}
+</update>
+
+
+
+
+
+
+
+
+
+
 
 
 	
