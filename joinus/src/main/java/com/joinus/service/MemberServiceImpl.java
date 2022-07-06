@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.joinus.domain.MemberInterestVo;
+import com.joinus.domain.MemberInterestsVo;
 import com.joinus.domain.MembersVo;
 import com.joinus.persistence.MemberDao;
 
@@ -26,7 +26,7 @@ public class MemberServiceImpl implements MemberService {
 		MembersVo selectMember = memberDao.selectMemberByEmail(member.getMember_email());
 		log.info("꺼내온 member : {}", selectMember);
 		// 3) 해당 회원번호를 회원관심사 테이블에 사용해서 회원관심사 추가
-		MemberInterestVo memberInterestVo = new MemberInterestVo();
+		MemberInterestsVo memberInterestVo = new MemberInterestsVo();
 		memberInterestVo.setInterest_no(interest_no);
 		memberInterestVo.setMember_no(selectMember.getMember_no());
 		memberDao.insertMemberInterest(memberInterestVo);

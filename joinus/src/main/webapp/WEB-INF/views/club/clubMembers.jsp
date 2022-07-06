@@ -29,7 +29,7 @@
 <div class="container px-4 py-5" id="icon-grid">
 	<div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
     <h2 class="pb-2 border-bottom">모임 멤버</h2>
-        <h3 class="text-end col-md-6 ms-auto"><a href="${PageContext.request.contextPath}/club/${clubInfo[0].club_no}/leave ">모임 나가기 <i class="fa fa-arrow-right ms-3"></i></a> </h3>
+        <h5 class="text-end col-md-6 ms-auto"><a href="${PageContext.request.contextPath}/club/${clubInfo[0].club_no}/leave ">모임 나가기 <i class="fa fa-arrow-right ms-3"></i></a> </h5>
 	</div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5">
    	<c:forEach var="vo" items="${clubMemberList }" varStatus="status">

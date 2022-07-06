@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubTotalBean;
 import com.joinus.domain.ClubsVo;
+import com.joinus.domain.MembersVo;
 import com.joinus.service.Clubservice;
 
 
@@ -110,8 +111,20 @@ public class ClubController {
 		
 	}
 	
+	@RequestMapping(value="/{club_no}/leave", method=RequestMethod.GET)
+	public String clubLeave(@PathVariable("club_no") Integer club_no,
+								HttpSession session) {
+		log.info("clubLeave()호출");
+		MembersVo member = (MembersVo) session.getAttribute("member");
+		log.info(member+"");
+		//"redirect:/club/clubList";
+		return "";
+	}
 	
 	
+	
+	
+	//================================================================================================
 	
 	// 파라미터를 전달하고 싶을 때는 보내주는 주소와 받는 주소 모두 다 modelAttribute를 사용해야 함
 	// ?뒤에 숫자는 모임고유번호(일단 임의로 주소줄에서 받아오기)

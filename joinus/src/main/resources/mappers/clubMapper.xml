@@ -12,7 +12,7 @@
 </resultMap>
 
 <!-- 조인할 테이블 1-2 -->
-<resultMap type="MemberVo" id="membersMap">
+<resultMap type="MembersVo" id="membersMap">
    <id property="member_no" column="member_no"/>
    <id property="member_email" column="member_email"/>
    <id property="member_pass" column="member_pass"/>

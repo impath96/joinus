@@ -94,7 +94,7 @@
                             </div>
                             <h4 class="mb-3">${vo.clubsVo.club_name }</h4>
                             <p>${vo.clubsVo.club_content }</p>
-                            <a class="small fw-medium" href="">클럽 상세 페이지<i class="fa fa-arrow-right ms-2"></i></a>
+                            <a class="small fw-medium" href="${PageContext.request.contextPath }/club/${vo.clubsVo.club_no}/clubMembers">클럽 상세 페이지<i class="fa fa-arrow-right ms-2"></i></a>
                         </div>
                     </div>
                 </div>

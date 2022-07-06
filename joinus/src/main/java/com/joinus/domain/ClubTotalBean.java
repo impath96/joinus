@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class ClubTotalBean {
 
-	private MemberVo membersVo;
+	private MembersVo membersVo;
 	private ClubMemberRolesVo clubMemberRoleVo;
 	private ClubMembersVo clubMembersVo;
 	

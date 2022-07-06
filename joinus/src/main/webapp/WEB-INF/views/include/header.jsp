@@ -87,7 +87,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="index.html" class="nav-item nav-link">Home</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
+                <a href="${PageContext.request.contextPath }/club/clubList" class="nav-item nav-link">ClubList</a>
                 <a href="service.html" class="nav-item nav-link active">Service</a>
                 <a href="project.html" class="nav-item nav-link">Project</a>
                 <div class="nav-item dropdown">

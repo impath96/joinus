@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.joinus.domain.InterestVo;
+import com.joinus.domain.InterestsVo;
 
 @Repository
 public class InterestDaoImpl implements InterestDao{
@@ -16,7 +16,7 @@ public class InterestDaoImpl implements InterestDao{
 	
 	private static final String NAMESPACE ="com.joinus.mapper.InterestMapper";
 	@Override
-	public List<InterestVo> selectInterestAll() {
+	public List<InterestsVo> selectInterestAll() {
 		
 		return sqlSession.selectList(NAMESPACE+".selectInterestAll");
 	}

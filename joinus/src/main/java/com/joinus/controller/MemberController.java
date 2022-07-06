@@ -25,7 +25,7 @@ import com.joinus.auth.AuthInfo;
 import com.joinus.auth.AuthLogin;
 import com.joinus.auth.GoogleLogin;
 import com.joinus.auth.KakaoLogin;
-import com.joinus.domain.InterestVo;
+import com.joinus.domain.InterestsVo;
 import com.joinus.domain.MembersVo;
 import com.joinus.service.InterestService;
 import com.joinus.service.MemberService;
@@ -103,7 +103,7 @@ public class MemberController {
 		
 		log.info("member : {}", member);
 		// 관심사 정보도 넘겨줘야 한다.
-		List<InterestVo> interestList = interestService.selectInterestAll();
+		List<InterestsVo> interestList = interestService.selectInterestAll();
 		log.info("관심사 목록 : {}", interestList);
 		
 		model.addAttribute("interestList", interestList);
