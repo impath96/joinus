@@ -1,110 +1,73 @@
 package com.joinus.auth;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.github.scribejava.core.model.Response;
+import com.github.scribejava.core.oauth.AccessTokenRequestParams;
 import com.joinus.domain.MembersVo;
 
-import lombok.Getter;
+public class KakaoLogin extends AuthLogin {
 
-@Getter
-@Service
-@PropertySource("classpath:kakao.properties")
-public class KakaoLogin extends SnsLogin {
-	
 	public static final String SERVICE = "kakao";
-	
-	@Value("${oauth.kakao.client_id}")
-	private void setClientId(String clientId) {
-		super.clientId = clientId;
-	}
-	@Value("${oauth.kakao.client_secret}")
-	private void setClientSecret(String clientSecret) {
-		super.clientSecret = clientSecret;
-	}
-	@Value("${oauth.kakao.authorization-server-uri}")
-	private void setAuthorizationServerUrl(String authorizationServerUrl) {
-		super.authorizationServerUrl = authorizationServerUrl;
-	}
-	@Value("${oauth.kakao.authentication-server-uri}")
-	private void setAuthenticationServerUrl(String authenticationServerUrl) {
-		super.authenticationServerUrl = authenticationServerUrl;
-	}
-	@Value("${oauth.kakao.api-server-uri}")
-	private void setApiServerUrl(String apiServerUrl) {
-		super.apiServerUrl = apiServerUrl;
-	}
-	@Value("${oauth.kakao.redirect_uri}")
-	private void setRedirectUrl(String redirectUrl) {
-		super.redirectUrl = redirectUrl;
-	}
-	
-	
-	@Override
-	protected String parseAccessToken(ResponseEntity<String> tokenResponse) {
-		ObjectMapper objectMapper = new ObjectMapper();
-		KakaoAuthToken authToken = null;
-		try {
-			authToken = objectMapper.readValue(tokenResponse.getBody(), KakaoAuthToken.class);
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return authToken.getAccess_token();
+
+	private static final Logger log = LoggerFactory.getLogger(KakaoLogin.class);
+
+	public KakaoLogin(AuthInfo autoInfo) {
+		super(autoInfo);
 	}
 
 	@Override
-	protected MembersVo parseSocialMember(ResponseEntity<String> response) {
-		ObjectMapper objectMapper = new ObjectMapper();
-		KakaoProfile kakaoProfile = null;
-		try {
-			kakaoProfile = objectMapper.readValue(response.getBody(), KakaoProfile.class);
-		} catch (JsonParseException e) {
-			// json 파싱 오류시 예외 처리
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// json 매핑 오류시 예외 처리
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println(kakaoProfile);
-		/*
-		 * SocialMember(id=2319171104,
-		 * 				email=aksghcjswo@naver.com,
-		 * 				nickname=aksghcjswo@naver.com, 
-		 * 				password=null, 
-		 * 				tel=null, 
-		 * 				role=null, 
-		 * 				type=kakao, 
-		 * 				thumbnail_image_url=http://k.kakaocdn.net/dn/crtS8q/btrquP1oIw4/M6lV7eYmTqD1KkWDRal7GK/img_110x110.jpg, 
-		 * 				regdate=null)
-		 * */
+	public OAuth2AccessToken getAccessToken(String code) throws IOException, InterruptedException, ExecutionException {
+
+//			OAuthRequest request = new OAuthRequest(Verb.POST, oauthService.getApi().getAccessTokenEndpoint());
+//			request.addHeader(OAuthConstants.HEADER, OAuthConstants.BASIC + ' '
+//                    + Base64.encode(String.format("%s:%s", oauthService.getApiKey(), oauthService.getApiSecret()).getBytes(Charset.forName("UTF-8"))));
+//            request.addParameter(OAuthConstants.REDIRECT_URI, oauthService.getCallback());
+//            request.addParameter(OAuthConstants.GRANT_TYPE, OAuthConstants.AUTHORIZATION_CODE);
+//            
+//          음... 카카오가 request를 파싱하는 방법이 다른건가? 왜 카카오만 안되지?
+// 			request.addParameter를 해줘야 정상적으로  동작
+//			음...?
+
+		AccessTokenRequestParams params = new AccessTokenRequestParams(code);
+		params.addExtraParameter("client_id", authInfo.getClientId());
+		params.addExtraParameter("client_secret", authInfo.getClientSecret());
+		return oauthService.getAccessToken(params);
+	}
+
+	@Override
+	public MembersVo parseResponse(Response response) throws JsonProcessingException, IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode node = mapper.readTree(response.getBody());
 		
-		// 이메일, 이미지, 이름, 소셜로그인 유저 
-		MembersVo socialMember = MembersVo.builder()
-				.member_email(kakaoProfile.getKakao_account().getEmail())
-				.member_image(kakaoProfile.getProperties().getThumbnail_image())
-				.member_name(kakaoProfile.getProperties().getNickname())
-				.member_type(SERVICE)
-				.build();
-		
-		System.out.println("socialMember : " + socialMember.toString());
-		return socialMember;
+		log.info("node : {}", node);
+		System.out.println("node : " +node.toString());
+		String email = node.get("kakao_account").get("email") == null ? "미동의"
+				: node.get("kakao_account").get("email").textValue();
+		String name = node.get("kakao_account").get("profile").get("nickname") == null ? "미동의"
+				: node.get("kakao_account").get("profile").get("nickname").textValue();
+		String picture = node.get("kakao_account").get("profile").get("profile_image_url") == null
+				? "/oauth2/assets/images/logo.png"
+				: node.get("kakao_account").get("profile").get("profile_image_url").textValue();
+		return MembersVo.builder()
+	    		.member_email(email)
+	    		.member_name(name)
+	    		.member_image(picture)
+	    		.member_signup_type(SERVICE)
+	    		.build();
+	}
+
+	@Override
+	public String getProfileEndPoint() {
+		return "https://kapi.kakao.com/v2/user/me";
 	}
 
 }

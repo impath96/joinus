@@ -1,12 +1,199 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+	pageEncoding="UTF-8"%>
+
+<%@ include file="../include/header.jsp"%>
+
+
 <body>
-<h1>MyPage</h1>
-</body>
-</html>
+	<!-- Contact Start -->
+	<div class="container-xxl py-5">
+		<div class="container">
+			<div class="text-center mx-auto mb-5 wow fadeInUp"
+				data-wow-delay="0.1s" style="max-width: 600px;">
+				<h6 class="text-primary">Our Services</h6>
+				<h1 class="mb-4">We Are Pioneers In The World Of Renewable
+					Energy</h1>
+			</div>
+			<div class="row g-4">
+				<div class="col-md-12 col-lg-6 wow  fadeInUp" data-wow-delay="0.1s">
+					<div class="service-item position-relative rounded overflow-hidden p-3">
+						<div style="height:230px;">
+							<div class="service-content d-flex flex-column">
+								<h4 class="mb-2">${sessionScope.memberEmail }님의 프로필</h4>
+								<p>Stet stet justo dolor sed duo. Ut clita sea sit ipsum diam
+									lorem diam.</p>
+								<a class="small fw-medium bottom-right" href="/settings/member">프로필 수정하기<i
+									class="fa fa-arrow-right ms-2"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 col-lg-6 wow  fadeInUp" data-wow-delay="0.1s">
+					<div class="service-item position-relative rounded overflow-hidden px-3 py-2">
+						<div style="height:250px;">
+							<div class="service-content d-flex flex-column">
+								<h4 class="mb-2">내 모임</h4>
+								<div class="box-content">
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div class="club_name">안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+								</div>
+								<a class="small fw-medium bottom-right" href="">내 모임 전체보기<i
+									class="fa fa-arrow-right ms-2"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 col-lg-6 wow  fadeInUp" data-wow-delay="0.1s">
+					<div class="service-item position-relative rounded overflow-hidden px-3 py-2">
+						<div style="height:250px;">
+							<div class="service-content d-flex flex-column">
+								<h4 class="mb-2">최근 본 모임</h4>
+								<div class="box-content">
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div class="club_name">안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+								</div>
+								<a class="small fw-medium bottom-right" href="">내 모임 전체보기<i
+									class="fa fa-arrow-right ms-2"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 col-lg-6 wow  fadeInUp" data-wow-delay="0.1s">
+					<div class="service-item position-relative rounded overflow-hidden px-3 py-2">
+						<div style="height:250px;">
+							<div class="service-content d-flex flex-column">
+								<h4 class="mb-2">내가 만든 모임</h4>
+								<div class="box-content">
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div class="club_name">안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+								</div>
+								<a class="small fw-medium bottom-right" href="">내 모임 전체보기<i
+									class="fa fa-arrow-right ms-2"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 col-lg-6 wow  fadeInUp" data-wow-delay="0.1s">
+					<div class="service-item position-relative rounded overflow-hidden px-3 py-2">
+						<div style="height:250px;">
+							<div class="service-content d-flex flex-column">
+								<h4 class="mb-2">참석 예정 정모</h4>
+								<div class="box-content">
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div class="club_name">안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+								</div>
+								<a class="small fw-medium bottom-right" href="">내 모임 전체보기<i
+									class="fa fa-arrow-right ms-2"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 col-lg-6 wow  fadeInUp" data-wow-delay="0.1s">
+					<div class="service-item position-relative rounded overflow-hidden px-3 py-2">
+						<div style="height:250px;">
+							<div class="service-content d-flex flex-column">
+								<h4 class="mb-2">참석 예정 정모</h4>
+								<div class="box-content">
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div class="club_name">안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+									</a>
+								</div>
+								<a class="small fw-medium bottom-right" href="">내 모임 전체보기<i
+									class="fa fa-arrow-right ms-2"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<%@ include file="../include/footer.jsp"%>

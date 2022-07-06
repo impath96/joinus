@@ -4,11 +4,29 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.joinus.mapper.MemberMapper">
-	<select id="selectMember" resultType="MembersVo">
-		select * from members where member_email = #{member_email};
+	<select id="selectMemberByEmail" resultType="MembersVo">
+		select * from members where member_email=#{member_email}
 	</select>
-	<insert id="insertMember">
-		insert into members (member_email, member_pass, member_name, member_image, member_type)
-		values (#{member_email},#{member_pass},#{member_name},#{member_image},#{member_type})
+		
+	<select id="selectMemberByNo" resultType="MembersVo">
+		select * from members where member_no=#{member_no}
+	</select>
+	<insert id="insertMember" parameterType="MembersVo">
+		insert into members(member_email, member_name, member_pass, member_image, member_signup_type, member_tel)
+		values(
+			#{member_email},
+			#{member_name}, 
+			#{member_pass},
+			#{member_image},
+			#{member_signup_type},
+			#{member_tel}
+			)
+	</insert>
+	<insert id="insertMemberInterest">
+		insert into member_interests(member_no, interest_no)
+		values(
+			#{member_no}, 
+			#{interest_no}
+			)
 	</insert>
 </mapper>
