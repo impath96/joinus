@@ -74,10 +74,6 @@ public class ClubServiceImpl implements ClubService{
 		return dao.getBoardList(club_no, board_type_no);
 	}
 
-	@Override
-	public List<BoardTotalBean> getBoardListAllCri(Integer club_no, Integer page, Integer size) {
-		return dao.getBoardListAll(club_no, page, size);
-	}
 	
 	
 	

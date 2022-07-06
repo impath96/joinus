@@ -31,6 +31,5 @@ public interface ClubService {
 	
 	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no);
 	
-	public List<BoardTotalBean> getBoardListAllCri(Integer club_no, Integer page, Integer size);
 	
 }

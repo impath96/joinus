@@ -211,20 +211,6 @@ public class ClubController {
 		return "/club/boards/boardList";
 	}
 	
-	//////////////////////////////////////////////////////////////////////////////////////////////////////
-	// 페이징 처리
-	// http://localhost:8088/club/{club_no}/boardsCri
-	// http://localhost:8088/club/{club_no}/boardsCri?perPageNum=5
-	// http://localhost:8088/club/{club_no}/boardsCri?page=5
-	// http://localhost:8088/club/{club_no}/boardsCri?perPageNum=5&page=5
-	@RequestMapping(value = "/{club_no}/boardsCri", method = RequestMethod.GET)
-	public void boardListAllCriGet(@PathVariable("club_no") Integer club_no, BoardCriteria cri, Model model) {
-		log.info(" boardListAllCriGet() 호출 ");
-		
-		
-	}
-	
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	/// http://localhost:8088/club/{club_no}/boards/{club_board_no}
 	/// http://localhost:8088/club/1/boards/1

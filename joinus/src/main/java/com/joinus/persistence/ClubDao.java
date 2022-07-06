@@ -31,10 +31,7 @@ public interface ClubDao {
 	
 	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no);
 	
-	// 게시글 페이징처리(전체)
-	public List<BoardTotalBean> getBoardListAll(Integer club_no, Integer page, Integer size);
 	
-	// 게시글 페이징처리(카테고리별)
 	
 	//=========================허수빈========================
 }
