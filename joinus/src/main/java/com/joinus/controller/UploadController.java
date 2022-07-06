@@ -23,9 +23,6 @@ public class UploadController {
 	@Autowired
 	MultipartResolver multipartResolver;
 	
-	@Resource(name="uploadPath")
-	private String uploadPath;
-	
 	private static final Logger log = LoggerFactory.getLogger(UploadController.class);
 
 	@GetMapping("/uploadImage")
@@ -47,9 +44,9 @@ public class UploadController {
 	}
 	private String uploadFile(MultipartFile file) throws IOException {
 		String savedFileName = UUID.randomUUID().toString()+"_"+file.getOriginalFilename();
-		File target = new File(uploadPath, savedFileName); // 어느 위치(uploadPath)에 어떤 파일?
+		// File target = new File(uploadPath, savedFileName); // 어느 위치(uploadPath)에 어떤 파일?
 		// stream을 쉽게 해주는 기능을 스프링이 제공
-		FileCopyUtils.copy(file.getBytes(), target);
+		// FileCopyUtils.copy(file.getBytes(), target);
 		
 		return savedFileName;
 	}

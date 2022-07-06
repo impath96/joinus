@@ -7,16 +7,16 @@ import lombok.Data;
 @Data
 public class ClubBoardsVo {
 
-	private int lub_board_no; 
-	private int lub_no; 
-	private int oard_type_no;
-	private int ember_no; 
-	private String lub_board_title; 
-	private String lub_board_content; 
-	private String lub_board_image; 
-	private Date lub_board_date; 
-	private Date lub_board_updatedate;
-	private int lub_board_like;
-	private int lub_board_commentcnt;
+	private int club_board_no; 
+	private int club_no; 
+	private int board_type_no;
+	private int member_no; 
+	private String club_board_title; 
+	private String club_board_content; 
+	private String club_board_image; 
+	private Date club_board_date; 
+	private Date club_board_updatedate;
+	private int club_board_like;
+	private int club_board_commentcnt;
 	
 }
