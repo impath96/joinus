@@ -23,10 +23,12 @@ public class SettingsController {
 	@Autowired
 	MultipartResolver multipartResolver;
 	
+	@Autowired
 	MemberService memberService;
 	
 	private static final Logger log = LoggerFactory.getLogger(SettingsController.class);
-
+	
+	
 	@Autowired
 	public SettingsController(MemberService memberService) {
 		this.memberService = memberService;

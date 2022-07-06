@@ -5,10 +5,8 @@ import lombok.Data;
 @Data
 public class MemberDipsVo {
 	
-	private int interest_no;
-	private String interest_icon;
-	private String interest_name;
+	private int member_dips_no; 
+	private int member_no;
+	private int club_no;
 	
-	
-
 }
