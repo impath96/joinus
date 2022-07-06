@@ -10,16 +10,16 @@
 	$(document).ready(function(){
 		
 		$('#all').click(function(){
-			$(location).attr('href','/club/boardList?club_no=${club_no}');
+			$(location).attr('href','/club/${club_no}/boards');
 		});
 		$('#notice').click(function(){
-			$(location).attr('href','/club/boardList?club_no=${club_no}&board_type_no=3');
+			$(location).attr('href','/club/${club_no}/boards/type/3');
 		});
 		$('#free').click(function(){
-			$(location).attr('href','/club/boardList?club_no=${club_no}&board_type_no=1');
+			$(location).attr('href','/club/${club_no}/boards/type/1');
 		});
 		$('#review').click(function(){
-			$(location).attr('href','/club/boardList?club_no=${club_no}&board_type_no=2');
+			$(location).attr('href','/club/${club_no}/boards/type/2');
 		});
 		$('#write').click(function(){
 			$(location).attr('href','/club/${club_no}/boards/new');
@@ -54,16 +54,37 @@
 	<!-- 				</div> -->
 					<h5 class="mb-3" style="display: inline-block;">${board.clubBoardsVo.club_board_title }</h5><br>
 					<p class="clubBoardList_content">${board.clubBoardsVo.club_board_content }</p>
-					<div style="margin-top: 0.5em;">${board.membersVo.member_name }</div>
-					<div>${board.clubBoardsVo.club_board_date }</div>
+					<div style="margin-bottom: 1px;">
+						<span class="clubBoardList_writer">${board.membersVo.member_name }</span>
+						<span>${board.clubBoardsVo.club_board_date }</span>
+					</div>
 					<i class="fa fa-regular fa-thumbs-up"></i> <span class="clubBoardList_likeCnt">${board.clubBoardsVo.club_board_like }</span>
 					<i class="fa fa-regular fa-comment"></i> <span class=clubBoardList_commentCnt>${board.clubBoardsVo.club_board_commentcnt }</span>
 				</div>
 				<hr>
 			</c:forEach>
 			
+			<div>
+				<ul class="pagination pagination-sm no-margin pull-right" style="float: right;">
+		
+				<li style="margin-right: 1em;"><a href="#">«</a></li>
+			
+				<li >
+					<a href="#" style="margin-right: 1em;">1</a>
+					<a href="#" style="margin-right: 1em;">2</a>
+					<a href="#" style="margin-right: 1em;">3</a>
+					<a href="#" style="margin-right: 1em;">4</a>
+				</li>			
+			
+				<li><a href="#">»</a></li>
+			
+				</ul>
+			</div>
+			
 			
 		</div>
+		
+	
 	</div>
 </div>
 

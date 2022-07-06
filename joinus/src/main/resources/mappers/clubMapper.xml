@@ -155,4 +155,14 @@
 		order by club_board_no desc
 	</select>
 	
+	<select id="getBoardListAllCri" resultMap="boardListMap">
+		select b.club_board_no, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_like, b.club_board_commentcnt
+		from club_boards b
+		join members m
+			on b.member_no = m.member_no
+		where b.club_no = #{club_no}
+		order by club_board_no desc
+		limit #{pageStart}, #{perPageNum}
+	</select>
+	
 </mapper> 

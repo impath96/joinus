@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubTotalBean;
+import com.joinus.domain.BoardCriteria;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
 
@@ -29,5 +30,11 @@ public interface ClubDao {
 	public List<BoardTotalBean> getBoardListAll(Integer club_no);
 	
 	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no);
+	
+	// 게시글 페이징처리(전체)
+	public List<BoardTotalBean> getBoardListAll(Integer club_no, Integer page, Integer size);
+	
+	// 게시글 페이징처리(카테고리별)
+	
 	//=========================허수빈========================
 }

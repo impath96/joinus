@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubTotalBean;
+import com.joinus.domain.BoardCriteria;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
 
@@ -29,5 +30,7 @@ public interface ClubService {
 	public List<BoardTotalBean> getBoardListAll(Integer club_no);
 	
 	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no);
+	
+	public List<BoardTotalBean> getBoardListAllCri(Integer club_no, Integer page, Integer size);
 	
 }

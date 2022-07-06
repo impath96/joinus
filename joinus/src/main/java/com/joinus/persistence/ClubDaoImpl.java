@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.joinus.domain.BoardCriteria;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubTotalBean;
@@ -88,6 +89,27 @@ public class ClubDaoImpl implements ClubDao{
 		param.put("board_type_no", board_type_no);
 		
 		return sqlSession.selectList(NAMESPACE+".getBoardList", param);
+	}
+
+	@Override
+	public List<BoardTotalBean> getBoardListAll(Integer club_no, Integer page, Integer size) {
+		Map<String, Integer> param = new HashMap<String, Integer>();
+		
+		if(page <= 0) {
+			page = 1;
+		}
+		
+		if(size <= 0) {
+			size = 10;
+		}
+		
+		page = (page -1 ) * size;
+		
+		param.put("pageStart", page);
+		param.put("perPageNum", size);
+		
+		
+		return sqlSession.selectList(NAMESPACE+".getBoardListAllCri", param);
 	}
 	
 	

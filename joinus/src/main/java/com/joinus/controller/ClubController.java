@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.joinus.domain.BoardCriteria;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.service.ClubService;
@@ -80,7 +81,6 @@ public class ClubController {
 	
 	// 파라미터를 전달하고 싶을 때는 보내주는 주소와 받는 주소 모두 다 modelAttribute를 사용해야 함
 	// ?뒤에 숫자는 모임고유번호(일단 임의로 주소줄에서 받아오기)
-	// http://localhost:8088/club/boardWrite?club_no=1
 	// http://localhost:8088/club/{club_no}/boards/new
 	// http://localhost:8088/club/1/boards/new
 	// 게시판글쓰기
@@ -111,6 +111,7 @@ public class ClubController {
 		int club_no = vo.getClub_no();
 		
 		return "redirect:/club/"+club_no+"/boards";
+		//return "redirect:/club/boardList?club_no="+club_no;
 	}
 	
 	// 파일 O
@@ -175,27 +176,55 @@ public class ClubController {
 		int club_no = vo.getClub_no();
 		
 		return "redirect:/club/"+club_no+"/boards";
+		//return "redirect:/club/boardList?club_no="+club_no;
 	}
 	
 	
-	// http://localhost:8088/club/boardList?club_no=1
-	// http://localhost:8088/club/boardList?club_no=1&board_type_no=2
+	// http://localhost:8088/club/{club_no}/boards
+	// http://localhost:8088/club/1/boards
 	// 게시글리스트
-	@RequestMapping(value = "/boardList", method = RequestMethod.GET)
-	public void boardListGet(@ModelAttribute("club_no") String club_no, @ModelAttribute("board_type_no") String board_type_no, Model model) {
-		log.info(" boardListGet() 호출 ");
+	@RequestMapping(value = "/{club_no}/boards", method = RequestMethod.GET)
+	public String boardListAllGet(@PathVariable("club_no") Integer club_no, Model model) {
+		log.info(" boardListAllGet() 호출 ");
+		log.info("club_no : "+club_no);
+		
+		model.addAttribute("club_no", club_no);
+		
+		model.addAttribute("boardList", service.getBoardListAll(club_no));
+		
+		return "/club/boards/boardList";
+			
+	}
+	
+	// http://localhost:8088/club/{club_no}/boards/type/{board_type_no}
+	// http://localhost:8088/club/1/boards/type/1
+	@RequestMapping(value = "/{club_no}/boards/type/{board_type_no}", method = RequestMethod.GET)
+	public String boardListTypeGet(@PathVariable("club_no") Integer club_no, @PathVariable("board_type_no") Integer board_type_no, Model model) {
+		log.info(" boardListTypeGet() 호출 ");
 		log.info("club_no : "+club_no);
 		log.info("board_type_no : "+board_type_no);
 		
 		model.addAttribute("club_no", club_no);
 		
-		if(board_type_no.isEmpty()) {
-			model.addAttribute("boardList", service.getBoardListAll(Integer.parseInt(club_no)));
-			
-		} else {
-			model.addAttribute("boardList", service.getBoardList(Integer.parseInt(club_no), Integer.parseInt(board_type_no)));
-		}
+		model.addAttribute("boardList", service.getBoardList(club_no, board_type_no));
+		
+		return "/club/boards/boardList";
 	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 페이징 처리
+	// http://localhost:8088/club/{club_no}/boardsCri
+	// http://localhost:8088/club/{club_no}/boardsCri?perPageNum=5
+	// http://localhost:8088/club/{club_no}/boardsCri?page=5
+	// http://localhost:8088/club/{club_no}/boardsCri?perPageNum=5&page=5
+	@RequestMapping(value = "/{club_no}/boardsCri", method = RequestMethod.GET)
+	public void boardListAllCriGet(@PathVariable("club_no") Integer club_no, BoardCriteria cri, Model model) {
+		log.info(" boardListAllCriGet() 호출 ");
+		
+		
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	/// http://localhost:8088/club/{club_no}/boards/{club_board_no}
 	/// http://localhost:8088/club/1/boards/1
