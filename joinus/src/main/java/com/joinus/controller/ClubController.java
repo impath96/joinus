@@ -256,13 +256,15 @@ public class ClubController {
 	}
 	
 	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/modify", method = RequestMethod.POST)
-	public void modifyBoardPost(ClubBoardsVo vo) {
+	public String modifyBoardPost(ClubBoardsVo vo) {
 		log.info(" modifyBoardPost() 호출 ");
-//		int club_no = vo.getClub_board_no();
-//		log.info("club_no : "+club_no);
-		log.info("vo : "+vo);
+		int club_board_no = vo.getClub_board_no();
+//		log.info("club_board_no : "+club_board_no);
+//		log.info("vo : "+vo);
+		
+		service.modifyBoardContent(vo);
 //		
-//		return "redirect:/club/"+club_no+"/boards";
+		return "redirect:/club/"+vo.getClub_no()+"/boards";
 		
 	}
 	

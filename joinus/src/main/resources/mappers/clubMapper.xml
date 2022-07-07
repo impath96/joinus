@@ -168,5 +168,11 @@
 		where club_board_no = #{club_board_no}
 	</select>
 	
+	<!-- 게시글 수정 -->
+	<update id="modifyBoardContent">
+		update club_boards set board_type_no = #{board_type_no}, club_board_title = #{club_board_title}, club_board_content = #{club_board_content}, club_board_updatedate = now()
+		where club_board_no = #{club_board_no}
+	</update>
+	
 	
 </mapper> 

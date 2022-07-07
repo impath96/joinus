@@ -36,5 +36,8 @@ public interface ClubService {
 	// 게시글 본문
 	public ClubBoardsVo getBoardContent(Integer club_board_no);
 	
+	// 게시글 수정
+	public void modifyBoardContent(ClubBoardsVo vo);
+	
 	
 }

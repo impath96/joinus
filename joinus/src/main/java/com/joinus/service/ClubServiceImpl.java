@@ -84,6 +84,11 @@ public class ClubServiceImpl implements ClubService{
 		return dao.getBoardContent(club_board_no);
 	}
 
+	@Override
+	public void modifyBoardContent(ClubBoardsVo vo) {
+		dao.modifyBoardContent(vo);
+	}
+
 	
 	
 	

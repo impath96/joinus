@@ -102,6 +102,11 @@ public class ClubDaoImpl implements ClubDao{
 		return sqlSession.selectOne(NAMESPACE+".getBoardContent", club_board_no);
 	}
 
+	@Override
+	public void modifyBoardContent(ClubBoardsVo vo) {
+		sqlSession.update(NAMESPACE+".modifyBoardContent", vo);
+	}
+
 	
 	
 	
