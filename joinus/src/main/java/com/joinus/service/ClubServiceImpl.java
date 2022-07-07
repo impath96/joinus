@@ -74,6 +74,16 @@ public class ClubServiceImpl implements ClubService{
 		return dao.getBoardList(club_no, board_type_no);
 	}
 
+	@Override
+	public List<ClubBoardsVo> getBoardImageList(Integer club_no) {
+		return dao.getBoardImageList(club_no);
+	}
+
+	@Override
+	public ClubBoardsVo getBoardContent(Integer club_board_no) {
+		return dao.getBoardContent(club_board_no);
+	}
+
 	
 	
 	

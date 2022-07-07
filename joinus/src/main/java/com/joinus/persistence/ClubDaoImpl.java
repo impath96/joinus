@@ -92,6 +92,16 @@ public class ClubDaoImpl implements ClubDao{
 		return sqlSession.selectList(NAMESPACE+".getBoardList", param);
 	}
 
+	@Override
+	public List<ClubBoardsVo> getBoardImageList(Integer club_no) {
+		return sqlSession.selectList(NAMESPACE+".getBoardImageList", club_no);
+	}
+
+	@Override
+	public ClubBoardsVo getBoardContent(Integer club_board_no) {
+		return sqlSession.selectOne(NAMESPACE+".getBoardContent", club_board_no);
+	}
+
 	
 	
 	

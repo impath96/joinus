@@ -10,6 +10,7 @@ import java.awt.image.renderable.ParameterBlock;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
@@ -122,7 +123,7 @@ public class ClubController {
 		// 1) 파일 업로드
 		// - 가상의 업로드 폴더 설정 upload 폴더 생성
 		ServletContext ctx = request.getServletContext();
-		String realPath = ctx.getRealPath("/resources/upload");
+		String realPath = ctx.getRealPath("/resources/upload/boards");
 		log.info(" 파일 저장 경로 : "+realPath);
 		
 		// realPath 경로에 파일업로드하기 위한 폴더가 있는지 확인
@@ -132,15 +133,16 @@ public class ClubController {
 		}
 		
 		
-		String fileName = file.getOriginalFilename();
-		log.info("파일명 : "+fileName);
+//		String fileName = file.getOriginalFilename();
+		String savedFileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+		log.info("파일명 : "+savedFileName);
 		
 		String fullPath = realPath;
 		
 //		realPath += File.separator + fileName;
 //		File savefile = new File(realPath);
 		
-		fullPath += File.separator + fileName;
+		fullPath += File.separator + savedFileName;
 		File saveFile = new File(fullPath);
 		
 		// 경로+파일명
@@ -152,7 +154,7 @@ public class ClubController {
 			file.transferTo(saveFile);
 			
 			// 썸네일
-			File thumbnailFile = new File(realPath, "sm_"+fileName);
+			File thumbnailFile = new File(realPath, "sm_"+savedFileName);
 			BufferedImage bo_image = ImageIO.read(saveFile);
 			BufferedImage bt_image = new BufferedImage(200, 150, BufferedImage.TYPE_INT_RGB);
 			Graphics2D graphic = bt_image.createGraphics();
@@ -166,7 +168,7 @@ public class ClubController {
 			e1.printStackTrace();
 		}
 		
-		vo.setClub_board_image(fileName);
+		vo.setClub_board_image(savedFileName);
 		// 전달된 정보 저장(글쓰기 정보)
 //		log.info("글쓰기 정보 : "+vo);
 		
@@ -188,6 +190,11 @@ public class ClubController {
 		log.info(" boardListAllGet() 호출 ");
 		log.info("club_no : "+club_no);
 		
+		
+		List<BoardTotalBean> boardList = service.getBoardListAll(club_no);
+		log.info("@@@@@@@@@@@@"+boardList.get(16)+"");
+		
+		
 		model.addAttribute("club_no", club_no);
 		
 		model.addAttribute("boardList", service.getBoardListAll(club_no));
@@ -198,6 +205,7 @@ public class ClubController {
 	
 	// http://localhost:8088/club/{club_no}/boards/type/{board_type_no}
 	// http://localhost:8088/club/1/boards/type/1
+	// 게시글리스트(게시글유형별)
 	@RequestMapping(value = "/{club_no}/boards/type/{board_type_no}", method = RequestMethod.GET)
 	public String boardListTypeGet(@PathVariable("club_no") Integer club_no, @PathVariable("board_type_no") Integer board_type_no, Model model) {
 		log.info(" boardListTypeGet() 호출 ");
@@ -211,16 +219,53 @@ public class ClubController {
 		return "/club/boards/boardList";
 	}
 	
+	// http://localhost:8088/club/{club_no}/gallery
+	// http://localhost:8088/club/1/gallery
+	// 갤러리 게시판
+	@RequestMapping(value = "/{club_no}/gallery", method = RequestMethod.GET)
+	public String galleryBoardGet(@PathVariable("club_no") Integer club_no, Model model) {
+		log.info(" galleryBoardGet() 호출 ");
+		//log.info("club_no : "+club_no);	// view에서 ${club_no} 로 호출가능
+		
+		model.addAttribute("imageList", service.getBoardImageList(club_no));
+		
+		return "/club/boards/boardGallery";
+	}
+	
 	
 	/// http://localhost:8088/club/{club_no}/boards/{club_board_no}
 	/// http://localhost:8088/club/1/boards/1
 	// 게시글 상세보기
 	@RequestMapping(value = "/{club_no}/boards/{club_board_no}", method = RequestMethod.GET)
-	public void boardGet(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no) {
-		log.info(" boardGet() 호출 ");
+	public String boardContentGet(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no) {
+		log.info(" boardContentGet() 호출 ");
 		
+		return "/club/boards/boardContent";
+	}
+	
+	// http://localhost:8088/club/{club_no}/boards/{club_board_no}/modify
+	// http://localhost:8088/club/1/boards/17/modify
+	// 게시글 수정
+	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/modify", method = RequestMethod.GET)
+	public String modifyBoardGet(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no, Model model) {
+		log.info(" modifyBoardGet() 호출 ");
+		
+		model.addAttribute("board", service.getBoardContent(club_board_no));
+	
+		return "/club/boards/boardModify";
+	}
+	
+	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/modify", method = RequestMethod.POST)
+	public void modifyBoardPost(ClubBoardsVo vo) {
+		log.info(" modifyBoardPost() 호출 ");
+//		int club_no = vo.getClub_board_no();
+//		log.info("club_no : "+club_no);
+		log.info("vo : "+vo);
+//		
+//		return "redirect:/club/"+club_no+"/boards";
 		
 	}
+	
 
 	
 }

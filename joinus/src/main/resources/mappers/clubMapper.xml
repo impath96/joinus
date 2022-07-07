@@ -138,7 +138,7 @@
 	</insert>
 	
 	<select id="getBoardListAll" resultMap="boardListMap">
-		select b.club_board_no, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_like, b.club_board_commentcnt
+		select b.club_board_no, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate, b.club_board_like, b.club_board_commentcnt
 		from club_boards b
 		join members m
 			on b.member_no = m.member_no
@@ -147,12 +147,25 @@
 	</select>
 	
 	<select id="getBoardList" resultMap="boardListMap">
-		select b.club_board_no, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_like, b.club_board_commentcnt
+		select b.club_board_no, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate, b.club_board_like, b.club_board_commentcnt
 		from club_boards b
 		join members m
 			on b.member_no = m.member_no
 		where b.club_no = #{club_no} and b.board_type_no = #{board_type_no}
 		order by club_board_no desc
+	</select>
+	
+	<select id="getBoardImageList" resultType="ClubBoardsVo">
+		select club_board_no, club_board_image 
+		from club_boards
+		where club_no = #{club_no} and club_board_image is not null
+	</select>
+	
+	<!-- 게시글 본문 -->
+	<select id="getBoardContent" resultType="ClubBoardsVo">
+		select board_type_no, club_board_title, club_board_content 
+		from club_boards
+		where club_board_no = #{club_board_no}
 	</select>
 	
 	

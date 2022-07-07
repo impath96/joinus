@@ -8,5 +8,7 @@
 </head>
 <body>
 	<h1>boardContent.jsp</h1>
+	club_no : ${club_no }
+	club_board_no : ${club_board_no }
 </body>
 </html>

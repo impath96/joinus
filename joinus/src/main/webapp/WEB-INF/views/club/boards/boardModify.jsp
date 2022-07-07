@@ -7,31 +7,15 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script type="text/javascript">
 	
-	var count = 0;
-	
-	// jQuery
-	$(document).ready(function() {
-
-		// 파일추가버튼
-		$('#addImage').click(function() {
-			
-			count++;
-			
-			var str = "<span><input type='file' name='file' id='file' style='display: inline; margin-bottom:8px;'></span><br>";
-			
-			$('#imageGroup').append(str);
-			$('#addImage').hide();
-
-		});	// 파일추가
-		
+	$(document).ready(function(){
 		
 		// 등록버튼
 		$('#subBtn').click(function(){
 			
-			if(document.fr.board_type_no.value == ''){
-				document.fr.board_type_no.focus();
-				return false;
-			}
+// 			if(document.fr.board_type_no.value == ''){
+// 				document.fr.board_type_no.focus();
+// 				return false;
+// 			}
 			if(!document.fr.club_board_title.value){
 				document.fr.club_board_title.focus();
 				return false;
@@ -41,35 +25,11 @@
 				return false;
 			}
 			
-			$('#count').val(count);
-			
-			
-			if(count == 0){
-				// 파일 X
-				$('form').attr({
-					action: '${pageContext.request.contextPath }/club/${club_no}/boards/new',
-					enctype: ''
-				});
-				
-			} else {
-				// 파일 O
-// 				alert(document.getElementById("file").files[0].name);
-				$('form').attr({
-					action: '${pageContext.request.contextPath }/club/${club_no}/boards/fileNew'
-				});
-				
-			}
-			
 		}); //등록버튼
 		
-
-	});	// jQuery
-	
-	// JS
-	
+	});
 	
 </script>
-
 
 <div class="container-fluid bg-light overflow-hidden px-lg-0">
 	<div class="container contact px-lg-0" style="width: 60%">
@@ -85,18 +45,24 @@
 					<input type="hidden" name="member_no" value="${sessionScope.member_no }">
 					<div class="row g-3">
 						<div class="col-md-4">
-							<select class="form-select" style="height: 55px;"
-								id="board_type_no" name="board_type_no">
-								<option selected value="">게시글 카테고리</option>
-								<option value="1">자유글</option>
-								<option value="2">정모후기</option>
-								<option value="3">공지사항</option>
+<%-- 						카테고리 번호 : ${board.board_type_no } --%>
+							<select class="form-select" style="height: 55px;" id="board_type_no" name="board_type_no">
+<!-- 								<option value="">게시글 카테고리</option> -->
+								<option value="1" 
+									<c:if test="${board.board_type_no == 1 }">selected</c:if>
+								>자유글</option>
+								<option value="2" 
+									<c:if test="${board.board_type_no == 2 }">selected</c:if>
+								>정모후기</option>
+								<option value="3" 
+									<c:if test="${board.board_type_no == 3 }">selected</c:if>
+								>공지사항</option>
 							</select>
 						</div>
 						<div class="col-md-8">
 							<div class="form-floating">
 								<input type="text" class="form-control" id="club_board_title"
-									name="club_board_title" placeholder="title"> <label
+									name="club_board_title" placeholder="title" value="${board.club_board_title }"> <label
 									for="club_board_title">제목</label>
 							</div>
 						</div> 
@@ -104,24 +70,14 @@
 							<div class="form-floating">
 								<textarea class="form-control" placeholder="content"
 									id="club_board_content" name="club_board_content"
-									style="height: 100px"></textarea>
+									style="height: 100px">${board.club_board_content }</textarea>
 								<label for="club_board_content">내용</label>
 							</div>
 						</div>
-
-
-
-
-						<!-- <span style="text-align: left;" class="clubWrite_fileSpan"> -->
-						<span class="clubWrite_imageSpan">
-							<button type="button" class="btn btn-primary" id="addImage">파일추가</button>
-						</span>
-						<span id="imageGroup" class="clubWrite_imageGroup"> </span>
-						
-						
 						
 						<div class="col-12 clubWrite_buttonMargin">
 							<input type="submit" class="btn btn-primary rounded-pill py-3 px-5" id="subBtn" value="등록">
+							<input type="submit" class="btn btn-primary rounded-pill py-3 px-5" style="margin-left: 2em;" id="subBtn" value="취소">
 						</div>
 					</div>
 				</form>

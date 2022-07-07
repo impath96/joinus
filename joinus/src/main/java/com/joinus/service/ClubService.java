@@ -31,5 +31,10 @@ public interface ClubService {
 	
 	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no);
 	
+	public List<ClubBoardsVo> getBoardImageList(Integer club_no);
+	
+	// 게시글 본문
+	public ClubBoardsVo getBoardContent(Integer club_board_no);
+	
 	
 }
