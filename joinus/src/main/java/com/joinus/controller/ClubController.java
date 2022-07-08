@@ -1,5 +1,7 @@
 package com.joinus.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
@@ -8,10 +10,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.joinus.domain.ClubBoardsVo;
+import com.joinus.domain.ClubGradesVo;
+import com.joinus.domain.ClubMembersVo;
+import com.joinus.domain.ClubsVo;
+import com.joinus.domain.InterestDetailsVo;
+import com.joinus.domain.InterestsVo;
+import com.joinus.domain.MembersVo;
 import com.joinus.service.ClubService;
 
 
@@ -101,4 +112,130 @@ public class ClubController {
 	}
 
 	
+	
+	
+	//============= 모임 등록 ==========================================
+		
+		// http://localhost:8088/club/new  모임등록 페이지
+		// http://localhost:8088/club/new?member_no=7
+		@RequestMapping(value="/new", method = RequestMethod.GET)
+		public String newClubGet(Model model, /* @ModelAttribute("member_no") int member_no, */ HttpSession session) {
+				
+			//회원넘버 세션으로 받을 시(넘겨주면 그걸로 받기)
+			session.setAttribute("member_no", 7); //세션값 임의생성 
+			int member_no =	(int)session.getAttribute("member_no");
+				
+			//회원 이름 출력
+			MembersVo membervo = service.getMember(member_no);
+			model.addAttribute("membervo", membervo);
+			//회원 관심사 출력
+			InterestsVo interestvo = service.getMemberInterest(member_no);
+			model.addAttribute("interest", interestvo);
+			
+			return "/club/clubNew";
+				 
+	}
+	
+	
+		// 상세관심사 ajax (등록페이지에 출력)
+		// http://localhost:8088/club/getdetail
+		@ResponseBody
+		@RequestMapping(value="/getdetail", method = RequestMethod.GET)
+		public List<InterestDetailsVo> test(@RequestParam("itemNum") int itemNum) {
+			List<InterestDetailsVo> detailList = service.getDetailName(itemNum);
+			return detailList;
+	}
+	
+		
+		// 모임등록
+		@RequestMapping(value="/new", method = RequestMethod.POST)
+		public String createClubPost(@RequestParam("interest_detail_name") String detail,
+								 @ModelAttribute("membervo") MembersVo membersvo,
+							     ClubsVo clubsvo, Model model, HttpSession session) {
+			
+				
+				  //선택한 관심사 이름으로 관심사정보 가져오기
+					InterestDetailsVo interDetail = service.getInterestNo(detail); 
+					
+			      //모임생성 + 넘버가져오기 
+					service.newClub(clubsvo); 
+					int club_no = clubsvo.getClub_no();
+					model.addAttribute("club_no", club_no);	
+				
+				  //모임관심사 저장
+					service.newClubInterest(club_no, interDetail.getInterest_no(),interDetail.getInterest_detail_no()); 
+				  
+				  //관리자 모임가입	
+					ClubMembersVo members = new ClubMembersVo();
+					members.setClub_no(club_no);
+					members.setMember_no(membersvo.getMember_no());
+					members.setClub_role_no(2); //모임 첫생성은 관리자
+					service.join(members);
+				
+					model.addAttribute("member_no", membersvo.getMember_no());	
+					return "redirect:/club/{club_no}";
+					
+			}	
+	
+	
+		// 모임상세페이지		
+		// http://localhost:8088/club/	
+		@RequestMapping(value = "/{club_no}", method = RequestMethod.GET)
+		public String info(Model model,HttpSession session,
+						@PathVariable("club_no") int club_no,
+						@ModelAttribute("member_no") int member_no) {
+				
+				
+				//모임정보
+				ClubsVo clubvo = service.getClubInfo(club_no);
+				model.addAttribute("clubvo", clubvo);
+				
+				//회원번호(세션)
+				session.setAttribute("member_no", 44);
+				model.addAttribute("member_no", (int)session.getAttribute("member_no"));
+				
+				//클럽회원정보
+				List<ClubMembersVo> clubmemberVO = service.getClubMembers(club_no);
+				model.addAttribute("clubmemberVO", clubmemberVO);
+				
+				//클럽별점정보
+				List<ClubGradesVo> gradevo = service.getClubGrade(club_no);
+				model.addAttribute("clubGrade", gradevo);
+				
+				//클럽별점 평균,참여자수
+				model.addAttribute("gradeAvgCnt", service.getClubAvgCnt(club_no));   
+								
+				//모임관심사 정보로 관심사 가져오기
+				
+				return "/club/clubInfo";
+			}
+			
+	
+	
+		// 모임가입 ajax (상세페이지에서 alert창 띄움)
+		@ResponseBody
+		@RequestMapping(value = "/join/{club_no}",method=RequestMethod.POST)
+		public void joinClub(@PathVariable("club_no") int club_no, @ModelAttribute("member_no") int member_no) {
+				
+				ClubMembersVo members = new ClubMembersVo();
+				members.setMember_no(member_no);
+				members.setClub_no(club_no);
+				members.setClub_role_no(1); //상세페이지에서 가입하면 무조건 회원
+				service.join(members);
+				System.out.println("모임가입완료");
+				
+			}
+			
+		// 별점주기 ajax (상세페이지에서 클릭)
+		@ResponseBody
+		@RequestMapping(value = "/grade", method = RequestMethod.POST)
+		public void clubGrade(@ModelAttribute ClubGradesVo vo) {
+					service.clubGrade(vo);
+					System.out.println("별점주기 완료");
+			}
+	
+	
+	
+			
+			
 }
