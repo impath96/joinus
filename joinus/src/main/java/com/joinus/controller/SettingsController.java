@@ -1,5 +1,7 @@
 package com.joinus.controller;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -16,9 +18,10 @@ import org.springframework.web.multipart.MultipartResolver;
 
 import com.joinus.domain.MembersVo;
 import com.joinus.service.MemberService;
+import com.joinus.util.FileUtils;
 
-@RequestMapping("/settings/*")
 @Controller
+@RequestMapping("/settings/*")
 public class SettingsController {
 	@Autowired
 	MultipartResolver multipartResolver;
@@ -44,16 +47,52 @@ public class SettingsController {
 		if(member == null) {
 			return "redirect:/";
 		}
+		
+		// 2) 
 		return "/member/settings";
 	}
 	
 	@PostMapping("/profile")
-	public String profile(@RequestParam("profile_image") MultipartFile file, Model model) {
+	public String profile(
+			@RequestParam("profile_image") MultipartFile file
+			, HttpServletRequest request
+			, HttpSession session) throws Exception {
 		log.info("upload Post ... originalName={}", file.getOriginalFilename());
 		log.info("upload Post ... size={}", file.getSize());
 		log.info("upload Post ... contentType={}", file.getContentType());
+		MembersVo member = (MembersVo)session.getAttribute("member");
+		log.info("member : {}", member);
+		if(member == null) {
+			return "redirect:/member/signin";
+		}
+		ServletContext ctx = request.getServletContext();
+		String realPath = ctx.getRealPath("/resources/upload");
+		log.info("실제 파일 저장 경로 : {}", realPath);
+		// 실제로 저장된 시스템에서의 파일명 
+		// ex) 실제 파일명 : aaa.png
+		//     시스템에 저장되는 파일명 : adjbjiasjjaaa_aaa.png(UUID_파일명 형식으로 할 예정)
+		// 시스템에 중복되는 파일명을 갖는 파일이 있을 가능성이 있기 때문!!
 		
+		// realPath 경로에 file을 업로드 한 후 업로드한 파일의 이름을 return
+		String savedFileName = FileUtils.uploadFile(realPath, file);
+		log.info("savedFileName : {}", savedFileName);
+		// DB members 테이블에 member_image 업데이트 - 
+		memberService.updateImage(savedFileName, member.getMember_no());
+		MembersVo updateMember = memberService.findMemberByNo(member.getMember_no());
+		session.setAttribute("member", updateMember);
 		return "redirect:/settings/member";
-		
 	}
+
+	// 2명의 사람이 동시에 동일한 파일명의 파일을 올릴 경우 하나의 파일명이 덮어쓰기가 되어진다.
+	// 이러한 상황을 고려해서 동기화를 해주는 것이 좋다.
+	// 동작 : 전달받은 파일을 특정 위치에 저장
+	//	private String uploadFile(String realPath, MultipartFile file) throws IOException {
+	//		// UUID_파일명 형식
+	//		String savedFileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+	//		// 경로는 어떤걸로 하지??
+	//		File target = new File(realPath, savedFileName); // 어느 경로 : dir, 어떤 파일 : savedFileName
+	//		
+	//		FileCopyUtils.copy(file.getBytes(), target); // 내용을 파일에 쓰는 동작
+	//		return savedFileName;
+	//	}
 }

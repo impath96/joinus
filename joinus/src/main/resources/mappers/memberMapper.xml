@@ -5,22 +5,37 @@
 
 <mapper namespace="com.joinus.mapper.MemberMapper">
 	<select id="selectMemberByEmail" resultType="MembersVo">
-		select * from members where member_email=#{member_email}
+		<![CDATA[
+		select * from members 
+		where member_email=#{member_email}
+		]]>
 	</select>
 		
 	<select id="selectMemberByNo" resultType="MembersVo">
 		select * from members where member_no=#{member_no}
 	</select>
 	<insert id="insertMember" parameterType="MembersVo">
-		insert into members(member_email, member_name, member_pass, member_image, member_signup_type, member_tel)
+		<![CDATA[
+		insert into members
+		(             
+ 		 member_email,       
+ 		 member_pass,         
+		 member_name,         
+		 member_tel,          
+		 member_image,            
+		 member_signup_type,
+		 member_location 
+		)
 		values(
 			#{member_email},
-			#{member_name}, 
-			#{member_pass},
+			#{member_pass}, 
+			#{member_name},
+			#{member_tel},
 			#{member_image},
 			#{member_signup_type},
-			#{member_tel}
+			#{member_location}
 			)
+		]]>
 	</insert>
 	<insert id="insertMemberInterest">
 		insert into member_interests(member_no, interest_no)
@@ -29,4 +44,10 @@
 			#{interest_no}
 			)
 	</insert>
+	
+	<update id="updateImage">
+		update members
+		set member_image=#{savedFileName}
+		where member_no=#{member_no}
+	</update>
 </mapper>

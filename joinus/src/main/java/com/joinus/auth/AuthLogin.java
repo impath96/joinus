@@ -30,7 +30,6 @@ public abstract class AuthLogin {
 		
 	}
 
-	//
 	public OAuth2AccessToken getAccessToken(String code) throws IOException, InterruptedException, ExecutionException {
 
 //		OAuthRequest request = new OAuthRequest(Verb.POST, oauthService.getApi().getAccessTokenEndpoint());

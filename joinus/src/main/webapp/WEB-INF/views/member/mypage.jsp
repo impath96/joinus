@@ -19,7 +19,7 @@
 					<div class="service-item position-relative rounded overflow-hidden p-3">
 						<div style="height:230px;">
 							<div class="service-content d-flex flex-column">
-								<h4 class="mb-2">${sessionScope.memberEmail }님의 프로필</h4>
+								<h4 class="mb-2">${sessionScope.member.member_name }님의 프로필</h4>
 								<p>Stet stet justo dolor sed duo. Ut clita sea sit ipsum diam
 									lorem diam.</p>
 								<a class="small fw-medium bottom-right" href="/settings/member">프로필 수정하기<i

@@ -19,7 +19,7 @@ public class MemberServiceImpl implements MemberService {
 	private static final Logger log = LoggerFactory.getLogger(MemberServiceImpl.class);
 
 	@Override
-	public void 회원가입(MembersVo member, int interest_no) {
+	public MembersVo 회원가입(MembersVo member, int interest_no) {
 		// 1) 먼저 회원을 등록
 		memberDao.insertMember(member);
 		// 2) 등록된 회원 다시 꺼내오고(session에 회원번호 저장하기 위해서)
@@ -30,6 +30,7 @@ public class MemberServiceImpl implements MemberService {
 		memberInterestVo.setInterest_no(interest_no);
 		memberInterestVo.setMember_no(selectMember.getMember_no());
 		memberDao.insertMemberInterest(memberInterestVo);
+		return selectMember;
 	}
 
 	@Override
@@ -40,11 +41,17 @@ public class MemberServiceImpl implements MemberService {
 		return findMember;
 	}
 	@Override
-	public MembersVo findMemberByNo(String member_no) {
+	public MembersVo findMemberByNo(int member_no) {
 		
-		MembersVo findMember = memberDao.selectMemberByEmail(member_no);
+		MembersVo findMember = memberDao.selectMemberByNo(member_no);
 		
 		return findMember;
+	}
+
+	@Override
+	public void updateImage(String savedFileName, int member_no) {
+		log.info("회원 프로필 사진 변경 savedFileName : {}, member_no : {}", savedFileName,member_no);
+		memberDao.updateImage(savedFileName,member_no);
 	}
 
 }

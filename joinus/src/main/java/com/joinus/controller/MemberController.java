@@ -60,6 +60,15 @@ public class MemberController {
 
 	}
 	
+	private String parseLocation(String location_name) {
+		String[] part = location_name.split(" ");
+		String savedLocation = part[0];
+		for(int i = 1; i<3; i++) {
+			savedLocation += " " + part[i];
+		}
+		return savedLocation;
+	}
+	
 	// 회원가입 처리
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signupPost(HttpSession session 
@@ -68,15 +77,22 @@ public class MemberController {
 							, @RequestParam("interest") int interest_no) {
 		log.info("회원가입 처리 동작 실행 @@@@@@@@@@@@@@");
 		log.info("session에 저장되어 있는 member : {}", session.getAttribute("member"));
-		log.info("추가로 전달받은 정보 : {}", interest_no);
-		MembersVo sessionMember = (MembersVo)session.getAttribute("member");
+		log.info("추가로 전달받은 정보 : 흥미 번호 :{}", interest_no);
+		log.info("추가로 전달받은 정보 : 전화번호 :{}", member_tel);
+		log.info("추가로 전달받은 정보 : 지역 이름 :{}", location_name);
 		
+		// 실제로 저정할 주소
+		String parsedLocation = parseLocation(location_name);
+		
+		MembersVo sessionMember = (MembersVo)session.getAttribute("member");
+		log.info("sessionMember : {}", sessionMember);
 		// 나중에 여기서 저장하기 전에 임의의 비밀번호도 설정해야한다.
 		MembersVo signUpMember = MembersVo.builder()
 				.member_email(sessionMember.getMember_email())
 				.member_image(sessionMember.getMember_image())
 				.member_name(sessionMember.getMember_name())
 				.member_signup_type(sessionMember.getMember_signup_type())
+				.member_location(parsedLocation)
 				.member_tel(member_tel)
 				.build();
 		
@@ -84,16 +100,20 @@ public class MemberController {
 		// 그러면 회원을 먼저 저장하고 해당 회원의 회원번호를 들고와서 회원관심사 테이블에 관심사를 등록?
 		// 1) 회원가입 처리
 		signUpMember.setMember_pass("asd123asc");
-		memberService.회원가입(signUpMember, interest_no);
-		
+		MembersVo member = memberService.회원가입(signUpMember, interest_no);
+		session.setAttribute("member", member);
 		return "redirect:/member/mypage";
 		
 	}
 	
 	// 마이 페이지로 이동
 	@GetMapping("/mypage")
-	public String mypage() {
+	public String mypage(HttpSession session) {
+		MembersVo member = (MembersVo)session.getAttribute("member");
 		
+		if(member == null) {
+			return "redirect:/member/signin";
+		}
 		return "/member/mypage";
 	}
 	

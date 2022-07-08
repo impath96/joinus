@@ -12,5 +12,6 @@ public interface MemberDao {
 	public void insertMember(MembersVo member);
 
 	public void insertMemberInterest(MemberInterestsVo memberInterestVo);
+	public void updateImage(String savedFileName, int member_no);
 	
 }
