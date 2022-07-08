@@ -31,7 +31,7 @@ public class ClubController {
 	public void clubList(@ModelAttribute("interest_no") String interest_no, Model model) {
 		log.info("interest_no : "+interest_no);	
 		
-		if(interest_no.isBlank()) {
+		if(interest_no.isEmpty()) {
 			model.addAttribute("clubList", service.clubList());
 			log.info("clubList() 호출");
 		}else{
