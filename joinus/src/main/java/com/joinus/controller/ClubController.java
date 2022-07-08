@@ -1,8 +1,13 @@
 package com.joinus.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubGradesVo;
@@ -147,35 +153,65 @@ public class ClubController {
 	}
 	
 		
-		// 모임등록
-		@RequestMapping(value="/new", method = RequestMethod.POST)
+		@RequestMapping(value = "/new", method = RequestMethod.POST)
 		public String createClubPost(@RequestParam("interest_detail_name") String detail,
-								 @ModelAttribute("membervo") MembersVo membersvo,
-							     ClubsVo clubsvo, Model model, HttpSession session) {
+				@RequestParam("member_no") int member_no, MultipartFile file,
+				ClubsVo clubsvo,Model model,HttpSession session,HttpServletRequest request ) throws IOException {
+		
+				log.info("모임등록 호출");
 			
+			  //모임 사진등록 
+				if(!file.isEmpty()) { 
 				
-				  //선택한 관심사 이름으로 관심사정보 가져오기
-					InterestDetailsVo interDetail = service.getInterestNo(detail); 
-					
-			      //모임생성 + 넘버가져오기 
-					service.newClub(clubsvo); 
-					int club_no = clubsvo.getClub_no();
-					model.addAttribute("club_no", club_no);	
+				//가상업로드 폴더 설정
+				ServletContext ctx =request.getServletContext();
+				String realpath = ctx.getRealPath("/resources/upload/clubs");
+				log.info("파일저장경로: " +realpath);
 				
+				//realpath 경로에 폴더 있는지 확인
+				File savePath = new File(realpath);
+				if(!savePath.exists()) {
+					savePath.mkdirs();
+				} //없다면 폴더 만듦
+				
+				
+				//String FileName = file.getOriginalFilename();
+				String savedFileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+				log.info("파일명: "+savedFileName);
+
+				
+				String fullpath = realpath;
+				fullpath += File.separator + savedFileName;
+				File saveFile = new File(fullpath);
+				
+				
+				file.transferTo(saveFile);
+				clubsvo.setClub_image(savedFileName);
+				
+				
+				log.info("사진저장 완료");
+				}
+			  
+				
+				  //관심사번호 가져오기 
+				  InterestDetailsVo interDetail = service.getInterestNo(detail);
+				  //클럽정보 저장 + 넘버가져오기 
+				  service.newClub(clubsvo); 
+				  int club_no = (int)clubsvo.getClub_no();
+				  model.addAttribute("club_no", club_no); 
 				  //모임관심사 저장
-					service.newClubInterest(club_no, interDetail.getInterest_no(),interDetail.getInterest_detail_no()); 
+				  service.newClubInterest(club_no,interDetail.getInterest_no(),interDetail.getInterest_detail_no()); 
+				  //모임가입
+				  ClubMembersVo members = new ClubMembersVo(); 
+				  members.setClub_no(club_no);
+				  members.setMember_no(member_no); 
+				  members.setClub_member_role("admin"); //모임 첫생성은 관리자
+				  service.join(members);
 				  
-				  //관리자 모임가입	
-					ClubMembersVo members = new ClubMembersVo();
-					members.setClub_no(club_no);
-					members.setMember_no(membersvo.getMember_no());
-					members.setClub_role_no(2); //모임 첫생성은 관리자
-					service.join(members);
-				
-					model.addAttribute("member_no", membersvo.getMember_no());	
-					return "redirect:/club/{club_no}";
-					
-			}	
+				  model.addAttribute("member_no", member_no);
+				 
+				  return "redirect:/club/{club_no}";
+		}
 	
 	
 		// 모임상세페이지		
@@ -220,7 +256,7 @@ public class ClubController {
 				ClubMembersVo members = new ClubMembersVo();
 				members.setMember_no(member_no);
 				members.setClub_no(club_no);
-				members.setClub_role_no(1); //상세페이지에서 가입하면 무조건 회원
+				members.setClub_member_role("common"); //상세페이지에서 가입하면 무조건 회원
 				service.join(members);
 				System.out.println("모임가입완료");
 				

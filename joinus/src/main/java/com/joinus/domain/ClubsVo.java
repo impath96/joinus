@@ -13,5 +13,6 @@ public class ClubsVo {
 	private String club_content; 
 	private String club_image; 
 	private Date club_regdate;
+	private String club_location;
 	
 }
