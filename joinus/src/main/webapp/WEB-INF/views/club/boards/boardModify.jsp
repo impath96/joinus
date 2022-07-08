@@ -8,6 +8,7 @@
 <script type="text/javascript">
 	
 	$(document).ready(function(){
+// 		alert(${club_no});
 		
 		// 등록버튼
 		$('#subBtn').click(function(){
@@ -27,6 +28,11 @@
 			
 		}); //등록버튼
 		
+		// 취소버튼
+		$('#cancelBtn').click(function(){
+			location.href = '/club/${club_no}/boards';
+		});
+		
 	});
 	
 </script>
@@ -39,7 +45,7 @@
 				<h6 class="text-primary">JoinUs</h6>
 				<h1 class="clubWrite_mb-4">게시글</h1>
 
-				<form name="fr" action="" method="post" enctype="multipart/form-data">
+				<form name="fr" action="" method="post">
 <!-- 					<input type="hidden" name="count" id="count" value=""> -->
 					<input type="hidden" name="club_no" value="${club_no }">
 					<input type="hidden" name="member_no" value="${sessionScope.member_no }">
@@ -77,7 +83,7 @@
 						
 						<div class="col-12 clubWrite_buttonMargin">
 							<input type="submit" class="btn btn-primary rounded-pill py-3 px-5" id="subBtn" value="등록">
-							<input type="submit" class="btn btn-primary rounded-pill py-3 px-5" style="margin-left: 2em;" id="subBtn" value="취소">
+							<input type="submit" class="btn btn-primary rounded-pill py-3 px-5" style="margin-left: 2em;" id="cancelBtn" value="취소">
 						</div>
 					</div>
 				</form>
