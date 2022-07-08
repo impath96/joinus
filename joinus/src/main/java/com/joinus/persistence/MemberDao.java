@@ -9,4 +9,6 @@ public interface MemberDao {
 
 	public void insertMember(MembersVo socialMember);
 	
+	public void signupMember(MembersVo vo);
+	
 }

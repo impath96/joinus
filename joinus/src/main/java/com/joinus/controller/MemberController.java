@@ -1,17 +1,27 @@
 package com.joinus.controller;
 
+import java.util.List;
+import java.util.Random;
+
 import javax.inject.Inject;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.joinus.auth.OauthService;
@@ -27,6 +37,9 @@ public class MemberController {
 	
 	@Inject
 	OauthService oauthService;
+	
+	@Inject
+	private JavaMailSender mailSender;
 
 	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
 
@@ -36,17 +49,78 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
-	public String signup() {
-
+	public String signup(Model model) {
+		
+		model.addAttribute("membersVo",new MembersVo());
 		return "/member/signup";
 
+	}
+	
+	// http://localhost:8080/member/signup
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	public String signUp(Model model, @ModelAttribute("membersVo") @Valid MembersVo vo, BindingResult result) throws Exception {
+		
+		if(result.hasErrors()) {
+			
+			
+			List<ObjectError> list = result.getAllErrors();
+			
+			for( ObjectError error : list) {
+				
+				System.out.println(error);
+			}
+			return "/member/signup";
+		}
+		
+		log.info(" C: " + vo);
+		memberService.회원가입(vo);
+		
+		log.info(" C: 회원가입 처리 완료");
+		
+		return "redirect:/login";
+	}
+	
+	// 이메일 인증
+	@ResponseBody
+	@RequestMapping(value = "/emailAuth", method = RequestMethod.POST)
+	public String emailAuth(String email) {		
+		Random random = new Random();
+		int checkNum = random.nextInt(888888) + 111111;
+
+		/* 이메일 보내기 */
+        String setFrom = "hd2080277@naver.com";
+        String toMail = email;
+        String title = "회원가입 인증 이메일 입니다.";
+        String content = 
+                "JoinUs 홈페이지를 방문해주셔서 감사합니다." +
+                "<br><br>" + 
+                "인증 번호는 " + checkNum + "입니다." + 
+                "<br>" + 
+                "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+        
+        try {
+            
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+            helper.setFrom(setFrom);
+            helper.setTo(toMail);
+            helper.setSubject(title);
+            helper.setText(content,true);
+            mailSender.send(message);
+            
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        return Integer.toString(checkNum);
+ 
 	}
 	
 	// GET : /signin -> 로그인 페이지 출력
 	// 단순 이메일 로그인을 했을 경우 해당 유저 정보를 세션에 저장
 	@RequestMapping(value="/signin", method = RequestMethod.GET)
 	public String signInPage() {
-		return "/member/signin";
+		return "/login";
 	}
 	
 	// 일반적인 이메일 방식의 로그인

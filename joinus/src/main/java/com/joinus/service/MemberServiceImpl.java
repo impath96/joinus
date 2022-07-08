@@ -20,9 +20,9 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void 회원가입() {
-		// TODO Auto-generated method stub
+	public void 회원가입(MembersVo vo) {
 		
+		MemberDao.signupMember(vo);
 	}
 	
 	

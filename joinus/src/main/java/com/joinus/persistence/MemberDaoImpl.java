@@ -34,7 +34,10 @@ public class MemberDaoImpl implements MemberDao {
 		sqlSession.insert(NAMESPACE+".insertMember", socialMember);
 	}
 	
-	
+	public void signupMember(MembersVo vo) {
+		
+		sqlSession.insert(NAMESPACE+".insertMember", vo);
+	}
 	
 	
 	
