@@ -20,7 +20,10 @@
    <id property="member_tel" column="member_tel"/>
    <id property="member_image" column="member_image"/>
    <id property="member_regdate" column="member_regdate"/>
+   <id property="member_updatedate" column="member_updatedate"/>
    <id property="member_authority" column="member_authority"/>
+   <id property="member_signup_type" column="member_signup_type"/>
+   <id property="member_status" column="member_status"/>
 </resultMap>
 
 <!-- 조인한 맵 만들어주기 1 -->
@@ -45,12 +48,14 @@
 <!-- </resultMap> -->
 
 <!-- 조인할 테이블 2-3 -->
-<!-- <resultMap type="ClubVo" id="clubMap"> -->
-<!--    <id property="club_no" column="club_no"/> -->
-<!--    <id property="club_name" column="club_name"/> -->
-<!--    <id property="club_content" column="club_content"/> -->
-<!--    <id property="club_image" column="club_image"/> -->
-<!-- </resultMap> -->
+<resultMap type="ClubsVo" id="clubsMap">
+   <id property="club_no" column="club_no"/>
+   <id property="club_name" column="club_name"/>
+   <id property="club_capacity" column="club_capacity"/>
+   <id property="club_content" column="club_content"/>
+   <id property="club_image" column="club_image"/>
+   <id property="club_regdate" column="club_regdate"/>
+</resultMap>
 
 <!--  조인할 테이블 2-4 -->
 <!-- <resultMap type="ClubGradeVo" id="clubGradeMap"> -->
@@ -83,8 +88,9 @@
 	<id property="club_board_content" column="club_board_content"/>
 	<id property="club_board_image" column="club_board_image"/>
 	<id property="club_board_date" column="club_board_date"/>
+	<id property="club_board_updatedate" column="club_board_updatedate"/>
 	<id property="club_board_like" column="club_board_like"/>
-	<id property="comment_cnt" column="comment_cnt"/>
+	<id property="club_board_commentcnt" column="club_board_commentcnt"/>
 </resultMap>
 
 <resultMap type="BoardTotalBean" id="boardListMap">
@@ -161,11 +167,13 @@
 		where club_no = #{club_no} and club_board_image is not null
 	</select>
 	
-	<!-- 게시글 본문 -->
-	<select id="getBoardContent" resultType="ClubBoardsVo">
-		select board_type_no, club_board_title, club_board_content 
-		from club_boards
-		where club_board_no = #{club_board_no}
+	<!-- 게시글 본문(상세보기, 수정) -->
+<!-- 	<select id="getBoardContent" resultType="ClubBoardsVo"> -->
+<!-- 		select board_type_no, club_board_title, club_board_content  -->
+<!-- 		from club_boards -->
+<!-- 		where club_board_no = #{club_board_no} -->
+<!-- 	</select> -->
+	<select id="getBoardContent" resultType="boardContentMap">
 	</select>
 	
 	<!-- 게시글 수정 -->

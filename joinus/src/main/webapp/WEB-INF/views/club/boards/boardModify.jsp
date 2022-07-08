@@ -8,7 +8,8 @@
 <script type="text/javascript">
 	
 	$(document).ready(function(){
-// 		alert(${club_no});
+// 		alert('경로를 통해 전달받은 club_no : '+${club_no});	// 1
+// 		alert('board 객체 안 club_no : '+${board.club_no});	// 0
 		
 		// 등록버튼
 		$('#subBtn').click(function(){
@@ -48,7 +49,7 @@
 				<form name="fr" action="" method="post">
 <!-- 					<input type="hidden" name="count" id="count" value=""> -->
 					<input type="hidden" name="club_no" value="${club_no }">
-					<input type="hidden" name="member_no" value="${sessionScope.member_no }">
+<%-- 					<input type="hidden" name="member_no" value="${sessionScope.member_no }"> --%>
 					<div class="row g-3">
 						<div class="col-md-4">
 <%-- 						카테고리 번호 : ${board.board_type_no } --%>
