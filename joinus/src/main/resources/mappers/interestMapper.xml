@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.joinus.mapper.InterestMapper">
+	<insert id="insertMemberInterest">
+		insert into member_interests(member_no, interest_no)
+		values(
+			#{member_email},
+			#{member_name}, 
+			#{member_pass}
+			)
+	</insert>
+	<select id="selectInterestAll" resultType="InterestsVo">
+		select * from interests
+	</select>
+</mapper>
