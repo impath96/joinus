@@ -1,6 +1,0 @@
-JoinUs DB Update
-
-2022-07-06
-- Members테이블 member_image 기본값 null -> 'default.jpg' 변경
-- INTERESTS테이블 interest_icon data정보 추가
-- CLUBS테이블 club_capacity 기본값 2 -> 50 변경
