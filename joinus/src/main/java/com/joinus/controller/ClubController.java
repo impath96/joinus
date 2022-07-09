@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.joinus.domain.BoardCriteria;
@@ -237,8 +238,11 @@ public class ClubController {
 	/// http://localhost:8088/club/1/boards/1
 	// 게시글 상세보기
 	@RequestMapping(value = "/{club_no}/boards/{club_board_no}", method = RequestMethod.GET)
-	public String boardContentGet(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no) {
+	public String boardContentGet(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no, Model model) {
 		log.info(" boardContentGet() 호출 ");
+		log.info(service.getBoardContent(club_board_no)+"");
+		
+		model.addAttribute("vo", service.getBoardContent(club_board_no));
 		
 		return "/club/boards/boardContent";
 	}
@@ -249,7 +253,9 @@ public class ClubController {
 	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/modify", method = RequestMethod.GET)
 	public String modifyBoardGet(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no, Model model) {
 		log.info(" modifyBoardGet() 호출 ");
-		
+		log.info("club_no : "+club_no);
+		log.info("club_board_no : "+club_board_no);
+	
 		model.addAttribute("board", service.getBoardContent(club_board_no));
 	
 		return "/club/boards/boardModify";
@@ -267,6 +273,25 @@ public class ClubController {
 		return "redirect:/club/"+vo.getClub_no()+"/boards";
 		
 	}
+	
+	// http://localhost:8088/club/{club_no}/boards/{club_board_no}/delete
+	// http://localhost:8088/club/1/boards/26/delete
+	// 게시글 삭제
+	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/delete", method = RequestMethod.POST)
+	public String deleteBoardPost(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no) {
+		log.info(" deleteBoardPost() 호출 ");
+		log.info("club_no : "+club_no);
+		
+		service.deleteBoard(club_board_no);
+		
+		return "redirect:/club/"+club_no+"/boards";
+	}
+	
+	// http://localhost:8088/club/${club_no}/boards/${club_board_no}/comment
+	// http://localhost:8088/club/1/boards/${club_board_no}/comment
+	// 댓글 등록
+	
+	
 	
 
 	

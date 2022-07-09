@@ -48,7 +48,7 @@
 </resultMap>
 
 <!-- 조인할 테이블 2-3 -->
-<resultMap type="ClubsVo" id="clubMap">
+<resultMap type="ClubsVo" id="clubsMap">
    <id property="club_no" column="club_no"/>
    <id property="club_name" column="club_name"/>
    <id property="club_capacity" column="club_capacity"/>
@@ -68,7 +68,7 @@
 <resultMap type="ClubTotalBean" id="ClubListMap">
 	<collection property="clubInterestsVo" resultMap="clubInterestMap"/>
 	<collection property="interestsVo" resultMap="interestMap"/>
-	<collection property="clubsVo" resultMap="clubMap"/>
+	<collection property="clubsVo" resultMap="clubsMap"/>
 	<collection property="clubGradesVo" resultMap="clubGradeMap"/>
 	
 </resultMap>
@@ -79,7 +79,7 @@
 <!-- 	<id property="member_name" column="member_name"/> -->
 <!-- </resultMap> -->
 
-<resultMap type="ClubBoardsVo" id="boardMap">
+<resultMap type="ClubBoardsVo" id="clubBoardsMap">
 	<id property="club_board_no" column="club_board_no"/>
 	<id property="club_no" column="club_no"/>
 	<id property="board_type_no" column="board_type_no"/>
@@ -91,6 +91,23 @@
 	<id property="club_board_updatedate" column="club_board_updatedate"/>
 	<id property="club_board_like" column="club_board_like"/>
 	<id property="club_board_commentcnt" column="club_board_commentcnt"/>
+</resultMap>
+
+<resultMap type="BoardTypesVo" id="boardTypesMap">
+	<id property="board_type_no" column="board_type_no"/>
+	<id property="board_type_name" column="board_type_name"/>
+</resultMap>
+
+<resultMap type="BoardTotalBean" id="boardListMap">
+	<collection property="membersVo" resultMap="membersMap"/>
+	<collection property="clubBoardsVo" resultMap="clubBoardsMap" />
+</resultMap>
+
+<resultMap type="BoardTotalBean" id="boardContentMap">
+	<collection property="clubBoardsVo" resultMap="clubBoardsMap"></collection>
+	<collection property="clubsVo" resultMap="clubsMap"></collection>
+	<collection property="membersVo" resultMap="membersMap"></collection>
+	<collection property="boardTypesVo" resultMap="boardTypesMap"></collection>
 </resultMap>
 
 <select id="ClubMemberList" resultMap="ClubMemberListMap">
@@ -142,7 +159,7 @@
 		select b.club_board_no, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate, b.club_board_like, b.club_board_commentcnt
 		from club_boards b
 		join members m
-			on b.member_no = m.member_no
+			on (b.member_no = m.member_no)
 		where b.club_no = #{club_no}
 		order by club_board_no desc
 	</select>
@@ -151,7 +168,7 @@
 		select b.club_board_no, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate, b.club_board_like, b.club_board_commentcnt
 		from club_boards b
 		join members m
-			on b.member_no = m.member_no
+			on (b.member_no = m.member_no)
 		where b.club_no = #{club_no} and b.board_type_no = #{board_type_no}
 		order by club_board_no desc
 	</select>
@@ -160,6 +177,7 @@
 		select club_board_no, club_board_image 
 		from club_boards
 		where club_no = #{club_no} and club_board_image is not null
+		order by club_board_no desc
 	</select>
 	
 	<!-- 게시글 본문(상세보기, 수정) -->
@@ -168,7 +186,16 @@
 <!-- 		from club_boards -->
 <!-- 		where club_board_no = #{club_board_no} -->
 <!-- 	</select> -->
-	<select id="getBoardContent" resultType="boardContentMap">
+	<select id="getBoardContent" resultMap="boardContentMap">
+		select c.club_name, b.board_type_no, bt.board_type_name, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate 
+		from club_boards b
+		join board_types bt
+			on (b.board_type_no = bt.board_type_no)
+		join clubs c
+			on (b.club_no = c.club_no)
+		join members m
+			on (b.member_no = m.member_no)
+		where club_board_no = #{club_board_no}
 	</select>
 	
 	<!-- 게시글 수정 -->
@@ -176,6 +203,20 @@
 		update club_boards set board_type_no = #{board_type_no}, club_board_title = #{club_board_title}, club_board_content = #{club_board_content}, club_board_updatedate = now()
 		where club_board_no = #{club_board_no}
 	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="deleteBoard">
+		delete from club_boards
+		where club_board_no = #{club_board_no}
+	</delete>
+	
+	<!-- 댓글수 -->
+	<select id="commentCnt" resultType="java.lang.Integer">
+		select count(*) from board_comments
+		where club_board_no = #{club_board_no}
+	</select>
+	
+	<!-- 댓글 작성 -->
 	
 	
 </mapper> 

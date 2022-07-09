@@ -8,8 +8,6 @@
 <script type="text/javascript">
 	
 	$(document).ready(function(){
-// 		alert('경로를 통해 전달받은 club_no : '+${club_no});	// 1
-// 		alert('board 객체 안 club_no : '+${board.club_no});	// 0
 		
 		// 등록버튼
 		$('#subBtn').click(function(){
@@ -31,7 +29,7 @@
 		
 		// 취소버튼
 		$('#cancelBtn').click(function(){
-			location.href = '/club/${club_no}/boards';
+			location.href = '/club/${club_no}/boards/${club_board_no}';
 		});
 		
 	});
@@ -56,20 +54,20 @@
 							<select class="form-select" style="height: 55px;" id="board_type_no" name="board_type_no">
 <!-- 								<option value="">게시글 카테고리</option> -->
 								<option value="1" 
-									<c:if test="${board.board_type_no == 1 }">selected</c:if>
+									<c:if test="${board.clubBoardsVo.board_type_no == 1 }">selected</c:if>
 								>자유글</option>
 								<option value="2" 
-									<c:if test="${board.board_type_no == 2 }">selected</c:if>
+									<c:if test="${board.clubBoardsVo.board_type_no == 2 }">selected</c:if>
 								>정모후기</option>
 								<option value="3" 
-									<c:if test="${board.board_type_no == 3 }">selected</c:if>
+									<c:if test="${board.clubBoardsVo.board_type_no == 3 }">selected</c:if>
 								>공지사항</option>
 							</select>
 						</div>
 						<div class="col-md-8">
 							<div class="form-floating">
 								<input type="text" class="form-control" id="club_board_title"
-									name="club_board_title" placeholder="title" value="${board.club_board_title }"> <label
+									name="club_board_title" placeholder="title" value="${board.clubBoardsVo.club_board_title }"> <label
 									for="club_board_title">제목</label>
 							</div>
 						</div> 
@@ -77,14 +75,14 @@
 							<div class="form-floating">
 								<textarea class="form-control" placeholder="content"
 									id="club_board_content" name="club_board_content"
-									style="height: 100px">${board.club_board_content }</textarea>
+									style="height: 100px">${board.clubBoardsVo.club_board_content }</textarea>
 								<label for="club_board_content">내용</label>
 							</div>
 						</div>
 						
 						<div class="col-12 clubWrite_buttonMargin">
 							<input type="submit" class="btn btn-primary rounded-pill py-3 px-5" id="subBtn" value="등록">
-							<input type="submit" class="btn btn-primary rounded-pill py-3 px-5" style="margin-left: 2em;" id="cancelBtn" value="취소">
+							<input type="button" class="btn btn-primary rounded-pill py-3 px-5" style="margin-left: 2em;" id="cancelBtn" value="취소">
 						</div>
 					</div>
 				</form>

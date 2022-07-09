@@ -34,17 +34,6 @@
 		<constructor-arg name="sqlSessionFactory"
 			ref="sqlSessionFactory" />
 	</bean>
-	<bean id="restTemplate"
-		class="org.springframework.web.client.RestTemplate">
-	</bean>
-	<bean id="kakaoLogin" class="com.joinus.auth.KakaoLogin">
-	</bean>
-	<bean id="googleLogin" class="com.joinus.auth.GoogleLogin">
-	</bean>
-	<bean id="snsLoginFactory" class="com.joinus.auth.SnsLoginFactory">
-		<constructor-arg name="kakaoLogin" ref="kakaoLogin"></constructor-arg>
-		<constructor-arg name="googleLogin" ref="googleLogin"></constructor-arg>
-	</bean>
 	
 	<!-- persistence 패키지 추가(빈 등록) -->
 	<context:component-scan base-package="com.joinus.persistence" />

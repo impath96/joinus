@@ -80,13 +80,18 @@ public class ClubServiceImpl implements ClubService{
 	}
 
 	@Override
-	public ClubBoardsVo getBoardContent(Integer club_board_no) {
+	public BoardTotalBean getBoardContent(Integer club_board_no) {
 		return dao.getBoardContent(club_board_no);
 	}
 
 	@Override
 	public void modifyBoardContent(ClubBoardsVo vo) {
 		dao.modifyBoardContent(vo);
+	}
+
+	@Override
+	public void deleteBoard(Integer club_board_no) {
+		dao.deleteBoard(club_board_no);
 	}
 
 	

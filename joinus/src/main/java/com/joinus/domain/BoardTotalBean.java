@@ -7,5 +7,7 @@ public class BoardTotalBean {
 	
 	private MembersVo membersVo;
 	private ClubBoardsVo clubBoardsVo;
+	private ClubsVo clubsVo;
+	private BoardTypesVo boardTypesVo;
 
 }

@@ -98,13 +98,18 @@ public class ClubDaoImpl implements ClubDao{
 	}
 
 	@Override
-	public ClubBoardsVo getBoardContent(Integer club_board_no) {
+	public BoardTotalBean getBoardContent(Integer club_board_no) {
 		return sqlSession.selectOne(NAMESPACE+".getBoardContent", club_board_no);
 	}
 
 	@Override
 	public void modifyBoardContent(ClubBoardsVo vo) {
 		sqlSession.update(NAMESPACE+".modifyBoardContent", vo);
+	}
+
+	@Override
+	public void deleteBoard(Integer club_board_no) {
+		sqlSession.delete(NAMESPACE+".deleteBoard", club_board_no);
 	}
 
 	

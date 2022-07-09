@@ -71,16 +71,14 @@
 						<span class="clubBoardList_writer">${board.membersVo.member_name }</span>
 						
 						<c:if test="${board.clubBoardsVo.club_board_updatedate == null }">
-							<span><fmt:formatDate value="${board.clubBoardsVo.club_board_date }" pattern="yyyy.MM.dd"/> </span>
+							<span><fmt:formatDate value="${board.clubBoardsVo.club_board_date }" pattern="yy.MM.dd HH:mm"/> </span>
 						</c:if>
-						club_board_date : ${board.clubBoardsVo.club_board_date }
 						<c:if test="${board.clubBoardsVo.club_board_updatedate != null }">
-							<span>${board.clubBoardsVo.club_board_updatedate }</span>
+							<span><fmt:formatDate value="${board.clubBoardsVo.club_board_updatedate }" pattern="yy.MM.dd HH:mm"/></span>
 						</c:if>
-						club_board_updatedate : ${board.clubBoardsVo.club_board_updatedate }
 					</div>
-					<i class="fa fa-regular fa-thumbs-up"></i> <span class="clubBoardList_likeCnt">${board.clubBoardsVo.club_board_like }</span>
-					<i class="fa fa-regular fa-comment"></i> <span class=clubBoardList_commentCnt>${board.clubBoardsVo.club_board_commentcnt }</span>
+					<i class="bi bi-heart"></i> <span class="clubBoardList_likeCnt">${board.clubBoardsVo.club_board_like }</span>
+					<i class="fa fa-comments fa-fw"></i> <span class=clubBoardList_commentCnt>${board.clubBoardsVo.club_board_commentcnt }</span>
 				</div>
 				<hr>
 			</c:forEach>

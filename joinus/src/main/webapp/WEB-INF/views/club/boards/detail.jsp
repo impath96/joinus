@@ -17,18 +17,18 @@
 				
 				
 				<form name="fr" action="${pageContext.request.contextPath }/club/delete">
-					<input type="hidden" name="club_board_no" value="${vo.club_board_no }">
+					<input type="hidden" name="club_board_no" value="">
 				</form>
 				
 					<div class="row g-3">
 						<div class="col-md-4">
 							<input type="text" class="form-control" style="height: 55px;" id="board_type_no" name="board_type_no"
-							value="${vo.boardtypeVo.board_type_name }" readonly="readonly">
+							value="" readonly="readonly">
 						</div>
 						<div class="col-md-8">
 							<div class="form-floating">
 								<input type="text" class="form-control" id="club_board_title"
-									name="club_board_title" readonly="readonly" value="${vo.club_board_title }"><label
+									name="club_board_title" readonly="readonly" value=""><label
 									for="club_board_title"></label>
 							</div>
 						</div>
@@ -37,7 +37,7 @@
 							<div class="form-floating">
 								<textarea class="form-control"
 									id="club_board_content" name="club_board_content"
-									style="height: 100px" readonly="readonly">${vo.club_board_content }</textarea>
+									style="height: 100px" readonly="readonly"></textarea>
 							</div>
 						</div>
 						

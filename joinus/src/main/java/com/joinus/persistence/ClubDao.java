@@ -34,10 +34,14 @@ public interface ClubDao {
 	public List<ClubBoardsVo> getBoardImageList(Integer club_no);
 	
 	// 게시글 본문
-	public ClubBoardsVo getBoardContent(Integer club_board_no);
+//	public ClubBoardsVo getBoardContent(Integer club_board_no);
+	public BoardTotalBean getBoardContent(Integer club_board_no);
 	
 	// 게시글 수정
 	public void modifyBoardContent(ClubBoardsVo vo);
+	
+	// 게시글 삭제
+	public void deleteBoard(Integer club_board_no);
 	
 	
 	//=========================허수빈========================
