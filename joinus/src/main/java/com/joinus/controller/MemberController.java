@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.HttpSession;
@@ -99,6 +100,8 @@ public class MemberController {
 		log.info("DB에 저장할 회원 정보 : {}", signUpMember);
 		// 그러면 회원을 먼저 저장하고 해당 회원의 회원번호를 들고와서 회원관심사 테이블에 관심사를 등록?
 		// 1) 회원가입 처리
+		String uuidPassword = UUID.randomUUID().toString();
+		String parsedPassword = encryptPassword("SHA-256", uuidPassword);
 		signUpMember.setMember_pass("asd123asc");
 		MembersVo member = memberService.회원가입(signUpMember, interest_no);
 		session.setAttribute("member", member);
@@ -226,8 +229,9 @@ public class MemberController {
 	}
 	
 	// 비밀번호 암호화 로직 구현 - SHA-256
-	private void encryptPassword(String hashAlgorithm, String password) {
+	private String encryptPassword(String hashAlgorithm, String password) {
 		MessageDigest messageDigest = null;
+		String hashedPassword = "";
 		try {
 			messageDigest = MessageDigest.getInstance(hashAlgorithm);
 			messageDigest.update(password.getBytes());
@@ -235,7 +239,6 @@ public class MemberController {
 			byte[] encPassword = messageDigest.digest();
 			
 			// 암호화된 바이트 데이터를 16진수 형태로 변환
-			String hashedPassword = "";
 			
 			for(int i=0; i<encPassword.length; i++) {
 				hashedPassword += Integer.toHexString(encPassword[i]&0xFF).toUpperCase();
@@ -246,6 +249,7 @@ public class MemberController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return hashedPassword;
 	}
 	
 	

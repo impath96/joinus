@@ -68,6 +68,13 @@
 		width : 100%;
 		max-width : 100%;
 	}
+	
+	.form-control {
+		font-size : 1.5rem;
+	}
+	#location::placeholder {
+		color : 9B9B9B;
+	}
 </style>
 
 <body>
@@ -104,6 +111,13 @@
 							</div>
 							<input type="submit" class="btn btn-primary fs-3" style="width:100%;" value="저장하기"/>
 						</form>
+						<div class="col-12">
+							<div class="form-floating">
+								<input type="text" class="form-control py-2" id="location" name="location_name"
+									placeholder="주소를 입력해주세요" onclick="sample4_execDaumPostcode()" >
+							</div>
+						</div>
+						<br>
 						<form>
 							<div class="row g-3">
 								<div class="col-12 col-sm-6">

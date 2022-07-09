@@ -66,6 +66,7 @@
 		    text-align: right;
 		    white-space: nowrap;
     	}
+    	
     </style>
 </head>
 
