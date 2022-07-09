@@ -107,21 +107,17 @@ public class ClubServiceImpl implements ClubService{
 		public void newClubInterest(Integer club_no, Integer interest_no, Integer interest_detail_no) {
 			dao.newClubInterest(club_no, interest_no, interest_detail_no);
 		}
+
+		// 모임 이름 중복체크
+		@Override
+		public ClubsVo checkClubName(String name) {
+			return dao.checkClubName(name);
+		}
 		
 		//모임가입하기
 		@Override
 		public void join(ClubMembersVo members) {
 			dao.join(members);
-		}
-		//모임 정보 가져오기
-		@Override
-		public ClubsVo getClubInfo(Integer num) {
-			return dao.getClubInfo(num);
-		}
-		//모임 회원 정보 가져오기
-		@Override
-		public List<ClubMembersVo> getClubMembers(Integer num) {
-			return dao.getClubMembers(num);
 		}
 		//모임별점주기
 		@Override
@@ -138,6 +134,17 @@ public class ClubServiceImpl implements ClubService{
 		public List<Map<String, Integer>> getClubAvgCnt(Integer num) {
 			return dao.getClubAvgCnt(num);
 		}
+
+		@Override
+		public ClubsVo getClubInfo(Integer num) {
+			return dao.getClubInfo(num);
+		}
+
+		@Override
+		public List<ClubMembersVo> getClubMembers(Integer num) {
+			return dao.getClubMembers(num);
+		}
+
 	
 		
 	

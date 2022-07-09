@@ -125,7 +125,7 @@ public class ClubController {
 		// http://localhost:8088/club/new  모임등록 페이지
 		// http://localhost:8088/club/new?member_no=7
 		@RequestMapping(value="/new", method = RequestMethod.GET)
-		public String newClubGet(Model model, /* @ModelAttribute("member_no") int member_no, */ HttpSession session) {
+		public String newClubGet(Model model, /* @ModelAttribute("member_no") int member_no, */HttpSession session) {
 				
 			//회원넘버 세션으로 받을 시(넘겨주면 그걸로 받기)
 			session.setAttribute("member_no", 7); //세션값 임의생성 
@@ -152,6 +152,28 @@ public class ClubController {
 			return detailList;
 	}
 	
+	
+		// 모임 제목 중복체크 ajax 
+		@ResponseBody
+		@RequestMapping(value="/check_clubname", method = RequestMethod.GET)
+		public int checkClubName(@RequestParam("club_name") String club_name) {
+				
+			ClubsVo vo=service.checkClubName(club_name);
+				
+				int result = 0;
+		        if(vo != null) {	
+		        	result =  1;	//중복
+		        }
+		        else if(vo == null){ 
+		        	result =  0;  //없음
+		        }
+		        
+		        return result;
+		}
+		
+		
+		
+		
 		
 		@RequestMapping(value = "/new", method = RequestMethod.POST)
 		public String createClubPost(@RequestParam("interest_detail_name") String detail,
@@ -165,7 +187,7 @@ public class ClubController {
 				
 				//가상업로드 폴더 설정
 				ServletContext ctx =request.getServletContext();
-				String realpath = ctx.getRealPath("/resources/upload/clubs");
+				String realpath = ctx.getRealPath("${PageContext.request.contextPath }/resources/upload/clubs");
 				log.info("파일저장경로: " +realpath);
 				
 				//realpath 경로에 폴더 있는지 확인
@@ -184,12 +206,11 @@ public class ClubController {
 				fullpath += File.separator + savedFileName;
 				File saveFile = new File(fullpath);
 				
-				
 				file.transferTo(saveFile);
+				
 				clubsvo.setClub_image(savedFileName);
-				
-				
 				log.info("사진저장 완료");
+				
 				}
 			  
 				
@@ -216,28 +237,30 @@ public class ClubController {
 	
 		// 모임상세페이지		
 		// http://localhost:8088/club/	
+		// http://localhost:8088/club/5
 		@RequestMapping(value = "/{club_no}", method = RequestMethod.GET)
 		public String info(Model model,HttpSession session,
-						@PathVariable("club_no") int club_no,
-						@ModelAttribute("member_no") int member_no) {
-				
+						@PathVariable("club_no") int club_no) {
+			//@ModelAttribute("member_no") int member_no
 				
 				//모임정보
 				ClubsVo clubvo = service.getClubInfo(club_no);
 				model.addAttribute("clubvo", clubvo);
 				
 				//회원번호(세션)
-				session.setAttribute("member_no", 44);
-				model.addAttribute("member_no", (int)session.getAttribute("member_no"));
+				session.setAttribute("member_no", 15);
+				int m = (int)session.getAttribute("member_no");
+				model.addAttribute("member_no",m );
 				
 				//클럽회원정보
 				List<ClubMembersVo> clubmemberVO = service.getClubMembers(club_no);
 				model.addAttribute("clubmemberVO", clubmemberVO);
+				log.info("clubmemberVO: "+clubmemberVO);
 				
 				//클럽별점정보
 				List<ClubGradesVo> gradevo = service.getClubGrade(club_no);
 				model.addAttribute("clubGrade", gradevo);
-				
+				log.info("gradevo: "+gradevo);
 				//클럽별점 평균,참여자수
 				model.addAttribute("gradeAvgCnt", service.getClubAvgCnt(club_no));   
 								

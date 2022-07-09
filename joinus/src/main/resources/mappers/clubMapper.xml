@@ -4,14 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.joinus.mapper.ClubMapper">
-
-<!-- 조인할 테이블 1-1 -->
+ 
+<!-- 조인할 테이블 1-1 
 <resultMap type="ClubMemberRolesVo" id="roleMap">
 	<id property="club_role_no" column="club_role_no"/>
 	<id property="club_role_name" column="club_role_name"/> 
-</resultMap>
+</resultMap> -->
 
-<!-- 조인할 테이블 1-2 -->
+<!-- 조인할 테이블 1-2 
 <resultMap type="MembersVo" id="membersMap">
    <id property="member_no" column="member_no"/>
    <id property="member_email" column="member_email"/>
@@ -21,52 +21,54 @@
    <id property="member_image" column="member_image"/>
    <id property="member_regdate" column="member_regdate"/>
    <id property="member_role" column="member_role"/>
-</resultMap>
+</resultMap> -->
 
-<!-- 조인한 맵 만들어주기 1 -->
+<!-- 조인한 맵 만들어주기 1 
 <resultMap type="ClubTotalBean" id="ClubMemberListMap">
 	<collection property="membersVo" resultMap="membersMap"/>
 	<collection property="clubMemberRolesVo" resultMap="roleMap"/>
-</resultMap>
+</resultMap> -->
 
-<!-- 조인할 테이블 2-1 -->
+<!-- 조인할 테이블 2-1 
 <resultMap type="InterestsVo" id="interestMap">
    <id property="interest_no" column="interest_no"/>
    <id property="interest_icon" column="interest_icon"/>
    <id property="interest_name" column="interest_name"/>
-</resultMap>
+</resultMap> -->
 
-<!-- 조인할 테이블 2-2 -->
+<!-- 조인할 테이블 2-2 
 <resultMap type="ClubInterestsVo" id="clubInterestMap">
    <id property="club_interest_no" column="club_interest_no"/>
    <id property="club_no" column="club_no"/>
    <id property="interest_no" column="interest_no"/>
    <id property="interest_detail_no" column="interest_detail_no"/>
-</resultMap>
+</resultMap> -->
 
-<!-- 조인할 테이블 2-3 -->
+<!-- 조인할 테이블 2-3 
 <resultMap type="ClubsVo" id="clubMap">
    <id property="club_no" column="club_no"/>
    <id property="club_name" column="club_name"/>
    <id property="club_content" column="club_content"/>
    <id property="club_image" column="club_image"/>
-</resultMap>
+</resultMap> -->
 
-<!--  조인할 테이블 2-4 -->
+<!--  조인할 테이블 2-4 
 <resultMap type="ClubGradesVo" id="clubGradeMap">
    <id property="club_grade_no" column="clubclub_grade_no_no"/>
    <id property="club_no" column="club_no"/>
    <id property="club_grade" column="club_grade"/>
-</resultMap>
+</resultMap> -->
 
-<!-- 조인한 맵 만들어주기 2 -->
+<!-- 조인한 맵 만들어주기 2 
 <resultMap type="ClubTotalBean" id="ClubListMap">
 	<collection property="clubInterestsVo" resultMap="clubInterestMap"/>
 	<collection property="interestsVo" resultMap="interestMap"/>
 	<collection property="clubsVo" resultMap="clubMap"/>
 	<collection property="clubGradesVo" resultMap="clubGradeMap"/>
 	
-</resultMap>
+</resultMap> -->
+
+<!-- 
 
 <select id="ClubMemberList" resultMap="ClubMemberListMap">
 	<![CDATA[
@@ -113,24 +115,23 @@
 		values(#{club_no},#{member_no},#{board_type_no},#{club_board_title},#{club_board_content},#{club_board_photo})
 	</insert>
 	
-<!-- 	<select id="getBoardListAll" resultType="ClubBoardVo"> -->
-<!-- 		select * from club_board where club_no = #{club_no} -->
-<!-- 	</select> -->
+	<select id="getBoardListAll" resultType="ClubBoardVo">
+		select * from club_board where club_no = #{club_no}
+	</select>
 	
 
-
-
+ 
+ -->
+ 
 
 <!-- 성민 -->
 
 	<select id="getMember" resultType="MembersVo">
-		select * from members
-		where member_no =#{member_no}
+		select * from members where member_no =#{member_no}
 	</select>
 	
 	<select id="getMemberInterest" resultType="InterestsVo">
-		select *
-		from interests
+		select * from interests
 		where interest_no = ( select interest_no from member_interests where member_no =#{member_no} )
 	</select>
 
@@ -149,23 +150,9 @@
 		values(#{club_no},#{interest_no},#{interest_detail_no})
 	</insert>
 	
-	<insert id="MemberRolesAdmin">
-		insert into club_member_roles(club_role_name) values(2)
-		<selectKey resultType="Integer" keyProperty="club_role_name" order="AFTER">
-		SELECT LAST_INSERT_ID()
-		</selectKey>
-	</insert>
-	
-	<insert id="MemberRolesCom">
-		insert into club_member_roles(club_role_name) values(1)
-		<selectKey resultType="Integer" keyProperty="club_role_name" order="AFTER">
-		SELECT LAST_INSERT_ID()
-		</selectKey>
-	</insert>
-	
 	<insert id="joinMembers">
-		insert into club_members(club_no,member_no,club_role_no)
-		values(#{club_no},#{member_no},#{club_role_no})
+		insert into club_members(club_no,member_no,club_member_role)
+		values(#{club_no},#{member_no},#{club_member_role})
 	</insert>
 	
 	<insert id="clubGrade">
@@ -176,17 +163,19 @@
 	<!-- select -->
 	
 	<select id="getClubInfo" resultType="ClubsVo">
-		select * from clubs
-		where club_no=#{club_no}
+		select * from clubs	where club_no=#{club_no}
 	</select>
 	
 	<select id="getClubMember" resultType="ClubMembersVo">
 		select * from club_members where club_no=#{club_no}
 	</select>
 	
+	<select id="checkClubName" resultType="ClubsVo">
+		select * from clubs where club_name =#{club_name}
+	</select>
+	
 	<select id="getInterestNameDetails" resultType="InterestDetailsVo">
-		select * from interest_details
-		where interest_no=#{interest_no}
+		select * from interest_details	where interest_no=#{interest_no}
 	</select>
 	
 	<select id="getInterestNo" resultType="InterestDetailsVo">
@@ -194,9 +183,8 @@
 		where interest_detail_name=#{interest_detail_name}
 	</select>
 	
-	<select id="getClubGrade" resultType="ClubGradesVO">
-		select * from club_grades
-		where club_no=#{club_no}
+	<select id="getClubGrade" resultType="ClubGradesVo">
+		select * from club_grades where club_no=#{club_no}
 	</select>
 	
 	<select id="getGradeOption" parameterType="int" resultType="HashMap">

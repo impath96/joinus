@@ -131,7 +131,12 @@ public class ClubDaoImpl implements ClubDao{
 			
 			sqlSession.insert(NAMESPACE+".createClubInterest", num);
 		}
-
+		
+		// 모임 이름 중복체크
+		@Override
+		public ClubsVo checkClubName(String name) {
+			return sqlSession.selectOne(NAMESPACE+".checkClubName", name);
+		}
 		
 		//모임가입하기
 		@Override
@@ -166,6 +171,12 @@ public class ClubDaoImpl implements ClubDao{
 			List<Map<String, Integer>> list = sqlSession.selectList(NAMESPACE+".getGradeOption", num);
 			return list;
 		}
+
+
+		
+
+
+		
 		
 		
 	

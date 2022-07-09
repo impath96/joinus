@@ -48,13 +48,15 @@ public interface ClubDao {
 	// 회원이 선택한 관심사 넘버값 가져오기
 	public InterestDetailsVo getInterestNo(String name);
 	
+	// 모임 이름 중복체크
+	public ClubsVo checkClubName(String name);
+	
 	// 모임생성
 	public void newClub(ClubsVo vo);
 	// 모임관심사 저장
 	public void newClubInterest(Integer club_no, Integer interest_no,Integer interest_detail_no);
 	// 모임가입하기
 	public void join(ClubMembersVo members);
-	
 	// 모임별점주기
 	public void clubGrade(ClubGradesVo vo);
 	// 모임 별점 정보 가져오기

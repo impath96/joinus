@@ -52,7 +52,10 @@ public interface ClubService {
 		public InterestDetailsVo getInterestNo(String name);
 		//회원이 입력한 클럽관심사 저장하기
 		public void newClubInterest(Integer club_no, Integer interest_no,Integer interest_detail_no);
-			
+		
+		// 모임 이름 중복체크
+		public ClubsVo checkClubName(String name);
+		
 		//모임가입하기
 		public void join(ClubMembersVo members);
 		//모임별점주기

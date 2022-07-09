@@ -116,15 +116,11 @@
 					 
 				});
 			
-			
-			
-			
-			
-			
-			
-			});
-				
-				
+		
+		 });
+	
+		 
+		 
 
 </script>
 
@@ -145,12 +141,13 @@
 			</ul>
 	</div>
 	
-	
+	<c:if test="${not empty clubvo.club_image }">
 	   	 <div class="col-12 text-center">
-		
-			<img alt="clubImage" src="${pageContext.request.contextPath}/upload/club/${clubvo.club_image }">
-	
+			<img src="${PageContext.request.contextPath }/resources/upload/club/${clubvo.club_image }">
 		</div>
+	</c:if>
+	
+	
 	
     <!-- About Start  모임 설명 -->
     <div class="container-fluid bg-light overflow-hidden my-5 px-lg-0">
@@ -166,55 +163,51 @@
 						
 						
 						
-					
 
-<%-- 						<c:forEach var="items" items="${clubmemberVO}" varStatus="status" > 
---%>
 						        
-				<!--  모임멤버면 별점, 별점 후 평균값 / 멤버가 아니면 가입하기 버튼 / break 대신 loop_flag 로 반복 막음 --> 
-						<c:set var="loop_flag" value="false" />
-						<%-- <c:forEach begin="0" end="10000" step="1" var="i"> --%>
-						<c:forEach items="${clubGrade }" var="Cgrade">
-						<c:forEach items="${clubmemberVO }" var="Cmember">
-						 
-							<c:set var="memberN" value="${member_no }"/>
-							<c:set var="gradeMember" value="${Cgrade.member_no }"/>
-							<c:set var="clubMember" value="${Cmember.member_no }"/>
-					    <c:if test="${not loop_flag }">
-							<c:choose>
-						        <c:when test="${memberN eq clubMember}">
-									<span class="text-bold">우리 모임의 별점을 선택해주세요</span>
-	                        		<form class="mb-3" name="myform" id="myform" method="post">
-									<fieldset>
-									<input type="radio" name="reviewStar" value="5" id="rate1"><label
-										for="rate1">★</label>
-									<input type="radio" name="reviewStar" value="4" id="rate2"><label
-										for="rate2">★</label>
-									<input type="radio" name="reviewStar" value="3" id="rate3"><label
-										for="rate3">★</label>
-									<input type="radio" name="reviewStar" value="2" id="rate4"><label
-										for="rate4">★</label>
-									<input type="radio" name="reviewStar" value="1" id="rate5"><label
-										for="rate5">★</label>
-									</fieldset>
-									</form>		
-	                        		<c:set var="loop_flag" value="true" />
-						        </c:when>
-						       <c:when test="${memberN eq gradeMember }">
-						        	우리모임의 평균 별점은? (참여자수 : ${gradeAvgCnt[0].cnt} 명 )
-						        	<h3> ${gradeAvgCnt[0].avg} 점 </h3>
-									 <c:set var="loop_flag" value="true" />
-						        </c:when>
-						        <c:when test="${memberN ne clubMember}">
-	                        		<div class="btn btn-primary rounded-pill py-3 px-5 mt-3" id="joinClub">가입하기</div>
-									 <c:set var="loop_flag" value="true" />
-						        </c:when>
-						        
-							</c:choose>	
-						        </c:if>
-						</c:forEach> 
-						</c:forEach> 
- 							                   
+				<!--  모임멤버면 별점, 별점 후 평균값 / 멤버가 아니면 가입하기 버튼 /  --> 
+			<c:set var="loop_flag" value="false" />
+			 <c:if test="${not loop_flag }">
+				<c:forEach var="member" items="${clubmemberVO}" >
+				<c:forEach var="grade" items="${clubGrade}" >
+                <c:if test="${member.member_no == member_no && grade.member_no != member_no }">
+						      <div id="grade">
+						      <span class="text-bold">우리 모임의 별점을 선택해주세요</span>
+             		<form class="mb-3" name="myform" id="myform" method="post">
+					<fieldset>
+					<input type="radio" name="reviewStar" value="5" id="rate1"><label for="rate1">★</label>
+					<input type="radio" name="reviewStar" value="4" id="rate2"><label for="rate2">★</label>
+					<input type="radio" name="reviewStar" value="3" id="rate3"><label for="rate3">★</label>
+					<input type="radio" name="reviewStar" value="2" id="rate4"><label for="rate4">★</label>
+					<input type="radio" name="reviewStar" value="1" id="rate5"><label for="rate5">★</label>
+					</fieldset>
+					</form>
+					<c:set var="loop_flag" value="true" />
+						      </div>
+				</c:if>
+				</c:forEach>	
+				
+                <c:if test=" ${member.member_no != member_no }">
+					<div id="joinBTN">
+				<div class="btn btn-primary rounded-pill py-3 px-5 mt-3" id="joinClub">가입하기</div>
+					</div>
+				<c:set var="loop_flag" value="true" />
+				</c:if>
+				</c:forEach>
+				
+				<c:forEach var="gradee" items="${clubGrade}" >
+                <c:if test="${gradee.member_no == member_no  }">
+						      <div id="avgGrade">
+					우리모임의 평균 별점은? (참여자수 : ${gradeAvgCnt[0].cnt}명 )
+						<h3> ${gradeAvgCnt[0].avg} 점 </h3>		      
+						      </div>
+				<c:set var="loop_flag" value="true" />						      
+				</c:if>
+				</c:forEach>		      
+			</c:if>			      
+			
+			
+						      
                 	    </div>
                     </div>
                 </div>

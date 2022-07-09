@@ -15,7 +15,7 @@
 		font-size: 1.7em; font-weight: 500; margin-top: 150px; margin-bottom: 30px; color: #343a40;
 		}
 		.sub3 {
-		font-size: 1.7em; font-weight: bold;  margin-top: 300px;  font-style: italic;
+		font-size: 1.7em; font-weight: bold;  margin-top: 300px;  font-style: italic; color: #343a40;
 		}
 		h1>.mb-4 {
 			font-size: 3em;
@@ -101,6 +101,7 @@ $(document).ready(function(){
 			else if(item == "문화/공연/축제"){ itemNum = 8;}
 			
 			$('#inter1,#inter2,#inter3,#inter4,#inter5,#inter6,#inter7,#inter8').unbind('click');
+				//중복 클릭을 막기위한 .. 중복막기 생각 더 해보기
 				
 			//상세관심사 텍스트를 출력
 		  $.ajax({
@@ -126,11 +127,31 @@ $(document).ready(function(){
 		 
 		});
 			
-			
-		 
-			
-	
 	}); 
+	
+
+	$('#clubName').blur(function(){
+	    var name = $('#clubName').val();
+	    console.log(name);
+	    $.ajax({
+	        data : {
+	        	club_name : name
+	        },
+	        url : "${pageContext.request.contextPath}/club/check_clubname",
+	        success : function(result) {
+	            if(result== '1') {
+	                $("#retry").text("이미 만들어진 모임이름입니다. 다른 이름을 입력하세요.");
+	                $("#retry").css("color","red");
+	            } 
+	            if(result == '0') {
+	                $("#retry").text("사용가능한 모임이름입니다.");
+	                $("#retry").css("color","#32C36C");
+	            }
+	        }
+	    });
+	    });
+	
+	
 	
 });
 
@@ -142,6 +163,8 @@ function select(item){
 	  $('html,body').animate({ scrollTop: $('#interest').offset().top }, 200);
 } 
 
+
+/* 	첨부파일 미리보기..
 function readImage(input) {
     // 인풋 태그에 파일이 있는 경우
     if(input.files && input.files[0]) {
@@ -162,7 +185,7 @@ const inputImage = document.getElementById("input-image")
 inputImage.addEventListener("change", e => {
     readImage(e.target)
 })
-
+ */
 
 
 </script>
@@ -203,7 +226,7 @@ inputImage.addEventListener("change", e => {
                   	 	
                   <div class="detail" >
                    	 	<p class="marginTOP"> ▼ </p>
-	                 <p class="sub3"> 2. 세부관심사를 선택해주세요 </p>    
+	                 <p class="sub2"> 2. 세부관심사를 선택해주세요 </p>    
 	                 <ul class="interTable newForm">
 	                	</ul>
 	              </div>
@@ -214,7 +237,7 @@ inputImage.addEventListener("change", e => {
                          <form action="" method="post" enctype="multipart/form-data">    
                          <input type="hidden" value="${membervo.member_no}" name="member_no" >                      
                          <div class="row g-3" align="center">
-	                 <p class="sub3"> 3. 모임의 정보를 작성해주세요 </p>     
+	                 <p class="sub2"> 3. 모임의 정보를 작성해주세요 </p>     
 	               			  <div class="col-md-6">
                                     <div class="form-floating">
                                         <input type="text" class="form-control" name="" readonly="readonly">
@@ -237,9 +260,10 @@ inputImage.addEventListener("change", e => {
                                 </div>
                                   <div class="col-12">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="subject" name="club_name" >
+                                        <input type="text" class="form-control" id="clubName" name="club_name" >
                                         <label for="subject">모임이름</label>
                                     </div>
+                                    <p id="retry" class="GreenP"></p>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating">
@@ -267,7 +291,7 @@ inputImage.addEventListener("change", e => {
                                     </div> 
                                     <hr> 
                                  <div class="col-12">
-                                    <button class="btn btn-primary rounded-pill py-3 px-5" type="submit">모임 개설하기</button>
+                                    <button class="btn btn-primary rounded-pill py-3 px-5" type="submit" id="clubBtn">모임 개설하기</button>
                                 </div>
                              </div>
                         </form>
