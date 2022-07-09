@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.joinus.domain.BoardCriteria;
+import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubTotalBean;
@@ -172,31 +174,42 @@ public class ClubDaoImpl implements ClubDao{
 	}
 
 	@Override
-	public List<ClubBoardsVo> getBoardListAll(Integer club_no) {
+	public List<BoardTotalBean> getBoardListAll(Integer club_no) {
 		log.info(" getBoardListAll() 호출 ");
 		
 		return sqlSession.selectList(NAMESPACE+".getBoardListAll", club_no);
 	}
 
+	@Override
+	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no) {
+		log.info(" getBoardList() 호출 ");
+		
+		Map<String, Integer> param = new HashMap<String, Integer>();
+		param.put("club_no", club_no);
+		param.put("board_type_no", board_type_no);
+		
+		
+		return sqlSession.selectList(NAMESPACE+".getBoardList", param);
+	}
 
+	@Override
+	public List<ClubBoardsVo> getBoardImageList(Integer club_no) {
+		return sqlSession.selectList(NAMESPACE+".getBoardImageList", club_no);
+	}
 
+	@Override
+	public BoardTotalBean getBoardContent(Integer club_board_no) {
+		return sqlSession.selectOne(NAMESPACE+".getBoardContent", club_board_no);
+	}
 
+	@Override
+	public void modifyBoardContent(ClubBoardsVo vo) {
+		sqlSession.update(NAMESPACE+".modifyBoardContent", vo);
+	}
 
+	@Override
+	public void deleteBoard(Integer club_board_no) {
+		sqlSession.delete(NAMESPACE+".deleteBoard", club_board_no);
+	}
 
-
-
-
-
-
-
-
-
-
-
-	
-	
-	
-	
-	
-	
 }

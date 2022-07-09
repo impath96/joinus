@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.joinus.domain.ClubMembersVo;
+import com.joinus.domain.BoardTotalBean;
+import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubTotalBean;
 import com.joinus.domain.ClubsVo;
 import com.joinus.domain.Criteria;
 import com.joinus.domain.MembersVo;
-import com.joinus.domain.ClubBoardsVo;
 
 @Service
 public interface Clubservice {
@@ -37,7 +37,6 @@ public interface Clubservice {
 	
 
 
-	public void writeBoard(ClubBoardsVo vo);
 
 	public void clubAuth(Integer member_no, int club_no);
 
@@ -45,7 +44,23 @@ public interface Clubservice {
 
 
 
-	
-//	public List<ClubBoardVo> getBoardListAll(Integer club_no);
+	 public void writeBoard(ClubBoardsVo vo);
+	   
+	   public List<BoardTotalBean> getBoardListAll(Integer club_no);
+	   
+	   public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no);
+	   
+	   public List<ClubBoardsVo> getBoardImageList(Integer club_no);
+	   
+	   // 게시글 본문
+	   //public ClubBoardsVo getBoardContent(Integer club_board_no);
+	   public BoardTotalBean getBoardContent(Integer club_board_no);
+	   
+	   // 게시글 수정
+	   public void modifyBoardContent(ClubBoardsVo vo);
+	   
+	   // 게시글 삭제
+	   public void deleteBoard(Integer club_board_no);
+
 	
 }
