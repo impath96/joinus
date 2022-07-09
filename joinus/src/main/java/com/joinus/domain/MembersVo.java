@@ -2,11 +2,15 @@ package com.joinus.domain;
 
 import java.sql.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MembersVo {
 
 	private int member_no;
@@ -20,5 +24,7 @@ public class MembersVo {
 	private String member_authority;
 	private String member_signup_type;
 	private String member_status;
+	private String member_location;
+
 
 }
