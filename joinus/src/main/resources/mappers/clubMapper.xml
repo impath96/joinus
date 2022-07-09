@@ -6,28 +6,29 @@
 <mapper namespace="com.joinus.mapper.ClubMapper">
 
 <!-- 조인할 테이블 1-1 -->
-<resultMap type="ClubMemberRolesVo" id="roleMap">
-	<id property="club_role_no" column="club_role_no"/>
-	<id property="club_role_name" column="club_role_name"/> 
-</resultMap>
-
-<!-- 조인할 테이블 1-2 -->
 <resultMap type="MembersVo" id="membersMap">
    <id property="member_no" column="member_no"/>
    <id property="member_email" column="member_email"/>
    <id property="member_pass" column="member_pass"/>
    <id property="member_name" column="member_name"/>
+   <id property="member_location" column="member_location"/>
    <id property="member_tel" column="member_tel"/>
    <id property="member_image" column="member_image"/>
    <id property="member_regdate" column="member_regdate"/>
    <id property="member_role" column="member_role"/>
+   <id property="member_type" column="member_type"/>
+   <id property="member_location" column="member_location"/>
 </resultMap>
 
-<!-- 조인한 맵 만들어주기 1 -->
-<resultMap type="ClubTotalBean" id="ClubMemberListMap">
-	<collection property="membersVo" resultMap="membersMap"/>
-	<collection property="clubMemberRolesVo" resultMap="roleMap"/>
+<!-- 조인할 테이블 1-2 -->
+<resultMap type="ClubMembersVo" id="clubMembersMap">
+   <id property="club_memberlist_no" column="club_memberlist_no"/>
+   <id property="club_no" column="club_no"/>
+   <id property="member_no" column="member_no"/>
+   <id property="club_member_role" column="club_member_role"/>
+   <id property="club_member_regdate" column="club_member_regdate"/>
 </resultMap>
+
 
 <!-- 조인할 테이블 2-1 -->
 <resultMap type="InterestsVo" id="interestMap">
@@ -45,7 +46,7 @@
 </resultMap>
 
 <!-- 조인할 테이블 2-3 -->
-<resultMap type="ClubsVo" id="clubMap">
+<resultMap type="ClubsVo" id="clubsMap">
    <id property="club_no" column="club_no"/>
    <id property="club_name" column="club_name"/>
    <id property="club_content" column="club_content"/>
@@ -59,30 +60,40 @@
    <id property="club_grade" column="club_grade"/>
 </resultMap>
 
+<!-- 조인한 맵 만들어주기 1 -->
+<resultMap type="ClubTotalBean" id="ClubMemberListMap">
+	<collection property="membersVo" resultMap="membersMap"/>
+	<collection property="clubMembersVo" resultMap="clubMembersMap"/>
+</resultMap>
+
 <!-- 조인한 맵 만들어주기 2 -->
 <resultMap type="ClubTotalBean" id="ClubListMap">
 	<collection property="clubInterestsVo" resultMap="clubInterestMap"/>
 	<collection property="interestsVo" resultMap="interestMap"/>
-	<collection property="clubsVo" resultMap="clubMap"/>
+	<collection property="clubsVo" resultMap="clubsMap"/>
 	<collection property="clubGradesVo" resultMap="clubGradeMap"/>
 	
 </resultMap>
 
 <select id="ClubMemberList" resultMap="ClubMemberListMap">
 	<![CDATA[
-	select m.member_no,m.member_name, m.member_image, c.club_no, c.club_role_no, cr.club_role_name
+	select m.member_no,m.member_name, m.member_image, c.club_no, c.club_member_role, c.club_member_regdate
 	from club_members c 
     join members m 
-    	on (m.member_no = c.member_no)
-	join club_member_roles cr
-		on(c.club_role_no = cr.club_role_no)
+    	on(m.member_no = c.member_no)
 	where club_no = #{club_no} 
-	order by club_role_name asc
+	order by club_member_role asc
 	]]>
 </select>
 
+<select id="ClubInfo" resultType="ClubsVo">
+	select club_name, club_capacity, club_content, club_image, club_regdate, club_no
+	from clubs
+	where club_no = #{club_no}
+</select>
+
 <select id="ClubList" resultMap="ClubListMap">
-	    select c.club_no, c.club_name, c.club_content, c.club_image, ci.interest_no, i.interest_name,i.interest_icon,cg.club_grade_rate
+<![CDATA[select c.club_no, c.club_name, c.club_content, c.club_image, ci.interest_no, i.interest_name,i.interest_icon, avg(cg.club_grade_rate) avg_gr
     from clubs c
 	join club_interests ci
         on(c.club_no = ci.club_no)
@@ -91,11 +102,24 @@
 	join club_grades cg
 		on(c.club_no = cg.club_no)
 	where ci.interest_no = #{interest_no}
-	order by club_no asc
+        group by club_no
+	order by avg_gr desc
+	limit #{cri.pageStart},#{cri.perPageNum}
+	]]>
 </select>
 
+<select id="CountClub" resultType="int" parameterType="Integer">
+	select count(club_no) from club_interests
+	<where>
+	<if test="value != null">
+		AND interest_no = #{value}
+	</if>
+	</where>
+</select>
+
+
 <select id="ClubListAll" resultMap="ClubListMap">
-	    select c.club_no, c.club_name, c.club_content, c.club_image, ci.interest_no, i.interest_name,i.interest_icon,cg.club_grade_rate
+<![CDATA[select c.club_no, c.club_name, c.club_content, c.club_image, ci.interest_no, i.interest_name,i.interest_icon, avg(cg.club_grade_rate) avg_gr
     from clubs c
 	join club_interests ci
         on(c.club_no = ci.club_no)
@@ -103,8 +127,64 @@
 		on(ci.interest_no = i.interest_no)
 	join club_grades cg
 		on(c.club_no = cg.club_no)
-	order by club_grade_rate desc
+        group by club_no
+	order by avg_gr desc
+	limit #{pageStart},#{perPageNum}
+	]]>
 </select>
+
+<select id="ClubRole" resultType="string" parameterType="java.util.List">
+	select club_member_role
+		from club_members
+		where member_no = #{member_no} and club_no = #{club_no}
+
+</select>
+
+<select id="ClubBan" resultType="ClubMembersVo">
+	select club_no, member_no, club_member_regdate
+	from club_members
+	where member_no = #{member_no}
+	
+</select>
+
+<insert id="VanMemberInsert" parameterType="java.util.List">
+
+	<foreach collection="list" item="item" separator=",">
+	insert into club_ban_members (club_no,member_no,club_member_regdate) values
+	(#{item.club_no}, #{item.member_no}, #{item.club_member_regdate})
+	</foreach>
+</insert>
+
+<delete id="ClubMemberBan">
+	delete from club_members
+	where member_no = #{member_no} and club_no = #{club_no}
+</delete>
+
+<update id="ClubMemberAuth1">
+	update club_members
+	set club_member_role = 'common'
+	where club_member_role = 'admin' and club_no = #{club_no}
+</update>
+
+<update id="ClubMemberAuth2">
+	update club_members
+	set club_member_role = 'admin'
+	where member_no = #{member_no} and club_no = #{club_no}
+</update>
+
+<delete id="ClubLeave">
+	delete from club_members
+	where (club_no = #{club_no} and member_no = #{member.member_no})
+
+</delete>
+
+
+
+
+
+
+
+
 
 
 	
