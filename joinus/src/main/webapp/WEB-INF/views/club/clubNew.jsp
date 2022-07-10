@@ -9,19 +9,19 @@
 			height: 1000px;
 		}
 		.sub {
-		font-size: 1.2em;  color: #32C36C; font-weight: bold;
+		font-size: 0.8em;  color: #32C36C; font-weight: normal; font-style: italic;
 		}
 		.sub2 {
-		font-size: 1.7em; font-weight: 500; margin-top: 150px; margin-bottom: 30px; color: #343a40;
+		font-size: 2em; font-weight: 500; margin-top: 20px; margin-bottom: 30px; color: #343a40;
 		}
 		.sub3 {
-		font-size: 1.7em; font-weight: bold;  margin-top: 300px;  font-style: italic; color: #343a40;
+		font-size: 1.3em; font-weight: bold;margin-top: 30px; color: #343a40;
 		}
 		h1>.mb-4 {
 			font-size: 3em;
 		}
-		.detail, .detail2 {
-			display: none; font-size: large;
+		.detail, .detail2 , #select2 {
+			display: none; 
 		}
 		
 		form {
@@ -48,7 +48,11 @@
 			width: 100%;
 		}
 		
-		#inter1,#inter2,#inter3,#inter4,#inter5,#inter6,#inter7,#inter8 {
+		#inters {
+			cursor: pointer;
+		}
+		
+		#inter,#inter1,#inter2,#inter3,#inter4,#inter5,#inter6,#inter7,#inter8 {
 		    font-weight: bold;
 			color: white;
 			
@@ -60,10 +64,11 @@
 		}
 		
 		.interTable {
-		}
+			padding: 0;
+			}
 		.interTable>li {
 			border-bottom: solid 6px #F6F7F8;
-			width: 200px;
+			width: 260;
 			padding: 1em;
 			display: inline-block;
 			background-color: 32C36C;
@@ -82,15 +87,24 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-		
+	
+	
+	//다른관심사출력
+	$('#inters').click(function(){
+		$('#select,#inters,#hideInter').hide();
+		$('#select2').fadeIn();
+	});
+	
+	
+	//상세관심사 출력 ajax
 	//관심사 텍스트를 클릭하면
-	$('#inter1,#inter2,#inter3,#inter4,#inter5,#inter6,#inter7,#inter8').click(function(){
+	$('#inter,#inter1,#inter2,#inter3,#inter4,#inter5,#inter6,#inter7,#inter8').click(function(){
 			
 			var item = $(this).text();
 			var itemNum;
 			$('#interest').val(item);
 			
-				//관심사 넘버로 변환 후 
+			//관심사 넘버로 변환 후 
 			if(item=="요리/제조"){ itemNum = 1; }
 			else if(item == "봉사활동"){ itemNum = 2;}
 			else if(item == "운동/스포츠"){ itemNum = 3;}
@@ -100,8 +114,7 @@ $(document).ready(function(){
 			else if(item == "외국/언어"){ itemNum = 7;}
 			else if(item == "문화/공연/축제"){ itemNum = 8;}
 			
-			$('#inter1,#inter2,#inter3,#inter4,#inter5,#inter6,#inter7,#inter8').unbind('click');
-				//중복 클릭을 막기위한 .. 중복막기 생각 더 해보기
+			$('#inter').unbind('click'); //중복클릭 막기
 				
 			//상세관심사 텍스트를 출력
 		  $.ajax({
@@ -112,17 +125,16 @@ $(document).ready(function(){
 			success:function(data){
 				
 				for(i=0;i<data.length;i++){
-						if(i == 3 || i == 7){
+						if(i == 3 || i == 7){ //한줄에 4개씩
 				$('.newForm').append("<li onclick='select(this);'' id='newDetail'>"+data[i].interest_detail_name+"</li><br>");
 						}else{
 				$('.newForm').append("<li onclick='select(this);'' id='newDetail'>"+data[i].interest_detail_name+"</li>");
 						}
 				}
 				
-				$('.detail').slideDown();
-				$('html,body').animate({ scrollTop: $('#newDetail').offset().top }, 200);
+				$('.detail').slideDown(); //숨겨진 detail 출력
+				$('html,body').animate({ scrollTop: $('#newDetail').offset().top }, 200); //포커스이동
 				
-			$('#inter1,#inter2,#inter3,#inter4,#inter5,#inter6,#inter7,#inter8').bind('click');
 				}
 		 
 		});
@@ -160,7 +172,7 @@ function select(item){
 	  var item = $(item).text();
 	  $('.detail2').slideDown();
 	  $('#interest_detail').val(item);
-	  $('html,body').animate({ scrollTop: $('#interest').offset().top }, 200);
+	  $('html,body').animate({ scrollTop: $('#location').offset().top }, 200);
 } 
 
 
@@ -202,14 +214,22 @@ inputImage.addEventListener("change", e => {
         </div>
      
     <div class="container-fluid bg-light overflow-hidden px-lg-0" align="center" >
+                <hr>    
         <div class="container contact px-lg-0" >
             <div class="col-lg-6 contact-text py-5 wow fadeIn" data-wow-delay="0.5s" id="centercontrol">
              
 	              <div id="NewContent" align="center">
-                  <p class="sub"> ${membervo.member_name }님의 주요관심사는 ' ${interest.interest_name } ' 입니다! </p>   
-                <hr>    
-	              <p class="sub2"> 1. 어떤 관심사로 모임을 만들까요? </p>    
+                  <p class="sub2"> 1. 관심사를 선택해주세요 </p><br>   
+                   	 	<p > ▼ </p>
+            	  <div id="hideInter">
+                  <p class="sub3"> ${membervo.member_name }님의 관심사 </p>   
+                  </div>
                   <div id="select" >
+                  			<ul class="interTable">
+                  			<li id="inter">${interest.interest_name }</li>
+                  			</ul>
+                  </div>
+                  <div id="select2" >
                   			<ul class="interTable">
                   			<li id="inter1">요리/제조</li>
                   			<li id="inter2">봉사활동</li>
@@ -221,6 +241,7 @@ inputImage.addEventListener("change", e => {
                   			<li id="inter8">문화/공연/축제</li>
                   			</ul>
                   </div>
+                  <p class="sub" id="inters"> 다른 관심사로 모임을 만들고 싶으신가요?</p>   
                   
                   	 	
                   	 	
@@ -234,13 +255,14 @@ inputImage.addEventListener("change", e => {
 		       
                
                   <div class="detail2" >
+               				<br><br>
                          <form action="" method="post" enctype="multipart/form-data">    
                          <input type="hidden" value="${membervo.member_no}" name="member_no" >                      
                          <div class="row g-3" align="center">
 	                 <p class="sub2"> 3. 모임의 정보를 작성해주세요 </p>     
-	               			  <div class="col-md-6">
+	               			  <div class="col-md-6"><br>
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" name="" readonly="readonly">
+                                        <input type="text" class="form-control" name="member_location" readonly="readonly" value="${membervo.member_location}" id="location">
                                         <label for="name">지역</label>
                                     </div>
                                 </div>
@@ -267,7 +289,7 @@ inputImage.addEventListener("change", e => {
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <textarea class="form-control" name="club_content" id="message" style="height: 100px"></textarea>
+                                        <textarea class="form-control" name="club_content" id="clubContent" style="height: 100px;"></textarea>
                                         <label for="message">모임의 소개글을 입력하세요</label>
                                     </div>
                                 </div>

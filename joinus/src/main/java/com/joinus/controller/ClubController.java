@@ -125,17 +125,17 @@ public class ClubController {
 		// http://localhost:8088/club/new  모임등록 페이지
 		// http://localhost:8088/club/new?member_no=7
 		@RequestMapping(value="/new", method = RequestMethod.GET)
-		public String newClubGet(Model model, /* @ModelAttribute("member_no") int member_no, */HttpSession session) {
+		public String newClubGet(Model model, /* @ModelAttribute("membervo") MembersVo membervo, */HttpSession session) {
 				
-			//회원넘버 세션으로 받을 시(넘겨주면 그걸로 받기)
-			session.setAttribute("member_no", 7); //세션값 임의생성 
+			//세션(임의)
+			session.setAttribute("member_no", 7); 
 			int member_no =	(int)session.getAttribute("member_no");
-				
-			//회원 이름 출력
+			//회원정보출력(merge후 생략)
 			MembersVo membervo = service.getMember(member_no);
 			model.addAttribute("membervo", membervo);
+			
 			//회원 관심사 출력
-			InterestsVo interestvo = service.getMemberInterest(member_no);
+			InterestsVo interestvo = service.getMemberInterest(membervo.getMember_no());
 			model.addAttribute("interest", interestvo);
 			
 			return "/club/clubNew";
@@ -159,19 +159,11 @@ public class ClubController {
 		public int checkClubName(@RequestParam("club_name") String club_name) {
 				
 			ClubsVo vo=service.checkClubName(club_name);
-				
 				int result = 0;
-		        if(vo != null) {	
-		        	result =  1;	//중복
-		        }
-		        else if(vo == null){ 
-		        	result =  0;  //없음
-		        }
-		        
+		        if(vo != null) { result =  1; } //중복
+		        else if(vo == null){ result =  0; } //없음
 		        return result;
 		}
-		
-		
 		
 		
 		
@@ -187,7 +179,7 @@ public class ClubController {
 				
 				//가상업로드 폴더 설정
 				ServletContext ctx =request.getServletContext();
-				String realpath = ctx.getRealPath("${PageContext.request.contextPath }/resources/upload/clubs");
+				String realpath = ctx.getRealPath("/resources/upload/clubs/");
 				log.info("파일저장경로: " +realpath);
 				
 				//realpath 경로에 폴더 있는지 확인
@@ -241,25 +233,35 @@ public class ClubController {
 		@RequestMapping(value = "/{club_no}", method = RequestMethod.GET)
 		public String info(Model model,HttpSession session,
 						@PathVariable("club_no") int club_no) {
-			//@ModelAttribute("member_no") int member_no
+			//@ModelAttribute("membervo") MembersVo membervo
 				
 				//모임정보
 				ClubsVo clubvo = service.getClubInfo(club_no);
 				model.addAttribute("clubvo", clubvo);
 				
-				//회원번호(세션)
+				//회원정보(임의)
 				session.setAttribute("member_no", 15);
 				int m = (int)session.getAttribute("member_no");
 				model.addAttribute("member_no",m );
-				
+				log.info("회원넘버: "+m);
+
 				//클럽회원정보
 				List<ClubMembersVo> clubmemberVO = service.getClubMembers(club_no);
-				model.addAttribute("clubmemberVO", clubmemberVO);
+				model.addAttribute("clubmembers", clubmemberVO);
+				
+				ClubMembersVo clubmembersvo = service.getClubMemberNo(m); //membervo.getMember_no();
+				if(clubmembersvo == null) { model.addAttribute("clubmember", null);}
+				else if(clubmembersvo != null) { model.addAttribute("clubmember", clubmembersvo);}
+				
 				log.info("clubmemberVO: "+clubmemberVO);
 				
 				//클럽별점정보
 				List<ClubGradesVo> gradevo = service.getClubGrade(club_no);
 				model.addAttribute("clubGrade", gradevo);
+				Integer graded = service.getGradeinfo(club_no,m);
+				if(graded == null) { model.addAttribute("graded", null);}
+				else if(graded != null) { model.addAttribute("graded", graded);}
+				model.addAttribute("Graded", graded);
 				log.info("gradevo: "+gradevo);
 				//클럽별점 평균,참여자수
 				model.addAttribute("gradeAvgCnt", service.getClubAvgCnt(club_no));   

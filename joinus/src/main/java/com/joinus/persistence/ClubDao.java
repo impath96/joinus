@@ -61,13 +61,18 @@ public interface ClubDao {
 	public void clubGrade(ClubGradesVo vo);
 	// 모임 별점 정보 가져오기
 	public List<ClubGradesVo> getClubGrade(Integer num);
+	// 모임 별점 참여자 가져오기
+	public Integer getGradeinfo(Integer num, Integer num2);
 	// 모임 별점 평균값, 참여자 수 가져오기
 	public List<Map<String, Integer>> getClubAvgCnt(Integer num);
 		
 	// 모임 정보 가져오기
 	public ClubsVo getClubInfo(Integer num);
-	// 모임 회원 정보 가져오기
+	// 모임 회원 정보 가져오기(리스트)
 	public List<ClubMembersVo> getClubMembers(Integer num);
+	// 모임 회원 정보 가져오기(특정)
+	public ClubMembersVo getClubMemberNo(Integer num);
+	
 		
 	
 	//=========================강성민========================

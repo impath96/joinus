@@ -170,6 +170,10 @@
 		select * from club_members where club_no=#{club_no}
 	</select>
 	
+	<select id="getClubMemberNo" resultType="ClubMembersVo">
+		select * from club_members where member_no=#{member_no}
+	</select>
+	
 	<select id="checkClubName" resultType="ClubsVo">
 		select * from clubs where club_name =#{club_name}
 	</select>
@@ -190,6 +194,11 @@
 	<select id="getGradeOption" parameterType="int" resultType="HashMap">
 		select round(avg(club_grade_rate)) avg, count(club_grade_no) cnt
 		from club_grades where club_no=#{club_no}
+	</select>
+	
+	<select id="clubBtn" resultType="int">
+		select member_no
+from club_grades where member_no in ( select member_no from club_members where member_no =#{member_no} and club_no=#{club_no} )
 	</select>
 	
 </mapper> 

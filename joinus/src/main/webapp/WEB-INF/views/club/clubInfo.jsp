@@ -8,7 +8,10 @@
 	<style>
 		
 		.datail_vertical {
-			margin-top: 100px;
+			width: 1290px;
+			margin-top: 20px;
+			margin-left: 15px;
+			text-align: center;
 		}
 		#detail_nav {
 			align-content: center;
@@ -51,6 +54,12 @@
 		    border-radius: 5px;
 		    font-size: 16px;
 		    resize: none;
+		}
+				
+		#club_image {
+		width: 1290px;
+		}		
+		#imgDiv {
 		}
 				
 	</style>
@@ -131,6 +140,7 @@
     
     
 
+	    <div class="container-xxl py-5">
     
    	 <div class="col-12 text-center">
 			<ul class="list-inline mb-5" id="portfolio-flters">
@@ -141,36 +151,31 @@
 			</ul>
 	</div>
 	
-	<c:if test="${not empty clubvo.club_image }">
-	   	 <div class="col-12 text-center">
-			<img src="${PageContext.request.contextPath }/resources/upload/club/${clubvo.club_image }">
-		</div>
-	</c:if>
-	
 	
 	
     <!-- About Start  모임 설명 -->
     <div class="container-fluid bg-light overflow-hidden my-5 px-lg-0">
-        <div class="container about px-lg-0">
-            <div class="row g-0 mx-lg-0">
-                <div class="col-lg-6 ps-lg-0 wow fadeIn" data-wow-delay="0.1s" style="min-height: 400px;">
-                    <div class="position-relative h-100" align="center">
-                    <div class="datail_vertical">
-                        <h6 class="text-primary" >${interest }</h6>
-                        <h1 class="mb-4" id="club_name">${clubvo.club_name }</h1>
-                        <p id="club_capa"><i class="fa fa-check-circle text-primary me-3" ></i>정원:${clubvo.club_capacity } 명</p>
+        <div class="container about px-lg-0" >
+                <div class="col-lg-6 ps-lg-0 wow fadeIn" data-wow-delay="0.1s" style="min-height: 400px; text-align: center;">
+                    <c:if test="${not empty clubvo.club_image }">
+					   	 <div class="col-12 " id="imgDiv" >
+							<img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${clubvo.club_image}" id="club_image">
+						</div>
+					</c:if>
                    																			     <!-- 남은 정원도 넣을까..?  -->
 						
 						
-						
+                    <div class="datail_vertical">
+                        <h6 class="text-primary" >${interest }</h6>
+                        <h1 class="mb-4" id="club_name">${clubvo.club_name }</h1>
+	
+                        <p id="club_capa"><i class="fa fa-check-circle text-primary me-3" ></i>정원:${clubvo.club_capacity } 명</p>
+			
 
-						        
+				<c:if test="${empty member_no}">
 				<!--  모임멤버면 별점, 별점 후 평균값 / 멤버가 아니면 가입하기 버튼 /  --> 
-			<c:set var="loop_flag" value="false" />
-			 <c:if test="${not loop_flag }">
-				<c:forEach var="member" items="${clubmemberVO}" >
-				<c:forEach var="grade" items="${clubGrade}" >
-                <c:if test="${member.member_no == member_no && grade.member_no != member_no }">
+                <c:choose>
+                <c:when test=" ${clubmember.member_no eq memeber_no}">
 						      <div id="grade">
 						      <span class="text-bold">우리 모임의 별점을 선택해주세요</span>
              		<form class="mb-3" name="myform" id="myform" method="post">
@@ -182,44 +187,34 @@
 					<input type="radio" name="reviewStar" value="1" id="rate5"><label for="rate5">★</label>
 					</fieldset>
 					</form>
-					<c:set var="loop_flag" value="true" />
 						      </div>
-				</c:if>
-				</c:forEach>	
-				
-                <c:if test=" ${member.member_no != member_no }">
-					<div id="joinBTN">
-				<div class="btn btn-primary rounded-pill py-3 px-5 mt-3" id="joinClub">가입하기</div>
-					</div>
-				<c:set var="loop_flag" value="true" />
-				</c:if>
-				</c:forEach>
-				
-				<c:forEach var="gradee" items="${clubGrade}" >
-                <c:if test="${gradee.member_no == member_no  }">
+				</c:when>
+                <c:when test="${clubmember.member_no == Graded }">
 						      <div id="avgGrade">
 					우리모임의 평균 별점은? (참여자수 : ${gradeAvgCnt[0].cnt}명 )
 						<h3> ${gradeAvgCnt[0].avg} 점 </h3>		      
 						      </div>
-				<c:set var="loop_flag" value="true" />						      
-				</c:if>
-				</c:forEach>		      
-			</c:if>			      
+				</c:when>
+                <c:when test=" ${clubmember.member_no != memeber_no }">
+					<div id="joinBTN">
+						<div class="btn btn-primary rounded-pill py-3 px-5 mt-3" id="joinClub">가입하기</div>
+					</div>
+				</c:when>
+				
+                </c:choose>
+				</c:if>		        
 			
 			
 						      
                 	    </div>
                     </div>
                 </div>
-                <div class="col-lg-6 about-text py-5 wow fadeIn" data-wow-delay="0.5s">
-                    <div class="p-lg-5 pe-lg-0">
+               
                 <h6 class="text-primary">소개글</h6>
-                        <p id="club_content">${clubvo.club_content }</p>
+                        <p id="club_content" style="white-space: pre-wrap;">${clubvo.club_content }</p>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                    
+                    </div>
     <!-- About End -->
 
  <!-- Feature Start 정모 -->

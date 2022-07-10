@@ -145,6 +145,18 @@ public class ClubServiceImpl implements ClubService{
 			return dao.getClubMembers(num);
 		}
 
+
+		@Override
+		public Integer getGradeinfo(Integer num, Integer num2) {
+			return dao.getGradeinfo(num,num2);
+		}
+
+
+		@Override
+		public ClubMembersVo getClubMemberNo(Integer num) {
+			return dao.getClubMemberNo(num);
+		}
+
 	
 		
 	

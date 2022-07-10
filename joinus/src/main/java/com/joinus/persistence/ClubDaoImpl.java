@@ -173,6 +173,21 @@ public class ClubDaoImpl implements ClubDao{
 		}
 
 
+		@Override
+		public Integer getGradeinfo(Integer num, Integer num2) {
+			Map<String, Integer> numm = new HashMap<String, Integer>();
+			numm.put("club_no", num);
+			numm.put("member_no", num2);
+			return sqlSession.selectOne(NAMESPACE+".clubBtn", num);
+		}
+
+
+		@Override
+		public ClubMembersVo getClubMemberNo(Integer num) {
+			return sqlSession.selectOne(NAMESPACE+".getClubMemberNo", num);
+		}
+
+
 		
 
 
