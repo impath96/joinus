@@ -17,6 +17,7 @@ import com.joinus.domain.MembersVo;
 import com.joinus.persistence.ClubDao;
 import org.springframework.stereotype.Service;
 
+import com.joinus.domain.BoardCommentsVo;
 import com.joinus.domain.BoardCriteria;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
@@ -25,7 +26,7 @@ import com.joinus.persistence.ClubDao;
 import com.joinus.domain.ClubBoardsVo;
 
 @Service
-public class ClubServiceImpl implements Clubservice{
+public class ClubServiceImpl implements ClubService{
 	
 	private static final Logger log = LoggerFactory.getLogger(ClubServiceImpl.class);
 	
@@ -146,6 +147,56 @@ public class ClubServiceImpl implements Clubservice{
 		dao.deleteBoard(club_board_no);
 	}
 
+	@Override
+	public void writeComment(BoardCommentsVo vo) {
+		dao.writeComment(vo);
+	}
+
+	@Override
+	public int getCommentCnt(int club_board_no) {
+		return dao.getCommentCnt(club_board_no);
+	}
+
+	@Override
+	public List<BoardTotalBean> getCommentList(int club_board_no) {
+		return dao.getCommentList(club_board_no);
+	}
+
+	@Override
+	public void updateCommentCnt(int club_board_no) {
+		dao.updateCommentCnt(club_board_no);
+	}
+
+	@Override
+	public void updateComment(BoardCommentsVo vo) {
+		dao.updateComment(vo);
+	}
+
+	@Override
+	public void deleteComment(int board_comment_no) {
+		dao.deleteComment(board_comment_no);
+	}
+
+	@Override
+	public void decreaseCommentCnt(int club_board_no) {
+		dao.decreaseCommentCnt(club_board_no);
+	}
+
+	@Override
+	public int getLikeCnt(int club_board_no) {
+		return dao.getLikeCnt(club_board_no);
+	}
+
+	@Override
+	public int checkLike(int club_board_no, int member_no) {
+		return dao.checkLike(club_board_no, member_no);
+	}
+
+	@Override
+	public List<BoardTotalBean> getLikeList(int club_board_no) {
+		return dao.getLikeList(club_board_no);
+	}
+	
 	
 	
 	

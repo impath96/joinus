@@ -9,5 +9,7 @@ public class BoardTotalBean {
 	private ClubBoardsVo clubBoardsVo;
 	private ClubsVo clubsVo;
 	private BoardTypesVo boardTypesVo;
+	private BoardCommentsVo boardCommentsVo;
+	private BoardLikesVo boardLikesVo;
 
 }

@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.joinus.domain.BoardCommentsVo;
 import com.joinus.domain.BoardCriteria;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
@@ -211,5 +212,63 @@ public class ClubDaoImpl implements ClubDao{
 	public void deleteBoard(Integer club_board_no) {
 		sqlSession.delete(NAMESPACE+".deleteBoard", club_board_no);
 	}
+
+	@Override
+	public void writeComment(BoardCommentsVo vo) {
+		sqlSession.insert(NAMESPACE+".writeComment", vo);
+	}
+
+	@Override
+	public int getCommentCnt(int club_board_no) {
+		return sqlSession.selectOne(NAMESPACE+".commentCnt", club_board_no);
+	}
+
+	@Override
+	public List<BoardTotalBean> getCommentList(int club_board_no) {
+		return sqlSession.selectList(NAMESPACE+".getCommentList", club_board_no);
+	}
+
+	@Override
+	public void updateCommentCnt(int club_board_no) {
+		sqlSession.update(NAMESPACE+".updateCommentCnt", club_board_no);
+	}
+
+	@Override
+	public void updateComment(BoardCommentsVo vo) {
+		sqlSession.update(NAMESPACE+".updateComment", vo);
+	}
+
+	@Override
+	public void deleteComment(int board_comment_no) {
+		sqlSession.delete(NAMESPACE+".deleteComment", board_comment_no);
+	}
+
+	@Override
+	public void decreaseCommentCnt(int club_board_no) {
+		sqlSession.update(NAMESPACE+".decreaseCommentCnt", club_board_no);
+	}
+
+	@Override
+	public int getLikeCnt(int club_board_no) {
+		return sqlSession.selectOne(NAMESPACE+".likeCnt", club_board_no);
+	}
+
+	@Override
+	public int checkLike(int club_board_no, int member_no) {
+		Map<String, Integer> param = new HashMap<String, Integer>();
+		param.put("club_board_no", club_board_no);
+		param.put("member_no", member_no);
+		
+		return sqlSession.selectOne(NAMESPACE+".checkLike", param);
+	}
+
+	@Override
+	public List<BoardTotalBean> getLikeList(int club_board_no) {
+		return sqlSession.selectList(NAMESPACE+".boardLikeList", club_board_no);
+	}
+	
+	
+	
+	
 
 }

@@ -77,7 +77,7 @@
 							<span><fmt:formatDate value="${board.clubBoardsVo.club_board_updatedate }" pattern="yy.MM.dd HH:mm"/></span>
 						</c:if>
 					</div>
-					<i class="bi bi-heart"></i> <span class="clubBoardList_likeCnt">${board.clubBoardsVo.club_board_like }</span>
+					<i class="bi bi-heart"></i> <span class="clubBoardList_likeCnt">${board.clubBoardsVo.club_board_likecnt }</span>
 					<i class="fa fa-comments fa-fw"></i> <span class=clubBoardList_commentCnt>${board.clubBoardsVo.club_board_commentcnt }</span>
 				</div>
 				<hr>

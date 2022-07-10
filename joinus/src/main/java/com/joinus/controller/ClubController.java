@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.joinus.domain.BoardCommentsVo;
 import com.joinus.domain.BoardCriteria;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
@@ -41,7 +42,7 @@ import com.joinus.domain.ClubsVo;
 import com.joinus.domain.Criteria;
 import com.joinus.domain.MembersVo;
 import com.joinus.domain.PageMaker;
-import com.joinus.service.Clubservice;
+import com.joinus.service.ClubService;
 
 
 @Controller
@@ -49,7 +50,7 @@ import com.joinus.service.Clubservice;
 public class ClubController {
 	
 	@Inject
-	private Clubservice service;
+	private ClubService service;
 	
 	private static final Logger log = LoggerFactory.getLogger(ClubController.class);
 	
@@ -317,6 +318,7 @@ public class ClubController {
 		
 		model.addAttribute("boardList", service.getBoardListAll(club_no));
 		
+		
 		return "/club/boards/boardList";
 			
 	}
@@ -353,13 +355,34 @@ public class ClubController {
 	
 	/// http://localhost:8088/club/{club_no}/boards/{club_board_no}
 	/// http://localhost:8088/club/1/boards/1
-	// 게시글 상세보기
+	// 게시글 상세보기 (모임가입한 사람만 확인가능)
 	@RequestMapping(value = "/{club_no}/boards/{club_board_no}", method = RequestMethod.GET)
-	public String boardContentGet(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no, Model model) {
+	public String boardContentGet(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no, 
+			Model model, HttpSession session) {
 		log.info(" boardContentGet() 호출 ");
 		log.info(service.getBoardContent(club_board_no)+"");
 		
 		model.addAttribute("vo", service.getBoardContent(club_board_no));
+		
+		int commentCnt = service.getCommentCnt(club_board_no);
+		model.addAttribute("commentCnt", commentCnt);
+		
+		// 해당글의 댓글이 있는지 체크(댓글리스트 가져오기)
+		if(commentCnt > 0) {
+			model.addAttribute("commentList", service.getCommentList(club_board_no));
+		}
+		
+		model.addAttribute("likeCnt", service.getLikeCnt(club_board_no));
+		
+		// 좋아요 체크
+		session.setAttribute("member_no", 11);
+		int member_no = (int) session.getAttribute("member_no");
+		// checkLike - 1:좋아요O / 0:좋아요X
+		model.addAttribute("checkLike", service.checkLike(club_board_no, member_no));
+		
+		// 좋아요 멤버리스트
+		model.addAttribute("likeList", service.getLikeList(club_board_no));
+		
 		
 		return "/club/boards/boardContent";
 	}
@@ -404,12 +427,73 @@ public class ClubController {
 		return "redirect:/club/"+club_no+"/boards";
 	}
 	
-	// http://localhost:8088/club/${club_no}/boards/${club_board_no}/comment
-	// http://localhost:8088/club/1/boards/${club_board_no}/comment
+	// http://localhost:8088/club/{club_no}/boards/{club_board_no}/comment
+	// http://localhost:8088/club/1/boards/24/comment
 	// 댓글 등록
+	@ResponseBody
+	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/comment", method = RequestMethod.POST)
+	public void writeCommentPost(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no, HttpSession session, BoardCommentsVo vo) {
+		log.info(" writeCommentPost() 호출 ");
+		
+		// 전달받은 데이터
+		log.info("commentVo : "+vo);
+		
+		// 작성자(member_no) 세션에서 꺼내쓰기(게시판 글쓰기 실행시키고 와야함)
+		session.setAttribute("member_no", 11);
+		int member_no = (int) session.getAttribute("member_no");
+		vo.setMember_no(member_no);
+		log.info("member추가 vo : "+vo);
+		
+		service.writeComment(vo);
+		service.updateCommentCnt(club_board_no);
+		log.info(" 댓글등록 완료! ");
+		
+		
+	}
 	
+	// http://localhost:8088/club/{club_no}/boards/{club_board_no}/comment/modify?board_comment_no="+board_comment_no
+	// 댓글 수정
+	@ResponseBody
+	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/comment/modify", method = RequestMethod.POST)
+	public void updateCommentPost(@PathVariable("club_no") int club_no, @PathVariable("club_board_no") int club_board_no, 
+			@RequestParam("board_comment_no") int board_comment_no, BoardCommentsVo vo) {
+		log.info(" updateCommentPost() 호출 ");
+		log.info("board_comment_no : "+board_comment_no);
+		log.info("boardCommentsVo : "+vo);
+		
+		service.updateComment(vo);
+		log.info(" 댓글수정 완료! ");
+	}
 	
+	// http://localhost:8088/club/{club_no}/boards/{club_board_no}/comment/delete?board_comment_no="+board_comment_no
+	// 댓글 삭제
+	@ResponseBody
+	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/comment/delete", method = RequestMethod.POST)
+	public void deleteCommentPost(@PathVariable("club_no") int club_no, @PathVariable("club_board_no") int club_board_no,
+			@RequestParam("board_comment_no") int board_comment_no) {
+		log.info(" deleteCommentPost() 호출 ");
+		
+		service.deleteComment(board_comment_no);
+		service.decreaseCommentCnt(club_board_no);
+		log.info(" 댓글삭제 완료! ");
+		
+	}
 	
+	// http://localhost:8088/club/{club_no}/boards/{club_board_no}/likeDown
+	// 좋아요 취소
+	@ResponseBody
+	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/likeDown", method = RequestMethod.POST)
+	public void cancleLikePost(@PathVariable("club_no") int club_no, @PathVariable("club_board_no") int club_board_no) {
+		log.info(" cancleLikePost() 호출 ");
+	}
+	
+	// http://localhost:8088/club/{club_no}/boards/{club_board_no}/likeUp
+	// 좋아요 등록
+	@ResponseBody
+	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/likeUp", method = RequestMethod.POST)
+	public void LikePost(@PathVariable("club_no") int club_no, @PathVariable("club_board_no") int club_board_no) {
+		log.info(" LikePost() 호출 ");
+	}
 
 	
 }

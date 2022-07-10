@@ -55,6 +55,7 @@
    <id property="club_name" column="club_name"/>
    <id property="club_capacity" column="club_capacity"/>
    <id property="club_content" column="club_content"/>
+   <id property="club_location" column="club_location"/>
    <id property="club_image" column="club_image"/>
    <id property="club_regdate" column="club_regdate"/>
 </resultMap>
@@ -97,13 +98,30 @@
 	<id property="club_board_image" column="club_board_image"/>
 	<id property="club_board_date" column="club_board_date"/>
 	<id property="club_board_updatedate" column="club_board_updatedate"/>
-	<id property="club_board_like" column="club_board_like"/>
+	<id property="club_board_likecnt" column="club_board_likecnt"/>
 	<id property="club_board_commentcnt" column="club_board_commentcnt"/>
+</resultMap>
+
+<resultMap type="BoardCommentsVo" id="boardCommentsMap">
+	<id property="board_comment_no" column="board_comment_no"/>
+	<id property="club_board_no" column="club_board_no"/>
+	<id property="club_no" column="club_no"/>
+	<id property="member_no" column="member_no"/>
+	<id property="board_comment_content" column="board_comment_content"/>
+	<id property="board_comment_date" column="board_comment_date"/>
+	<id property="board_comment_updatedate" column="board_comment_updatedate"/>
 </resultMap>
 
 <resultMap type="BoardTypesVo" id="boardTypesMap">
 	<id property="board_type_no" column="board_type_no"/>
 	<id property="board_type_name" column="board_type_name"/>
+</resultMap>
+
+<resultMap type="BoardLikesVo" id="boardLikesMap">
+	<id property="board_like_no" column="board_like_no"/>
+	<id property="club_board_no" column="club_board_no"/>
+	<id property="club_no" column="club_no"/>
+	<id property="member_no" column="member_no"/>
 </resultMap>
 
 <resultMap type="BoardTotalBean" id="boardListMap">
@@ -116,6 +134,16 @@
 	<collection property="clubsVo" resultMap="clubsMap"></collection>
 	<collection property="membersVo" resultMap="membersMap"></collection>
 	<collection property="boardTypesVo" resultMap="boardTypesMap"></collection>
+</resultMap>
+
+<resultMap type="BoardTotalBean" id="boardCommentMap">
+	<collection property="membersVo" resultMap="membersMap"></collection>
+	<collection property="boardCommentsVo" resultMap="boardCommentsMap"></collection>
+</resultMap>
+
+<resultMap type="BoardTotalBean" id="boardLikeMemberMap">
+	<collection property="membersVo" resultMap="membersMap"></collection>
+	<collection property="boardLikesVo" resultMap="boardLikesMap"></collection>
 </resultMap>
 
 <select id="ClubMemberList" resultMap="ClubMemberListMap">
@@ -237,7 +265,7 @@
 	</insert>
 	
 	<select id="getBoardListAll" resultMap="boardListMap">
-		select b.club_board_no, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate, b.club_board_like, b.club_board_commentcnt
+		select b.club_board_no, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate, b.club_board_likecnt, b.club_board_commentcnt
 		from club_boards b
 		join members m
 			on (b.member_no = m.member_no)
@@ -246,7 +274,7 @@
 	</select>
 	
 	<select id="getBoardList" resultMap="boardListMap">
-		select b.club_board_no, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate, b.club_board_like, b.club_board_commentcnt
+		select b.club_board_no, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate, b.club_board_likecnt, b.club_board_commentcnt
 		from club_boards b
 		join members m
 			on (b.member_no = m.member_no)
@@ -298,6 +326,64 @@
 	</select>
 	
 	<!-- 댓글 작성 -->
+	<insert id="writeComment">
+		insert into board_comments (club_board_no, club_no, member_no, board_comment_content)
+		values (#{club_board_no}, #{club_no}, #{member_no}, #{board_comment_content})
+	</insert>
+	
+	<!-- 댓글 출력 -->
+	<select id="getCommentList" resultMap="boardCommentMap">
+		select bc.board_comment_no, m.member_name, m.member_image, bc.board_comment_content, bc.board_comment_date, bc.board_comment_updatedate
+		from board_comments bc
+		join members m
+			on (bc.member_no = m.member_no)
+		where club_board_no = #{club_board_no}
+	</select>
+	
+	<!-- 댓글수 + 1 -->
+	<update id="updateCommentCnt">
+		update club_boards set club_board_commentcnt = club_board_commentcnt + 1
+		where club_board_no = #{club_board_no}
+	</update>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateComment">
+		update board_comments set board_comment_content = #{board_comment_content}, board_comment_updatedate = now()
+		where board_comment_no = #{board_comment_no}
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteComment">
+		delete from board_comments
+		where board_comment_no = #{board_comment_no}
+	</delete>
+	
+	<!-- 댓글수 - 1 -->
+	<update id="decreaseCommentCnt">
+		update club_boards set club_board_commentcnt = club_board_commentcnt - 1
+		where club_board_no = #{club_board_no}
+	</update>
+	
+	<!-- 좋아요수 -->
+	<select id="likeCnt" resultType="java.lang.Integer">
+		select count(*) from board_likes
+		where club_board_no = #{club_board_no}
+	</select>
+	
+	<!-- 좋아요 눌렀는지 확인 -->
+	<select id="checkLike" resultType="java.lang.Integer">
+		select count(*) from board_likes
+		where club_board_no = #{club_board_no} and member_no = #{member_no}
+	</select>
+	
+	<!-- 좋아요한 멤버리스트 -->
+	<select id="boardLikeList" resultMap="boardLikeMemberMap">
+		select m.member_name, m.member_image
+		from board_likes bl
+		join members m
+		on bl.member_no = m.member_no
+		where club_board_no = #{club_board_no}
+	</select>
 	
 	
 </mapper> 
