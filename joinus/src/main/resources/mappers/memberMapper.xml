@@ -8,7 +8,7 @@
 		select * from members where member_email = #{member_email};
 	</select>
 	<insert id="insertMember">
-		insert into members (member_email, member_pass, member_name, member_image, member_type)
-		values (#{member_email},#{member_pass},#{member_name},#{member_image},#{member_type})
+		insert into members (member_email, member_pass, member_name)
+		values (#{member_email},#{member_pass},#{member_name})
 	</insert>
 </mapper>
