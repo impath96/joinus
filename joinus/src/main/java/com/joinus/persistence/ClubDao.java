@@ -53,11 +53,11 @@ public interface ClubDao {
 	public void writeBoard(ClubBoardsVo vo);
 	
 	// 모임고유값에 따른 게시글리스트
-	public List<BoardTotalBean> getBoardListAll(Integer club_no);
+	public List<BoardTotalBean> getBoardListAll(Integer club_no, BoardCriteria cri);
 	
-	public Integer getTotalBoardCnt();
+	public Integer getTotalBoardCnt(int club_no);
 	
-	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no);
+	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no, BoardCriteria cri);
 	
 	public List<ClubBoardsVo> getBoardImageList(Integer club_no);
 	

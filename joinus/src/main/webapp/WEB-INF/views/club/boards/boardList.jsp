@@ -83,22 +83,41 @@
 				<hr>
 			</c:forEach>
 			
-			<div>
-				<ul class="pagination pagination-sm no-margin pull-right" style="float: right;">
+<!-- 			<div> -->
+<!-- 				<ul class="pagination pagination-sm no-margin pull-right" style="float: right;"> -->
 		
-				<li style="margin-right: 1em;"><a href="#">«</a></li>
+<!-- 				<li style="margin-right: 1em;"><a href="#">«</a></li> -->
 			
-				<li >
-					<a href="#" style="margin-right: 1em;">1</a>
-					<a href="#" style="margin-right: 1em;">2</a>
-					<a href="#" style="margin-right: 1em;">3</a>
-					<a href="#" style="margin-right: 1em;">4</a>
-				</li>			
+<!-- 				<li > -->
+<!-- 					<a href="#" style="margin-right: 1em;">1</a> -->
+<!-- 					<a href="#" style="margin-right: 1em;">2</a> -->
+<!-- 					<a href="#" style="margin-right: 1em;">3</a> -->
+<!-- 					<a href="#" style="margin-right: 1em;">4</a> -->
+<!-- 				</li>			 -->
 			
-				<li><a href="#">»</a></li>
+<!-- 				<li><a href="#">»</a></li> -->
 			
-				</ul>
-			</div>
+<!-- 				</ul> -->
+<!-- 			</div> -->
+
+				<!-- 페이징블럭 -->
+				<div class="d-flex justify-content-center py-3">
+		        	<ul class="list-group list-group-horizontal">
+		        		<c:if test="${pm.prev }">
+		        			<li><a href="${PageContext.request.contextPath }/club/${club_no }/boards?page=${pm.startPage-1}">&laquo;</a></li>
+		        		</c:if>
+		        		<c:forEach var ="idx" begin ="${pm.startPage }" end="${pm.endPage }">
+		        			<li class="list-group-item" <c:out value="${pm.cri.page == idx? 'class=active':'' }"/>>
+		        			<a href = "${PageContext.request.contextPath }/club/${club_no }/boards?page=${idx}" >${idx }</a>
+		        			</li>
+		        		</c:forEach>
+		        		
+		        		<c:if test="${pm.next && pm.endPage>0 }">
+		        			<li> <a href ="${PageContext.request.contextPath }/club/${club_no }/boards?page=${pm.endPage+1}">&raquo;</a></li>
+		        		</c:if>
+		        	
+		        	</ul>
+		        </div>
 			
 			
 		</div>

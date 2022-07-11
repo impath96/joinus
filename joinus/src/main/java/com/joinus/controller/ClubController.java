@@ -307,25 +307,23 @@ public class ClubController {
 	// http://localhost:8088/club/1/boards
 	// 게시글리스트
 	@RequestMapping(value = "/{club_no}/boards", method = RequestMethod.GET)
-	public String boardListAllGet(@PathVariable("club_no") Integer club_no, Model model) {
+	public String boardListAllGet(@PathVariable("club_no") Integer club_no, Model model, BoardCriteria cri) {
 		log.info(" boardListAllGet() 호출 ");
 		log.info("club_no : "+club_no);
 		
 		
-		List<BoardTotalBean> boardList = service.getBoardListAll(club_no);
-		log.info("@@@@@@@@@@@@"+boardList.get(16)+"");
+//		List<BoardTotalBean> boardList = service.getBoardListAll(club_no, cri);
+//		log.info("@@@@@@@@@@@@"+boardList.get(16)+"");
 		
 		
 		model.addAttribute("club_no", club_no);
 		
-		model.addAttribute("boardList", service.getBoardListAll(club_no));
-//		log.info("페이징처리 boardList 완료");
-		
-//		BoardPageMaker pageMarker = new BoardPageMaker();
-//		pageMarker.setCri(cri);
-//		pageMarker.setTotalCount(service.getTotalBoardCnt());
-//		log.info(pageMarker+"");
-//		model.addAttribute("pm", pageMarker);
+		model.addAttribute("boardList", service.getBoardListAll(club_no, cri));
+		BoardPageMaker pageMarker = new BoardPageMaker();
+		pageMarker.setCri(cri);
+		pageMarker.setTotalCount(service.getTotalBoardCnt(club_no));
+		log.info(pageMarker+"");
+		model.addAttribute("pm", pageMarker);
 		
 		
 		return "/club/boards/boardList";
@@ -336,14 +334,18 @@ public class ClubController {
 	// http://localhost:8088/club/1/boards/type/1
 	// 게시글리스트(게시글유형별)
 	@RequestMapping(value = "/{club_no}/boards/type/{board_type_no}", method = RequestMethod.GET)
-	public String boardListTypeGet(@PathVariable("club_no") Integer club_no, @PathVariable("board_type_no") Integer board_type_no, Model model) {
+	public String boardListTypeGet(@PathVariable("club_no") Integer club_no, @PathVariable("board_type_no") Integer board_type_no, Model model, BoardCriteria cri) {
 		log.info(" boardListTypeGet() 호출 ");
 		log.info("club_no : "+club_no);
 		log.info("board_type_no : "+board_type_no);
 		
 		model.addAttribute("club_no", club_no);
 		
-		model.addAttribute("boardList", service.getBoardList(club_no, board_type_no));
+		model.addAttribute("boardList", service.getBoardList(club_no, board_type_no, cri));
+		BoardPageMaker pageMarker = new BoardPageMaker();
+		pageMarker.setCri(cri);
+		// 카테고리별 게시글 총개수 구하는 메서드 만들기(매퍼는 준비완)
+		
 		
 		return "/club/boards/boardList";
 	}

@@ -176,30 +176,32 @@ public class ClubDaoImpl implements ClubDao{
 	}
 
 	@Override
-	public List<BoardTotalBean> getBoardListAll(Integer club_no) {
+	public List<BoardTotalBean> getBoardListAll(Integer club_no, BoardCriteria cri) {
 		log.info(" getBoardListAll() 호출 ");
-//		log.info("@@@@@@"+club_no+", "+cri);
-//		Map<String, Object> param = new HashMap<String, Object>();
-//		param.put("club_no", club_no);
-//		param.put("pageStart", cri.getPageStart());
-//		param.put("perPageNum", cri.getPerPageNum());
+		log.info("@@@@@@"+club_no+", "+cri);
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("club_no", club_no);
+		param.put("pageStart", cri.getPageStart());
+		param.put("perPageNum", cri.getPerPageNum());
 		
-		return sqlSession.selectList(NAMESPACE+".getBoardListAll", club_no);
+		return sqlSession.selectList(NAMESPACE+".getBoardListAll", param);
 	}
 	
 	@Override
-	public Integer getTotalBoardCnt() {
-		return sqlSession.selectOne(NAMESPACE+".totalBoardCnt");
+	public Integer getTotalBoardCnt(int club_no) {
+		return sqlSession.selectOne(NAMESPACE+".totalBoardCnt", club_no);
 	}
 
 	@Override
-	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no) {
+	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no, BoardCriteria cri) {
 		log.info(" getBoardList() 호출 ");
+		log.info("@@@@@@"+club_no+", "+board_type_no+", "+cri);
 		
-		Map<String, Integer> param = new HashMap<String, Integer>();
+		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("club_no", club_no);
 		param.put("board_type_no", board_type_no);
-		
+		param.put("pageStart", cri.getPageStart());
+		param.put("perPageNum", cri.getPerPageNum());
 		
 		return sqlSession.selectList(NAMESPACE+".getBoardList", param);
 	}

@@ -272,11 +272,13 @@
 			on (b.member_no = m.member_no)
 		where b.club_no = #{club_no}
 		order by club_board_no desc
+		limit #{pageStart}, #{perPageNum}
 		]]>
 	</select>
 	
 	<select id="totalBoardCnt" resultType="java.lang.Integer">
 		select count(club_board_no) from club_boards
+		where club_no = #{club_no}
 	</select>
 	
 	
@@ -287,6 +289,12 @@
 			on (b.member_no = m.member_no)
 		where b.club_no = #{club_no} and b.board_type_no = #{board_type_no}
 		order by club_board_no desc
+		limit #{pageStart}, #{perPageNum}
+	</select>
+	
+	<select id="typeBoardCnt" resultType="java.lang.Integer">
+		select count(club_board_no) from club_boards
+		where club_no = #{club_no} and board_type_no = #{board_type_no}
 	</select>
 	
 	<select id="getBoardImageList" resultType="ClubBoardsVo">

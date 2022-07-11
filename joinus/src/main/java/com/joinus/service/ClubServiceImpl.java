@@ -119,18 +119,18 @@ public class ClubServiceImpl implements ClubService{
 	}
 
 	@Override
-	public List<BoardTotalBean> getBoardListAll(Integer club_no) {
-		return dao.getBoardListAll(club_no);
+	public List<BoardTotalBean> getBoardListAll(Integer club_no, BoardCriteria cri) {
+		return dao.getBoardListAll(club_no, cri);
 	}
 	
 	@Override
-	public Integer getTotalBoardCnt() {
-		return dao.getTotalBoardCnt();
+	public Integer getTotalBoardCnt(int club_no) {
+		return dao.getTotalBoardCnt(club_no);
 	}
 
 	@Override
-	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no) {
-		return dao.getBoardList(club_no, board_type_no);
+	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no, BoardCriteria cri) {
+		return dao.getBoardList(club_no, board_type_no, cri);
 	}
 
 	@Override
