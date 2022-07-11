@@ -265,13 +265,20 @@
 	</insert>
 	
 	<select id="getBoardListAll" resultMap="boardListMap">
+		<![CDATA[
 		select b.club_board_no, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate, b.club_board_likecnt, b.club_board_commentcnt
 		from club_boards b
 		join members m
 			on (b.member_no = m.member_no)
 		where b.club_no = #{club_no}
 		order by club_board_no desc
+		]]>
 	</select>
+	
+	<select id="totalBoardCnt" resultType="java.lang.Integer">
+		select count(club_board_no) from club_boards
+	</select>
+	
 	
 	<select id="getBoardList" resultMap="boardListMap">
 		select b.club_board_no, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate, b.club_board_likecnt, b.club_board_commentcnt
@@ -381,9 +388,32 @@
 		select m.member_name, m.member_image
 		from board_likes bl
 		join members m
-		on bl.member_no = m.member_no
+			on (bl.member_no = m.member_no)
 		where club_board_no = #{club_board_no}
 	</select>
 	
+	<!-- 좋아요 등록 -->
+	<insert id="insertLike">
+		insert into board_likes (club_board_no, club_no, member_no)
+		values (#{club_board_no}, #{club_no}, #{member_no})
+	</insert>
+	
+	<!-- 좋아요수 + 1 -->
+	<update id="increaseLikeCnt">
+		update club_boards set club_board_likecnt = club_board_likecnt + 1
+		where club_board_no = #{club_board_no}
+	</update>
+	
+	<!-- 좋아요 취소 -->
+	<delete id="cancelLike">
+		delete from board_likes
+		where club_board_no = #{club_board_no} and member_no = #{member_no}
+	</delete>
+	
+	<!-- 좋아요수 - 1 -->
+	<update id="decreaseLikeCnt">
+		update club_boards set club_board_likecnt = club_board_likecnt - 1
+		where club_board_no = #{club_board_no}
+	</update>
 	
 </mapper> 

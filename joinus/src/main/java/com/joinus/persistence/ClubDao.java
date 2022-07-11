@@ -7,6 +7,7 @@ import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubTotalBean;
 import com.joinus.domain.BoardCommentsVo;
 import com.joinus.domain.BoardCriteria;
+import com.joinus.domain.BoardLikesVo;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubsVo;
 import com.joinus.domain.Criteria;
@@ -54,6 +55,8 @@ public interface ClubDao {
 	// 모임고유값에 따른 게시글리스트
 	public List<BoardTotalBean> getBoardListAll(Integer club_no);
 	
+	public Integer getTotalBoardCnt();
+	
 	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no);
 	
 	public List<ClubBoardsVo> getBoardImageList(Integer club_no);
@@ -97,6 +100,18 @@ public interface ClubDao {
 	
 	// 좋아요 멤버 리스트
 	public List<BoardTotalBean> getLikeList(int club_board_no);
+	
+	// 좋아요 등록
+	public void insertLike(BoardLikesVo vo);
+	
+	// 좋아요수 + 1
+	public void increaseLikeCnt(int club_board_no);
+	
+	// 좋아요 취소
+	public void cancelLike(int club_board_no, int member_no);
+	
+	// 좋아요수 - 1
+	public void decreaseLikeCnt(int club_board_no);
 	
 	//=========================허수빈========================
 

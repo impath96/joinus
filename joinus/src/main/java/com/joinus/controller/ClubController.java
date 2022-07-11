@@ -36,6 +36,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.joinus.domain.BoardCommentsVo;
 import com.joinus.domain.BoardCriteria;
+import com.joinus.domain.BoardLikesVo;
+import com.joinus.domain.BoardPageMaker;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubsVo;
@@ -317,6 +319,13 @@ public class ClubController {
 		model.addAttribute("club_no", club_no);
 		
 		model.addAttribute("boardList", service.getBoardListAll(club_no));
+//		log.info("페이징처리 boardList 완료");
+		
+//		BoardPageMaker pageMarker = new BoardPageMaker();
+//		pageMarker.setCri(cri);
+//		pageMarker.setTotalCount(service.getTotalBoardCnt());
+//		log.info(pageMarker+"");
+//		model.addAttribute("pm", pageMarker);
 		
 		
 		return "/club/boards/boardList";
@@ -375,9 +384,9 @@ public class ClubController {
 		model.addAttribute("likeCnt", service.getLikeCnt(club_board_no));
 		
 		// 좋아요 체크
-		session.setAttribute("member_no", 11);
+		session.setAttribute("member_no", 12);
 		int member_no = (int) session.getAttribute("member_no");
-		// checkLike - 1:좋아요O / 0:좋아요X
+		// checkLike - 1:좋아요O / 0:좋아요X (해당 회원이 좋아요를 눌렀는지 체크)
 		model.addAttribute("checkLike", service.checkLike(club_board_no, member_no));
 		
 		// 좋아요 멤버리스트
@@ -479,21 +488,40 @@ public class ClubController {
 		
 	}
 	
-	// http://localhost:8088/club/{club_no}/boards/{club_board_no}/likeDown
-	// 좋아요 취소
-	@ResponseBody
-	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/likeDown", method = RequestMethod.POST)
-	public void cancleLikePost(@PathVariable("club_no") int club_no, @PathVariable("club_board_no") int club_board_no) {
-		log.info(" cancleLikePost() 호출 ");
-	}
 	
 	// http://localhost:8088/club/{club_no}/boards/{club_board_no}/likeUp
 	// 좋아요 등록
 	@ResponseBody
 	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/likeUp", method = RequestMethod.POST)
-	public void LikePost(@PathVariable("club_no") int club_no, @PathVariable("club_board_no") int club_board_no) {
+	public void LikePost(@PathVariable("club_no") int club_no, @PathVariable("club_board_no") int club_board_no, 
+			BoardLikesVo vo, HttpSession session) {
 		log.info(" LikePost() 호출 ");
+		log.info("좋아요 vo : "+vo);
+		// 세션에서 member_no
+		session.setAttribute("member_no", 12);
+		int member_no = (int) session.getAttribute("member_no");
+		vo.setMember_no(member_no);
+		log.info("member추가 vo : "+vo);
+		
+		service.insertLike(vo);
+		service.increaseLikeCnt(club_board_no);
+		log.info(" 좋아요 등록 완료! ");
 	}
 
+	// http://localhost:8088/club/{club_no}/boards/{club_board_no}/likeDown
+	// 좋아요 취소
+	@ResponseBody
+	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/likeDown", method = RequestMethod.POST)
+	public void cancleLikePost(@PathVariable("club_no") int club_no, @PathVariable("club_board_no") int club_board_no, 
+			HttpSession session) {
+		log.info(" cancleLikePost() 호출 ");
+		// 세션에서 member_no
+		session.setAttribute("member_no", 12);
+		int member_no = (int) session.getAttribute("member_no");
+		
+		service.cancelLike(club_board_no, member_no);
+		service.decreaseLikeCnt(club_board_no);
+		log.info(" 좋아요 취소 완료! ");
+	}
 	
 }

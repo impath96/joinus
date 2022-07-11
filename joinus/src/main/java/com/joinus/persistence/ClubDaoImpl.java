@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.joinus.domain.BoardCommentsVo;
 import com.joinus.domain.BoardCriteria;
+import com.joinus.domain.BoardLikesVo;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubMembersVo;
@@ -177,8 +178,18 @@ public class ClubDaoImpl implements ClubDao{
 	@Override
 	public List<BoardTotalBean> getBoardListAll(Integer club_no) {
 		log.info(" getBoardListAll() 호출 ");
+//		log.info("@@@@@@"+club_no+", "+cri);
+//		Map<String, Object> param = new HashMap<String, Object>();
+//		param.put("club_no", club_no);
+//		param.put("pageStart", cri.getPageStart());
+//		param.put("perPageNum", cri.getPerPageNum());
 		
 		return sqlSession.selectList(NAMESPACE+".getBoardListAll", club_no);
+	}
+	
+	@Override
+	public Integer getTotalBoardCnt() {
+		return sqlSession.selectOne(NAMESPACE+".totalBoardCnt");
 	}
 
 	@Override
@@ -265,6 +276,30 @@ public class ClubDaoImpl implements ClubDao{
 	@Override
 	public List<BoardTotalBean> getLikeList(int club_board_no) {
 		return sqlSession.selectList(NAMESPACE+".boardLikeList", club_board_no);
+	}
+
+	@Override
+	public void insertLike(BoardLikesVo vo) {
+		sqlSession.insert(NAMESPACE+".insertLike", vo);
+	}
+
+	@Override
+	public void increaseLikeCnt(int club_board_no) {
+		sqlSession.update(NAMESPACE+".increaseLikeCnt", club_board_no);
+	}
+
+	@Override
+	public void cancelLike(int club_board_no, int member_no) {
+		Map<String, Integer> param = new HashMap<String, Integer>();
+		param.put("club_board_no", club_board_no);
+		param.put("member_no", member_no);
+		
+		sqlSession.delete(NAMESPACE+".cancelLike", param);
+	}
+
+	@Override
+	public void decreaseLikeCnt(int club_board_no) {
+		sqlSession.update(NAMESPACE+".decreaseLikeCnt", club_board_no);
 	}
 	
 	

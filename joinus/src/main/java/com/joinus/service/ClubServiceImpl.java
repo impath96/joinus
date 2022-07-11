@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import com.joinus.domain.BoardCommentsVo;
 import com.joinus.domain.BoardCriteria;
+import com.joinus.domain.BoardLikesVo;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.persistence.ClubDao;
@@ -121,6 +122,11 @@ public class ClubServiceImpl implements ClubService{
 	public List<BoardTotalBean> getBoardListAll(Integer club_no) {
 		return dao.getBoardListAll(club_no);
 	}
+	
+	@Override
+	public Integer getTotalBoardCnt() {
+		return dao.getTotalBoardCnt();
+	}
 
 	@Override
 	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no) {
@@ -195,6 +201,26 @@ public class ClubServiceImpl implements ClubService{
 	@Override
 	public List<BoardTotalBean> getLikeList(int club_board_no) {
 		return dao.getLikeList(club_board_no);
+	}
+
+	@Override
+	public void insertLike(BoardLikesVo vo) {
+		dao.insertLike(vo);
+	}
+
+	@Override
+	public void increaseLikeCnt(int club_board_no) {
+		dao.increaseLikeCnt(club_board_no);
+	}
+
+	@Override
+	public void cancelLike(int club_board_no, int member_no) {
+		dao.cancelLike(club_board_no, member_no);
+	}
+
+	@Override
+	public void decreaseLikeCnt(int club_board_no) {
+		dao.decreaseLikeCnt(club_board_no);
 	}
 	
 	

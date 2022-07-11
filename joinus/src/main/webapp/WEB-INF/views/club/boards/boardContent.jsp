@@ -30,7 +30,7 @@
 		$('#commentBtn').click(function(){
 // 			alert('댓글등록');
 			if($('#board_comment_content').val() != ''){
-				alert('값O');
+// 				alert('값O');
 				$.ajax({
 					type : "post",
 					url : "${pageContext.request.contextPath}/club/${club_no}/boards/${club_board_no}/comment",
@@ -39,7 +39,7 @@
 						board_comment_content : $('#board_comment_content').val()
 					},
 					success : function(data){
-						alert('댓글등록완료');
+// 						alert('댓글등록완료');
 						$('#board_comment_content').val('');
 						location.reload();
 					},
@@ -120,19 +120,19 @@
 		
 		// 좋아요
 		$('#like').click(function(){{
-			alert('좋아요클릭');
+// 			alert('좋아요클릭');
 			var like_check = ${checkLike};
 			
 			if(like_check == 1){
-				alert('좋아요 누른 회원');
+// 				alert('좋아요 누른 회원');
 				// 좋아요 취소
 				$.ajax({
 					type : "post",
 					url : "${pageContext.request.contextPath}/club/${club_no}/boards/${club_board_no}/likeDown",
 					// 만약 data를 넘겨줄것같으면 세션값에 저장된 member_no -> 근데 굳이 view에서 세션값을 넘겨줄 필요가..? 컨트롤러에서 세션값 바로 쓰면 될 것 같은데
 					success : function(){
-						alert('좋아요 취소');
-// 						location.reload();
+// 						alert('좋아요 취소');
+						location.reload();
 					},
 					erorr : function error(){
 						alert('시스템 문제발생');
@@ -140,12 +140,14 @@
 				});
 			} else {
 				// 좋아요 안누른 회원
+// 				alert('좋아요 안누른 회원');
 				// 좋아요
 				$.ajax({
 					type : "post",
 					url : "${pageContext.request.contextPath}/club/${club_no}/boards/${club_board_no}/likeUp",
 					success : function(){
-						alert('좋아요');
+// 						alert('좋아요');
+						location.reload();
 					},
 					error : function error(){
 						alert('시스템 문제발생');
@@ -154,6 +156,17 @@
 			}
 			
 		}});
+		
+		// 좋아요 회원 목록
+		$('#likeMember').click(function(){
+			
+			if($('#likeMemberList').css("display") == 'none'){
+				$('#likeMemberList').show();
+			} else {
+				$('#likeMemberList').hide();
+			}
+			
+		});
 		
 	});
 
@@ -180,7 +193,7 @@
 		<div class="row g-0 mx-lg-0">
 			<!-- 			<div class="col-lg-6 contact-text py-5 wow fadeIn" data-wow-delay="0.5s"> -->
 			<div class="p-lg-5" align="center">
-				<h6 class="text-primary">${vo.clubsVo.club_name } / ${vo.boardTypesVo.board_type_name }</h6>
+				<h6 class="text-primary">${vo.clubsVo.club_name } ${vo.boardTypesVo.board_type_name }</h6>
 				<h1 class="clubWrite_mb-4" style="float: left;">${vo.clubBoardsVo.club_board_title }</h1>
 				<br>
 					<div class="row g-3">
@@ -218,13 +231,32 @@
 					<hr style="margin-top: 3em;">
 					
 					<div style="text-align: left;">
-						<a id="like" href="#"><i class="bi bi-heart"></i></a><span class="clubBoardList_likeCnt"> ${likeCnt }</span>
+						<a id="like" href="#">
+							<c:if test="${checkLike == 0 }">
+								<i id="noLikeIcon" class="bi bi-heart"></i>
+							</c:if>
+							<c:if test="${checkLike == 1 }">
+								<i id="likeIcon" class="fa fa-solid fa-heart"></i>
+							</c:if>
+						</a>
+						<span class="clubBoardList_likeCnt"> ${likeCnt }</span>
+						
 						<i class="fa fa-comments fa-fw"></i><span class=clubBoardList_commentCnt> ${commentCnt }</span>
 					</div>
 					
 					<c:if test="${likeCnt > 0 }">
-						<a href="">${likeCnt }명이 좋아하셨습니다.</a>
+						<button type="button" class="likeMemberBtn btn btn-primary" id="likeMember" style="color:black;">${likeCnt }명이 좋아하셨습니다.</button>
+<%-- 						<a id="likeMember" href="">${likeCnt }명이 좋아하셨습니다.</a> --%>
+						
+						<div id="likeMemberList" style="display: none;">
+<!-- 							좋아요한 회원목록<br> -->
+							<c:forEach var="member" items="${likeList }">
+								<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${member.membersVo.member_image }"> / ${member.membersVo.member_name } <br>
+							</c:forEach>
+						</div>
+						
 					</c:if>
+					
 					
 					<div class="comments_form" style="margin: 30px 0;">
 						<div>

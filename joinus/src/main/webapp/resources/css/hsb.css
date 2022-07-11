@@ -50,3 +50,8 @@
 	width: 50px;
 	border-radius: 100%;
 }
+
+.likeMemberBtn {
+	color: black;
+	background-color: white;
+}
