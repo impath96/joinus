@@ -18,7 +18,7 @@ import com.joinus.persistence.ClubDao;
 import com.joinus.domain.ClubBoardsVo;
 
 @Service
-public class ClubServiceImpl implements Clubservice{
+public class ClubServiceImpl implements ClubService{
 	
 	private static final Logger log = LoggerFactory.getLogger(ClubServiceImpl.class);
 	

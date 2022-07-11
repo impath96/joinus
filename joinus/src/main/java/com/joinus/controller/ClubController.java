@@ -19,7 +19,7 @@ import com.joinus.domain.ClubsVo;
 import com.joinus.domain.Criteria;
 import com.joinus.domain.MembersVo;
 import com.joinus.domain.PageMaker;
-import com.joinus.service.Clubservice;
+import com.joinus.service.ClubService;
 
 
 @Controller
@@ -28,7 +28,7 @@ public class ClubController {
 	
 
 	@Inject
-	private Clubservice service;
+	private ClubService service;
 	
 	private static final Logger log = LoggerFactory.getLogger(ClubController.class);
 	
@@ -84,7 +84,6 @@ public class ClubController {
 			//result = 3 : 클럽 미가입 회원
 			//result = 1 : 클럽 가입 회원
 			//result = 2 : 클럽장
-			
 		}
 		
 		List<ClubsVo> clubInfo = service.clubInfo(club_no);
@@ -98,9 +97,22 @@ public class ClubController {
 	}
 	
 	//http://localhost:8088/club/clubMeeting
-	@RequestMapping(value="/clubMeeting", method = RequestMethod.GET)
-	public void clubMeeting() {
+	@RequestMapping(value="/meetingList", method = RequestMethod.GET)
+	public void clubMeetingGET() {
 		log.info("clubMeeting() 호출");
+	}
+	
+	
+	//http://localhost:8088/club/1/meetingWrite
+	@RequestMapping(value="/{club_no}/meetingWrite", method = RequestMethod.GET)
+	public String meetingWritegPOST(Model model,
+						@PathVariable("club_no") Integer club_no, HttpSession session) {
+			
+		
+		
+		log.info("meetingWritePOST() 호출");
+		
+		return "/club/meetingWrite";
 	}
 	
 	//http://localhost:8088/club/1/clubMember/ban
