@@ -141,7 +141,7 @@ $(document).ready(function(){
 			
 	}); 
 	
-
+	// 모임이름 중복체크
 	$('#clubName').blur(function(){
 	    var name = $('#clubName').val();
 	    console.log(name);
@@ -154,10 +154,14 @@ $(document).ready(function(){
 	            if(result== '1') {
 	                $("#retry").text("이미 만들어진 모임이름입니다. 다른 이름을 입력하세요.");
 	                $("#retry").css("color","red");
+	                $('#clubBtn').attr("disabled",true); //등록버튼 비활성화
+	                
+	                
 	            } 
-	            if(result == '0') {
+	            if(result == '0' && name != '') {
 	                $("#retry").text("사용가능한 모임이름입니다.");
 	                $("#retry").css("color","#32C36C");
+	                $('#clubBtn').attr("disabled",false);
 	            }
 	        }
 	    });
@@ -166,7 +170,34 @@ $(document).ready(function(){
 	
 	//유효성체크
 	$('#clubBtn').click(function(){
-		
+		 // 모임이름, 소개, 정원을 필수값으로
+		 
+		 
+		 var reg = /[^0-9]/g;
+		 
+		 if($('#clubName').val() == ""){
+			 alert('모임의 이름을 입력해주세요');
+			 $('#clubName').focus();
+			 return false;
+		 }
+		 if($('#clubContent').val() == ""){
+			 alert('모임의 소개글을 입력해주세요');
+			 $('#clubContent').focus();
+			 return false;
+		 }
+		 if($('#clubcapacity').val() == ""){
+			 alert('모임의 정원을 입력해주세요');
+			 $('#club_capacity').focus();
+			 return false;
+		 }
+		 if(!reg.test($('#clubcapacity').val())){
+			 alert('모임의 정원은 숫자로 입력해주세요');
+			 $('#club_capacity').focus();
+			 return false;
+		 }
+		 
+		 
+		 
 		
 	});
 	
@@ -182,28 +213,6 @@ function select(item){
 } 
 
 
-/* 	첨부파일 미리보기..
-function readImage(input) {
-    // 인풋 태그에 파일이 있는 경우
-    if(input.files && input.files[0]) {
-        // 이미지 파일인지 검사 (생략)
-        // FileReader 인스턴스 생성
-        const reader = new FileReader()
-        // 이미지가 로드가 된 경우
-        reader.onload = e => {
-            const previewImage = document.getElementById("preview-image")
-            previewImage.src = e.target.result
-        }
-        // reader가 이미지 읽도록 하기
-        reader.readAsDataURL(input.files[0])
-    }
-}
-// input file에 change 이벤트 부여
-const inputImage = document.getElementById("input-image")
-inputImage.addEventListener("change", e => {
-    readImage(e.target)
-})
- */
 
 
 </script>
@@ -301,7 +310,8 @@ inputImage.addEventListener("change", e => {
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" name="club_capacity">
+                                        <input type="text" class="form-control" name="club_capacity" id="clubcapacity"
+                                        onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
                                         <label for="name">정원</label>
                                     </div>
                                 </div>
@@ -328,7 +338,6 @@ inputImage.addEventListener("change", e => {
                                 </div>
                                 </div>
 	<hr>
-                                </div>
      
   <!-- Contact End -->
     
