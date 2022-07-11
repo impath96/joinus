@@ -68,12 +68,19 @@ public interface ClubDao {
 		
 	// 모임 정보 가져오기
 	public ClubsVo getClubInfo(Integer num);
+	// 모임 관심사 가져오기
+	public String getClubInterestDName(Integer num);
 	// 모임 회원 정보 가져오기(리스트)
 	public List<ClubMembersVo> getClubMembers(Integer num);
 	// 모임 회원 정보 가져오기(특정)
-	public ClubMembersVo getClubMemberNo(Integer num);
+	public ClubMembersVo getClubMemberNo(Integer num,Integer num2);
 	
-		
+	// 모임 찜하기
+	public void clubDip(Integer num,Integer num2);
+	// 모임 찜 여부 확인
+	public Integer dip(Integer num);
+	// 모임 찜 취소
+	public void dipX(Integer num,Integer num2);
 	
 	//=========================강성민========================
 	

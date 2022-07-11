@@ -157,7 +157,12 @@
 	
 	<insert id="clubGrade">
 		insert into club_grades(club_no,member_no,club_grade_rate)
-		value(#{club_no},#{member_no},#{club_grade_rate})
+		values(#{club_no},#{member_no},#{club_grade_rate})
+	</insert>
+	
+	<insert id="clubDip">
+		insert into member_dips(member_no,club_no)
+		values(#{member_no},#{club_no})
 	</insert>
 	
 	<!-- select -->
@@ -171,7 +176,7 @@
 	</select>
 	
 	<select id="getClubMemberNo" resultType="ClubMembersVo">
-		select * from club_members where member_no=#{member_no}
+		select * from club_members where club_no=#{club_no} and member_no=#{member_no}
 	</select>
 	
 	<select id="checkClubName" resultType="ClubsVo">
@@ -187,6 +192,15 @@
 		where interest_detail_name=#{interest_detail_name}
 	</select>
 	
+	<select id="getClubInterestNo" resultType="ClubInterestsVo">
+		select * from club_interests where club_no=#{club_no}
+	</select>
+	
+	<select id="getClubInterestDName" resultType="String">
+		select interest_detail_name from interest_details 
+		where interest_detail_no=(select interest_detail_no from club_interests where club_no=#{club_no})
+	</select>
+	
 	<select id="getClubGrade" resultType="ClubGradesVo">
 		select * from club_grades where club_no=#{club_no}
 	</select>
@@ -198,7 +212,18 @@
 	
 	<select id="clubBtn" resultType="int">
 		select member_no
-from club_grades where member_no in ( select member_no from club_members where member_no =#{member_no} and club_no=#{club_no} )
+		from club_grades where (member_no,club_no) =
+		 ( select member_no,club_no from club_members where club_no=#{club_no} and  member_no=#{member_no} and club_member_role='common')
 	</select>
+	
+	<select id="dipCheck" resultType="int">
+		select member_no from member_dips where club_no=#{club_no}
+	</select>
+	
+	<!-- Delete  -->
+	
+	<delete id="dipX">
+		delete from member_dips where member_no=#{member_no} and club_no=#{club_no}
+	</delete>
 	
 </mapper> 

@@ -134,30 +134,54 @@ public class ClubServiceImpl implements ClubService{
 		public List<Map<String, Integer>> getClubAvgCnt(Integer num) {
 			return dao.getClubAvgCnt(num);
 		}
-
+		//모임정보가져오기
 		@Override
 		public ClubsVo getClubInfo(Integer num) {
 			return dao.getClubInfo(num);
 		}
+		//모임 관심사 가져오기
+		@Override
+		public String getClubInterestDName(Integer num) {
+			return dao.getClubInterestDName(num);
+		}
 
+		//모임회원정보가져오기
 		@Override
 		public List<ClubMembersVo> getClubMembers(Integer num) {
 			return dao.getClubMembers(num);
 		}
 
-
+		// 모임 회원 정보 가져오기(특정)
+		@Override
+		public ClubMembersVo getClubMemberNo(Integer num, Integer num2) {
+			return dao.getClubMemberNo(num,num2);
+		}
+		// 모임 별점 참여자 가져오기
 		@Override
 		public Integer getGradeinfo(Integer num, Integer num2) {
 			return dao.getGradeinfo(num,num2);
 		}
 
-
+		// 모임 찜하기
 		@Override
-		public ClubMembersVo getClubMemberNo(Integer num) {
-			return dao.getClubMemberNo(num);
+		public void clubDip(Integer num, Integer num2) {
+			dao.clubDip(num, num2);
+		}
+		// 모임 찜 여부 확인
+		@Override
+		public Integer dip(Integer num) {
+			return dao.dip(num);
 		}
 
-	
+
+		// 모임 찜 취소
+		@Override
+		public void dipX(Integer num, Integer num2) {
+			dao.dipX(num, num2);
+		}
+
+
+		
 		
 	
 }

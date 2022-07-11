@@ -28,6 +28,7 @@ import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubsVo;
 import com.joinus.domain.InterestDetailsVo;
 import com.joinus.domain.InterestsVo;
+import com.joinus.domain.MemberDipsVo;
 import com.joinus.domain.MembersVo;
 import com.joinus.service.ClubService;
 
@@ -235,38 +236,58 @@ public class ClubController {
 						@PathVariable("club_no") int club_no) {
 			//@ModelAttribute("membervo") MembersVo membervo
 				
+			
+			 
+			 
+			 
+			
 				//모임정보
 				ClubsVo clubvo = service.getClubInfo(club_no);
 				model.addAttribute("clubvo", clubvo);
 				
 				//회원정보(임의)
-				session.setAttribute("member_no", 15);
+				session.setAttribute("member_no", 7);
 				int m = (int)session.getAttribute("member_no");
 				model.addAttribute("member_no",m );
 				log.info("회원넘버: "+m);
 
 				//클럽회원정보
-				List<ClubMembersVo> clubmemberVO = service.getClubMembers(club_no);
-				model.addAttribute("clubmembers", clubmemberVO);
+				List<ClubMembersVo> clubmemberList = service.getClubMembers(club_no);
+				model.addAttribute("clubmemebrList", clubmemberList);
 				
-				ClubMembersVo clubmembersvo = service.getClubMemberNo(m); //membervo.getMember_no();
-				if(clubmembersvo == null) { model.addAttribute("clubmember", null);}
-				else if(clubmembersvo != null) { model.addAttribute("clubmember", clubmembersvo);}
-				
-				log.info("clubmemberVO: "+clubmemberVO);
+				int result = 0; 
+				ClubMembersVo clubmembersvo = service.getClubMemberNo(club_no,m); //membervo.getMember_no();
+				  if(clubmembersvo != null) { 
+					  result = clubmembersvo.getMember_no(); 
+				  }else if(clubmembersvo == null) { 
+					  result = 0; }
+				model.addAttribute("clubmember", result);
+				log.info("클럽멤버 가입여부: "+result);
 				
 				//클럽별점정보
 				List<ClubGradesVo> gradevo = service.getClubGrade(club_no);
 				model.addAttribute("clubGrade", gradevo);
+				
+				int result2 = 0;
 				Integer graded = service.getGradeinfo(club_no,m);
-				if(graded == null) { model.addAttribute("graded", null);}
-				else if(graded != null) { model.addAttribute("graded", graded);}
-				model.addAttribute("Graded", graded);
-				log.info("gradevo: "+gradevo);
+				  if(graded != null) { 
+					  result2 = graded; 
+				  }else if(graded == null) { 
+					  result2 = 0; }
+				model.addAttribute("graded", result2);
+				log.info("별점 참여자 여부: "+result2);
+				
 				//클럽별점 평균,참여자수
 				model.addAttribute("gradeAvgCnt", service.getClubAvgCnt(club_no));   
 								
 				//모임관심사 정보로 관심사 가져오기
+				String interDetail = service.getClubInterestDName(club_no);
+				model.addAttribute("interDetail", interDetail);   
+				log.info("모임 상세관심사"+interDetail);
+				
+				//찜하기 완료
+				model.addAttribute("dipMember", service.dip(clubvo.getClub_no()));   
+				
 				
 				return "/club/clubInfo";
 			}
@@ -275,7 +296,7 @@ public class ClubController {
 	
 		// 모임가입 ajax (상세페이지에서 alert창 띄움)
 		@ResponseBody
-		@RequestMapping(value = "/join/{club_no}",method=RequestMethod.POST)
+		@RequestMapping(value = "/{club_no}",method=RequestMethod.POST)
 		public void joinClub(@PathVariable("club_no") int club_no, @ModelAttribute("member_no") int member_no) {
 				
 				ClubMembersVo members = new ClubMembersVo();
@@ -289,11 +310,34 @@ public class ClubController {
 			
 		// 별점주기 ajax (상세페이지에서 클릭)
 		@ResponseBody
-		@RequestMapping(value = "/grade", method = RequestMethod.POST)
+		@RequestMapping(value = "/{club_no}/grade", method = RequestMethod.POST)
 		public void clubGrade(@ModelAttribute ClubGradesVo vo) {
 					service.clubGrade(vo);
 					System.out.println("별점주기 완료");
 			}
+		
+		// 찜하기 ajax (상세페이지에서 클릭)
+		@ResponseBody
+		@RequestMapping(value = "/{clubvo.club_no}/dip", method = RequestMethod.POST)
+		public void clubDip(@ModelAttribute MemberDipsVo vo) {
+			service.clubDip(vo.getMember_no(),vo.getClub_no());
+			System.out.println("찜하기 완료");
+			
+		}
+		// 찜취소 ajax (상세페이지에서 클릭)
+		@ResponseBody
+		@RequestMapping(value = "/{clubvo.club_no}/dipX", method = RequestMethod.POST)
+		public void clubDipX(@ModelAttribute MemberDipsVo vo) {
+			service.dipX(vo.getMember_no(),vo.getClub_no());
+			System.out.println("찜 취소완료");
+			
+		}
+		
+		
+		
+		// 대관 결제 ajax
+		
+		
 	
 	
 	

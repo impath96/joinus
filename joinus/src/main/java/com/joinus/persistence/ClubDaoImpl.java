@@ -149,10 +149,25 @@ public class ClubDaoImpl implements ClubDao{
 		public ClubsVo getClubInfo(Integer num) {
 			return sqlSession.selectOne(NAMESPACE+".getClubInfo", num);
 		}
+		
+		//모임 관심사 가져오기
+		@Override
+		public String getClubInterestDName(Integer num) {
+			return sqlSession.selectOne(NAMESPACE+".getClubInterestDName", num);
+		}
+
 		//모임회원정보가져오기
 		@Override
 		public List<ClubMembersVo> getClubMembers(Integer num) {
 			return sqlSession.selectList(NAMESPACE+".getClubMember", num);
+		}
+		// 모임 회원 정보 가져오기(특정)
+		@Override
+		public ClubMembersVo getClubMemberNo(Integer num, Integer num2) {
+			Map<String, Integer> nummm = new HashMap<String, Integer>();
+			nummm.put("club_no", num);
+			nummm.put("member_no", num2);
+			return sqlSession.selectOne(NAMESPACE+".getClubMemberNo", nummm);
 		}
 		
 		//별점주기
@@ -172,22 +187,38 @@ public class ClubDaoImpl implements ClubDao{
 			return list;
 		}
 
-
+		// 모임 별점 참여자 가져오기
 		@Override
 		public Integer getGradeinfo(Integer num, Integer num2) {
 			Map<String, Integer> numm = new HashMap<String, Integer>();
 			numm.put("club_no", num);
 			numm.put("member_no", num2);
-			return sqlSession.selectOne(NAMESPACE+".clubBtn", num);
+			return sqlSession.selectOne(NAMESPACE+".clubBtn", numm);
 		}
 
-
+		// 모임 찜하기
 		@Override
-		public ClubMembersVo getClubMemberNo(Integer num) {
-			return sqlSession.selectOne(NAMESPACE+".getClubMemberNo", num);
+		public void clubDip(Integer num, Integer num2) {
+			Map<String, Integer> dipNums = new HashMap<String, Integer>();
+			dipNums.put("member_no", num);
+			dipNums.put("club_no", num2);
+			sqlSession.insert(NAMESPACE+".clubDip", dipNums);
 		}
-
-
+		// 모임 찜 여부 확인
+		@Override
+		public Integer dip(Integer num) {
+			return sqlSession.selectOne(NAMESPACE+".dipCheck", num);
+		}
+		
+		// 모임 찜 취소
+		@Override
+		public void dipX(Integer num, Integer num2) {
+			Map<String, Integer> dipx = new HashMap<String, Integer>();
+			dipx.put("member_no", num);
+			dipx.put("club_no", num2);
+			sqlSession.insert(NAMESPACE+".dipX", dipx);
+		}
+		
 		
 
 

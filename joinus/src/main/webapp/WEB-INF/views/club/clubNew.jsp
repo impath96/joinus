@@ -164,6 +164,12 @@ $(document).ready(function(){
 	    });
 	
 	
+	//유효성체크
+	$('#clubBtn').click(function(){
+		
+		
+	});
+	
 	
 });
 
@@ -213,13 +219,13 @@ inputImage.addEventListener("change", e => {
             <p class="mb-4">우리들만의 모임을 자유롭게 만들어보세요! </p>
         </div>
      
-    <div class="container-fluid bg-light overflow-hidden px-lg-0" align="center" >
-                <hr>    
+<!--     <div class="container-fluid bg-light overflow-hidden px-lg-0" align="center" >
+ -->                <hr>    
         <div class="container contact px-lg-0" >
             <div class="col-lg-6 contact-text py-5 wow fadeIn" data-wow-delay="0.5s" id="centercontrol">
              
 	              <div id="NewContent" align="center">
-                  <p class="sub2"> 1. 관심사를 선택해주세요 </p><br>   
+                  <p class="sub2"> 관심사를 선택해주세요 </p><br>   
                    	 	<p > ▼ </p>
             	  <div id="hideInter">
                   <p class="sub3"> ${membervo.member_name }님의 관심사 </p>   
@@ -247,7 +253,7 @@ inputImage.addEventListener("change", e => {
                   	 	
                   <div class="detail" >
                    	 	<p class="marginTOP"> ▼ </p>
-	                 <p class="sub2"> 2. 세부관심사를 선택해주세요 </p>    
+	                 <p class="sub2"> 세부관심사를 선택해주세요 </p>    
 	                 <ul class="interTable newForm">
 	                	</ul>
 	              </div>
@@ -259,7 +265,7 @@ inputImage.addEventListener("change", e => {
                          <form action="" method="post" enctype="multipart/form-data">    
                          <input type="hidden" value="${membervo.member_no}" name="member_no" >                      
                          <div class="row g-3" align="center">
-	                 <p class="sub2"> 3. 모임의 정보를 작성해주세요 </p>     
+	                 <p class="sub2"> 모임의 정보를 작성해주세요 </p>     
 	               			  <div class="col-md-6"><br>
                                     <div class="form-floating">
                                         <input type="text" class="form-control" name="member_location" readonly="readonly" value="${membervo.member_location}" id="location">
