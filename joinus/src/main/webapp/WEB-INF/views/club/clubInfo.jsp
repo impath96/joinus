@@ -329,47 +329,18 @@
                             <i class="fa fa-users text-white" ></i>
                         </div>
                     </div>
-                    <h3 class="mb-3" onclick="meetingTitle()" id="meetingTitle">정모주제</h3>
-                    <span>날짜</span><br>
-                    <span>장소</span><br>
-                    <span>인원</span><br>
+                    <c:forEach var="m" items="${meetings }">
+                    	<c:if test="${m.length()<4 }">
+                    <h3 class="mb-3" onclick="meetingTitle()" id="meetingTitle">${m.club_meeting_title }</h3>
+                    <span>${m.club_meeting_title }</span><br>
+                    <span>${m.club_meeting_location }</span><br>
+                    <span>${m.club_meeting_capacity }</span><br>
+                    	</c:if>
+                    </c:forEach>
                 </div>
-                 <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
-                    <div class="d-flex align-items-center mb-4">
-                        <div class="btn-lg-square bg-primary rounded-circle me-3">
-                            <i class="fa fa-users text-white"></i>
-                        </div>
-                    </div>
-                    <h3 class="mb-3">정모주제</h3>
-                    <span>날짜</span><br>
-                    <span>장소</span><br>
-                    <span>인원</span><br>
-                </div>
-              <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
-                    <div class="d-flex align-items-center mb-4">
-                        <div class="btn-lg-square bg-primary rounded-circle me-3">
-                            <i class="fa fa-users text-white"></i>
-                        </div>
-                    </div>
-                    <h3 class="mb-3">정모주제</h3>
-                    <span>날짜</span><br>
-                    <span>장소</span><br>
-                    <span>인원</span><br>
-                </div>
-                 <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
-                    <div class="d-flex align-items-center mb-4">
-                        <div class="btn-lg-square bg-primary rounded-circle me-3">
-                            <i class="fa fa-users text-white"></i>
-                        </div>
-                    </div>
-                    <h3 class="mb-3">정모주제</h3>
-                    <span>날짜</span><br>
-                    <span>장소</span><br>
-                    <span>인원</span><br>
                 </div>
             </div>
         </div>
-    </div>
     <!-- Feature Start -->
 
 

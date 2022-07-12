@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubGradesVo;
+import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubsVo;
 import com.joinus.domain.InterestDetailsVo;
@@ -232,14 +233,8 @@ public class ClubController {
 		// http://localhost:8088/club/	
 		// http://localhost:8088/club/5
 		@RequestMapping(value = "/{club_no}", method = RequestMethod.GET)
-		public String info(Model model,HttpSession session,
-						@PathVariable("club_no") int club_no) {
-			//@ModelAttribute("membervo") MembersVo membervo
-				
-			
-			 
-			 
-			 
+		public String info(Model model,HttpSession session, @PathVariable("club_no") int club_no) {
+												//@ModelAttribute("membervo") MembersVo membervo
 			
 				//모임정보
 				ClubsVo clubvo = service.getClubInfo(club_no);
@@ -251,10 +246,10 @@ public class ClubController {
 				model.addAttribute("member_no",m );
 				log.info("회원넘버: "+m);
 
-				//클럽회원정보
+				//모임회원 리스트
 				List<ClubMembersVo> clubmemberList = service.getClubMembers(club_no);
 				model.addAttribute("clubmemebrList", clubmemberList);
-				
+				//방문한 모임회원
 				int result = 0; 
 				ClubMembersVo clubmembersvo = service.getClubMemberNo(club_no,m); //membervo.getMember_no();
 				  if(clubmembersvo != null) { 
@@ -262,12 +257,12 @@ public class ClubController {
 				  }else if(clubmembersvo == null) { 
 					  result = 0; }
 				model.addAttribute("clubmember", result);
-				log.info("클럽멤버 가입여부: "+result);
+				log.info("모임회원일시 회원번호, 아닐시 0: "+result);
 				
-				//클럽별점정보
+				//별점정보
 				List<ClubGradesVo> gradevo = service.getClubGrade(club_no);
 				model.addAttribute("clubGrade", gradevo);
-				
+				//별점참여
 				int result2 = 0;
 				Integer graded = service.getGradeinfo(club_no,m);
 				  if(graded != null) { 
@@ -275,7 +270,7 @@ public class ClubController {
 				  }else if(graded == null) { 
 					  result2 = 0; }
 				model.addAttribute("graded", result2);
-				log.info("별점 참여자 여부: "+result2);
+				log.info("별점 참여시 회원번호, 미참여시 0: "+result2);
 				
 				//클럽별점 평균,참여자수
 				model.addAttribute("gradeAvgCnt", service.getClubAvgCnt(club_no));   
@@ -285,8 +280,13 @@ public class ClubController {
 				model.addAttribute("interDetail", interDetail);   
 				log.info("모임 상세관심사"+interDetail);
 				
-				//찜하기 완료
+				//찜 여부 확인
 				model.addAttribute("dipMember", service.dip(clubvo.getClub_no()));   
+				
+				//정모리스트 
+				List<ClubMeetingsVo> meetings = service.getMeetings(club_no);
+				//게시글(사진빼오기)
+				List<ClubBoardsVo> boards = service.getBoards(club_no);
 				
 				
 				return "/club/clubInfo";

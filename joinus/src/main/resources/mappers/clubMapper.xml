@@ -221,8 +221,9 @@
 	</select>
 	
 	<select id="getMeetingList" resultType="ClubMeetingsVo">
-		select * from club_meetings where club_no=#{club_no}
+		select * from club_meetings where club_no=#{club_no} order by club_meeting_date desc
 	</select>
+	
 	<select id="getBoardList" resultType="ClubBoardsVo">
 		select * from club_boards where club_no=#{club_no}
 	</select>

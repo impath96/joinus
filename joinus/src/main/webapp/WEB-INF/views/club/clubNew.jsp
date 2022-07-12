@@ -173,7 +173,7 @@ $(document).ready(function(){
 		 // 모임이름, 소개, 정원을 필수값으로
 		 
 		 
-		 var reg = /[^0-9]/g;
+		 var reg = /[^0-9]/g; //정원은 숫자만 가능하도록
 		 
 		 if($('#clubName').val() == ""){
 			 alert('모임의 이름을 입력해주세요');

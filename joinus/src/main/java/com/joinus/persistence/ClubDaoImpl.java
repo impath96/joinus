@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubGradesVo;
+import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubTotalBean;
 import com.joinus.domain.ClubsVo;
@@ -218,9 +219,21 @@ public class ClubDaoImpl implements ClubDao{
 			dipx.put("club_no", num2);
 			sqlSession.insert(NAMESPACE+".dipX", dipx);
 		}
-		
-		
 
+
+		//정모 리스트
+		@Override
+		public List<ClubMeetingsVo> getMeetings(Integer num) {
+			return sqlSession.selectList(NAMESPACE+".getMeetingList", num);
+		}
+
+		//게시글 리스트
+		@Override
+		public List<ClubBoardsVo> getBoards(Integer num) {
+			return sqlSession.selectList(NAMESPACE+".getBoardList", num);
+		}
+		
+		
 
 		
 		

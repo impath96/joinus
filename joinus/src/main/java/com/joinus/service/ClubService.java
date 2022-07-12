@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubGradesVo;
+import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubTotalBean;
 import com.joinus.domain.ClubsVo;
@@ -83,5 +84,8 @@ public interface ClubService {
 		// 모임 찜 취소
 		public void dipX(Integer num,Integer num2);
 		
-	
+		//정모 리스트
+		public List<ClubMeetingsVo> getMeetings(Integer num);
+		//게시글 리스트
+		public List<ClubBoardsVo> getBoards(Integer num);
 }
