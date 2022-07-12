@@ -14,10 +14,14 @@ import org.springframework.stereotype.Repository;
 import com.joinus.domain.BoardCriteria;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
+import com.joinus.domain.Criteria;
+import com.joinus.domain.ClubGradesVo;
+import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubTotalBean;
 import com.joinus.domain.ClubsVo;
-import com.joinus.domain.Criteria;
+import com.joinus.domain.InterestDetailsVo;
+import com.joinus.domain.InterestsVo;
 import com.joinus.domain.MembersVo;
 
 @Repository
@@ -212,4 +216,158 @@ public class ClubDaoImpl implements ClubDao{
 		sqlSession.delete(NAMESPACE+".deleteBoard", club_board_no);
 	}
 
+	
+	
+	
+	
+//=======================강성민=============================================================
+	
+		
+		//회원정보 가져오기
+		@Override
+		public InterestsVo interest(Integer num) {
+			return sqlSession.selectOne(NAMESPACE+".getMemberInterest",num);
+		}
+		//회원관심사 가져오기
+		@Override
+		public MembersVo getMember(Integer num) {
+			return sqlSession.selectOne(NAMESPACE+".getMember", num);
+		}
+		
+		//회원이 선택한 관심사의 세부관심사리스트 가져오기
+		@Override
+		public List<InterestDetailsVo> getDetailName(Integer num) {
+			return sqlSession.selectList(NAMESPACE+".getInterestNameDetails", num);
+		}
+
+		
+		//회원이 입력한 클럽정보 저장하기
+		@Override
+		public void newClub(ClubsVo vo) {
+			sqlSession.insert(NAMESPACE+".createClub", vo);
+		}
+		//회원이 선택한 관심사 넘버값 가져오기
+		@Override
+		public InterestDetailsVo getInterestNo(String name) {
+			return sqlSession.selectOne(NAMESPACE+".getInterestNo", name);
+		}
+		//회원이 입력한 클럽관심사 저장하기
+		@Override
+		public void newClubInterest(Integer club_no, Integer interest_no, Integer interest_detail_no) {
+			Map<String, Integer> num = new HashMap<String, Integer>();
+			num.put("club_no", club_no);
+			num.put("interest_no", interest_no);
+			num.put("interest_detail_no", interest_detail_no);
+			
+			sqlSession.insert(NAMESPACE+".createClubInterest", num);
+		}
+		
+		// 모임 이름 중복체크
+		@Override
+		public ClubsVo checkClubName(String name) {
+			return sqlSession.selectOne(NAMESPACE+".checkClubName", name);
+		}
+		
+		//모임가입하기
+		@Override
+		public void join(ClubMembersVo members) {
+			sqlSession.insert(NAMESPACE+".joinMembers",members);
+		}
+
+		//모임정보가져오기
+		@Override
+		public ClubsVo getClubInfo(Integer num) {
+			return sqlSession.selectOne(NAMESPACE+".getClubInfo", num);
+		}
+		
+		//모임 관심사 가져오기
+		@Override
+		public String getClubInterestDName(Integer num) {
+			return sqlSession.selectOne(NAMESPACE+".getClubInterestDName", num);
+		}
+
+		//모임회원정보가져오기
+		@Override
+		public List<ClubMembersVo> getClubMembers(Integer num) {
+			return sqlSession.selectList(NAMESPACE+".getClubMember", num);
+		}
+		// 모임 회원 정보 가져오기(특정)
+		@Override
+		public ClubMembersVo getClubMemberNo(Integer num, Integer num2) {
+			Map<String, Integer> nummm = new HashMap<String, Integer>();
+			nummm.put("club_no", num);
+			nummm.put("member_no", num2);
+			return sqlSession.selectOne(NAMESPACE+".getClubMemberNo", nummm);
+		}
+		
+		//별점주기
+		@Override
+		public void clubGrade(ClubGradesVo vo) {
+			sqlSession.selectList(NAMESPACE+".clubGrade", vo);		
+		}
+		//별점정보 가져오기
+		@Override
+		public List<ClubGradesVo> getClubGrade(Integer num) {
+			return sqlSession.selectList(NAMESPACE+".getClubGrade", num);
+		}
+		//별점 평균값,참여자수 가져오기
+		@Override
+		public List<Map<String, Integer>> getClubAvgCnt(Integer num) {
+			List<Map<String, Integer>> list = sqlSession.selectList(NAMESPACE+".getGradeOption", num);
+			return list;
+		}
+
+		// 모임 별점 참여자 가져오기
+		@Override
+		public Integer getGradeinfo(Integer num, Integer num2) {
+			Map<String, Integer> numm = new HashMap<String, Integer>();
+			numm.put("club_no", num);
+			numm.put("member_no", num2);
+			return sqlSession.selectOne(NAMESPACE+".clubBtn", numm);
+		}
+
+		// 모임 찜하기
+		@Override
+		public void clubDip(Integer num, Integer num2) {
+			Map<String, Integer> dipNums = new HashMap<String, Integer>();
+			dipNums.put("member_no", num);
+			dipNums.put("club_no", num2);
+			sqlSession.insert(NAMESPACE+".clubDip", dipNums);
+		}
+		// 모임 찜 여부 확인
+		@Override
+		public Integer dip(Integer num) {
+			return sqlSession.selectOne(NAMESPACE+".dipCheck", num);
+		}
+		
+		// 모임 찜 취소
+		@Override
+		public void dipX(Integer num, Integer num2) {
+			Map<String, Integer> dipx = new HashMap<String, Integer>();
+			dipx.put("member_no", num);
+			dipx.put("club_no", num2);
+			sqlSession.insert(NAMESPACE+".dipX", dipx);
+		}
+
+
+		//정모 리스트
+		@Override
+		public List<ClubMeetingsVo> getMeetings(Integer num) {
+			return sqlSession.selectList(NAMESPACE+".getMeetingList", num);
+		}
+
+		//게시글 리스트
+		@Override
+		public List<ClubBoardsVo> getBoards(Integer num) {
+			return sqlSession.selectList(NAMESPACE+".getBoardList", num);
+		}
+		
+		
+
+		
+		
+		
+	
+	
+	
 }

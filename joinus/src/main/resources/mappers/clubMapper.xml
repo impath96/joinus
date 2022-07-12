@@ -299,5 +299,116 @@
 	
 	<!-- 댓글 작성 -->
 	
+
+<!-- 성민 -->
+
+	<select id="getMember" resultType="MembersVo">
+		select * from members where member_no =#{member_no}
+	</select>
 	
-</mapper> 
+	<select id="getMemberInterest" resultType="InterestsVo">
+		select * from interests
+		where interest_no = ( select interest_no from member_interests where member_no =#{member_no} )
+	</select>
+
+	<!-- insert  -->
+	
+	<insert id="createClub" parameterType="ClubsVo">
+		insert into clubs(club_name,club_capacity,club_content,club_image)
+		values(#{club_name},#{club_capacity},#{club_content},#{club_image})
+		<selectKey resultType="Integer" keyProperty="club_no" order="AFTER">
+		SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<insert id="createClubInterest">
+		insert into club_interests(club_no,interest_no,interest_detail_no)
+		values(#{club_no},#{interest_no},#{interest_detail_no})
+	</insert>
+	
+	<insert id="joinMembers">
+		insert into club_members(club_no,member_no,club_member_role)
+		values(#{club_no},#{member_no},#{club_member_role})
+	</insert>
+	
+	<insert id="clubGrade">
+		insert into club_grades(club_no,member_no,club_grade_rate)
+		values(#{club_no},#{member_no},#{club_grade_rate})
+	</insert>
+	
+	<insert id="clubDip">
+		insert into member_dips(member_no,club_no)
+		values(#{member_no},#{club_no})
+	</insert>
+	
+	<!-- select -->
+	
+	<select id="getClubInfo" resultType="ClubsVo">
+		select * from clubs	where club_no=#{club_no}
+	</select>
+	
+	<select id="getClubMember" resultType="ClubMembersVo">
+		select * from club_members where club_no=#{club_no}
+	</select>
+	
+	<select id="getClubMemberNo" resultType="ClubMembersVo">
+		select * from club_members where club_no=#{club_no} and member_no=#{member_no}
+	</select>
+	
+	<select id="checkClubName" resultType="ClubsVo">
+		select * from clubs where club_name =#{club_name}
+	</select>
+	
+	<select id="getInterestNameDetails" resultType="InterestDetailsVo">
+		select * from interest_details	where interest_no=#{interest_no}
+	</select>
+	
+	<select id="getInterestNo" resultType="InterestDetailsVo">
+		select interest_no,interest_detail_no from interest_details 
+		where interest_detail_name=#{interest_detail_name}
+	</select>
+	
+	<select id="getClubInterestNo" resultType="ClubInterestsVo">
+		select * from club_interests where club_no=#{club_no}
+	</select>
+	
+	<select id="getClubInterestDName" resultType="String">
+		select interest_detail_name from interest_details 
+		where interest_detail_no=(select interest_detail_no from club_interests where club_no=#{club_no})
+	</select>
+	
+	<select id="getClubGrade" resultType="ClubGradesVo">
+		select * from club_grades where club_no=#{club_no}
+	</select>
+	
+	<select id="getGradeOption" parameterType="int" resultType="HashMap">
+		select round(avg(club_grade_rate)) avg, count(club_grade_no) cnt
+		from club_grades where club_no=#{club_no}
+	</select>
+	
+	<select id="clubBtn" resultType="int">
+		select member_no
+		from club_grades where (member_no,club_no) =
+		 ( select member_no,club_no from club_members where club_no=#{club_no} and  member_no=#{member_no} and club_member_role='common')
+	</select>
+	
+	<select id="dipCheck" resultType="int">
+		select member_no from member_dips where club_no=#{club_no}
+	</select>
+	
+	<select id="getMeetingList" resultType="ClubMeetingsVo">
+		select * from club_meetings where club_no=#{club_no} order by club_meeting_date desc
+	</select>
+	
+	<select id="getBoardList" resultType="ClubBoardsVo">
+		select * from club_boards where club_no=#{club_no}
+	</select>
+	
+	<!-- Delete  -->
+	
+	<delete id="dipX">
+		delete from member_dips where member_no=#{member_no} and club_no=#{club_no}
+	</delete>
+	
+	
+	</mapper> 

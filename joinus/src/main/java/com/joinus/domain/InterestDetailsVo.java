@@ -1,11 +1,13 @@
 package com.joinus.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-
-public class IntetestDetailsVo {
-
+@NoArgsConstructor
+@AllArgsConstructor
+public class InterestDetailsVo {
 
 	private int interest_detail_no; 
 	private int interest_no;
