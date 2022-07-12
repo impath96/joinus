@@ -1,29 +1,19 @@
 package com.joinus.controller;
-import java.util.List;
-
-
-
-
-
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.awt.image.renderable.ParameterBlock;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
-import javax.inject.Inject;
-import javax.servlet.ServletContext;
+
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,21 +25,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.joinus.domain.BoardCriteria;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubGradesVo;
 import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubsVo;
+import com.joinus.domain.Criteria;
 import com.joinus.domain.InterestDetailsVo;
 import com.joinus.domain.InterestsVo;
 import com.joinus.domain.MemberDipsVo;
-import com.joinus.domain.ClubsVo;
-import com.joinus.domain.Criteria;
 import com.joinus.domain.MembersVo;
 import com.joinus.domain.PageMaker;
-import com.joinus.service.Clubservice;
+import com.joinus.service.ClubService;
 
 
 @Controller
@@ -57,7 +45,7 @@ import com.joinus.service.Clubservice;
 public class ClubController {
 	
 	@Inject
-	private Clubservice service;
+	private ClubService service;
 	
 	private static final Logger log = LoggerFactory.getLogger(ClubController.class);
 	
@@ -586,7 +574,7 @@ public class ClubController {
 				//정모리스트 
 				List<ClubMeetingsVo> meetings = service.getMeetings(club_no);
 				//게시글(사진빼오기)
-				List<ClubBoardsVo> boards = service.getBoards(club_no);
+				List<ClubBoardsVo> boards = service.getBoardImageList(club_no);
 				
 				
 				return "/club/clubInfo";
@@ -633,9 +621,6 @@ public class ClubController {
 			
 		}
 		
-		
-		
-		// 대관 결제 ajax
 		
 		
 	

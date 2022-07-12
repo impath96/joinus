@@ -184,8 +184,39 @@ public class ClubDaoImpl implements ClubDao{
 	}
 	
 	
-	
-	
+	@Override
+	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no) {
+		log.info(" getBoardList() 호출 ");
+		
+		Map<String, Integer> param = new HashMap<String, Integer>();
+		param.put("club_no", club_no);
+		param.put("board_type_no", board_type_no);
+		
+		
+		return sqlSession.selectList(NAMESPACE+".getBoardList", param);
+	}
+
+	@Override
+	public List<ClubBoardsVo> getBoardImageList(Integer club_no) {
+		return sqlSession.selectList(NAMESPACE+".getBoardImageList", club_no);
+	}
+
+	@Override
+	public BoardTotalBean getBoardContent(Integer club_board_no) {
+		return sqlSession.selectOne(NAMESPACE+".getBoardContent", club_board_no);
+	}
+
+	@Override
+	public void modifyBoardContent(ClubBoardsVo vo) {
+		sqlSession.update(NAMESPACE+".modifyBoardContent", vo);
+	}
+
+	@Override
+	public void deleteBoard(Integer club_board_no) {
+		sqlSession.delete(NAMESPACE+".deleteBoard", club_board_no);
+	}
+
+
 //=======================강성민=============================================================
 	
 		
@@ -322,10 +353,10 @@ public class ClubDaoImpl implements ClubDao{
 			return sqlSession.selectList(NAMESPACE+".getMeetingList", num);
 		}
 
-		//게시글 리스트
+		//게시글 이미지리스트 가져오기
 		@Override
 		public List<ClubBoardsVo> getBoards(Integer num) {
-			return sqlSession.selectList(NAMESPACE+".getBoardList", num);
+			return sqlSession.selectList(NAMESPACE+".getBoardImageList", num);
 		}
 		
 		
@@ -335,38 +366,7 @@ public class ClubDaoImpl implements ClubDao{
 		
 	
 	
+}
 	
 
-	@Override
-	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no) {
-		log.info(" getBoardList() 호출 ");
-		
-		Map<String, Integer> param = new HashMap<String, Integer>();
-		param.put("club_no", club_no);
-		param.put("board_type_no", board_type_no);
-		
-		
-		return sqlSession.selectList(NAMESPACE+".getBoardList", param);
-	}
-
-	@Override
-	public List<ClubBoardsVo> getBoardImageList(Integer club_no) {
-		return sqlSession.selectList(NAMESPACE+".getBoardImageList", club_no);
-	}
-
-	@Override
-	public BoardTotalBean getBoardContent(Integer club_board_no) {
-		return sqlSession.selectOne(NAMESPACE+".getBoardContent", club_board_no);
-	}
-
-	@Override
-	public void modifyBoardContent(ClubBoardsVo vo) {
-		sqlSession.update(NAMESPACE+".modifyBoardContent", vo);
-	}
-
-	@Override
-	public void deleteBoard(Integer club_board_no) {
-		sqlSession.delete(NAMESPACE+".deleteBoard", club_board_no);
-	}
-
-}
+	

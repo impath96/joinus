@@ -17,10 +17,9 @@ import com.joinus.domain.InterestDetailsVo;
 import com.joinus.domain.InterestsVo;
 import com.joinus.domain.MembersVo;
 
-@Service
-public interface Clubservice {
+public interface ClubService {
 
-	//클럽 회원 리스트
+		//클럽 회원 리스트
 		public List<ClubTotalBean> clubMemberListAll(int club_no);
 		//클럽 정보
 		public List<ClubsVo> clubInfo(int club_no);
@@ -120,7 +119,7 @@ public interface Clubservice {
 		//정모 리스트
 		public List<ClubMeetingsVo> getMeetings(Integer num);
 		//게시글 리스트
-		public List<ClubBoardsVo> getBoards(Integer num);
+		public List<ClubBoardsVo> getBoardsforimg(Integer num);
 
 		
 	

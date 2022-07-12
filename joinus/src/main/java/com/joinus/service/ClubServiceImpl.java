@@ -23,7 +23,7 @@ import com.joinus.domain.MembersVo;
 import com.joinus.persistence.ClubDao;
 
 @Service
-public class ClubServiceImpl implements Clubservice{
+public class ClubServiceImpl implements ClubService{
 	
 	private static final Logger log = LoggerFactory.getLogger(ClubServiceImpl.class);
 	
@@ -257,15 +257,13 @@ public class ClubServiceImpl implements Clubservice{
 		//정모 리스트
 		@Override
 		public List<ClubMeetingsVo> getMeetings(Integer num) {
-			// TODO Auto-generated method stub
-			return null;
+			return dao.getMeetings(num);
 		}
 
 		//게시글 리스트
 		@Override
-		public List<ClubBoardsVo> getBoards(Integer num) {
-			// TODO Auto-generated method stub
-			return null;
+		public List<ClubBoardsVo> getBoardsforimg(Integer num) {
+			return dao.getBoards(num);
 		}
 
 
