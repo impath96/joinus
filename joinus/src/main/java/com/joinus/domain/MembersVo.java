@@ -10,9 +10,9 @@ import lombok.ToString;
 
 @Data
 @ToString
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MembersVo {
 
 	private int member_no;

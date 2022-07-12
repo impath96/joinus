@@ -34,12 +34,11 @@
 		<constructor-arg name="sqlSessionFactory"
 			ref="sqlSessionFactory" />
 	</bean>
+	
 	<!-- persistence 패키지 추가(빈 등록) -->
-	<context:component-scan
-		base-package="com.joinus.persistence" />
+	<context:component-scan base-package="com.joinus.persistence" />
 	<!-- service 패키지 추가(빈 등록) -->
-	<context:component-scan
-		base-package="com.joinus.service" />
-	<context:component-scan
-		base-package="com.joinus.auth" />
+	<context:component-scan base-package="com.joinus.service" />
+	<context:component-scan base-package="com.joinus.auth" />
+	
 </beans>
