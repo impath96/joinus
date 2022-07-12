@@ -9,6 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.joinus.domain.BoardCommentsVo;
+import com.joinus.domain.BoardCriteria;
+import com.joinus.domain.BoardLikesVo;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubGradesVo;
@@ -115,13 +118,23 @@ public class ClubServiceImpl implements ClubService{
 	}
 
 	@Override
-	public List<BoardTotalBean> getBoardListAll(Integer club_no) {
-		return dao.getBoardListAll(club_no);
+	public List<BoardTotalBean> getBoardListAll(Integer club_no, BoardCriteria cri) {
+		return dao.getBoardListAll(club_no, cri);
+	}
+	
+	@Override
+	public Integer getTotalBoardCnt(int club_no) {
+		return dao.getTotalBoardCnt(club_no);
 	}
 
 	@Override
-	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no) {
-		return dao.getBoardList(club_no, board_type_no);
+	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no, BoardCriteria cri) {
+		return dao.getBoardList(club_no, board_type_no, cri);
+	}
+	
+	@Override
+	public Integer getTypeBoardCnt(int club_no, int board_type_no) {
+		return dao.getTypeBoardCnt(club_no, board_type_no);
 	}
 
 	@Override
@@ -144,6 +157,76 @@ public class ClubServiceImpl implements ClubService{
 		dao.deleteBoard(club_board_no);
 	}
 
+	@Override
+	public void writeComment(BoardCommentsVo vo) {
+		dao.writeComment(vo);
+	}
+
+	@Override
+	public int getCommentCnt(int club_board_no) {
+		return dao.getCommentCnt(club_board_no);
+	}
+
+	@Override
+	public List<BoardTotalBean> getCommentList(int club_board_no) {
+		return dao.getCommentList(club_board_no);
+	}
+
+	@Override
+	public void updateCommentCnt(int club_board_no) {
+		dao.updateCommentCnt(club_board_no);
+	}
+
+	@Override
+	public void updateComment(BoardCommentsVo vo) {
+		dao.updateComment(vo);
+	}
+
+	@Override
+	public void deleteComment(int board_comment_no) {
+		dao.deleteComment(board_comment_no);
+	}
+
+	@Override
+	public void decreaseCommentCnt(int club_board_no) {
+		dao.decreaseCommentCnt(club_board_no);
+	}
+
+	@Override
+	public int getLikeCnt(int club_board_no) {
+		return dao.getLikeCnt(club_board_no);
+	}
+
+	@Override
+	public int checkLike(int club_board_no, int member_no) {
+		return dao.checkLike(club_board_no, member_no);
+	}
+
+	@Override
+	public List<BoardTotalBean> getLikeList(int club_board_no) {
+		return dao.getLikeList(club_board_no);
+	}
+
+	@Override
+	public void insertLike(BoardLikesVo vo) {
+		dao.insertLike(vo);
+	}
+
+	@Override
+	public void increaseLikeCnt(int club_board_no) {
+		dao.increaseLikeCnt(club_board_no);
+	}
+
+	@Override
+	public void cancelLike(int club_board_no, int member_no) {
+		dao.cancelLike(club_board_no, member_no);
+	}
+
+	@Override
+	public void decreaseLikeCnt(int club_board_no) {
+		dao.decreaseLikeCnt(club_board_no);
+	}
+	
 	
 	
 	
