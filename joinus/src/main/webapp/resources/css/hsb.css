@@ -55,3 +55,22 @@
 	color: black;
 	background-color: white;
 }
+
+.boardContent {
+	font-family: inherit;
+	font-size: inherit;
+	line-height: 40px;
+	white-space: pre-line;
+}
+
+.ContentImage {
+	max-width: 500px;
+	max-height: 300px;
+}
+
+#comment_content {
+	padding-top: 1em;
+	padding-bottom: 1em;
+	text-align: left;
+	color: black;
+}

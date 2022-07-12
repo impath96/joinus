@@ -345,7 +345,9 @@ public class ClubController {
 		BoardPageMaker pageMarker = new BoardPageMaker();
 		pageMarker.setCri(cri);
 		// 카테고리별 게시글 총개수 구하는 메서드 만들기(매퍼는 준비완)
-		
+		pageMarker.setTotalCount(service.getTypeBoardCnt(club_no, board_type_no));
+		log.info(pageMarker+"");
+		model.addAttribute("pm", pageMarker);
 		
 		return "/club/boards/boardList";
 	}
@@ -366,13 +368,15 @@ public class ClubController {
 	
 	/// http://localhost:8088/club/{club_no}/boards/{club_board_no}
 	/// http://localhost:8088/club/1/boards/1
-	// 게시글 상세보기 (모임가입한 사람만 확인가능)
+	// 게시글 상세보기 (조건 - 모임가입한 사람만 확인가능)
 	@RequestMapping(value = "/{club_no}/boards/{club_board_no}", method = RequestMethod.GET)
 	public String boardContentGet(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no, 
 			Model model, HttpSession session) {
 		log.info(" boardContentGet() 호출 ");
 		log.info(service.getBoardContent(club_board_no)+"");
 		
+		// 게시글과 관련된 정보 가져가기 (여기서 가져가는 member_name : 게시글 작성자)
+		// view에서의 세션값과 여기서 가져가는 member_name이 일치하면 글 수정/삭제 가능하게 나중에 구현
 		model.addAttribute("vo", service.getBoardContent(club_board_no));
 		
 		int commentCnt = service.getCommentCnt(club_board_no);
@@ -385,7 +389,7 @@ public class ClubController {
 		
 		model.addAttribute("likeCnt", service.getLikeCnt(club_board_no));
 		
-		// 좋아요 체크
+		// 좋아요 체크 (세션에 저장된 member 체크)
 		session.setAttribute("member_no", 12);
 		int member_no = (int) session.getAttribute("member_no");
 		// checkLike - 1:좋아요O / 0:좋아요X (해당 회원이 좋아요를 눌렀는지 체크)

@@ -10,6 +10,10 @@
 
 	$(document).ready(function(){
 		
+		// 글을 상세보기 할 때 그 때의 세션값 확인(나중에 지우기)
+		var sessionMember = ${sessionScope.member_no};
+		alert("현재 보고 있는 회원의 member_no : "+sessionMember);
+		
 		// 폼태그 정보
 		var formObj = $('form[role="form"]');
 		console.log(formObj);
@@ -122,16 +126,17 @@
 		$('#like').click(function(){{
 // 			alert('좋아요클릭');
 			var like_check = ${checkLike};
+			alert("좋아요 확인 : "+like_check);
 			
 			if(like_check == 1){
-// 				alert('좋아요 누른 회원');
+				alert('좋아요 누른 회원');
 				// 좋아요 취소
 				$.ajax({
 					type : "post",
 					url : "${pageContext.request.contextPath}/club/${club_no}/boards/${club_board_no}/likeDown",
 					// 만약 data를 넘겨줄것같으면 세션값에 저장된 member_no -> 근데 굳이 view에서 세션값을 넘겨줄 필요가..? 컨트롤러에서 세션값 바로 쓰면 될 것 같은데
 					success : function(){
-// 						alert('좋아요 취소');
+						alert('좋아요 취소');
 						location.reload();
 					},
 					erorr : function error(){
@@ -140,13 +145,13 @@
 				});
 			} else {
 				// 좋아요 안누른 회원
-// 				alert('좋아요 안누른 회원');
+				alert('좋아요 안누른 회원');
 				// 좋아요
 				$.ajax({
 					type : "post",
 					url : "${pageContext.request.contextPath}/club/${club_no}/boards/${club_board_no}/likeUp",
 					success : function(){
-// 						alert('좋아요');
+						alert('좋아요');
 						location.reload();
 					},
 					error : function error(){
@@ -192,17 +197,18 @@
 	<div class="container contact px-lg-0" style="width: 60%">
 		<div class="row g-0 mx-lg-0">
 			<!-- 			<div class="col-lg-6 contact-text py-5 wow fadeIn" data-wow-delay="0.5s"> -->
-			<div class="p-lg-5" align="center">
-				<h6 class="text-primary">${vo.clubsVo.club_name } ${vo.boardTypesVo.board_type_name }</h6>
-				<h1 class="clubWrite_mb-4" style="float: left;">${vo.clubBoardsVo.club_board_title }</h1>
+			<div class="p-lg-5" align="center" >
+				<h6 class="text-primary" style="margin-bottom: 2em;">${vo.clubsVo.club_name } ${vo.boardTypesVo.board_type_name }</h6>
+<%-- 				<h1 class="clubWrite_mb-4">${vo.clubBoardsVo.club_board_title }</h1> --%>
+				<h1>${vo.clubBoardsVo.club_board_title }</h1>
 				<br>
 					<div class="row g-3">
-						<div class="col-md-8">
-							<div class="form-floating">
+						<div class="col-md-12">
+							<div class="form-floating" style="float: left">
 								<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${vo.membersVo.member_image }">
 								<span style="color: black; margin-left: 5px;">${vo.membersVo.member_name }</span>
 							</div>
-							<div>
+							<div style="float: right;">
 								<c:if test="${vo.clubBoardsVo.club_board_updatedate == null }">
 									<span><fmt:formatDate value="${vo.clubBoardsVo.club_board_date }" pattern="yy.MM.dd HH:mm"/> </span>
 								</c:if>
@@ -213,14 +219,12 @@
 						</div> 
 						<div class="col-12">
 							<div class="form-floating" style="color: black;">
-								내용 : ${vo.clubBoardsVo.club_board_content }
+								<pre class="boardContent">내용 : ${vo.clubBoardsVo.club_board_content }</pre>
 							</div>
+							<img src="${PageContext.request.contextPath }/resources/upload/boards/${vo.clubBoardsVo.club_board_image }" class="ContentImage">
 						</div>
 						
 						<div class="col-12 clubWrite_buttonMargin" style="text-align: right;">
-<!-- 							<input type="button" class="btn btn-primary rounded-pill py-3 px-5" id="modBtn" value="수정"> -->
-<!-- 							<input type="button" class="btn btn-primary rounded-pill py-3 px-5" style="margin-left: 2em;" id="delBtn" value="삭제"> -->
-<!-- 							<input type="button" class="btn btn-primary rounded-pill py-3 px-5" style="margin-left: 2em;" id="backBtn" value="목록"> -->
 							<button type="button" class="btn btn-primary py-2 mt-2 me-2" id="modBtn">수정</button>
 							<button type="button" class="btn btn-primary py-2 mt-2 me-2" id="delBtn">삭제</button>
 							<button type="button" class="btn btn-primary py-2 mt-2 me-2" id="backBtn">목록</button>
@@ -244,18 +248,21 @@
 						<i class="fa fa-comments fa-fw"></i><span class=clubBoardList_commentCnt> ${commentCnt }</span>
 					</div>
 					
-					<c:if test="${likeCnt > 0 }">
-						<button type="button" class="likeMemberBtn btn btn-primary" id="likeMember" style="color:black;">${likeCnt }명이 좋아하셨습니다.</button>
-<%-- 						<a id="likeMember" href="">${likeCnt }명이 좋아하셨습니다.</a> --%>
-						
-						<div id="likeMemberList" style="display: none;">
-<!-- 							좋아요한 회원목록<br> -->
-							<c:forEach var="member" items="${likeList }">
-								<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${member.membersVo.member_image }"> / ${member.membersVo.member_name } <br>
-							</c:forEach>
-						</div>
-						
-					</c:if>
+					<div style="text-align: left; margin-top: 1em;">
+						<c:if test="${likeCnt > 0 }">
+							<button type="button" class="likeMemberBtn btn btn-primary" id="likeMember" style="color:black;">${likeCnt }명이 좋아하셨습니다.</button>
+							
+							<div id="likeMemberList" style="display: none;">
+								<c:forEach var="member" items="${likeList }">
+									<div style="margin: 1em;">
+										<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${member.membersVo.member_image }">
+										${member.membersVo.member_name }
+									</div>
+								</c:forEach>
+							</div>
+							
+						</c:if>
+					</div>
 					
 					
 					<div class="comments_form" style="margin: 30px 0;">
@@ -267,32 +274,36 @@
 								</div>
 						</div>
 					</div>
+					
+					<!-- 댓글리스트 -->
 					<c:if test="${commentCnt > 0 }">
 						<c:forEach var="comment" items="${commentList }">
-<%-- 						작성자 : ${comment.membersVo.member_name } --%>
-<%-- 						내용 : ${comment.boardCommentsVo.board_comment_content } --%>
-							
 							
 							<article class="comment${comment.boardCommentsVo.board_comment_no }">
-								<div>
-									<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${comment.membersVo.member_image }">
-									<h4 class="comment-author" style="padding-top: 0.7em;">${comment.membersVo.member_name }
-										<div class="form-group pull-right">
-											<!-- 세션값과 댓글작성자비교 -->
-											<input type="button" id="commentUpBtn${comment.boardCommentsVo.board_comment_no }" class="btn btn-primary py-2 mt-2 me-2 tabActive" value="수정">
-											<input type="button" id="commentDelBtn${comment.boardCommentsVo.board_comment_no }" class="btn btn-primary py-2 mt-2 me-2" value="삭제">
-										</div>
-									</h4>
-									<div id="comment_content" style="padding-top: 1em; padding-bottom: 1em;">${comment.boardCommentsVo.board_comment_content }</div>
-									<small class="comment-meta" style="padding: 0;">
-										<c:if test="${comment.boardCommentsVo.board_comment_updatedate == null }">
-											<span><fmt:formatDate value="${comment.boardCommentsVo.board_comment_date }" pattern="yy.MM.dd HH:mm"/> </span>
-										</c:if>
-										<c:if test="${comment.boardCommentsVo.board_comment_updatedate != null }">
-											<span><fmt:formatDate value="${comment.boardCommentsVo.board_comment_updatedate }" pattern="yy.MM.dd HH:mm"/> </span>
-										</c:if>
-									</small>
-								</div>
+							
+								<div class="col-md-12">
+									<div class="form-floating" style="float: left">
+										<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${comment.membersVo.member_image }">
+										<span style="color: black; margin-left: 5px;">${comment.membersVo.member_name }</span>
+										<small style="margin-left: 1em;">
+											<c:if test="${comment.boardCommentsVo.board_comment_updatedate == null }">
+												<span><fmt:formatDate value="${comment.boardCommentsVo.board_comment_date }" pattern="yy.MM.dd HH:mm"/> </span>
+											</c:if>
+											<c:if test="${comment.boardCommentsVo.board_comment_updatedate != null }">
+												<span><fmt:formatDate value="${comment.boardCommentsVo.board_comment_updatedate }" pattern="yy.MM.dd HH:mm"/> </span>
+											</c:if>
+										</small>
+									</div>
+									<div class="form-group pull-right" style="text-align: right;">
+										<!-- 세션값과 댓글작성자비교 -->
+										<input type="button" id="commentUpBtn${comment.boardCommentsVo.board_comment_no }" class="btn btn-primary py-2 mt-2 me-2 tabActive" value="수정">
+										<input type="button" id="commentDelBtn${comment.boardCommentsVo.board_comment_no }" class="btn btn-primary py-2 mt-2 me-2" value="삭제">
+									</div>
+									<div id="comment_content">
+										${comment.boardCommentsVo.board_comment_content }
+									</div>
+								</div> 
+							
 							</article>
 							
 							<!-- 댓글수정폼 -->
@@ -300,16 +311,16 @@
 								<textarea class="form-control" name="commentUp${comment.boardCommentsVo.board_comment_no }"
 									id="commentUp${comment.boardCommentsVo.board_comment_no }" rows="3" required>${comment.boardCommentsVo.board_comment_content }</textarea>
 								<div>
-									<input type="button" id="commentUpCompleteBtn${comment.boardCommentsVo.board_comment_no }" class="button" value="수정">
-									<input type="button" id="commentUpCancelBtn${comment.boardCommentsVo.board_comment_no }" class="button" value="취소">
+									<input type="button" id="commentUpCompleteBtn${comment.boardCommentsVo.board_comment_no }" class="button btn btn-secondary btn-default float-right py-2 my-4" value="수정">
+									<input type="button" id="commentUpCancelBtn${comment.boardCommentsVo.board_comment_no }" class="button btn btn-secondary btn-default float-right py-2 my-4" value="취소">
 								</div>
 							</div>
 							
-							
-							
+							<hr>
 							
 						</c:forEach>
 					</c:if>
+					<!-- 댓글리스트 -->
 
 
 			</div>

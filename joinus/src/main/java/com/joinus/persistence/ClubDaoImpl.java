@@ -205,6 +205,15 @@ public class ClubDaoImpl implements ClubDao{
 		
 		return sqlSession.selectList(NAMESPACE+".getBoardList", param);
 	}
+	
+	@Override
+	public Integer getTypeBoardCnt(int club_no, int board_type_no) {
+		Map<String, Integer> param = new HashMap<String, Integer>();
+		param.put("club_no", club_no);
+		param.put("board_type_no", board_type_no);
+		
+		return sqlSession.selectOne(NAMESPACE+".typeBoardCnt", param);
+	}
 
 	@Override
 	public List<ClubBoardsVo> getBoardImageList(Integer club_no) {

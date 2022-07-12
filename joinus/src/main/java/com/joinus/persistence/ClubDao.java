@@ -59,6 +59,8 @@ public interface ClubDao {
 	
 	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no, BoardCriteria cri);
 	
+	public Integer getTypeBoardCnt(int club_no, int board_type_no);
+	
 	public List<ClubBoardsVo> getBoardImageList(Integer club_no);
 	
 	// 게시글 본문
