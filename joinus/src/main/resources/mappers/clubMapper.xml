@@ -6,28 +6,33 @@
 <mapper namespace="com.joinus.mapper.ClubMapper">
 
 <!-- 조인할 테이블 1-1 -->
-<resultMap type="ClubMemberRolesVo" id="roleMap">
-	<id property="club_role_no" column="club_role_no"/>
-	<id property="club_role_name" column="club_role_name"/> 
-</resultMap>
-
-<!-- 조인할 테이블 1-2 -->
 <resultMap type="MembersVo" id="membersMap">
    <id property="member_no" column="member_no"/>
    <id property="member_email" column="member_email"/>
    <id property="member_pass" column="member_pass"/>
    <id property="member_name" column="member_name"/>
+   <id property="member_location" column="member_location"/>
    <id property="member_tel" column="member_tel"/>
    <id property="member_image" column="member_image"/>
    <id property="member_regdate" column="member_regdate"/>
+   <id property="member_updatedate" column="member_updatedate"/>
+   <id property="member_authority" column="member_authority"/>
+   <id property="member_signup_type" column="member_signup_type"/>
+   <id property="member_status" column="member_status"/>
    <id property="member_role" column="member_role"/>
+   <id property="member_type" column="member_type"/>
+   <id property="member_location" column="member_location"/>
 </resultMap>
 
-<!-- 조인한 맵 만들어주기 1 -->
-<resultMap type="ClubTotalBean" id="ClubMemberListMap">
-	<collection property="membersVo" resultMap="membersMap"/>
-	<collection property="clubMemberRolesVo" resultMap="roleMap"/>
+<!-- 조인할 테이블 1-2 -->
+<resultMap type="ClubMembersVo" id="clubMembersMap">
+   <id property="club_memberlist_no" column="club_memberlist_no"/>
+   <id property="club_no" column="club_no"/>
+   <id property="member_no" column="member_no"/>
+   <id property="club_member_role" column="club_member_role"/>
+   <id property="club_member_regdate" column="club_member_regdate"/>
 </resultMap>
+
 
 <!-- 조인할 테이블 2-1 -->
 <resultMap type="InterestsVo" id="interestMap">
@@ -45,11 +50,13 @@
 </resultMap>
 
 <!-- 조인할 테이블 2-3 -->
-<resultMap type="ClubsVo" id="clubMap">
+<resultMap type="ClubsVo" id="clubsMap">
    <id property="club_no" column="club_no"/>
    <id property="club_name" column="club_name"/>
+   <id property="club_capacity" column="club_capacity"/>
    <id property="club_content" column="club_content"/>
    <id property="club_image" column="club_image"/>
+   <id property="club_regdate" column="club_regdate"/>
 </resultMap>
 
 <!--  조인할 테이블 2-4 -->
@@ -59,30 +66,77 @@
    <id property="club_grade" column="club_grade"/>
 </resultMap>
 
+<!-- 조인한 맵 만들어주기 1 -->
+<resultMap type="ClubTotalBean" id="ClubMemberListMap">
+	<collection property="membersVo" resultMap="membersMap"/>
+	<collection property="clubMembersVo" resultMap="clubMembersMap"/>
+</resultMap>
+
 <!-- 조인한 맵 만들어주기 2 -->
 <resultMap type="ClubTotalBean" id="ClubListMap">
 	<collection property="clubInterestsVo" resultMap="clubInterestMap"/>
 	<collection property="interestsVo" resultMap="interestMap"/>
-	<collection property="clubsVo" resultMap="clubMap"/>
+	<collection property="clubsVo" resultMap="clubsMap"/>
 	<collection property="clubGradesVo" resultMap="clubGradeMap"/>
 	
 </resultMap>
 
+<!-- boardList(MembersVo, ClubBoardVo) -->
+<!-- <resultMap type="MembersVo" id="membersMap"> -->
+<!-- 	<id property="member_no" column="member_no"/> -->
+<!-- 	<id property="member_name" column="member_name"/> -->
+<!-- </resultMap> -->
+
+<resultMap type="ClubBoardsVo" id="clubBoardsMap">
+	<id property="club_board_no" column="club_board_no"/>
+	<id property="club_no" column="club_no"/>
+	<id property="board_type_no" column="board_type_no"/>
+	<id property="member_no" column="member_no"/>
+	<id property="club_board_title" column="club_board_title"/>
+	<id property="club_board_content" column="club_board_content"/>
+	<id property="club_board_image" column="club_board_image"/>
+	<id property="club_board_date" column="club_board_date"/>
+	<id property="club_board_updatedate" column="club_board_updatedate"/>
+	<id property="club_board_like" column="club_board_like"/>
+	<id property="club_board_commentcnt" column="club_board_commentcnt"/>
+</resultMap>
+
+<resultMap type="BoardTypesVo" id="boardTypesMap">
+	<id property="board_type_no" column="board_type_no"/>
+	<id property="board_type_name" column="board_type_name"/>
+</resultMap>
+
+<resultMap type="BoardTotalBean" id="boardListMap">
+	<collection property="membersVo" resultMap="membersMap"/>
+	<collection property="clubBoardsVo" resultMap="clubBoardsMap" />
+</resultMap>
+
+<resultMap type="BoardTotalBean" id="boardContentMap">
+	<collection property="clubBoardsVo" resultMap="clubBoardsMap"></collection>
+	<collection property="clubsVo" resultMap="clubsMap"></collection>
+	<collection property="membersVo" resultMap="membersMap"></collection>
+	<collection property="boardTypesVo" resultMap="boardTypesMap"></collection>
+</resultMap>
+
 <select id="ClubMemberList" resultMap="ClubMemberListMap">
 	<![CDATA[
-	select m.member_no,m.member_name, m.member_image, c.club_no, c.club_role_no, cr.club_role_name
+	select m.member_no,m.member_name, m.member_image, c.club_no, c.club_member_role, c.club_member_regdate
 	from club_members c 
     join members m 
-    	on (m.member_no = c.member_no)
-	join club_member_roles cr
-		on(c.club_role_no = cr.club_role_no)
+    	on(m.member_no = c.member_no)
 	where club_no = #{club_no} 
-	order by club_role_name asc
+	order by club_member_role asc
 	]]>
 </select>
 
+<select id="ClubInfo" resultType="ClubsVo">
+	select club_name, club_capacity, club_content, club_image, club_regdate, club_no
+	from clubs
+	where club_no = #{club_no}
+</select>
+
 <select id="ClubList" resultMap="ClubListMap">
-	    select c.club_no, c.club_name, c.club_content, c.club_image, ci.interest_no, i.interest_name,i.interest_icon,cg.club_grade_rate
+<![CDATA[select c.club_no, c.club_name, c.club_content, c.club_image, ci.interest_no, i.interest_name,i.interest_icon, avg(cg.club_grade_rate) avg_gr
     from clubs c
 	join club_interests ci
         on(c.club_no = ci.club_no)
@@ -91,11 +145,24 @@
 	join club_grades cg
 		on(c.club_no = cg.club_no)
 	where ci.interest_no = #{interest_no}
-	order by club_no asc
+        group by club_no
+	order by avg_gr desc
+	limit #{cri.pageStart},#{cri.perPageNum}
+	]]>
 </select>
 
+<select id="CountClub" resultType="int" parameterType="Integer">
+	select count(club_no) from club_interests
+	<where>
+	<if test="value != null">
+		AND interest_no = #{value}
+	</if>
+	</where>
+</select>
+
+
 <select id="ClubListAll" resultMap="ClubListMap">
-	    select c.club_no, c.club_name, c.club_content, c.club_image, ci.interest_no, i.interest_name,i.interest_icon,cg.club_grade_rate
+<![CDATA[select c.club_no, c.club_name, c.club_content, c.club_image, ci.interest_no, i.interest_name,i.interest_icon, avg(cg.club_grade_rate) avg_gr
     from clubs c
 	join club_interests ci
         on(c.club_no = ci.club_no)
@@ -103,19 +170,134 @@
 		on(ci.interest_no = i.interest_no)
 	join club_grades cg
 		on(c.club_no = cg.club_no)
-	order by club_grade_rate desc
+        group by club_no
+	order by avg_gr desc
+	limit #{pageStart},#{perPageNum}
+	]]>
 </select>
+
+<select id="ClubRole" resultType="string" parameterType="java.util.List">
+	select club_member_role
+		from club_members
+		where member_no = #{member_no} and club_no = #{club_no}
+
+</select>
+
+<select id="ClubBan" resultType="ClubMembersVo">
+	select club_no, member_no, club_member_regdate
+	from club_members
+	where member_no = #{member_no}
+	
+</select>
+
+<insert id="VanMemberInsert" parameterType="java.util.List">
+
+	<foreach collection="list" item="item" separator=",">
+	insert into club_ban_members (club_no,member_no,club_member_regdate) values
+	(#{item.club_no}, #{item.member_no}, #{item.club_member_regdate})
+	</foreach>
+</insert>
+
+<delete id="ClubMemberBan">
+	delete from club_members
+	where member_no = #{member_no} and club_no = #{club_no}
+</delete>
+
+<update id="ClubMemberAuth1">
+	update club_members
+	set club_member_role = 'common'
+	where club_member_role = 'admin' and club_no = #{club_no}
+</update>
+
+<update id="ClubMemberAuth2">
+	update club_members
+	set club_member_role = 'admin'
+	where member_no = #{member_no} and club_no = #{club_no}
+</update>
+
+<delete id="ClubLeave">
+	delete from club_members
+	where (club_no = #{club_no} and member_no = #{member.member_no})
+
+</delete>
+
+
+
+
+
+
+
+
 
 
 	
 	<insert id="writeBoard">
-		insert into club_boards (club_no,member_no,board_type_no,club_board_title,club_board_content,club_board_photo)
-		values(#{club_no},#{member_no},#{board_type_no},#{club_board_title},#{club_board_content},#{club_board_photo})
+		insert into club_boards (club_no,board_type_no,member_no,club_board_title,club_board_content,club_board_image)
+		values(#{club_no},#{board_type_no},#{member_no},#{club_board_title},#{club_board_content},#{club_board_image})
 	</insert>
 	
-<!-- 	<select id="getBoardListAll" resultType="ClubBoardVo"> -->
-<!-- 		select * from club_board where club_no = #{club_no} -->
+	<select id="getBoardListAll" resultMap="boardListMap">
+		select b.club_board_no, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate, b.club_board_like, b.club_board_commentcnt
+		from club_boards b
+		join members m
+			on (b.member_no = m.member_no)
+		where b.club_no = #{club_no}
+		order by club_board_no desc
+	</select>
+	
+	<select id="getBoardList" resultMap="boardListMap">
+		select b.club_board_no, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate, b.club_board_like, b.club_board_commentcnt
+		from club_boards b
+		join members m
+			on (b.member_no = m.member_no)
+		where b.club_no = #{club_no} and b.board_type_no = #{board_type_no}
+		order by club_board_no desc
+	</select>
+	
+	<select id="getBoardImageList" resultType="ClubBoardsVo">
+		select club_board_no, club_board_image 
+		from club_boards
+		where club_no = #{club_no} and club_board_image is not null
+		order by club_board_no desc
+	</select>
+	
+	<!-- 게시글 본문(상세보기, 수정) -->
+<!-- 	<select id="getBoardContent" resultType="ClubBoardsVo"> -->
+<!-- 		select board_type_no, club_board_title, club_board_content  -->
+<!-- 		from club_boards -->
+<!-- 		where club_board_no = #{club_board_no} -->
 <!-- 	</select> -->
+	<select id="getBoardContent" resultMap="boardContentMap">
+		select c.club_name, b.board_type_no, bt.board_type_name, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate 
+		from club_boards b
+		join board_types bt
+			on (b.board_type_no = bt.board_type_no)
+		join clubs c
+			on (b.club_no = c.club_no)
+		join members m
+			on (b.member_no = m.member_no)
+		where club_board_no = #{club_board_no}
+	</select>
+	
+	<!-- 게시글 수정 -->
+	<update id="modifyBoardContent">
+		update club_boards set board_type_no = #{board_type_no}, club_board_title = #{club_board_title}, club_board_content = #{club_board_content}, club_board_updatedate = now()
+		where club_board_no = #{club_board_no}
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="deleteBoard">
+		delete from club_boards
+		where club_board_no = #{club_board_no}
+	</delete>
+	
+	<!-- 댓글수 -->
+	<select id="commentCnt" resultType="java.lang.Integer">
+		select count(*) from board_comments
+		where club_board_no = #{club_board_no}
+	</select>
+	
+	<!-- 댓글 작성 -->
 	
 	
 </mapper> 
