@@ -16,7 +16,7 @@ import com.joinus.domain.InterestsVo;
 import com.joinus.domain.MembersVo;
 
 @Service
-public interface ClubService {
+public interface Clubservice {
 
 	//클럽 회원 리스트
 	public List<ClubTotalBean> clubMemberListAll(int club_no);

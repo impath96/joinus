@@ -21,7 +21,7 @@ import com.joinus.domain.MembersVo;
 import com.joinus.persistence.ClubDao;
 
 @Service
-public class ClubServiceImpl implements ClubService{
+public class ClubServiceImpl implements Clubservice{
 	
 	private static final Logger log = LoggerFactory.getLogger(ClubServiceImpl.class);
 	

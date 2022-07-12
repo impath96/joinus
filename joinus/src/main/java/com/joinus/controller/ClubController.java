@@ -31,7 +31,7 @@ import com.joinus.domain.InterestDetailsVo;
 import com.joinus.domain.InterestsVo;
 import com.joinus.domain.MemberDipsVo;
 import com.joinus.domain.MembersVo;
-import com.joinus.service.ClubService;
+import com.joinus.service.Clubservice;
 
 
 @Controller
@@ -40,7 +40,7 @@ public class ClubController {
 	
 
 	@Inject
-	private ClubService service;
+	private Clubservice service;
 	
 	private static final Logger log = LoggerFactory.getLogger(ClubController.class);
 	
