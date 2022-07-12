@@ -34,7 +34,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.joinus.domain.BoardCommentsVo;
 import com.joinus.domain.BoardCriteria;
+import com.joinus.domain.BoardLikesVo;
+import com.joinus.domain.BoardPageMaker;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubsVo;
@@ -304,18 +307,24 @@ public class ClubController {
 	// http://localhost:8088/club/1/boards
 	// 게시글리스트
 	@RequestMapping(value = "/{club_no}/boards", method = RequestMethod.GET)
-	public String boardListAllGet(@PathVariable("club_no") Integer club_no, Model model) {
+	public String boardListAllGet(@PathVariable("club_no") Integer club_no, Model model, BoardCriteria cri) {
 		log.info(" boardListAllGet() 호출 ");
 		log.info("club_no : "+club_no);
 		
 		
-		List<BoardTotalBean> boardList = service.getBoardListAll(club_no);
-		log.info("@@@@@@@@@@@@"+boardList.get(16)+"");
+//		List<BoardTotalBean> boardList = service.getBoardListAll(club_no, cri);
+//		log.info("@@@@@@@@@@@@"+boardList.get(16)+"");
 		
 		
 		model.addAttribute("club_no", club_no);
 		
-		model.addAttribute("boardList", service.getBoardListAll(club_no));
+		model.addAttribute("boardList", service.getBoardListAll(club_no, cri));
+		BoardPageMaker pageMarker = new BoardPageMaker();
+		pageMarker.setCri(cri);
+		pageMarker.setTotalCount(service.getTotalBoardCnt(club_no));
+		log.info(pageMarker+"");
+		model.addAttribute("pm", pageMarker);
+		
 		
 		return "/club/boards/boardList";
 			
@@ -325,14 +334,20 @@ public class ClubController {
 	// http://localhost:8088/club/1/boards/type/1
 	// 게시글리스트(게시글유형별)
 	@RequestMapping(value = "/{club_no}/boards/type/{board_type_no}", method = RequestMethod.GET)
-	public String boardListTypeGet(@PathVariable("club_no") Integer club_no, @PathVariable("board_type_no") Integer board_type_no, Model model) {
+	public String boardListTypeGet(@PathVariable("club_no") Integer club_no, @PathVariable("board_type_no") Integer board_type_no, Model model, BoardCriteria cri) {
 		log.info(" boardListTypeGet() 호출 ");
 		log.info("club_no : "+club_no);
 		log.info("board_type_no : "+board_type_no);
 		
 		model.addAttribute("club_no", club_no);
 		
-		model.addAttribute("boardList", service.getBoardList(club_no, board_type_no));
+		model.addAttribute("boardList", service.getBoardList(club_no, board_type_no, cri));
+		BoardPageMaker pageMarker = new BoardPageMaker();
+		pageMarker.setCri(cri);
+		// 카테고리별 게시글 총개수 구하는 메서드 만들기(매퍼는 준비완)
+		pageMarker.setTotalCount(service.getTypeBoardCnt(club_no, board_type_no));
+		log.info(pageMarker+"");
+		model.addAttribute("pm", pageMarker);
 		
 		return "/club/boards/boardList";
 	}
@@ -353,13 +368,36 @@ public class ClubController {
 	
 	/// http://localhost:8088/club/{club_no}/boards/{club_board_no}
 	/// http://localhost:8088/club/1/boards/1
-	// 게시글 상세보기
+	// 게시글 상세보기 (조건 - 모임가입한 사람만 확인가능)
 	@RequestMapping(value = "/{club_no}/boards/{club_board_no}", method = RequestMethod.GET)
-	public String boardContentGet(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no, Model model) {
+	public String boardContentGet(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no, 
+			Model model, HttpSession session) {
 		log.info(" boardContentGet() 호출 ");
 		log.info(service.getBoardContent(club_board_no)+"");
 		
+		// 게시글과 관련된 정보 가져가기 (여기서 가져가는 member_name : 게시글 작성자)
+		// view에서의 세션값과 여기서 가져가는 member_name이 일치하면 글 수정/삭제 가능하게 나중에 구현
 		model.addAttribute("vo", service.getBoardContent(club_board_no));
+		
+		int commentCnt = service.getCommentCnt(club_board_no);
+		model.addAttribute("commentCnt", commentCnt);
+		
+		// 해당글의 댓글이 있는지 체크(댓글리스트 가져오기)
+		if(commentCnt > 0) {
+			model.addAttribute("commentList", service.getCommentList(club_board_no));
+		}
+		
+		model.addAttribute("likeCnt", service.getLikeCnt(club_board_no));
+		
+		// 좋아요 체크 (세션에 저장된 member 체크)
+		session.setAttribute("member_no", 12);
+		int member_no = (int) session.getAttribute("member_no");
+		// checkLike - 1:좋아요O / 0:좋아요X (해당 회원이 좋아요를 눌렀는지 체크)
+		model.addAttribute("checkLike", service.checkLike(club_board_no, member_no));
+		
+		// 좋아요 멤버리스트
+		model.addAttribute("likeList", service.getLikeList(club_board_no));
+		
 		
 		return "/club/boards/boardContent";
 	}
@@ -404,12 +442,92 @@ public class ClubController {
 		return "redirect:/club/"+club_no+"/boards";
 	}
 	
-	// http://localhost:8088/club/${club_no}/boards/${club_board_no}/comment
-	// http://localhost:8088/club/1/boards/${club_board_no}/comment
+	// http://localhost:8088/club/{club_no}/boards/{club_board_no}/comment
+	// http://localhost:8088/club/1/boards/24/comment
 	// 댓글 등록
+	@ResponseBody
+	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/comment", method = RequestMethod.POST)
+	public void writeCommentPost(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no, HttpSession session, BoardCommentsVo vo) {
+		log.info(" writeCommentPost() 호출 ");
+		
+		// 전달받은 데이터
+		log.info("commentVo : "+vo);
+		
+		// 작성자(member_no) 세션에서 꺼내쓰기(게시판 글쓰기 실행시키고 와야함)
+		session.setAttribute("member_no", 11);
+		int member_no = (int) session.getAttribute("member_no");
+		vo.setMember_no(member_no);
+		log.info("member추가 vo : "+vo);
+		
+		service.writeComment(vo);
+		service.updateCommentCnt(club_board_no);
+		log.info(" 댓글등록 완료! ");
+		
+		
+	}
+	
+	// http://localhost:8088/club/{club_no}/boards/{club_board_no}/comment/modify?board_comment_no="+board_comment_no
+	// 댓글 수정
+	@ResponseBody
+	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/comment/modify", method = RequestMethod.POST)
+	public void updateCommentPost(@PathVariable("club_no") int club_no, @PathVariable("club_board_no") int club_board_no, 
+			@RequestParam("board_comment_no") int board_comment_no, BoardCommentsVo vo) {
+		log.info(" updateCommentPost() 호출 ");
+		log.info("board_comment_no : "+board_comment_no);
+		log.info("boardCommentsVo : "+vo);
+		
+		service.updateComment(vo);
+		log.info(" 댓글수정 완료! ");
+	}
+	
+	// http://localhost:8088/club/{club_no}/boards/{club_board_no}/comment/delete?board_comment_no="+board_comment_no
+	// 댓글 삭제
+	@ResponseBody
+	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/comment/delete", method = RequestMethod.POST)
+	public void deleteCommentPost(@PathVariable("club_no") int club_no, @PathVariable("club_board_no") int club_board_no,
+			@RequestParam("board_comment_no") int board_comment_no) {
+		log.info(" deleteCommentPost() 호출 ");
+		
+		service.deleteComment(board_comment_no);
+		service.decreaseCommentCnt(club_board_no);
+		log.info(" 댓글삭제 완료! ");
+		
+	}
 	
 	
-	
+	// http://localhost:8088/club/{club_no}/boards/{club_board_no}/likeUp
+	// 좋아요 등록
+	@ResponseBody
+	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/likeUp", method = RequestMethod.POST)
+	public void LikePost(@PathVariable("club_no") int club_no, @PathVariable("club_board_no") int club_board_no, 
+			BoardLikesVo vo, HttpSession session) {
+		log.info(" LikePost() 호출 ");
+		log.info("좋아요 vo : "+vo);
+		// 세션에서 member_no
+		session.setAttribute("member_no", 12);
+		int member_no = (int) session.getAttribute("member_no");
+		vo.setMember_no(member_no);
+		log.info("member추가 vo : "+vo);
+		
+		service.insertLike(vo);
+		service.increaseLikeCnt(club_board_no);
+		log.info(" 좋아요 등록 완료! ");
+	}
 
+	// http://localhost:8088/club/{club_no}/boards/{club_board_no}/likeDown
+	// 좋아요 취소
+	@ResponseBody
+	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/likeDown", method = RequestMethod.POST)
+	public void cancleLikePost(@PathVariable("club_no") int club_no, @PathVariable("club_board_no") int club_board_no, 
+			HttpSession session) {
+		log.info(" cancleLikePost() 호출 ");
+		// 세션에서 member_no
+		session.setAttribute("member_no", 12);
+		int member_no = (int) session.getAttribute("member_no");
+		
+		service.cancelLike(club_board_no, member_no);
+		service.decreaseLikeCnt(club_board_no);
+		log.info(" 좋아요 취소 완료! ");
+	}
 	
 }

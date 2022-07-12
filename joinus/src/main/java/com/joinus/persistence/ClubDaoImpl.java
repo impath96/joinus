@@ -11,7 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.joinus.domain.BoardCommentsVo;
 import com.joinus.domain.BoardCriteria;
+import com.joinus.domain.BoardLikesVo;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubMembersVo;
@@ -174,22 +176,43 @@ public class ClubDaoImpl implements ClubDao{
 	}
 
 	@Override
-	public List<BoardTotalBean> getBoardListAll(Integer club_no) {
+	public List<BoardTotalBean> getBoardListAll(Integer club_no, BoardCriteria cri) {
 		log.info(" getBoardListAll() 호출 ");
+		log.info("@@@@@@"+club_no+", "+cri);
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("club_no", club_no);
+		param.put("pageStart", cri.getPageStart());
+		param.put("perPageNum", cri.getPerPageNum());
 		
-		return sqlSession.selectList(NAMESPACE+".getBoardListAll", club_no);
+		return sqlSession.selectList(NAMESPACE+".getBoardListAll", param);
+	}
+	
+	@Override
+	public Integer getTotalBoardCnt(int club_no) {
+		return sqlSession.selectOne(NAMESPACE+".totalBoardCnt", club_no);
 	}
 
 	@Override
-	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no) {
+	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no, BoardCriteria cri) {
 		log.info(" getBoardList() 호출 ");
+		log.info("@@@@@@"+club_no+", "+board_type_no+", "+cri);
 		
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("club_no", club_no);
+		param.put("board_type_no", board_type_no);
+		param.put("pageStart", cri.getPageStart());
+		param.put("perPageNum", cri.getPerPageNum());
+		
+		return sqlSession.selectList(NAMESPACE+".getBoardList", param);
+	}
+	
+	@Override
+	public Integer getTypeBoardCnt(int club_no, int board_type_no) {
 		Map<String, Integer> param = new HashMap<String, Integer>();
 		param.put("club_no", club_no);
 		param.put("board_type_no", board_type_no);
 		
-		
-		return sqlSession.selectList(NAMESPACE+".getBoardList", param);
+		return sqlSession.selectOne(NAMESPACE+".typeBoardCnt", param);
 	}
 
 	@Override
@@ -211,5 +234,87 @@ public class ClubDaoImpl implements ClubDao{
 	public void deleteBoard(Integer club_board_no) {
 		sqlSession.delete(NAMESPACE+".deleteBoard", club_board_no);
 	}
+
+	@Override
+	public void writeComment(BoardCommentsVo vo) {
+		sqlSession.insert(NAMESPACE+".writeComment", vo);
+	}
+
+	@Override
+	public int getCommentCnt(int club_board_no) {
+		return sqlSession.selectOne(NAMESPACE+".commentCnt", club_board_no);
+	}
+
+	@Override
+	public List<BoardTotalBean> getCommentList(int club_board_no) {
+		return sqlSession.selectList(NAMESPACE+".getCommentList", club_board_no);
+	}
+
+	@Override
+	public void updateCommentCnt(int club_board_no) {
+		sqlSession.update(NAMESPACE+".updateCommentCnt", club_board_no);
+	}
+
+	@Override
+	public void updateComment(BoardCommentsVo vo) {
+		sqlSession.update(NAMESPACE+".updateComment", vo);
+	}
+
+	@Override
+	public void deleteComment(int board_comment_no) {
+		sqlSession.delete(NAMESPACE+".deleteComment", board_comment_no);
+	}
+
+	@Override
+	public void decreaseCommentCnt(int club_board_no) {
+		sqlSession.update(NAMESPACE+".decreaseCommentCnt", club_board_no);
+	}
+
+	@Override
+	public int getLikeCnt(int club_board_no) {
+		return sqlSession.selectOne(NAMESPACE+".likeCnt", club_board_no);
+	}
+
+	@Override
+	public int checkLike(int club_board_no, int member_no) {
+		Map<String, Integer> param = new HashMap<String, Integer>();
+		param.put("club_board_no", club_board_no);
+		param.put("member_no", member_no);
+		
+		return sqlSession.selectOne(NAMESPACE+".checkLike", param);
+	}
+
+	@Override
+	public List<BoardTotalBean> getLikeList(int club_board_no) {
+		return sqlSession.selectList(NAMESPACE+".boardLikeList", club_board_no);
+	}
+
+	@Override
+	public void insertLike(BoardLikesVo vo) {
+		sqlSession.insert(NAMESPACE+".insertLike", vo);
+	}
+
+	@Override
+	public void increaseLikeCnt(int club_board_no) {
+		sqlSession.update(NAMESPACE+".increaseLikeCnt", club_board_no);
+	}
+
+	@Override
+	public void cancelLike(int club_board_no, int member_no) {
+		Map<String, Integer> param = new HashMap<String, Integer>();
+		param.put("club_board_no", club_board_no);
+		param.put("member_no", member_no);
+		
+		sqlSession.delete(NAMESPACE+".cancelLike", param);
+	}
+
+	@Override
+	public void decreaseLikeCnt(int club_board_no) {
+		sqlSession.update(NAMESPACE+".decreaseLikeCnt", club_board_no);
+	}
+	
+	
+	
+	
 
 }
