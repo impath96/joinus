@@ -22,7 +22,7 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "login";
+		return "main";
 	}
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home2(Locale locale, Model model) {

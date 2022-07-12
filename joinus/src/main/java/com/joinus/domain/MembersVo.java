@@ -6,8 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
+@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,6 +27,5 @@ public class MembersVo {
 	private String member_signup_type;
 	private String member_status;
 	private String member_location;
-
 
 }

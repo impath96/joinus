@@ -1,18 +1,28 @@
 package com.joinus.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
-import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.joinus.domain.BoardCommentsVo;
+import com.joinus.domain.BoardCriteria;
+import com.joinus.domain.BoardLikesVo;
+import com.joinus.domain.BoardTotalBean;
+import com.joinus.domain.ClubBoardsVo;
+import com.joinus.domain.ClubGradesVo;
+import com.joinus.domain.ClubMeetingsVo;
+import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubTotalBean;
 import com.joinus.domain.ClubsVo;
 import com.joinus.domain.Criteria;
 import com.joinus.domain.MeetingTotalBean;
+import com.joinus.domain.InterestDetailsVo;
+import com.joinus.domain.InterestsVo;
 import com.joinus.domain.MembersVo;
 import com.joinus.domain.RentalPlacesVo;
 import com.joinus.persistence.ClubDao;
@@ -134,31 +144,240 @@ public class ClubServiceImpl implements ClubService{
 		
 	}
 
+	@Override
+	public List<BoardTotalBean> getBoardListAll(Integer club_no, BoardCriteria cri) {
+		return dao.getBoardListAll(club_no, cri);
+	}
+	
+	@Override
+	public Integer getTotalBoardCnt(int club_no) {
+		return dao.getTotalBoardCnt(club_no);
+	}
 
+	@Override
+	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no, BoardCriteria cri) {
+		return dao.getBoardList(club_no, board_type_no, cri);
+	}
+	
+	@Override
+	public Integer getTypeBoardCnt(int club_no, int board_type_no) {
+		return dao.getTypeBoardCnt(club_no, board_type_no);
+	}
 
+	@Override
+	public List<ClubBoardsVo> getBoardImageList(Integer club_no) {
+		return dao.getBoardImageList(club_no);
+	}
 
+	@Override
+	public BoardTotalBean getBoardContent(Integer club_board_no) {
+		return dao.getBoardContent(club_board_no);
+	}
 
+	@Override
+	public void modifyBoardContent(ClubBoardsVo vo) {
+		dao.modifyBoardContent(vo);
+	}
 
+	@Override
+	public void deleteBoard(Integer club_board_no) {
+		dao.deleteBoard(club_board_no);
+	}
 
+	@Override
+	public void writeComment(BoardCommentsVo vo) {
+		dao.writeComment(vo);
+	}
 
+	@Override
+	public int getCommentCnt(int club_board_no) {
+		return dao.getCommentCnt(club_board_no);
+	}
 
+	@Override
+	public List<BoardTotalBean> getCommentList(int club_board_no) {
+		return dao.getCommentList(club_board_no);
+	}
 
+	@Override
+	public void updateCommentCnt(int club_board_no) {
+		dao.updateCommentCnt(club_board_no);
+	}
 
+	@Override
+	public void updateComment(BoardCommentsVo vo) {
+		dao.updateComment(vo);
+	}
 
+	@Override
+	public void deleteComment(int board_comment_no) {
+		dao.deleteComment(board_comment_no);
+	}
 
+	@Override
+	public void decreaseCommentCnt(int club_board_no) {
+		dao.decreaseCommentCnt(club_board_no);
+	}
 
+	@Override
+	public int getLikeCnt(int club_board_no) {
+		return dao.getLikeCnt(club_board_no);
+	}
 
+	@Override
+	public int checkLike(int club_board_no, int member_no) {
+		return dao.checkLike(club_board_no, member_no);
+	}
 
+	@Override
+	public List<BoardTotalBean> getLikeList(int club_board_no) {
+		return dao.getLikeList(club_board_no);
+	}
 
+	@Override
+	public void insertLike(BoardLikesVo vo) {
+		dao.insertLike(vo);
+	}
 
+	@Override
+	public void increaseLikeCnt(int club_board_no) {
+		dao.increaseLikeCnt(club_board_no);
+	}
 
+	@Override
+	public void cancelLike(int club_board_no, int member_no) {
+		dao.cancelLike(club_board_no, member_no);
+	}
 
-//	@Override
-//	public List<ClubBoardVo> getBoardListAll(Integer club_no) {
-//		return dao.getBoardListAll(club_no);
-//	}
+	@Override
+	public void decreaseLikeCnt(int club_board_no) {
+		dao.decreaseLikeCnt(club_board_no);
+	}
 	
 	
 	
+	
+	
+	
+	//=========================강성민========================
+	
+		//회원정보 가져오기
+		@Override
+		public MembersVo getMember(Integer num) {
+			return dao.getMember(num);
+		}
+		//회원관심사 가져오기
+		@Override
+		public InterestsVo getMemberInterest(Integer num) {
+			return dao.interest(num);
+		}
+		//회원이 선택한 관심사의 세부관심사리스트 가져오기
+		@Override
+		public List<InterestDetailsVo> getDetailName(Integer num) {
+			return dao.getDetailName(num);
+		}
+	
+		//회원이 입력한 클럽정보 저장
+		@Override
+		public void newClub(ClubsVo vo) {
+			dao.newClub(vo);
+		}
+		//회원이 선택한 관심사 넘버값 가져오기
+		@Override
+		public InterestDetailsVo getInterestNo(String name) {
+			return dao.getInterestNo(name);
+		}
+		//회원이 입력한 클럽관심사 저장하기
+		@Override
+		public void newClubInterest(Integer club_no, Integer interest_no, Integer interest_detail_no) {
+			dao.newClubInterest(club_no, interest_no, interest_detail_no);
+		}
+
+		// 모임 이름 중복체크
+		@Override
+		public ClubsVo checkClubName(String name) {
+			return dao.checkClubName(name);
+		}
+		
+		//모임가입하기
+		@Override
+		public void join(ClubMembersVo members) {
+			dao.join(members);
+		}
+		//모임별점주기
+		@Override
+		public void clubGrade(ClubGradesVo vo) {
+			dao.clubGrade(vo);
+		}
+		//모임 별점 정보 가져오기
+		@Override
+		public List<ClubGradesVo> getClubGrade(Integer num) {
+			return dao.getClubGrade(num);
+		}
+		//모임 별점 평균값, 참여자 수 가져오기
+		@Override
+		public List<Map<String, Integer>> getClubAvgCnt(Integer num) {
+			return dao.getClubAvgCnt(num);
+		}
+		//모임정보가져오기
+		@Override
+		public ClubsVo getClubInfo(Integer num) {
+			return dao.getClubInfo(num);
+		}
+		//모임 관심사 가져오기
+		@Override
+		public String getClubInterestDName(Integer num) {
+			return dao.getClubInterestDName(num);
+		}
+
+		//모임회원정보가져오기
+		@Override
+		public List<ClubMembersVo> getClubMembers(Integer num) {
+			return dao.getClubMembers(num);
+		}
+
+		// 모임 회원 정보 가져오기(특정)
+		@Override
+		public ClubMembersVo getClubMemberNo(Integer num, Integer num2) {
+			return dao.getClubMemberNo(num,num2);
+		}
+		// 모임 별점 참여자 가져오기
+		@Override
+		public Integer getGradeinfo(Integer num, Integer num2) {
+			return dao.getGradeinfo(num,num2);
+		}
+
+		// 모임 찜하기
+		@Override
+		public void clubDip(Integer num, Integer num2) {
+			dao.clubDip(num, num2);
+		}
+		// 모임 찜 여부 확인
+		@Override
+		public Integer dip(Integer num) {
+			return dao.dip(num);
+		}
+
+		// 모임 찜 취소
+		@Override
+		public void dipX(Integer num, Integer num2) {
+			dao.dipX(num, num2);
+		}
+
+		//정모 리스트
+		@Override
+		public List<ClubMeetingsVo> getMeetings(Integer num) {
+			return dao.getMeetings(num);
+		}
+
+		//게시글 리스트
+		@Override
+		public List<ClubBoardsVo> getBoardsforimg(Integer num) {
+			return dao.getBoards(num);
+		}
+
+
+		
+		
 	
 }
