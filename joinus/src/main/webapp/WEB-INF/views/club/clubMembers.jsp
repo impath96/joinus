@@ -83,10 +83,9 @@
 	if(check == "LEAVEOK"){
 		alert('모임을 나가셨습니다.')
 	}
-	if(check == "LEAVENOT"){
-		alert('모임장 양도를 먼저 해주세요')
+	if(check == "MeetingNew"){
+		alert('정모생성을 완료했습니다.')
 	}
-	
 </script>
 <!-- 모임회원리스트 -->
 

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.joinus.mapper.MeetingMapper">
+
+<!-- 조인할 테이블 1-1 -->
+<resultMap type="PartnerPlacesVo" id="partnerPlacesMap">
+   <id property="partner_place_no" column="partner_place_no"/>
+   <id property="place_type_no" column="place_type_no"/>
+   <id property="partner_place_name" column="partner_place_name"/>
+   <id property="partner_place_image" column="partner_place_image"/>
+   <id property="partner_place_price" column="partner_place_price"/>
+   <id property="partner_place_address" column="partner_place_address"/>
+   <id property="partner_place_tel" column="partner_place_tel"/>
+</resultMap>
+
+<!-- 조인할 테이블 1-2 -->
+<resultMap type="RentalPlacesVo" id="rentalPlacesMap">
+   <id property="rental_places_no" column="rental_places_no"/>
+   <id property="club_no" column="club_no"/>
+   <id property="member_no" column="member_no"/>
+   <id property="partner_place_no" column="partner_place_no"/>
+   <id property="payment_no" column="payment_no"/>
+   <id property="rental_date" column="rental_date"/>
+   <id property="rental_time" column="rental_time"/>
+</resultMap>
+
+<!-- 조인한 맵 만들어주기 1 -->
+<resultMap type="MeetingTotalBean" id="RentalListMap">
+	<collection property="partnerPlacesVo" resultMap="partnerPlacesMap"/>
+	<collection property="rentalPlacesVo" resultMap="rentalPlacesMap"/>
+</resultMap>
+
+
+<insert id="CreateMeeting">
+	insert into club_meetings(club_no, club_meeting_title, club_meeting_capacity, club_meeting_date, club_meeting_location, club_meeting_dues)
+	values(#{club_no},#{club_meeting_title},#{club_meeting_capacity},#{club_meeting_date},#{club_meeting_location},#{club_meeting_dues})
+</insert>
+
+<select id="GetRental" resultMap="RentalListMap">
+	
+	select rp.rental_places_no, rp.club_no, rp.member_no, rp.partner_place_no, rp.rental_date, pp.partner_place_name, pp.partner_place_address
+	from rental_places rp
+	join partner_places pp
+		on(rp.partner_place_no = pp.partner_place_no)
+		where member_no = #{member_no}
+
+</select>
+
+<select id="GetRentalREST" resultMap="RentalListMap">
+	
+	select rp.rental_places_no, rp.club_no, rp.member_no, rp.partner_place_no, rp.rental_date, pp.partner_place_name, pp.partner_place_address
+	from rental_places rp
+	join partner_places pp
+		on(rp.partner_place_no = pp.partner_place_no)
+		where rental_places_no = #{rental_places_no}
+
+</select>
+
+
+<delete id="DeleteMeeting">
+	delete from club_meetings
+	where club_meeting_no = #{club_meeting_no}
+
+</delete>
+	
+<update id="ModifyMeeting">
+	update club_meetings
+	set(club_no = #{club_no},
+	 club_meeting_title =#{club_meeting_title},
+	 club_meeting_capacity =#{club_meeting_capacity},
+	 club_meeting_date = #{club_meeting_date},
+	 club_meeting_location =#{club_meeting_location},
+	 club_meeting_dues =#{club_meeting_dues})
+	where club_meeting_no = #{club_meeting_no}
+
+</update>
+	
+</mapper> 

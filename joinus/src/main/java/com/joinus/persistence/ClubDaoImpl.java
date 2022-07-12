@@ -12,11 +12,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.joinus.domain.ClubBoardsVo;
+import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubTotalBean;
 import com.joinus.domain.ClubsVo;
 import com.joinus.domain.Criteria;
+import com.joinus.domain.MeetingTotalBean;
 import com.joinus.domain.MembersVo;
+import com.joinus.domain.RentalPlacesVo;
 
 @Repository
 public class ClubDaoImpl implements ClubDao{
@@ -25,6 +28,7 @@ public class ClubDaoImpl implements ClubDao{
 	private SqlSession sqlSession;
 	
 	static final String NAMESPACE ="com.joinus.mapper.ClubMapper";
+	static final String NAMESPACE2 ="com.joinus.mapper.MeetingMapper";
 	
 	private static final Logger log = LoggerFactory.getLogger(ClubDaoImpl.class);
 	
@@ -155,8 +159,25 @@ public class ClubDaoImpl implements ClubDao{
 		sqlSession.delete(NAMESPACE+".ClubLeave", param);
 		log.info("모임나가기 완료");
 		
+	}
+	
+	//예약정보 가져오기
+	@Override
+	public List<MeetingTotalBean> getRental(int member_no) {
 		
-		
+		return sqlSession.selectList(NAMESPACE2+".GetRental", member_no);
+	}
+	
+	//예약정보 가져오기 - REST
+	@Override
+	public List<MeetingTotalBean> getRentalREST(int rental_places_no) {
+		return sqlSession.selectList(NAMESPACE2+".GetRentalREST", rental_places_no);
+	}
+	
+	//정모 생성
+	@Override
+	public void createMeeting(ClubMeetingsVo vo) {
+		sqlSession.insert(NAMESPACE2+".CreateMeeting", vo);
 	}
 	
 //=======================허수빈=============================================================
@@ -177,6 +198,10 @@ public class ClubDaoImpl implements ClubDao{
 		
 		return sqlSession.selectList(NAMESPACE+".getBoardListAll", club_no);
 	}
+
+
+
+
 
 
 

@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ include file="../include/header.jsp"%>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ce8d060125bcc89e0c25ee69f6b5c7b0"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ce8d060125bcc89e0c25ee69f6b5c7b0&libraries=services"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"> </script>
+
 
 <body> 
 <!-- 정모 -->
@@ -14,35 +17,31 @@
           <span class="text-primary">예약 장소</span>
           <span class="badge bg-primary rounded-pill">총 개수</span>
         </h4>
+       <c:forEach var = "vo" items="${rentalList }" varStatus="status">
         <ul class="list-group mb-3">
-          <li class="list-group-item d-flex justify-content-between lh-sm">
+          <li class="list-group-item d-flex justify-content-between lh-sm" >
             <div>
-              <h6 class="my-0">7/30</h6>
-              <small class="text-muted">##장소 이름##</small> <br>
-              <small class="text-muted">##장소 시간##</small>
+            <input type="text" id="rental_no_${status.index}" value="${vo.rentalPlacesVo.rental_places_no }">
+              <h6 class="my-0">${vo.rentalPlacesVo.rental_date }</h6>
+              <small class="text-muted">${vo.partnerPlacesVo.partner_place_name }</small> <br>
+              <input type="button" class="btn btn-secondary" value='적용하기'
+              onclick="location.href='${PageContext.request.contextPath}/club/${clubInfo[0].club_no}/meeting/${vo.rentalPlacesVo.rental_places_no }';"
+              >
             </div>
-            <span class="text-muted">n명</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0">7/30</h6>
-              <small class="text-muted">##장소 이름##</small> <br>
-              <small class="text-muted">##장소 시간##</small>
-            </div>
-            <span class="text-muted">n명</span>
           </li>
         </ul>
+        </c:forEach>
       </div>
       
       
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">일정 생성하기</h4>
-        <form class="needs-validation" novalidate="">
+        <form class="needs-validation" action ="${PageContext.request.contextPath }/club/${clubInfo[0].club_no}/meeting/new" method="post">
           <div class="row g-3">
           
             <div class="col-12">
               <label for="firstName" class="form-label">제목</label>
-              <input type="text" class="form-control" id="firstName" placeholder="8월 정기 모임" value="" required="">
+              <input type="text" class="form-control" name="club_meeting_title" value="" required="">
               <div class="invalid-feedback">
                 Valid first name is required.
               </div>
@@ -50,7 +49,7 @@
             
             <div class="col-12">
               <label for="address" class="form-label">날짜</label>
-              <input type="date" class="form-control" id="address"  required="">
+              <input type="date" class="form-control" name="club_meeting_date"  required="">
               <div class="invalid-feedback">
                 Please enter your shipping address.
               </div>
@@ -58,38 +57,33 @@
             
             <div class="col-12">
               <label for="address" class="form-label">정원</label>
-              <input type="number" class="form-control" id="address" required="">
+              <input type="number" class="form-control" name="club_meeting_capacity" required="">
               <div class="invalid-feedback">
                 Please enter your shipping address.
               </div>
             </div>
             
-            <form action="" method="get">
+
+            <div>
             <div class="col-12">
               <label for="address" class="form-label">장소</label>
               	<div class="input-group">
-              		<input type="text" class="form-control" id="address">
-             		<button type="button" class="btn btn-secondary" id="search">검색하기</button>
+              		<input type="text" class="form-control" id="keyward" name="club_meeting_location">
+             		<button type="button" class="btn btn-secondary" id ="search">검색하기</button>
+            	</div>
+            	<div>
+            		<ul id="placesList"></ul>
+            		<div id="pagination"></div>
             	</div>
             </div>
-            </form>
             <!-- https://map.kakao.com/link/search/카카오 -->
        
-       		<div id="map" style="width:500px;height:400px;" class="text-center"></div>
-       		<script>
-       		var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-       		var options = { //지도를 생성할 때 필요한 기본 옵션
-       			center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-       			level: 3 //지도의 레벨(확대, 축소 정도)
-       		};
-
-       		var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-       		</script>
-       
-       
+       		<div id="map" style="width:500px; height:400px;" class="text-center"></div>
+       		</div>
+      
             <div class="col-12">
               <label for="address2" class="form-label">참가비 <span class="text-muted">(선택)</span></label>
-              <input type="number" class="form-control" id="address2" placeholder="Apartment or suite">
+              <input type="number" class="form-control" name="club_meeting_dues" placeholder="Apartment or suite">
             </div>
 
           </div>
@@ -123,23 +117,33 @@
     </div>
 </div>
 <!-- 정모 -->
+
 <script type="text/javascript">
 
-$(document).ready(function(){
+$(function(){
+	//alert('jquery! check');
+	
+		//alert($('#rental_no'+${status.current}).attr('value'));
+	
+	//$('#rental').click(function(){
+		//alert('rental 버튼 클릭');
+		
+		//$.ajax({
+		//	url : '/club/rental?rental_places_no='+rental_no,
+		//	type :'get',
+		//	success : function(){
+		//		alert('갔다옴');
+		//	}
+		//});//ajax
+		
+	//});//click
 	
 	
-	$.ajax({
-		
-		
-		
-		
-	})//ajax
 	
 	
 });//jquery
 
 
 </script>
-
 
 <%@ include file="../include/footer.jsp"%>

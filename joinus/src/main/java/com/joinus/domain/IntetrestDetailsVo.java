@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 
-public class IntetestDetailsVo {
+public class IntetrestDetailsVo {
 
 
 	private int interest_detail_no; 

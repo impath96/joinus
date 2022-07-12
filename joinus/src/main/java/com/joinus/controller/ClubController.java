@@ -15,23 +15,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.joinus.domain.ClubBoardsVo;
+import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.ClubsVo;
 import com.joinus.domain.Criteria;
+import com.joinus.domain.MeetingTotalBean;
 import com.joinus.domain.MembersVo;
 import com.joinus.domain.PageMaker;
 import com.joinus.service.ClubService;
-
 
 @Controller
 @RequestMapping("/club/*")
 public class ClubController {
 	
-
 	@Inject
 	private ClubService service;
 	
 	private static final Logger log = LoggerFactory.getLogger(ClubController.class);
 	
+
 	//http://localhost:8088/club/clubList?page=1
 	//http://localhost:8088/club/clubList?interest_no=2
 	@RequestMapping(value="/clubList", method = RequestMethod.GET)
@@ -68,7 +69,7 @@ public class ClubController {
 	
 	//http://localhost:8088/club/1/clubMembers
 	@RequestMapping(value="/{club_no}/clubMembers", method = RequestMethod.GET)
-	public String clubMember(Model model,
+	public String clubMember(Model model, 
 							@PathVariable("club_no") Integer club_no, HttpSession session) throws Exception{
 		log.info("clubMember() 호출");		
 		
@@ -96,24 +97,6 @@ public class ClubController {
 		return "/club/clubMembers";
 	}
 	
-	//http://localhost:8088/club/clubMeeting
-	@RequestMapping(value="/meetingList", method = RequestMethod.GET)
-	public void clubMeetingGET() {
-		log.info("clubMeeting() 호출");
-	}
-	
-	
-	//http://localhost:8088/club/1/meetingWrite
-	@RequestMapping(value="/{club_no}/meetingWrite", method = RequestMethod.GET)
-	public String meetingWritegPOST(Model model,
-						@PathVariable("club_no") Integer club_no, HttpSession session) {
-			
-		
-		
-		log.info("meetingWritePOST() 호출");
-		
-		return "/club/meetingWrite";
-	}
 	
 	//http://localhost:8088/club/1/clubMember/ban
 	@RequestMapping(value="/{club_no}/clubMembers/ban", method=RequestMethod.GET)
@@ -165,7 +148,6 @@ public class ClubController {
 			rttr.addFlashAttribute("check","LEAVEOK");
 			return "redirect:/club/{club_no}/clubMembers";
 		}
-
 	}
 	
 	//http://localhost:8088/club/1/modify
@@ -180,10 +162,46 @@ public class ClubController {
 			
 			model.addAttribute("clubInfo", clubInfo);
 			
-			
 			return "/club/clubModify";
 		}
 
+		//http://localhost:8088/club/1/meetingWrite
+		@RequestMapping(value="/{club_no}/meetingWrite", method = RequestMethod.GET)
+		public String meetingWritegPOST(Model model,
+				@PathVariable("club_no") Integer club_no, HttpSession session) {
+			
+			log.info("meetingWritePOST() 호출");
+			
+			//멤버정보 가져오기
+			//MembersVo member = (MembersVo) session.getAttribute("member");
+			//int member_no =member.getMember_no();
+			
+			int member_no = 124;
+			
+			//예약정보 불러오기
+			List<MeetingTotalBean> rentalList = (List<MeetingTotalBean>)service.getRental(member_no);
+			log.info(rentalList+"");
+			List<ClubsVo> clubInfo = service.clubInfo(club_no);
+			log.info(clubInfo+"");
+			model.addAttribute("clubInfo", clubInfo);
+			model.addAttribute("rentalList", rentalList);
+			return "/club/meetingWrite";
+			
+		}
+		
+		//http://localhost:8088/club/1/meeting/new
+		@RequestMapping(value="/{club_no}/meeting/new", method = RequestMethod.POST)
+		public String clubMeetingGET(Model model, ClubMeetingsVo vo, RedirectAttributes rttr,
+				@PathVariable("club_no") Integer club_no, HttpSession session) {
+			log.info("clubMeeting new() 호출");
+			
+			//log.info(vo+"");
+			
+			service.createMeeting(vo);
+			rttr.addFlashAttribute("check","MeetingNew");
+			
+			return "redirect:/club/{club_no}/clubMembers";
+		}
 	
 	
 	

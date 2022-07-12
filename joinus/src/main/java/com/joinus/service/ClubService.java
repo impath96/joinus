@@ -5,10 +5,13 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.joinus.domain.ClubBoardsVo;
+import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.ClubTotalBean;
 import com.joinus.domain.ClubsVo;
 import com.joinus.domain.Criteria;
+import com.joinus.domain.MeetingTotalBean;
 import com.joinus.domain.MembersVo;
+import com.joinus.domain.RentalPlacesVo;
 
 @Service
 	public interface ClubService {
@@ -34,16 +37,20 @@ import com.joinus.domain.MembersVo;
 		//강퇴기능
 		public void clubBan(int member_no, int club_no);
 		
-
-
 		public void writeBoard(ClubBoardsVo vo);
 
 		public void clubAuth(Integer member_no, int club_no);
 
 		public void clubLeave(MembersVo member, Integer club_no);
-
-
-
+		
+		//예약정보 불러오기
+		public List<MeetingTotalBean> getRental(int member_no);
+		
+		public List<MeetingTotalBean> getRentalREST(int rental_places_no);
+		
+		//정모생성
+		public void createMeeting(ClubMeetingsVo vo);
+		
 		
 //		public List<ClubBoardVo> getBoardListAll(Integer club_no);
 		

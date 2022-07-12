@@ -179,15 +179,6 @@
 </delete>
 
 
-
-
-
-
-
-
-
-
-	
 	<insert id="writeBoard">
 		insert into club_boards (club_no,member_no,board_type_no,club_board_title,club_board_content,club_board_photo)
 		values(#{club_no},#{member_no},#{board_type_no},#{club_board_title},#{club_board_content},#{club_board_photo})
