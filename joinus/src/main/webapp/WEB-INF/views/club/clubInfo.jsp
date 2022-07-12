@@ -330,12 +330,10 @@
                         </div>
                     </div>
                     <c:forEach var="m" items="${meetings }">
-                    	<c:if test="${m.length()<4 }">
                     <h3 class="mb-3" onclick="meetingTitle()" id="meetingTitle">${m.club_meeting_title }</h3>
                     <span>${m.club_meeting_title }</span><br>
                     <span>${m.club_meeting_location }</span><br>
                     <span>${m.club_meeting_capacity }</span><br>
-                    	</c:if>
                     </c:forEach>
                 </div>
                 </div>
@@ -402,15 +400,15 @@
   
   //모임 게시판으로 이동
   function listClubMember(){
-	  location.href='${PageContext.request.contextPath }/test';
+	  location.href='${PageContext.request.contextPath }/club/${clubvo.club_no}/boards/new';
   }
   // 모임 사진첩으로 이동
   function listClubBoard(){
-	  location.href='${PageContext.request.contextPath }/test';
+	  location.href='${PageContext.request.contextPath }/club/${clubvo.club_no}/gallery';
   }
   // 정모페이지로 이동  	
   function meetingTitle(){
-	  location.href='${PageContext.request.contextPath }/test';
+	  location.href='${PageContext.request.contextPath }//club/${clubvo.club_no}/meetting/${meetings.club_meeting_no}';
   }
 	
     </script>

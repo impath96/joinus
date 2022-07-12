@@ -86,7 +86,7 @@
         </a>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="index.html" class="nav-item nav-link">Home</a>
+                <a href="${PageContext.request.contextPath }/" class="nav-item nav-link">Home</a>
                 <a href="${PageContext.request.contextPath }/club/clubList" class="nav-item nav-link">ClubList</a>
                 <a href="service.html" class="nav-item nav-link active">Service</a>
                 <a href="project.html" class="nav-item nav-link">Project</a>
@@ -100,9 +100,9 @@
                         <a href="404.html" class="dropdown-item">404 Page</a>
                     </div>
                 </div>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
+                <a href="${PageContext.request.contextPath }/member/mypage" class="nav-item nav-link">MYPAGE</a>
             </div>
-            <a href="" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Get A Quote<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="${PageContext.request.contextPath }/member/signin" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Login<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
     <!-- Navbar End -->

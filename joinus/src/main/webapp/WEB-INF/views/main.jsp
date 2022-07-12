@@ -34,7 +34,7 @@ function iamport(){
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                 <h6 class="text-primary">Our Projects</h6>
                 <h1 class="mb-4">Visit Our Latest Solar And Renewable Energy Projects</h1>
-            </div>
+            </div><hr><br><br>
             <div class="row mt-n2 wow fadeInUp" data-wow-delay="0.3s">
                 <div class="col-12 text-center">
                     <ul class="list-inline mb-5" id="portfolio-flters">
@@ -44,7 +44,7 @@ function iamport(){
                         <li class="mx-2" data-filter=".third">Hydropower Plants</li>
                     </ul>
                 </div>
-            </div>
+            </div><br><br>
             <div class="row g-4 portfolio-container wow fadeInUp" data-wow-delay="0.5s">
                 <div class="col-lg-4 col-md-6 portfolio-item first">
                     <div class="portfolio-img rounded overflow-hidden">
