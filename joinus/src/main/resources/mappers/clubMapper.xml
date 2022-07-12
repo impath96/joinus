@@ -419,6 +419,12 @@
 		update club_boards set club_board_likecnt = club_board_likecnt - 1
 		where club_board_no = #{club_board_no}
 	</update>
+	
+	<!-- 해당 모임의 모임원이 맞는지 확인 -->
+	<select id="checkClubMember" resultType="java.lang.Integer">
+		select count(member_no) from club_members
+		where club_no = #{club_no] and member_no = #{member_no}
+	</select>
 
 
 
