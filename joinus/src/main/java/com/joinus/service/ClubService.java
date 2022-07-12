@@ -12,7 +12,7 @@ import com.joinus.domain.Criteria;
 import com.joinus.domain.MembersVo;
 
 @Service
-public interface Clubservice {
+public interface ClubService {
 
 	//클럽 회원 리스트
 	public List<ClubTotalBean> clubMemberListAll(int club_no);
