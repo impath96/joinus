@@ -3,20 +3,14 @@
     
 <%@ include file="../include/header.jsp"%>
 
-
 <div class="container-xxl py-5">
 	<div class="container">
 		<div class="row g-5">
 
-			<div style="margin-bottom: 2em;">
-				<button type="button" class="btn btn-primary" id="all">전체</button>
-				<button type="button" class="btn btn-primary" id="notice">공지사항</button>
-				<button type="button" class="btn btn-primary" id="free">자유글</button>
-				<button type="button" class="btn btn-primary" id="review">정모후기</button>
-			</div>
+			<h1>${partnerPlace.partner_place_name }</h1>
+			<!-- 이미지크기 773*450(노트북) -->			
 			
-			
-            <div class="col-lg-4 col-md-6" onclick=" location.href='/rental/partnerPlaces/1'; " style="cursor: pointer;">
+            <div class="col-lg-4 col-md-6" onclick="" style="cursor: pointer;">
                 <div class="portfolio-img overflow-hidden">
                     <img class="img-fluid" src="${PageContext.request.contextPath }/resources/img/img-600x400-4.jpg" alt="">
                 </div>
@@ -26,7 +20,7 @@
                     <h5 class="lh-base">We Are pioneers of solar & renewable energy industry</h5>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6" onclick=" location.href='/rental/partnerPlaces/1'; " style="cursor: pointer;">
+            <div class="col-lg-4 col-md-6" onclick="" style="cursor: pointer;">
                 <div class="portfolio-img overflow-hidden">
                     <img class="img-fluid" src="${PageContext.request.contextPath }/resources/img/img-600x400-4.jpg" alt="">
                 </div>
@@ -36,7 +30,7 @@
                     <h5 class="lh-base">We Are pioneers of solar & renewable energy industry</h5>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6" onclick=" location.href='/rental/partnerPlaces/1'; " style="cursor: pointer;">
+            <div class="col-lg-4 col-md-6" onclick="" style="cursor: pointer;">
                 <div class="portfolio-img overflow-hidden">
                     <img class="img-fluid" src="${PageContext.request.contextPath }/resources/img/img-600x400-4.jpg" alt="">
                 </div>
@@ -46,7 +40,7 @@
                     <h5 class="lh-base">We Are pioneers of solar & renewable energy industry</h5>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6" onclick=" location.href='/rental/partnerPlaces/1'; " style="cursor: pointer;">
+            <div class="col-lg-4 col-md-6" onclick="" style="cursor: pointer;">
                 <div class="portfolio-img overflow-hidden">
                     <img class="img-fluid" src="${PageContext.request.contextPath }/resources/img/img-600x400-4.jpg" alt="">
                 </div>
@@ -56,7 +50,7 @@
                     <h5 class="lh-base">We Are pioneers of solar & renewable energy industry</h5>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6" onclick=" location.href='/rental/partnerPlaces/1'; " style="cursor: pointer;">
+            <div class="col-lg-4 col-md-6" onclick="" style="cursor: pointer;">
                 <div class="portfolio-img overflow-hidden">
                     <img class="img-fluid" src="${PageContext.request.contextPath }/resources/img/img-600x400-4.jpg" alt="">
                 </div>
@@ -66,7 +60,7 @@
                     <h5 class="lh-base">We Are pioneers of solar & renewable energy industry</h5>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6" onclick=" location.href='/rental/partnerPlaces/1'; " style="cursor: pointer;">
+            <div class="col-lg-4 col-md-6" onclick="" style="cursor: pointer;">
                 <div class="portfolio-img overflow-hidden">
                     <img class="img-fluid" src="${PageContext.request.contextPath }/resources/img/img-600x400-4.jpg" alt="">
                 </div>

@@ -75,3 +75,8 @@
 	text-align: left;
 	color: black;
 }
+
+.placeListContent {
+	border: 1px solid black;
+	padding: 18px 20px 14px;
+}
