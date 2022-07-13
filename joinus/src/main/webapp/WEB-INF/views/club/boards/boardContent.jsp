@@ -12,7 +12,8 @@
 		
 		// 글을 상세보기 할 때 그 때의 세션값 확인(나중에 지우기)
 		var sessionMember = ${sessionScope.member_no};
-		alert("현재 보고 있는 회원의 member_no : "+sessionMember);
+		alert("접속한 member_no : "+sessionMember);
+		alert("글 작성자 member_no : "+${vo.membersVo.member_no});
 		
 		// 폼태그 정보
 		var formObj = $('form[role="form"]');
@@ -219,14 +220,16 @@
 						</div> 
 						<div class="col-12">
 							<div class="form-floating" style="color: black;">
-								<pre class="boardContent">내용 : ${vo.clubBoardsVo.club_board_content }</pre>
+								<pre class="boardContent">${vo.clubBoardsVo.club_board_content }</pre>
 							</div>
 							<img src="${PageContext.request.contextPath }/resources/upload/boards/${vo.clubBoardsVo.club_board_image }" class="ContentImage">
 						</div>
 						
 						<div class="col-12 clubWrite_buttonMargin" style="text-align: right;">
-							<button type="button" class="btn btn-primary py-2 mt-2 me-2" id="modBtn">수정</button>
-							<button type="button" class="btn btn-primary py-2 mt-2 me-2" id="delBtn">삭제</button>
+							<c:if test="${sessionScope.member_no == vo.membersVo.member_no }">
+								<button type="button" class="btn btn-primary py-2 mt-2 me-2" id="modBtn">수정</button>
+								<button type="button" class="btn btn-primary py-2 mt-2 me-2" id="delBtn">삭제</button>
+							</c:if>
 							<button type="button" class="btn btn-primary py-2 mt-2 me-2" id="backBtn">목록</button>
 						</div>
 						
@@ -282,7 +285,7 @@
 							<article class="comment${comment.boardCommentsVo.board_comment_no }">
 							
 								<div class="col-md-12">
-									<div class="form-floating" style="float: left">
+									<div class="form-floating" style="text-align: left;">
 										<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${comment.membersVo.member_image }">
 										<span style="color: black; margin-left: 5px;">${comment.membersVo.member_name }</span>
 										<small style="margin-left: 1em;">
@@ -294,10 +297,11 @@
 											</c:if>
 										</small>
 									</div>
-									<div class="form-group pull-right" style="text-align: right;">
-										<!-- 세션값과 댓글작성자비교 -->
-										<input type="button" id="commentUpBtn${comment.boardCommentsVo.board_comment_no }" class="btn btn-primary py-2 mt-2 me-2 tabActive" value="수정">
-										<input type="button" id="commentDelBtn${comment.boardCommentsVo.board_comment_no }" class="btn btn-primary py-2 mt-2 me-2" value="삭제">
+									<div class="form-group pull-right" style="float: right;">
+										<c:if test="${sessionScope.member_no == comment.membersVo.member_no }">
+											<input type="button" id="commentUpBtn${comment.boardCommentsVo.board_comment_no }" class="btn btn-primary py-2 mt-2 me-2 tabActive" value="수정">
+											<input type="button" id="commentDelBtn${comment.boardCommentsVo.board_comment_no }" class="btn btn-primary py-2 mt-2 me-2" value="삭제">
+										</c:if>
 									</div>
 									<div id="comment_content">
 										${comment.boardCommentsVo.board_comment_content }

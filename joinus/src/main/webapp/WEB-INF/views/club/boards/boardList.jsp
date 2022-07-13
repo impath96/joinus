@@ -7,9 +7,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script type="text/javascript">
-	alert(${sessionScope.member_no});
-	alert(${checkMember});
-
+// 	alert("접속한 member_no : "+${sessionScope.member_no});
+	alert("모임원 체크 : "+${checkMember});
+	
 	$(document).ready(function(){
 		
 		$('#all').click(function(){
@@ -27,7 +27,18 @@
 		$('#write').click(function(){
 			$(location).attr('href','/club/${club_no}/boards/new');
 		});
+		
 	});
+	
+	// 모임원만 상세보기 가능
+	function linkContent(club_board_no){
+		if(${checkMember == 0}){
+			alert('모임가입을 해주세요.');			
+			return false;
+		} else {
+			location.href= "/club/${club_no}/boards/"+club_board_no;
+		}
+	}
 
 </script>
 
@@ -54,12 +65,14 @@
 				<button type="button" class="btn btn-primary" id="notice">공지사항</button>
 				<button type="button" class="btn btn-primary" id="free">자유글</button>
 				<button type="button" class="btn btn-primary" id="review">정모후기</button>
-				<button type="button" class="btn btn-primary" id="write" style="float: right;">글쓰기</button>
+				<c:if test="${checkMember == 1 }">
+					<button type="button" class="btn btn-primary" id="write" style="float: right;">글쓰기</button>
+				</c:if>
 			</div>
 
 
 			<c:forEach var="board" items="${boardList }">
-				<div class="wow fadeIn" onclick="location.href='/club/${club_no}/boards/${board.clubBoardsVo.club_board_no }';" style="cursor: pointer;">
+				<div class="wow fadeIn" onclick="return linkContent(${board.clubBoardsVo.club_board_no});" style="cursor: pointer;">
 				<c:if test="${board.clubBoardsVo.club_board_image != null }">
 					<img src="${PageContext.request.contextPath }/resources/upload/boards/sm_${board.clubBoardsVo.club_board_image }" class="clubBoardList_smImage">
 				</c:if>
@@ -84,7 +97,7 @@
 			<!-- 페이징블럭 -->
 			<!-- 카테고리선택했으면 링크다르게 걸어줘야 할 듯 -->
 			<c:if test="${board_type_no > 0 }">
-			
+
 			</c:if>
 			
 			<div class="d-flex justify-content-center py-3">

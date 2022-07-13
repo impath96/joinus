@@ -34,12 +34,12 @@ public class RentalController {
 	
 	// 결제(정보 받는 페이지, 안에서 ajax)
 	// http://localhost:8088/rental/pay
-			@RequestMapping(value ="/payment",method=RequestMethod.GET)
-			public void pay() {
-				
-				//form으로 받은 정보들로 결제 후 결제완료 페이지 출력
-				
-			}
+	@RequestMapping(value ="/payment",method=RequestMethod.GET)
+	public void pay() {
+		
+		//form으로 받은 정보들로 결제 후 결제완료 페이지 출력
+		
+	}
 	
 	
 	private IamportClient api;
@@ -58,6 +58,15 @@ public class RentalController {
 			
 	}
 	
+	
+	//================================================================================================
+	
+	
+	// http://localhost:8088/rental/placeList
+	@RequestMapping(value = "/placeList", method = RequestMethod.GET)
+	public void placeListGet() {
+		log.info(" placeListGet() 호출 ");
+	}
 	
 	
 	

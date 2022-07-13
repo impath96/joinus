@@ -306,7 +306,7 @@ public class ClubController {
 	// http://localhost:8088/club/1/boards
 	// 게시글리스트
 	@RequestMapping(value = "/{club_no}/boards", method = RequestMethod.GET)
-	public String boardListAllGet(@PathVariable("club_no") Integer club_no, Model model, BoardCriteria cri) {
+	public String boardListAllGet(@PathVariable("club_no") Integer club_no, Model model, BoardCriteria cri, HttpSession session) {
 		log.info(" boardListAllGet() 호출 ");
 		log.info("club_no : "+club_no);
 		
@@ -318,6 +318,13 @@ public class ClubController {
 		log.info(pageMarker+"");
 		model.addAttribute("pm", pageMarker);
 		
+		// 모임원일 때만 글쓰기 버튼이 보이도록 제어(1:모임가입O / 0:모임가입X)
+		// club_members 더미 채우고 실행해야 함
+		session.setAttribute("member_no", 22);
+		int member_no = (int) session.getAttribute("member_no");
+		int checkMember = service.checkClubMember(club_no, member_no);
+		log.info("모임원 확인 : "+checkMember);
+		model.addAttribute("checkMember", checkMember);
 		
 		return "/club/boards/boardList";
 			
@@ -327,7 +334,8 @@ public class ClubController {
 	// http://localhost:8088/club/1/boards/type/1
 	// 게시글리스트(게시글유형별)
 	@RequestMapping(value = "/{club_no}/boards/type/{board_type_no}", method = RequestMethod.GET)
-	public String boardListTypeGet(@PathVariable("club_no") Integer club_no, @PathVariable("board_type_no") Integer board_type_no, Model model, BoardCriteria cri) {
+	public String boardListTypeGet(@PathVariable("club_no") Integer club_no, @PathVariable("board_type_no") Integer board_type_no, 
+			Model model, BoardCriteria cri, HttpSession session) {
 		log.info(" boardListTypeGet() 호출 ");
 		log.info("club_no : "+club_no);
 		log.info("board_type_no : "+board_type_no);
@@ -342,6 +350,14 @@ public class ClubController {
 		log.info(pageMarker+"");
 		model.addAttribute("pm", pageMarker);
 		
+		// 모임원일 때만 글쓰기 버튼이 보이도록 제어(1:모임가입O / 0:모임가입X)
+		// club_members 더미 채우고 실행해야 함
+		session.setAttribute("member_no", 22);
+		int member_no = (int) session.getAttribute("member_no");
+		int checkMember = service.checkClubMember(club_no, member_no);
+		log.info("모임원 확인 : "+checkMember);
+		model.addAttribute("checkMember", checkMember);
+		
 		return "/club/boards/boardList";
 	}
 	
@@ -349,11 +365,16 @@ public class ClubController {
 	// http://localhost:8088/club/1/gallery
 	// 갤러리 게시판
 	@RequestMapping(value = "/{club_no}/gallery", method = RequestMethod.GET)
-	public String galleryBoardGet(@PathVariable("club_no") Integer club_no, Model model) {
+	public String galleryBoardGet(@PathVariable("club_no") Integer club_no, Model model, HttpSession session) {
 		log.info(" galleryBoardGet() 호출 ");
 		//log.info("club_no : "+club_no);	// view에서 ${club_no} 로 호출가능
 		
 		model.addAttribute("imageList", service.getBoardImageList(club_no));
+		
+		// 모임원이 아니면 상세보기가 안되도록 제어
+		session.setAttribute("member_no", 22);
+		int member_no = (int) session.getAttribute("member_no");
+		model.addAttribute("checkMember", service.checkClubMember(club_no, member_no));
 		
 		return "/club/boards/boardGallery";
 	}
@@ -361,7 +382,7 @@ public class ClubController {
 	
 	/// http://localhost:8088/club/{club_no}/boards/{club_board_no}
 	/// http://localhost:8088/club/1/boards/1
-	// 게시글 상세보기 (조건 - 모임가입한 사람만 확인가능)
+	// 게시글 상세보기 (조건 - 모임가입한 사람만 확인가능:list에서 처리)
 	@RequestMapping(value = "/{club_no}/boards/{club_board_no}", method = RequestMethod.GET)
 	public String boardContentGet(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no, 
 			Model model, HttpSession session) {
@@ -370,6 +391,7 @@ public class ClubController {
 		
 		// 게시글과 관련된 정보 가져가기 (여기서 가져가는 member_name : 게시글 작성자)
 		// view에서의 세션값과 여기서 가져가는 member_name이 일치하면 글 수정/삭제 가능하게 나중에 구현
+		// 동명이인일 수도 있으니 member_no로 비교하는 게 나을 듯
 		model.addAttribute("vo", service.getBoardContent(club_board_no));
 		
 		int commentCnt = service.getCommentCnt(club_board_no);
@@ -446,8 +468,8 @@ public class ClubController {
 		// 전달받은 데이터
 		log.info("commentVo : "+vo);
 		
-		// 작성자(member_no) 세션에서 꺼내쓰기(게시판 글쓰기 실행시키고 와야함)
-		session.setAttribute("member_no", 11);
+		// 작성자(member_no) 세션에서 꺼내쓰기
+		session.setAttribute("member_no", 12);
 		int member_no = (int) session.getAttribute("member_no");
 		vo.setMember_no(member_no);
 		log.info("member추가 vo : "+vo);
