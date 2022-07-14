@@ -70,7 +70,9 @@ import com.joinus.domain.MembersVo;
 		
 		//정모 수정
 		public Integer updateMeeting(Integer club_meeting_no, ClubMeetingsVo vo);
-
+		
+		//정모 삭제
+		public void deleteClubMeeting(Integer club_meeting_no);
 		
 		
 //		public List<ClubBoardVo> getBoardListAll(Integer club_no);
@@ -151,6 +153,7 @@ import com.joinus.domain.MembersVo;
 	//====================== 김민호 ======================
 	public List<ClubsVo> getClubListByMemberNo(int member_no);
 	public List<ClubsVo> getMyClubList(int member_no);
+
 	
 	
 	

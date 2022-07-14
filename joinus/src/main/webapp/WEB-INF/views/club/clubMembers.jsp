@@ -6,7 +6,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <body> 
-
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"> </script>
 <!-- 클럽 정보 -->
 <div class="container px-4 py-5">
 	<div class="row featurette py-5">
@@ -72,7 +72,7 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"> </script>
+
 <script type="text/javascript">
 
 	var check = '${check}';
