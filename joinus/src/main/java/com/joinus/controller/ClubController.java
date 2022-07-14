@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.BoardCommentsVo;
 import com.joinus.domain.BoardCriteria;
 import com.joinus.domain.BoardLikesVo;
@@ -114,6 +113,7 @@ public class ClubController {
 		
 		log.info("result : "+result);
 		model.addAttribute("clubInfo", clubInfo);
+		model.addAttribute("club_no",club_no);
 		model.addAttribute("clubMemberList",service.clubMemberListAll(club_no));
 		model.addAttribute("result", result);
 		
