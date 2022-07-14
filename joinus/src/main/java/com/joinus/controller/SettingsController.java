@@ -78,7 +78,7 @@ public class SettingsController {
 			return "redirect:/member/signin";
 		}
 		
-		if(file.getOriginalFilename() != null || !file.getOriginalFilename().equals("")) {
+		if(file.getSize() != 0) {
 			// 업로드된 파일이 없을 경우 이미지는 변경하지 않는 것으로 간주.
 			log.info("upload Post ... originalName={}", file.getOriginalFilename());
 			log.info("upload Post ... size={}", file.getSize());
