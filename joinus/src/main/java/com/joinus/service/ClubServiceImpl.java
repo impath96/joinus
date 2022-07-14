@@ -310,8 +310,10 @@ public class ClubServiceImpl implements ClubService{
 		dao.decreaseLikeCnt(club_board_no);
 	}
 	
-	
-	
+	@Override
+	public int checkClubMember(int club_no, int member_no) {
+		return dao.checkClubMember(club_no, member_no);
+	}
 	
 	
 	

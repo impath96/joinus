@@ -84,11 +84,13 @@
 			</div>
 			
 			<div class="btn-group">
-			<button type="button" class="btn btn-danger btn-flat">삭제하기</button>
+			<button type="button" class="btn btn-danger btn-flat"
+				onclick ="${PageContext.request.contextPath}/club/${clubInfo[0].club_no}/meeting/${meetingList[0].club_meeting_no}/delete">삭제하기</button>
 			</div>
 			
 			<div class="btn-group">
-			<button type="button" class="btn btn-success btn-flat">마감하기</button>
+			<button type="button" class="btn btn-success btn-flat"
+				onclick ="${PageContext.request.contextPath}/club/${clubInfo[0].club_no}/meeting/${meetingList[0].club_meeting_no}/close">마감하기</button>
 			</div>
 			
 			</div>

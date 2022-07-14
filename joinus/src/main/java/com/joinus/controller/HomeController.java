@@ -21,7 +21,7 @@ public class HomeController {
 	private MainService service;
 	
 	@GetMapping(value = "/")
-	public String home(Locale locale, Model model, MembersVo members) {
+	public String home(Locale locale, Model model, HttpSession session) {
 		
 		List<ClubsVo> vo1 = service.getMostPopularClub();
 		model.addAttribute("popular", vo1);
@@ -30,12 +30,13 @@ public class HomeController {
 		List<ClubsVo> vo3 = service.getMostNumerousClub();
 		model.addAttribute("Numerous", vo3);
 		
-		members.setMember_location("부산진구");
-		if(members != null) {
-			List<ClubsVo> vo4 = service.getMyClubs(members.getMember_location());
+		MembersVo member = (MembersVo)session.getAttribute("member");
+		if(member != null) {
+			member.setMember_location("부산진구");
+			List<ClubsVo> vo4 = service.getMyClubs(member.getMember_location());
 			model.addAttribute("my", vo4);
 		}
-		
+		session.setAttribute("member", member);
 		return "main";
 	}
 	

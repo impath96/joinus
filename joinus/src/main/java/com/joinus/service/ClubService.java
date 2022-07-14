@@ -145,6 +145,9 @@ import com.joinus.domain.MembersVo;
 	
 	// 좋아요수 - 1
 	public void decreaseLikeCnt(int club_board_no);
+	
+	// 모임원이 맞는지 확인(1:모임가입O / 0:모임가입X)
+	public int checkClubMember(int club_no, int member_no);
 
 	
 		
