@@ -82,6 +82,7 @@ public class MemberServiceImpl implements MemberService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		log.info("암호화된 패스워드: "+encryptedPassword);
 		MembersVo member = memberDao.selectMember(email, encryptedPassword);
 			
 		return member;

@@ -104,14 +104,14 @@
                         <a href="404.html" class="dropdown-item">404 Page</a> 
                     </div>
                 </div>-->
-            <c:if test="${!empty member_no }">
+            <c:if test="${!empty member}">
                 <a href="${PageContext.request.contextPath }/member/mypage" class="nav-item nav-link">MYPAGE</a>
             </c:if>    
             </div>
-            <c:if test="${empty member_no }">
+            <c:if test="${empty member }">
             <a href="${PageContext.request.contextPath }/member/signin" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">LOGIN<i class="fa fa-arrow-right ms-3"></i></a>
             </c:if>    
-            <c:if test="${!empty member_no }">
+            <c:if test="${!empty member }">
             <a href="${PageContext.request.contextPath }/member/signin" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">LOGOUT<i class="fa fa-arrow-right ms-3"></i></a>
             </c:if>    
         </div>

@@ -872,6 +872,9 @@ public class ClubController {
 					model.addAttribute("boards", boards);
 					log.info("게시글사진: "+boards);
 					
+					
+					session.setAttribute("member", member);
+					
 				}
 				
 				return "/club/clubInfo";
