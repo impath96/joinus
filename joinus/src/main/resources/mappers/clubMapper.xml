@@ -345,7 +345,7 @@
 
 <!-- ================================= -->
 	<select id="getBoardContent" resultMap="boardContentMap">
-		select c.club_name, b.board_type_no, bt.board_type_name, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate 
+		select c.club_name, b.board_type_no, bt.board_type_name, m.member_no, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate 
 		from club_boards b
 		join board_types bt
 			on (b.board_type_no = bt.board_type_no)
@@ -383,7 +383,7 @@
 
 	<!-- 댓글 출력 -->
 	<select id="getCommentList" resultMap="boardCommentMap">
-		select bc.board_comment_no, m.member_name, m.member_image, bc.board_comment_content, bc.board_comment_date, bc.board_comment_updatedate
+		select bc.board_comment_no, m.member_no, m.member_name, m.member_image, bc.board_comment_content, bc.board_comment_date, bc.board_comment_updatedate
 		from board_comments bc
 		join members m
 			on (bc.member_no = m.member_no)
@@ -458,6 +458,12 @@
 		update club_boards set club_board_likecnt = club_board_likecnt - 1
 		where club_board_no = #{club_board_no}
 	</update>
+	
+	<!-- 해당 모임의 모임원이 맞는지 확인 -->
+	<select id="checkClubMember" resultType="java.lang.Integer">
+		select count(member_no) from club_members
+		where club_no = #{club_no} and member_no = #{member_no}
+	</select>
 
 
 

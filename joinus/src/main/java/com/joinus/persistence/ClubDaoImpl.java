@@ -400,6 +400,15 @@ public class ClubDaoImpl implements ClubDao{
 		return sqlSession.selectList(NAMESPACE+".myClubList", member_no);
 	}
 	
+	@Override
+	public int checkClubMember(int club_no, int member_no) {
+		Map<String, Integer> param = new HashMap<String, Integer>();
+		param.put("club_no", club_no);
+		param.put("member_no", member_no);
+		
+		return sqlSession.selectOne(NAMESPACE+".checkClubMember", param);
+	}
+	
 	
 	
 	//=======================강성민=============================================================
