@@ -1,28 +1,40 @@
 package com.joinus.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.joinus.domain.ClubsVo;
+import com.joinus.domain.MembersVo;
+import com.joinus.service.MainService;
+
 @Controller
 public class HomeController {
 	
-	// 메인 페이지
+	@Inject
+	private MainService service;
+	
 	@GetMapping(value = "/")
-	public String home(Locale locale, Model model) {
+	public String home(Locale locale, Model model, MembersVo members) {
 		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		List<ClubsVo> vo1 = service.getMostPopularClub();
+		model.addAttribute("popular", vo1);
+		List<ClubsVo> vo2 = service.getMostRecentClub();
+		model.addAttribute("latest", vo2);
+		List<ClubsVo> vo3 = service.getMostNumerousClub();
+		model.addAttribute("Numerous", vo3);
 		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
+		members.setMember_location("부산진구");
+		if(members != null) {
+			List<ClubsVo> vo4 = service.getMyClubs(members.getMember_location());
+			model.addAttribute("my", vo4);
+		}
 		
 		return "main";
 	}

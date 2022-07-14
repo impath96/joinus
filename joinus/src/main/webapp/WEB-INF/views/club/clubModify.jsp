@@ -9,26 +9,24 @@
 
 <!-- 클럽 정보 -->
 <div class="container px-4 py-5">
-	<form action ="" method = "post">
+	<form action ="${PageContext.request.contextPath}/club/${clubInfo[0].club_no}/modify" method ="post" enctype="multipart/form-data">
 	<div class="row featurette py-5">
 		<div class="col-md-7 order-md-2">
-		<input type="text" class="form-control border-1 py-3 md-3" style="height: 55px;" value = "${clubInfo[0].club_name}">
+		<input type="text" class="form-control border-1 py-3 md-3" style="height: 55px;" value = "${clubInfo[0].club_name}" name="club_name">
 		<br>
-		<textarea class="form-control border-1" style="resize: none;" rows="15">${clubInfo[0].club_content}</textarea>
+		<textarea class="form-control border-1" style="resize: none;" rows="15" name="club_content">${clubInfo[0].club_content}</textarea>
       	</div>
 	    <div class="col-md-5 order-md-1">
 	    	<img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${clubInfo[0].club_image}" class="w-100 py-auto">
 	    	<br>
-	    	<button type="button" class="btn btn-secondary btn-default float-right py-2 my-4"
-	    	onclick="location.href='${PageContext.request.contextPath}/uploadImage';">이미지 변경하기</button>
+	    	<input type="file" class="btn btn-secondary btn-default float-right py-2 my-4" name="file">
 	    </div>
     </div>
-    </form>
     <!-- 클럽정보 수정하기 -->
     <div class="text-end col-md-6 ms-auto">
-    	<button class="btn btn-primary rounded-pill py-3 px-5" type="submit"
-    	onclick="location.href='${PageContext.request.contextPath}/club/${clubInfo[0].club_no}';">수정하기</button>
+    	<button class="btn btn-primary rounded-pill py-3 px-5" type="submit">수정하기</button>
     </div>
+    </form>
     <!-- 클럽정보 수정하기 -->
 </div>
 <!-- 클럽 정보 -->
