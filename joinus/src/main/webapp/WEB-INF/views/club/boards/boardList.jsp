@@ -4,7 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="../../include/header.jsp"%>
-<%@ include file="../../include/club_header.jsp" %>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script type="text/javascript">
@@ -47,6 +46,18 @@
 <div class="container-xxl py-5">
 	<div class="container">
 		<div class="row g-5">
+		
+			<!-- Projects Start -->
+			<div class="row mt-n2 wow fadeInUp" data-wow-delay="0.3s">
+				<div class="col-12 text-center">
+				    <ul class="list-inline mb-5" id="portfolio-flters">
+				        <li class="mx-2 active"><a href="">정보</a></li>
+				        <li class="mx-2"><a href="/club/${club_no}/boards">게시판</a></li>
+				        <li class="mx-2"><a href="/club/${club_no }/gallery">사진첩</a></li>
+				    </ul>
+				</div>
+			</div>
+		    <!-- Projects End -->
 
 			<div style="margin-bottom: 2em;">
 				<button type="button" class="btn btn-primary" id="all">전체</button>
