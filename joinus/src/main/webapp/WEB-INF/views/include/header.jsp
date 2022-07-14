@@ -16,10 +16,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&amp;family=Roboto:wght@500;700;900&amp;display=swap" rel="stylesheet"> 
-
+	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+	
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/774827a7a5.js" crossorigin="anonymous"></script>
     
     <!-- jQuery Library -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -27,6 +30,7 @@
     <link href="${PageContext.request.contextPath }/resources/lib/animate/animate.min.css" rel="stylesheet">
     <link href="${PageContext.request.contextPath }/resources/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="${PageContext.request.contextPath }/resources/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="${PageContext.request.contextPath }/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -122,12 +126,12 @@
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 mb-5">
         <div class="container py-5">
-            <h1 class="display-3 text-white mb-3 animated slideInDown">JOINUS</h1>
+            <h1 class="display-3 text-white mb-3 animated slideInDown"></h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
-                    <li class="breadcrumb-item text-white active" aria-current="page">Services</li>
+<!--                     <li class="breadcrumb-item"><a class="text-white" href="#"></a></li>
+                    <li class="breadcrumb-item"><a class="text-white" href="#"></a></li>
+                    <li class="breadcrumb-item text-white active" aria-current="page"></li> -->
                 </ol>
             </nav>
         </div>
