@@ -737,13 +737,17 @@ public class ClubController {
 //			int member_no =	(int)session.getAttribute("member_no"); 
 //			//회원정보출력(merge후 생략)
 //			MembersVo membervo = service.getMember(member_no);
-			model.addAttribute("membervo", member);
+			if(member != null) {
 			
+			Integer no = member.getMember_no();
+			log.info("member: "+no);
 			
 			//회원 관심사 출력
-			InterestsVo interestvo = service.getMemberInterest(member.getMember_no());
+			InterestsVo interestvo = service.getMemberInterest(no);
 			model.addAttribute("interest", interestvo);
+			model.addAttribute("membervo", member);
 			
+			}
 			return "/club/clubNew";
 				 
 	}
