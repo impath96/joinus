@@ -372,6 +372,23 @@ public class ClubDaoImpl implements ClubDao{
 	public void decreaseLikeCnt(int club_board_no) {
 		sqlSession.update(NAMESPACE+".decreaseLikeCnt", club_board_no);
 	}
+
+	// =========================== 김민호 =============================
+	
+	@Override
+	public List<ClubsVo> ClubListByMemberNo(int member_no) {
+		log.info("회원 번호가 {} 인 회원의 모임 리스트 출력", member_no);
+		
+		return sqlSession.selectList(NAMESPACE+".ClubListByMemberNo", member_no);
+	}
+	
+
+	@Override
+	public List<ClubsVo> myClubList(int member_no) {
+		log.info("회원 번호가 {}인 회원이 만든 모임 리스트 출력", member_no);
+		
+		return sqlSession.selectList(NAMESPACE+".myClubList", member_no);
+	}
 	
 	
 	
@@ -517,7 +534,7 @@ public class ClubDaoImpl implements ClubDao{
 				return sqlSession.selectList(NAMESPACE+".getBoardImageList", num);
 			}
 
-
+			
 			
 
 			

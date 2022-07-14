@@ -25,4 +25,11 @@ public class InterestServiceImpl implements InterestService {
 		return interestDao.selectInterestAll();
 	}
 
+	@Override
+	public InterestsVo selectInterestByMemberNo(int member_no) {
+		log.info("selectInterestByMemberNo 메서드 호출");
+		log.info("전달받은 회원 번호 : {}", member_no);
+		return interestDao.selectInterestByMemberNo(member_no);
+	}
+
 }

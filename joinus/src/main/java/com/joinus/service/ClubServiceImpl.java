@@ -165,6 +165,25 @@ public class ClubServiceImpl implements ClubService{
 		
 	}
 
+	//========================= 김민호 =======================
+	
+	@Override
+	public List<ClubsVo> getClubListByMemberNo(int member_no) {
+		return dao.ClubListByMemberNo(member_no);
+	}
+
+	@Override
+	public List<ClubsVo> getMyClubList(int member_no) {
+		
+		return dao.myClubList(member_no);
+	}
+
+	// ========================================================
+
+//	@Override
+//	public List<ClubBoardVo> getBoardListAll(Integer club_no) {
+//		return dao.getBoardListAll(club_no);
+//	}
 	@Override
 	public List<BoardTotalBean> getBoardListAll(Integer club_no, BoardCriteria cri) {
 		return dao.getBoardListAll(club_no, cri);

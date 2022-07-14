@@ -10,6 +10,7 @@ import com.joinus.domain.ClubGradesVo;
 import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubTotalBean;
+import com.joinus.domain.ClubsVo;
 import com.joinus.domain.BoardCommentsVo;
 import com.joinus.domain.BoardCriteria;
 import com.joinus.domain.BoardLikesVo;
@@ -145,6 +146,17 @@ public interface ClubDao {
 	public void decreaseLikeCnt(int club_board_no);
 	
 	//=========================허수빈========================
+
+	//=========================김민호========================
+	
+	// 내 모임 리스트
+	public List<ClubsVo> ClubListByMemberNo(int member_no);
+
+	// 나가 만든 모임 리스트
+	public List<ClubsVo> myClubList(int member_no);
+	
+	//=========================김민호========================
+	
 	
 	
 	//=========================강성민========================
@@ -199,9 +211,6 @@ public interface ClubDao {
 	//게시글 리스트
 	public List<ClubBoardsVo> getBoards(Integer num);
 
-
-
-	
 	
 	//=========================강성민========================
 	

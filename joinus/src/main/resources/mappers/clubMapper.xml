@@ -323,6 +323,27 @@
 <!-- 		from club_boards -->
 <!-- 		where club_board_no = #{club_board_no} -->
 <!-- 	</select> -->
+
+<!-- ============= 민호 ============== -->
+<select id="ClubListByMemberNo" resultType="ClubsVo">
+	select * from clubs
+	where club_no in (
+		select club_no 
+		from club_members
+		where member_no = #{member_no});
+</select>
+
+<select id="myClubList" resultType="ClubsVo">
+	<![CDATA[
+		select * from clubs
+		where club_no in (
+					select club_no 
+					from club_members 
+					where member_no = #{member_no} and club_member_role = 'admin')
+		]]>
+</select>
+
+<!-- ================================= -->
 	<select id="getBoardContent" resultMap="boardContentMap">
 		select c.club_name, b.board_type_no, bt.board_type_name, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate 
 		from club_boards b
