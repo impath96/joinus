@@ -1,5 +1,8 @@
 JoinUs DB Update
 
+2022.07.14
+ - 
+
 
 2022.07.06
   - Members테이블 member_image 기본값 null -> 'default.jpg' 변경
