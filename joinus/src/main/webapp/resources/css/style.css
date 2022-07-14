@@ -1,20 +1,27 @@
 /********** Template CSS **********/
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+
+
 :root {
     --primary: #32C36C;
     --light: #F6F7F8;
     --dark: #1A2A36;
+    font-family: 'NanumSquare';
 }
 
 .fw-medium {
     font-weight: 500 !important;
+    font-family: 'NanumSquare';
 }
 
 .fw-bold {
     font-weight: 700 !important;
+    font-family: 'NanumSquare';
 }
 
 .fw-black {
     font-weight: 900 !important;
+    font-family: 'NanumSquare';
 }
 
 .back-to-top {
@@ -45,6 +52,7 @@
 .btn {
     font-weight: 500;
     transition: .5s;
+    font-family: 'NanumSquare';
 }
 
 .btn.btn-primary,
@@ -94,6 +102,7 @@
     color: var(--dark);
     font-size: 15px;
     font-weight: 500;
+    font-family: 'NanumSquare';
     text-transform: uppercase;
     outline: none;
 }
@@ -106,7 +115,7 @@
 .navbar .dropdown-toggle::after {
     border: none;
     content: "\f107";
-    font-family: "Font Awesome 5 Free";
+    font-family: 'NanumSquare';
     font-weight: 900;
     vertical-align: middle;
     margin-left: 8px;
@@ -303,6 +312,7 @@
     cursor: pointer;
     transition: .5s;
     border-bottom: 2px solid transparent;
+    font-family: 'NanumSquare';
 }
 
 #portfolio-flters li:hover,
@@ -468,6 +478,7 @@
     color: var(--primary);
     font-size: 45px;
     transition: .5s;
+    font-family: 'NanumSquare';
 }
 
 .testimonial-carousel .owl-nav .owl-prev:hover,
@@ -544,6 +555,7 @@
     text-align: left;
     color: #9B9B9B;
     font-weight: normal;
+    font-family: 'NanumSquare';
     text-transform: capitalize;
     transition: .3s;
 }
@@ -551,7 +563,7 @@
 .footer .btn.btn-link::before {
     position: relative;
     content: "\f105";
-    font-family: "Font Awesome 5 Free";
+    font-family: 'NanumSquare';
     font-weight: 900;
     margin-right: 10px;
 }
