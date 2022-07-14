@@ -327,6 +327,14 @@ public class ClubDaoImpl implements ClubDao{
 		return sqlSession.selectList(NAMESPACE+".ClubListByMemberNo", member_no);
 	}
 	
+
+	@Override
+	public List<ClubsVo> myClubList(int member_no) {
+		log.info("회원 번호가 {}인 회원이 만든 모임 리스트 출력", member_no);
+		
+		return sqlSession.selectList(NAMESPACE+".myClubList", member_no);
+	}
+	
 	
 	
 	//=======================강성민=============================================================
@@ -470,6 +478,7 @@ public class ClubDaoImpl implements ClubDao{
 			public List<ClubBoardsVo> getBoards(Integer num) {
 				return sqlSession.selectList(NAMESPACE+".getBoardImageList", num);
 			}
+
 			
 			
 

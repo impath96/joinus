@@ -124,6 +124,14 @@ public class ClubServiceImpl implements ClubService{
 		return dao.ClubListByMemberNo(member_no);
 	}
 
+	@Override
+	public List<ClubsVo> getMyClubList(int member_no) {
+		
+		return dao.myClubList(member_no);
+	}
+
+	// ========================================================
+
 //	@Override
 //	public List<ClubBoardVo> getBoardListAll(Integer club_no) {
 //		return dao.getBoardListAll(club_no);

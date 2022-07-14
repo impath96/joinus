@@ -125,7 +125,13 @@ public interface ClubDao {
 	//=========================허수빈========================
 
 	//=========================김민호========================
+	
+	// 내 모임 리스트
 	public List<ClubsVo> ClubListByMemberNo(int member_no);
+
+	// 나가 만든 모임 리스트
+	public List<ClubsVo> myClubList(int member_no);
+	
 	//=========================김민호========================
 	
 	
@@ -181,6 +187,7 @@ public interface ClubDao {
 	public List<ClubMeetingsVo> getMeetings(Integer num);
 	//게시글 리스트
 	public List<ClubBoardsVo> getBoards(Integer num);
+
 	
 	//=========================강성민========================
 	

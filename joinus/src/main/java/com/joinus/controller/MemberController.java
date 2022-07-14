@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.CookieGenerator;
 
 import com.joinus.domain.ClubsVo;
 import com.joinus.domain.InterestsVo;
@@ -148,15 +149,19 @@ public class MemberController {
 			return "redirect:/member/signin";
 		}
 		
-		// 화면에 표시할 클럽 리스트 
+		// 내 모임 리스트
 		List<ClubsVo> clubList = clubService.getClubListByMemberNo(member.getMember_no());
 		log.info("clubList : {}", clubList);
 		
-		// 해당 사용자의 관심사 정보 출력
-		// InterestsVo interest = interestService.selectInterestByMemberNo(member.getMember_no());
-		// log.info("{} 회원의 관심사 : {}", member.getMember_no(), interest);
+		// 내가 만든 모임 리스트
+		List<ClubsVo> myClubList = clubService.getMyClubList(member.getMember_no());
+		log.info("myClubList : {}", myClubList);
+		
+		// 최근 본 모임 리스트...는 어떻게 구현하지?? 쿠키??
+		CookieGenerator cg = new CookieGenerator();
 		
 		model.addAttribute("clubList", clubList);
+		model.addAttribute("myClubList", myClubList);
 		return "/member/mypage";
 	}
 
@@ -250,6 +255,17 @@ public class MemberController {
 		session.invalidate();
 		
 		return "탈퇴완료";
+	}
+	
+	@GetMapping(value = "/my-clublist")
+	public String myClubList(HttpSession session) {
+		MembersVo member = (MembersVo)session.getAttribute("member");
+
+		if(member == null) {
+			return "member/signin";
+		}
+		
+		return "/member/myClubList";
 	}
 
 }

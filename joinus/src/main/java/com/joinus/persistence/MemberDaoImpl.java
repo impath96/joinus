@@ -88,6 +88,17 @@ public class MemberDaoImpl implements MemberDao {
 		
 		return sqlSession.selectOne(NAMESPACE + ".selectMemberByNo", member_no);
 	}
+
+	@Override
+	public void updateName(String memberName, int member_no) {
+
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("member_no", member_no);
+		paramMap.put("member_name", memberName);
+		
+		sqlSession.update(NAMESPACE+".updateName", paramMap);
+		
+	}
 	
 	
 	

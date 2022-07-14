@@ -171,5 +171,6 @@ public interface ClubService {
 	
 	//====================== 김민호 ======================
 	public List<ClubsVo> getClubListByMemberNo(int member_no);
+	public List<ClubsVo> getMyClubList(int member_no);
 	
 }

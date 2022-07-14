@@ -110,4 +110,10 @@ public class MemberServiceImpl implements MemberService {
 		return member;
 	}
 
+	@Override
+	public void updateName(String memberName, int member_no) {
+		memberDao.updateName(memberName, member_no);
+		
+	}
+
 }

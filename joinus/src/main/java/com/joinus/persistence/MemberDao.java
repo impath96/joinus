@@ -14,5 +14,6 @@ public interface MemberDao {
 	public MembersVo selectMember(String email, String password);
 	public void insertMemberInterest(int member_no, int interest);
 	public MembersVo updatePassword(int member_no, String encryptedPassword);
+	public void updateName(String memberName, int member_no);
 	
 }

@@ -68,31 +68,45 @@ public class SettingsController {
 	@PostMapping("/profile")
 	public String profile(
 			@RequestParam("profile_image") MultipartFile file
+			, @RequestParam("member_name") String memberName
 			, HttpServletRequest request
 			, HttpSession session) throws Exception {
-		log.info("upload Post ... originalName={}", file.getOriginalFilename());
-		log.info("upload Post ... size={}", file.getSize());
-		log.info("upload Post ... contentType={}", file.getContentType());
+
 		MembersVo member = (MembersVo)session.getAttribute("member");
 		log.info("member : {}", member);
+		log.info("닉네임 : {}", memberName);
 		if(member == null) {
 			return "redirect:/member/signin";
 		}
-		ServletContext ctx = request.getServletContext();
-		String realPath = ctx.getRealPath("/resources/upload");
-		log.info("실제 파일 저장 경로 : {}", realPath);
-		// 실제로 저장된 시스템에서의 파일명 
-		// ex) 실제 파일명 : aaa.png
-		//     시스템에 저장되는 파일명 : adjbjiasjjaaa_aaa.png(UUID_파일명 형식으로 할 예정)
-		// 시스템에 중복되는 파일명을 갖는 파일이 있을 가능성이 있기 때문!!
 		
-		// realPath 경로에 file을 업로드 한 후 업로드한 파일의 이름을 return
-		String savedFileName = FileUtils.uploadFile(realPath, file);
-		log.info("savedFileName : {}", savedFileName);
-		// DB members 테이블에 member_image 업데이트 - 
-		memberService.updateImage(savedFileName, member.getMember_no());
+		if(file.getOriginalFilename() != null || !file.getOriginalFilename().equals("")) {
+			// 업로드된 파일이 없을 경우 이미지는 변경하지 않는 것으로 간주.
+			log.info("upload Post ... originalName={}", file.getOriginalFilename());
+			log.info("upload Post ... size={}", file.getSize());
+			log.info("upload Post ... contentType={}", file.getContentType());
+			
+			ServletContext ctx = request.getServletContext();
+			String realPath = ctx.getRealPath("/resources/upload/membersupload");
+			log.info("실제 파일 저장 경로 : {}", realPath);
+			// 실제로 저장된 시스템에서의 파일명 
+			// ex) 실제 파일명 : aaa.png
+			//     시스템에 저장되는 파일명 : adjbjiasjjaaa_aaa.png(UUID_파일명 형식으로 할 예정)
+			// 시스템에 중복되는 파일명을 갖는 파일이 있을 가능성이 있기 때문!!
+			
+			// realPath 경로에 file을 업로드 한 후 업로드한 파일의 이름을 return
+			String savedFileName = FileUtils.uploadFile(realPath, file);
+			log.info("savedFileName : {}", savedFileName);
+			// DB members 테이블에 member_image 업데이트 - 
+			memberService.updateImage(savedFileName, member.getMember_no());
+			
+		}
+		
+		// 닉네임은 전달받은 닉네임을 통해 무조건 update 되도록 하기
+		memberService.updateName(memberName, member.getMember_no());
 		MembersVo updateMember = memberService.findMemberByNo(member.getMember_no());
 		session.setAttribute("member", updateMember);
+		
+		
 		return "redirect:/settings/member";
 	}
 

@@ -13,5 +13,6 @@ public interface MemberService {
 	public MembersVo signIn(String email, String password);
 	public void addInterest(int member_no, int interest);
 	public MembersVo resetPassword(int member_no, String newPassword);
+	public void updateName(String memberName, int member_no);
 
 }

@@ -98,7 +98,7 @@
 											<img alt="" class="thumbnail_image" src="${member.member_image }">
 										</c:if>
 										<c:if test="${!sessionScope.member.member_image.contains(':') }">
-											<img alt="" class="thumbnail_image" src="${pageContext.request.contextPath }/resources/upload/${member.member_image }">
+											<img alt="" class="thumbnail_image" src="${pageContext.request.contextPath }/resources/upload/membersupload/${member.member_image }">
 										</c:if>
 									</span>
 								</label>
@@ -107,7 +107,7 @@
 							<div style="width:100%;">
 								<label for="name" class="input-label">
 									<span>닉네임</span>
-									<input id="name" type="text" class="input"
+									<input id="name" type="text" class="input" name="member_name"
 											value="${member.member_name }" placeholder="변경할 닉네임을 입력해주세요">
 								</label>
 							</div>

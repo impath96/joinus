@@ -50,6 +50,11 @@
 		set member_image=#{savedFileName}
 		where member_no=#{member_no}
 	</update>
+	<update id="updateName">
+		update members
+		set member_name=#{member_name}
+		where member_no=#{member_no}
+	</update>
 	
 	<update id="updatePassword">
 		update members
