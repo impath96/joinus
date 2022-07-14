@@ -567,7 +567,6 @@ public class ClubController {
 		log.info(service.getBoardContent(club_board_no)+"");
 		
 		// 게시글과 관련된 정보 가져가기 (여기서 가져가는 member_name : 게시글 작성자)
-		// view에서의 세션값과 여기서 가져가는 member_name이 일치하면 글 수정/삭제 가능하게 나중에 구현
 		// 동명이인일 수도 있으니 member_no로 비교하는 게 나을 듯
 		model.addAttribute("vo", service.getBoardContent(club_board_no));
 		
