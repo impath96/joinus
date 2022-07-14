@@ -16,6 +16,7 @@ import com.joinus.domain.BoardCriteria;
 import com.joinus.domain.BoardLikesVo;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
+import com.joinus.domain.Criteria;
 import com.joinus.domain.ClubGradesVo;
 import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.ClubMembersVo;
@@ -255,7 +256,6 @@ public class ClubDaoImpl implements ClubDao{
 		
 		return sqlSession.selectList(NAMESPACE+".getBoardListAll", param);
 	}
-	
 	@Override
 	public Integer getTotalBoardCnt(int club_no) {
 		return sqlSession.selectOne(NAMESPACE+".totalBoardCnt", club_no);
@@ -518,8 +518,8 @@ public class ClubDaoImpl implements ClubDao{
 			}
 			// 모임 찜 여부 확인
 			@Override
-			public Integer dip(Integer num) {
-				return sqlSession.selectOne(NAMESPACE+".dipCheck", num);
+			public List<Integer> dip(Integer num) {
+				return sqlSession.selectList(NAMESPACE+".dipCheck", num);
 			}
 			
 			// 모임 찜 취소
@@ -551,8 +551,6 @@ public class ClubDaoImpl implements ClubDao{
 	
 	
 	
-	
-
 }
 	
 

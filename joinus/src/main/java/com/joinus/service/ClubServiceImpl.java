@@ -20,15 +20,11 @@ import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubTotalBean;
 import com.joinus.domain.ClubsVo;
 import com.joinus.domain.Criteria;
-import com.joinus.domain.MeetingTotalBean;
 import com.joinus.domain.InterestDetailsVo;
 import com.joinus.domain.InterestsVo;
+import com.joinus.domain.MeetingTotalBean;
 import com.joinus.domain.MembersVo;
-import com.joinus.domain.RentalPlacesVo;
 import com.joinus.persistence.ClubDao;
-
-import com.joinus.domain.ClubBoardsVo;
-import com.joinus.domain.ClubMeetingsVo;
 
 @Service
 public class ClubServiceImpl implements ClubService{
@@ -404,7 +400,7 @@ public class ClubServiceImpl implements ClubService{
 		}
 		// 모임 찜 여부 확인
 		@Override
-		public Integer dip(Integer num) {
+		public List<Integer> dip(Integer num) {
 			return dao.dip(num);
 		}
 
@@ -425,11 +421,5 @@ public class ClubServiceImpl implements ClubService{
 		public List<ClubBoardsVo> getBoardsforimg(Integer num) {
 			return dao.getBoards(num);
 		}
-
-
-
-
-		
-		
 	
 }
