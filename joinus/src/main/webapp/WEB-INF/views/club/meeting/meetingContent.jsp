@@ -103,48 +103,5 @@
 </div>
 <!-- 정모 -->
 
-<script type="text/javascript">
- 
-$(function(){
-	alert('jquery! check');
-	
-	$("input[name^='rental']").on('click', function(e){
-		
-			//console.log($(this).attr('id')); 
-			var rental_places_no = $(this).attr('id');
-		
-		$.ajax({ 
-			
-			url : '${PageContext.request.contextPath}/club/${clubInfo[0].club_no}/meeting/'+rental_places_no,
-			type : 'GET',
-			contentType : "application/json",
-			success : function(data){
-			alert('갔다옴');
-				//console.log(data);
-				//console.log(data[0].partnerPlacesVo.partner_place_name);
-				//console.log(data[0].rentalPlacesVo.rental_date);
-				
-				var rental_date = data[0].rentalPlacesVo.rental_date;
-				var rental_place = data[0].partnerPlacesVo.partner_place_name;
-				
-				$('#club_meeting_date').attr('value',rental_date);
-				$('#club_meeting_location').attr('value',rental_place);
-				
-				}
-		});//ajax
-	
-	});//클릭
-	
-	
-
-		
-	
-	
-	
-	
-});//jquery
-
-
-</script>
 
 <%@ include file="../../include/footer.jsp"%>
