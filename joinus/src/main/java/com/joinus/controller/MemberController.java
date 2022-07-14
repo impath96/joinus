@@ -1,6 +1,5 @@
 package com.joinus.controller;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Random;
 
@@ -28,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.joinus.domain.ClubTotalBean;
 import com.joinus.domain.ClubsVo;
 import com.joinus.domain.InterestsVo;
 import com.joinus.domain.MembersVo;
@@ -253,7 +251,5 @@ public class MemberController {
 		
 		return "탈퇴완료";
 	}
-	 */
-	
 
 }
