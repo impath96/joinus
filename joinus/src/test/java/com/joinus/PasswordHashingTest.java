@@ -11,8 +11,7 @@ public class PasswordHashingTest {
 	@Test
 	public void hashTest() throws NoSuchAlgorithmException {
 		
-		SHA256 sha = new SHA256();
-		String password = sha.encrypt("ppppp123!");
+		String password = SHA256.encrypt("비밀번호");
 		System.out.println(password);
 	}
 	

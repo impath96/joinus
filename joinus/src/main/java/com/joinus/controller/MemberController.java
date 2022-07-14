@@ -190,7 +190,7 @@ public class MemberController {
 		// 일단 이 기능은 MemberService에 추가
 		memberService.addInterest(member.getMember_no(), interest);
 
-		return "/member/mypage";
+		return "redirect:/";
 	}
 	
 
