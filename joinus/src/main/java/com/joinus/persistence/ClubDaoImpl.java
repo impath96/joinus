@@ -22,9 +22,11 @@ import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubTotalBean;
 import com.joinus.domain.ClubsVo;
 import com.joinus.domain.Criteria;
+import com.joinus.domain.MeetingTotalBean;
 import com.joinus.domain.InterestDetailsVo;
 import com.joinus.domain.InterestsVo;
 import com.joinus.domain.MembersVo;
+import com.joinus.domain.RentalPlacesVo;
 
 @Repository
 public class ClubDaoImpl implements ClubDao{
@@ -33,6 +35,7 @@ public class ClubDaoImpl implements ClubDao{
 	private SqlSession sqlSession;
 	
 	static final String NAMESPACE ="com.joinus.mapper.ClubMapper";
+	static final String NAMESPACE2 ="com.joinus.mapper.MeetingMapper";
 	
 	private static final Logger log = LoggerFactory.getLogger(ClubDaoImpl.class);
 	
@@ -163,12 +166,64 @@ public class ClubDaoImpl implements ClubDao{
 		sqlSession.delete(NAMESPACE+".ClubLeave", param);
 		log.info("모임나가기 완료");
 		
+	}
+	
+	@Override
+	public void clubUpdate(ClubsVo clubsvo, Integer club_no) {
 		
+		Map<String, Object> param= new HashMap<String, Object>();
+		param.put("clubsvo", clubsvo);
+		param.put("club_no", club_no);
+		
+		sqlSession.update(NAMESPACE+".ClubUpdate", param);
+		log.info("모임 정보 수정 완료");
 		
 	}
+
+	//예약정보 가져오기
+	@Override
+	public List<MeetingTotalBean> getRental(int member_no) {
+		
+		return sqlSession.selectList(NAMESPACE2+".GetRental", member_no);
+	}
+	
+	//예약정보 가져오기 - REST
+	@Override
+	public List<MeetingTotalBean> getRentalREST(int rental_places_no) {
+		return sqlSession.selectList(NAMESPACE2+".GetRentalREST", rental_places_no);
+	}
+	
+	//정모 생성
+	@Override
+	public void createMeeting(ClubMeetingsVo vo) {
+		sqlSession.insert(NAMESPACE2+".CreateMeeting", vo);
+	}
+	
+	//정모 정보 가져오기
+	@Override
+	public List<ClubMeetingsVo> getMeetings_no(Integer club_meeting_no) {
+		
+		return sqlSession.selectList(NAMESPACE2+".GetMeeting_no", club_meeting_no);
+	}
+	
+	@Override
+	public Integer updateMeeting(Integer club_meeting_no, ClubMeetingsVo vo) {
+		
+		Map<String, Object> param= new HashMap<String, Object>();
+		param.put("club_meeting_no", club_meeting_no);
+		param.put("vo", vo);
+		
+		return sqlSession.update(NAMESPACE2+".UpdateMeeting", param);
+	}
+
+	
+	
 	
 //=======================허수빈=============================================================
 	
+
+
+
 
 	@Override
 	public void writeBoard(ClubBoardsVo vo) {
@@ -317,6 +372,23 @@ public class ClubDaoImpl implements ClubDao{
 	public void decreaseLikeCnt(int club_board_no) {
 		sqlSession.update(NAMESPACE+".decreaseLikeCnt", club_board_no);
 	}
+
+	// =========================== 김민호 =============================
+	
+	@Override
+	public List<ClubsVo> ClubListByMemberNo(int member_no) {
+		log.info("회원 번호가 {} 인 회원의 모임 리스트 출력", member_no);
+		
+		return sqlSession.selectList(NAMESPACE+".ClubListByMemberNo", member_no);
+	}
+	
+
+	@Override
+	public List<ClubsVo> myClubList(int member_no) {
+		log.info("회원 번호가 {}인 회원이 만든 모임 리스트 출력", member_no);
+		
+		return sqlSession.selectList(NAMESPACE+".myClubList", member_no);
+	}
 	
 	
 	
@@ -461,6 +533,7 @@ public class ClubDaoImpl implements ClubDao{
 			public List<ClubBoardsVo> getBoards(Integer num) {
 				return sqlSession.selectList(NAMESPACE+".getBoardImageList", num);
 			}
+
 			
 			
 

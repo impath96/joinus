@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../include/header.jsp"%>
 <body>
 	<!-- Contact Start -->
@@ -9,19 +9,17 @@
 			<div class="row g-0 mx-lg-0">
 				<div class="p-lg-5 ps-lg-0" align="center">
 					<h6 class="text-primary">Grouping</h6>
-					<h1 class="mb-4">추가정보(선택)</h1>
-					<form action="/member/mypage" method="post">
+					<h1 class="mb-4">추가정보(필수)</h1>
+					<form action="${pageContext.request.contextPath }/member/more-info" name="form" method="post">
 						<div class="col-12">
-							<div class="form-floating" style="width: 50%;">
-								<input type="text" class="form-control" id="location" name="member_location"
-									placeholder="주소" onclick="sample4_execDaumPostcode()" > <label for="location">주소</label>
-							</div>
-						</div>
-						<br>
-						<div class="col-12">
-							<div class="form-floating" style="width: 50%;">
-								<input type="tel" class="form-control" id="tel" name="member_tel"
-									placeholder="Subject"> <label for="subject">전화번호</label>
+							<div class="form-floating" style="width:50%;">
+								<select name = "interest" id="interest" class="form-select form-select-lg mb-3 pt-2" aria-label="interest">
+		  							<option selected>관심사 선택</option>
+		  							<c:forEach var="interest" items="${interestList}">
+										<option value="${interest.interest_no }">${interest.interest_name }</option>
+		  							</c:forEach>
+									
+								</select>
 							</div>
 						</div>
 						<br>
@@ -35,8 +33,8 @@
 		</div>
 	</div>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script>
-    function sample4_execDaumPostcode() {
+	<script>
+    function searchLocation() {
         new daum.Postcode({
             oncomplete: function(data) {
                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
