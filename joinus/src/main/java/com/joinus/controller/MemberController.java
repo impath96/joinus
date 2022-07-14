@@ -253,7 +253,7 @@ public class MemberController {
 		
 		return "탈퇴완료";
 	}
-	
+	 */
 	
 
 }

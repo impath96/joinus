@@ -87,13 +87,10 @@
         <a href="index.html" class="navbar-brand d-flex align-items-center border-end px-4 px-lg-5">
             <h2 class="m-0 text-primary">Solartec</h2>
         </a>
-        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="index.html" class="nav-item nav-link">Home</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
+                <a href="${PageContext.request.contextPath }/club/clubList" class="nav-item nav-link">ClubList</a>
                 <a href="service.html" class="nav-item nav-link active">Service</a>
                 <a href="project.html" class="nav-item nav-link">Project</a>
                 <div class="nav-item dropdown">
