@@ -1,7 +1,6 @@
 package com.joinus.persistence;
 
 
-import com.joinus.domain.MemberInterestsVo;
 import com.joinus.domain.MembersVo;
 
 public interface MemberDao {
@@ -11,6 +10,10 @@ public interface MemberDao {
 
 	public void insertMember(MembersVo member);
 
-	public void insertMemberInterest(MemberInterestsVo memberInterestVo);
+	public void updateImage(String savedFileName, int member_no);
+	public MembersVo selectMember(String email, String password);
+	public void insertMemberInterest(int member_no, int interest);
+	public MembersVo updatePassword(int member_no, String encryptedPassword);
+	public void updateName(String memberName, int member_no);
 	
 }

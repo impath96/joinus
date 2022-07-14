@@ -55,7 +55,7 @@ public class KakaoLogin extends AuthLogin {
 		String name = node.get("kakao_account").get("profile").get("nickname") == null ? "미동의"
 				: node.get("kakao_account").get("profile").get("nickname").textValue();
 		String picture = node.get("kakao_account").get("profile").get("profile_image_url") == null
-				? "/oauth2/assets/images/logo.png"
+				? "default.jpg"
 				: node.get("kakao_account").get("profile").get("profile_image_url").textValue();
 		return MembersVo.builder()
 	    		.member_email(email)

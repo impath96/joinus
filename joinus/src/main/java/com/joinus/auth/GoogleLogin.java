@@ -29,8 +29,8 @@ public class GoogleLogin extends AuthLogin{
 	    System.out.println("googleLogin - parseResponse");
 	    System.out.println("resopnse : " + response.toString());
 	    String email = node.get("email") == null ? "미동의" : node.get("email").textValue();
-	    String name = node.get("name") == null ? "미동의" : node.get("name").textValue();
-	    String picture = node.get("picture") == null ? "/oauth2/assets/images/logo.png" : node.get("picture").textValue();
+	    String name = node.get("name") == null ? email.split("@")[0] : node.get("name").textValue();
+	    String picture = node.get("picture") == null ? "default.jpg" : node.get("picture").textValue();
 	    log.info("email =  {}", email);
 	    log.info("name =  {}", name);
 	    log.info("picture =  {}", picture);
