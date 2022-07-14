@@ -200,14 +200,14 @@ public class ClubController {
 	// 파라미터를 전달하고 싶을 때는 보내주는 주소와 받는 주소 모두 다 modelAttribute를 사용해야 함
 	// ?뒤에 숫자는 모임고유번호(일단 임의로 주소줄에서 받아오기)
 	// http://localhost:8088/club/{club_no}/boards/new
-	// http://localhost:8088/club/1/boards/new
+	// http://localhost:8088/club/53/boards/new
 	// 게시판글쓰기 (해당 모임에 가입한 멤버가 아니면 글쓰기 X=> 가입하라고 알림창 띄우기 / 로그인안했으면(세션값이 없으면) 로그인페이지로 )
 	@RequestMapping(value = "/{club_no}/boards/new", method = RequestMethod.GET)
 	public String boardWriteGet(@PathVariable("club_no") Integer club_no, HttpSession session) {
 		log.info(" boardWriteGet() 호출 ");
 		log.info(" club_no : "+club_no);
 		
-		session.setAttribute("member_no", 11);
+		session.setAttribute("member_no", 52);
 		int member_no = (int) session.getAttribute("member_no");
 		log.info("세션에 저장된 member_no : "+member_no);
 		
@@ -303,7 +303,7 @@ public class ClubController {
 	
 	
 	// http://localhost:8088/club/{club_no}/boards
-	// http://localhost:8088/club/1/boards
+	// http://localhost:8088/club/53/boards
 	// 게시글리스트
 	@RequestMapping(value = "/{club_no}/boards", method = RequestMethod.GET)
 	public String boardListAllGet(@PathVariable("club_no") Integer club_no, Model model, BoardCriteria cri, HttpSession session) {
@@ -320,7 +320,7 @@ public class ClubController {
 		
 		// 모임원일 때만 글쓰기 버튼이 보이도록 제어(1:모임가입O / 0:모임가입X)
 		// club_members 더미 채우고 실행해야 함
-		session.setAttribute("member_no", 22);
+		session.setAttribute("member_no", 52);
 		int member_no = (int) session.getAttribute("member_no");
 		int checkMember = service.checkClubMember(club_no, member_no);
 		log.info("모임원 확인 : "+checkMember);
@@ -331,7 +331,7 @@ public class ClubController {
 	}
 	
 	// http://localhost:8088/club/{club_no}/boards/type/{board_type_no}
-	// http://localhost:8088/club/1/boards/type/1
+	// http://localhost:8088/club/53/boards/type/1
 	// 게시글리스트(게시글유형별)
 	@RequestMapping(value = "/{club_no}/boards/type/{board_type_no}", method = RequestMethod.GET)
 	public String boardListTypeGet(@PathVariable("club_no") Integer club_no, @PathVariable("board_type_no") Integer board_type_no, 
@@ -352,7 +352,7 @@ public class ClubController {
 		
 		// 모임원일 때만 글쓰기 버튼이 보이도록 제어(1:모임가입O / 0:모임가입X)
 		// club_members 더미 채우고 실행해야 함
-		session.setAttribute("member_no", 22);
+		session.setAttribute("member_no", 52);
 		int member_no = (int) session.getAttribute("member_no");
 		int checkMember = service.checkClubMember(club_no, member_no);
 		log.info("모임원 확인 : "+checkMember);
@@ -362,7 +362,7 @@ public class ClubController {
 	}
 	
 	// http://localhost:8088/club/{club_no}/gallery
-	// http://localhost:8088/club/1/gallery
+	// http://localhost:8088/club/53/gallery
 	// 갤러리 게시판
 	@RequestMapping(value = "/{club_no}/gallery", method = RequestMethod.GET)
 	public String galleryBoardGet(@PathVariable("club_no") Integer club_no, Model model, HttpSession session) {
@@ -372,7 +372,7 @@ public class ClubController {
 		model.addAttribute("imageList", service.getBoardImageList(club_no));
 		
 		// 모임원이 아니면 상세보기가 안되도록 제어
-		session.setAttribute("member_no", 22);
+		session.setAttribute("member_no", 52);
 		int member_no = (int) session.getAttribute("member_no");
 		model.addAttribute("checkMember", service.checkClubMember(club_no, member_no));
 		
@@ -381,7 +381,7 @@ public class ClubController {
 	
 	
 	/// http://localhost:8088/club/{club_no}/boards/{club_board_no}
-	/// http://localhost:8088/club/1/boards/1
+	/// http://localhost:8088/club/53/boards/1
 	// 게시글 상세보기 (조건 - 모임가입한 사람만 확인가능:list에서 처리)
 	@RequestMapping(value = "/{club_no}/boards/{club_board_no}", method = RequestMethod.GET)
 	public String boardContentGet(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no, 
@@ -405,7 +405,7 @@ public class ClubController {
 		model.addAttribute("likeCnt", service.getLikeCnt(club_board_no));
 		
 		// 좋아요 체크 (세션에 저장된 member 체크)
-		session.setAttribute("member_no", 12);
+		session.setAttribute("member_no", 52);
 		int member_no = (int) session.getAttribute("member_no");
 		// checkLike - 1:좋아요O / 0:좋아요X (해당 회원이 좋아요를 눌렀는지 체크)
 		model.addAttribute("checkLike", service.checkLike(club_board_no, member_no));
@@ -418,7 +418,7 @@ public class ClubController {
 	}
 	
 	// http://localhost:8088/club/{club_no}/boards/{club_board_no}/modify
-	// http://localhost:8088/club/1/boards/17/modify
+	// http://localhost:8088/club/53/boards/17/modify
 	// 게시글 수정
 	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/modify", method = RequestMethod.GET)
 	public String modifyBoardGet(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no, Model model) {
@@ -445,7 +445,7 @@ public class ClubController {
 	}
 	
 	// http://localhost:8088/club/{club_no}/boards/{club_board_no}/delete
-	// http://localhost:8088/club/1/boards/26/delete
+	// http://localhost:8088/club/53/boards/26/delete
 	// 게시글 삭제
 	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/delete", method = RequestMethod.POST)
 	public String deleteBoardPost(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no) {
@@ -458,7 +458,7 @@ public class ClubController {
 	}
 	
 	// http://localhost:8088/club/{club_no}/boards/{club_board_no}/comment
-	// http://localhost:8088/club/1/boards/24/comment
+	// http://localhost:8088/club/53/boards/24/comment
 	// 댓글 등록
 	@ResponseBody
 	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/comment", method = RequestMethod.POST)
@@ -469,7 +469,7 @@ public class ClubController {
 		log.info("commentVo : "+vo);
 		
 		// 작성자(member_no) 세션에서 꺼내쓰기
-		session.setAttribute("member_no", 12);
+		session.setAttribute("member_no", 52);
 		int member_no = (int) session.getAttribute("member_no");
 		vo.setMember_no(member_no);
 		log.info("member추가 vo : "+vo);
@@ -519,7 +519,7 @@ public class ClubController {
 		log.info(" LikePost() 호출 ");
 		log.info("좋아요 vo : "+vo);
 		// 세션에서 member_no
-		session.setAttribute("member_no", 12);
+		session.setAttribute("member_no", 52);
 		int member_no = (int) session.getAttribute("member_no");
 		vo.setMember_no(member_no);
 		log.info("member추가 vo : "+vo);
@@ -537,7 +537,7 @@ public class ClubController {
 			HttpSession session) {
 		log.info(" cancleLikePost() 호출 ");
 		// 세션에서 member_no
-		session.setAttribute("member_no", 12);
+		session.setAttribute("member_no", 52);
 		int member_no = (int) session.getAttribute("member_no");
 		
 		service.cancelLike(club_board_no, member_no);

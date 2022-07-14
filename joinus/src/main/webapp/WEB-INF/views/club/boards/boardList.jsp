@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="../../include/header.jsp"%>
+<%@ include file="../../include/club_header.jsp" %>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script type="text/javascript">
@@ -42,19 +43,6 @@
 
 </script>
 
-    <!-- Projects Start -->
-	<div class="row mt-n2 wow fadeInUp" data-wow-delay="0.3s">
-		<div class="col-12 text-center">
-		    <ul class="list-inline mb-5" id="portfolio-flters">
-		        <li class="mx-2 active"><a href="">정보</a></li>
-		        <li class="mx-2"><a href="/club/${club_no}/boards">게시판</a></li>
-		        <li class="mx-2"><a href="/club/${club_no }/gallery">사진첩</a></li>
-		    </ul>
-		</div>
-	</div>
-    <!-- Projects End -->
-
-
 <!-- Feature Start -->
 <div class="container-xxl py-5">
 	<div class="container">
@@ -78,7 +66,8 @@
 				</c:if>
 					<h5 class="mb-3" style="display: inline-block;">${board.clubBoardsVo.club_board_title }</h5><br>
 					<p class="clubBoardList_content">${board.clubBoardsVo.club_board_content }</p>
-					<div style="margin-bottom: 1px;">
+					<div style="margin-bottom: 1em;">
+						<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${board.membersVo.member_image }">
 						<span class="clubBoardList_writer">${board.membersVo.member_name }</span>
 						
 						<c:if test="${board.clubBoardsVo.club_board_updatedate == null }">
@@ -91,7 +80,7 @@
 					<i class="bi bi-heart"></i> <span class="clubBoardList_likeCnt">${board.clubBoardsVo.club_board_likecnt }</span>
 					<i class="fa fa-comments fa-fw"></i> <span class=clubBoardList_commentCnt>${board.clubBoardsVo.club_board_commentcnt }</span>
 				</div>
-				<hr>
+				<hr style="margin-top: 1em;">
 			</c:forEach>
 			
 			<!-- 페이징블럭 -->

@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri ="http://java.sun.com/jsp/jstl/core" %>
  
 <%@ include file="../../include/header.jsp"%>
+<%@ include file="../../include/club_header.jsp" %>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script type="text/javascript">
@@ -23,31 +24,21 @@
 	
 <!-- Projects Start -->
 <div class="container-xxl py-5">
-    <div class="container">
-        <div class="row mt-n2 wow fadeInUp" data-wow-delay="0.3s">
-            <div class="col-12 text-center">
-                <ul class="list-inline mb-5" id="portfolio-flters">
-                    <li class="mx-2 active"><a href="">정보</a></li>
-                    <li class="mx-2"><a href="/club/${club_no}/boards">게시판</a></li>
-                    <li class="mx-2"><a href="/club/${club_no }/gallery">사진첩</a></li>
-                </ul>
-            </div>
-        </div>
-        
-  <div class="row g-4 portfolio-container wow fadeInUp" data-wow-delay="0.5s">
-   <c:forEach var="image" items="${imageList }">
-   	<!-- 이미지 크기 355.99*237.32이 템플릿기본(노트북) -->
-   	<!-- 이미지 크기 407.98*237.31이 템플릿기본(데스크탑) -->
-    <div class="col-lg-4 col-md-6 portfolio-item first">
-        <div class="portfolio-img rounded overflow-hidden">
-            <img style="width: 407.98px; height: 237.31px;" class="img-fluid" src="${PageContext.request.contextPath }/resources/upload/boards/${image.club_board_image}">
-            <div class="portfolio-btn">
-                <a class="btn btn-lg-square btn-outline-light rounded-circle mx-1" href="#" onclick="return linkContent(${image.club_board_no});"><i class="fa fa-link"></i></a>
-            </div>
-        </div>
-   	</div>
-            </c:forEach>
-  </div>
+	<div class="container">
+		<div class="row g-4 portfolio-container wow fadeInUp" data-wow-delay="0.5s">
+			<c:forEach var="image" items="${imageList }">
+				<!-- 이미지 크기 355.99*237.32이 템플릿기본(노트북) -->
+				<!-- 이미지 크기 407.98*237.31이 템플릿기본(데스크탑) -->
+				<div class="col-lg-4 col-md-6 portfolio-item first">
+				    <div class="portfolio-img rounded overflow-hidden">
+				        <img style="width: 407.98px; height: 237.31px;" class="img-fluid" src="${PageContext.request.contextPath }/resources/upload/boards/${image.club_board_image}">
+				        <div class="portfolio-btn">
+				            <a class="btn btn-lg-square btn-outline-light rounded-circle mx-1" href="#" onclick="return linkContent(${image.club_board_no});"><i class="fa fa-link"></i></a>
+				        </div>
+				    </div>
+				</div>
+			</c:forEach>
+		</div>
         
     </div>
 </div>

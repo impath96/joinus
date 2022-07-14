@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="../../include/header.jsp"%>
+<%@ include file="../../include/club_header.jsp" %>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script type="text/javascript">
@@ -220,9 +221,11 @@
 						</div> 
 						<div class="col-12">
 							<div class="form-floating" style="color: black;">
-								<pre class="boardContent">${vo.clubBoardsVo.club_board_content }</pre>
+								<pre class="boardContent" style="margin-top: 2em;">${vo.clubBoardsVo.club_board_content }</pre>
 							</div>
-							<img src="${PageContext.request.contextPath }/resources/upload/boards/${vo.clubBoardsVo.club_board_image }" class="ContentImage">
+							<c:if test="${vo.clubBoardsVo.club_board_image != null}">
+								<img src="${PageContext.request.contextPath }/resources/upload/boards/${vo.clubBoardsVo.club_board_image }" class="ContentImage">
+							</c:if>
 						</div>
 						
 						<div class="col-12 clubWrite_buttonMargin" style="text-align: right;">
