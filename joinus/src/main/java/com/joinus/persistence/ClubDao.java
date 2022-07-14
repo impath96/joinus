@@ -73,6 +73,9 @@ public interface ClubDao {
 	
 	//정모 수정하기
 	public Integer updateMeeting(Integer club_meeting_no, ClubMeetingsVo vo);
+	
+	//정모 삭제하기
+	public void deleteMeeting(Integer club_meeting_no);
 
 	
 	//=========================고은비=========================
@@ -205,7 +208,7 @@ public interface ClubDao {
 	// 모임 찜하기
 	public void clubDip(Integer num,Integer num2);
 	// 모임 찜 여부 확인
-	public Integer dip(Integer num);
+	public List<Integer> dip(Integer num);
 	// 모임 찜 취소
 	public void dipX(Integer num,Integer num2);
 	
@@ -214,17 +217,11 @@ public interface ClubDao {
 	//게시글 리스트
 	public List<ClubBoardsVo> getBoards(Integer num);
 
+
+
 	
 	//=========================강성민========================
 	
 	
-
-
-
-
-
-
-	
-
 	
 }
