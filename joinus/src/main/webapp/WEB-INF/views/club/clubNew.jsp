@@ -30,7 +30,7 @@ $(document).ready(function(){
 			if(item == "요리/제조"){ itemNum = 1; }
 			else if(item == "봉사활동"){ itemNum = 2;}
 			else if(item == "운동/스포츠"){ itemNum = 3;}
-			else if(item == "오락/게임"){ itemNum = 4;}
+			else if(item == "게임/오락"){ itemNum = 4;}
 			else if(item == "음악/악기"){ itemNum = 5;}
 			else if(item == "아웃도어/여행"){ itemNum = 6;}
 			else if(item == "외국/언어"){ itemNum = 7;}
@@ -159,7 +159,7 @@ function select(item){
                   <p class="sub2"> 관심사를 선택해주세요 </p><br>   
                    	 	<p > ▼ </p>
             	  <div id="hideInter">
-                  <p class="sub3"> ${membervo.member_name }님의 관심사 </p>   
+                  <p class="sub3"> ${membervo.member_name}님의 관심사 </p>   
                   </div>
                   <div id="select" >
                   			<ul class="interTable">
@@ -171,7 +171,7 @@ function select(item){
                   			<li id="inter1">요리/제조</li>
                   			<li id="inter2">봉사활동</li>
                   			<li id="inter3">운동/스포츠</li>
-                  			<li id="inter4">오락/게임</li> <br>
+                  			<li id="inter4">게임/오락</li> <br>
                   			<li id="inter5">음악/악기</li>
                   			<li id="inter6">아웃도어/여행</li>
                   			<li id="inter7">외국/언어</li>

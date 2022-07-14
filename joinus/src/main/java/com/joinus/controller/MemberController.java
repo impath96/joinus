@@ -36,8 +36,8 @@ import com.joinus.service.ClubService;
 import com.joinus.service.InterestService;
 import com.joinus.service.MemberService;
 
-@RequestMapping(value = "/member/*")
 @Controller
+@RequestMapping(value = "/member/*")
 public class MemberController {
 
 	@Autowired
@@ -149,16 +149,16 @@ public class MemberController {
 			return "redirect:/member/signin";
 		}
 		
-		// 내 모임 리스트
-		List<ClubsVo> clubList = clubService.getClubListByMemberNo(member.getMember_no());
+		// 내 모임 리스트 - 제한 5개
+		List<ClubsVo> clubList = clubService.getClubListByMemberNo(member.getMember_no(), 5);
 		log.info("clubList : {}", clubList);
 		
-		// 내가 만든 모임 리스트
-		List<ClubsVo> myClubList = clubService.getMyClubList(member.getMember_no());
+		// 내가 만든 모임 리스트 - 제한 5개
+		List<ClubsVo> myClubList = clubService.getMyClubList(member.getMember_no(), 5);
 		log.info("myClubList : {}", myClubList);
 		
 		// 최근 본 모임 리스트...는 어떻게 구현하지?? 쿠키??
-		CookieGenerator cg = new CookieGenerator();
+		// CookieGenerator cg = new CookieGenerator();
 		
 		model.addAttribute("clubList", clubList);
 		model.addAttribute("myClubList", myClubList);
@@ -190,7 +190,7 @@ public class MemberController {
 		// 일단 이 기능은 MemberService에 추가
 		memberService.addInterest(member.getMember_no(), interest);
 
-		return "/member/mypage";
+		return "redirect:/";
 	}
 	
 
@@ -222,7 +222,7 @@ public class MemberController {
 		session.setAttribute("member", findMember);
 
 		// 그리고 메인 페이지로 이동 - 하지만 지금은 일단 마이페이지로
-		return "redirect:/member/mypage";
+		return "redirect:/";
 	}
 	
 	@ResponseBody
@@ -243,7 +243,7 @@ public class MemberController {
 		}
 		response = new ResponseEntity<String>("정상적으로 처리", HttpStatus.OK);
 		MembersVo resetMember = memberService.resetPassword(member.getMember_no(), passwordCheckDto.getNewPassword());
-		log.info("빌밀번호 변경된 사용자 정보 : {}", resetMember);
+		log.info("비밀번호 변경된 사용자 정보 : {}", resetMember);
 		session.setAttribute("member", resetMember);
 		return response;
 	}
@@ -252,9 +252,20 @@ public class MemberController {
 	@PostMapping(value = "/leave", produces = "application/text; charset=UTF-8")
 	public String leave(HttpSession session) {
 		
+		// 탈퇴시 어떠한 작업을 할것인가???
+		
 		session.invalidate();
 		
 		return "탈퇴완료";
+	}
+	@GetMapping(value = "/signout")
+	public String signout(HttpSession session) {
+		
+		// 탈퇴시 어떠한 작업을 할것인가???
+		
+		session.invalidate();
+		
+		return "/";
 	}
 	
 	@GetMapping(value = "/my-clublist")
