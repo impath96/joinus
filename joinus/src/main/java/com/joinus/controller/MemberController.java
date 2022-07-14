@@ -222,7 +222,7 @@ public class MemberController {
 		session.setAttribute("member", findMember);
 
 		// 그리고 메인 페이지로 이동 - 하지만 지금은 일단 마이페이지로
-		return "redirect:/member/mypage";
+		return "redirect:/";
 	}
 	
 	@ResponseBody
@@ -243,7 +243,7 @@ public class MemberController {
 		}
 		response = new ResponseEntity<String>("정상적으로 처리", HttpStatus.OK);
 		MembersVo resetMember = memberService.resetPassword(member.getMember_no(), passwordCheckDto.getNewPassword());
-		log.info("빌밀번호 변경된 사용자 정보 : {}", resetMember);
+		log.info("비밀번호 변경된 사용자 정보 : {}", resetMember);
 		session.setAttribute("member", resetMember);
 		return response;
 	}
@@ -257,6 +257,15 @@ public class MemberController {
 		session.invalidate();
 		
 		return "탈퇴완료";
+	}
+	@GetMapping(value = "/signout")
+	public String signout(HttpSession session) {
+		
+		// 탈퇴시 어떠한 작업을 할것인가???
+		
+		session.invalidate();
+		
+		return "/";
 	}
 	
 	@GetMapping(value = "/my-clublist")
