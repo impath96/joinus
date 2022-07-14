@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.BoardCommentsVo;
 import com.joinus.domain.BoardCriteria;
 import com.joinus.domain.BoardLikesVo;
@@ -114,6 +113,7 @@ public class ClubController {
 		
 		log.info("result : "+result);
 		model.addAttribute("clubInfo", clubInfo);
+		model.addAttribute("club_no",club_no);
 		model.addAttribute("clubMemberList",service.clubMemberListAll(club_no));
 		model.addAttribute("result", result);
 		
@@ -274,10 +274,19 @@ public class ClubController {
 			
 			log.info("meetingModifyGET() 호출");
 			
-			MembersVo member = (MembersVo) session.getAttribute("member");
-			log.info(member+"");
+			//비회원
+			int result = 0;
 			
-			int member_no =member.getMember_no();
+			if(session.getAttribute("member") != null) {
+				MembersVo member = (MembersVo) session.getAttribute("member");
+				log.info(member+"");
+				
+				int member_no =member.getMember_no();
+				result = service.checkClubRole(club_no, member_no);
+				//result = 3 : 클럽 미가입 회원
+				//result = 1 : 클럽 가입 회원
+				//result = 2 : 클럽장
+			}
 			
 			List<ClubMeetingsVo> meetingList = service.getMeeting(club_meeting_no);
 			log.info(meetingList+"");
@@ -286,6 +295,7 @@ public class ClubController {
 			log.info(clubInfo+"");
 			model.addAttribute("clubInfo", clubInfo);
 			model.addAttribute("meetingList", meetingList);
+			model.addAttribute("result", result);
 			return "/club/meeting/meetingContent";
 			
 		}
@@ -332,10 +342,29 @@ public class ClubController {
 		
 		@RequestMapping(value="/{club_no}/meeting/{club_meeting_no}/delete", method = RequestMethod.GET)
 		public String meetingDelete(Model model, @PathVariable("club_no") Integer club_no,
-				@PathVariable("club_meeting_no") Integer club_meeting_no, ClubMeetingsVo vo, HttpSession session) {
+				@PathVariable("club_meeting_no") Integer club_meeting_no, HttpSession session) {
 			
+			log.info("meetingDelete 호출");
 			
-		
+			//비회원
+			int result = 0;
+			
+			if(session.getAttribute("member") != null) {
+				MembersVo member = (MembersVo) session.getAttribute("member");
+				log.info(member+"");
+				
+				int member_no =member.getMember_no();
+				result = service.checkClubRole(club_no, member_no);
+				//result = 3 : 클럽 미가입 회원
+				//result = 1 : 클럽 가입 회원
+				//result = 2 : 클럽장
+			}
+			
+			service.deleteClubMeeting(club_meeting_no);
+			
+			log.info("정모 삭제 완료");
+			model.addAttribute("result", result);
+			
 			return "redirect:/club/{club_no}";
 		}
 	
