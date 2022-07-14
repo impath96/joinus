@@ -725,25 +725,29 @@ public class ClubController {
 		// http://localhost:8088/club/new  모임등록 페이지
 		// http://localhost:8088/club/new?member_no=7
 		@RequestMapping(value="/new", method = RequestMethod.GET)
-		public String newClubGet(Model model, /* @ModelAttribute("membervo") MembersVo membervo, */HttpSession session) {
+		public String newClubGet(Model model, HttpSession session) {
 				
-			Integer memberNo = (Integer)session.getAttribute("member_no");
-			if(memberNo == null) {
+			MembersVo member = (MembersVo)session.getAttribute("member");
+			if(member == null) {
 				return "redirect:/member/signin";
 			}
 			
-			//세션(임의)
-			session.setAttribute("member_no", 7); 
-			int member_no =	(int)session.getAttribute("member_no"); 
-			//회원정보출력(merge후 생략)
-			MembersVo membervo = service.getMember(member_no);
-			model.addAttribute("membervo", membervo);
+//			//세션(임의)
+//			session.setAttribute("member_no", 7); 
+//			int member_no =	(int)session.getAttribute("member_no"); 
+//			//회원정보출력(merge후 생략)
+//			MembersVo membervo = service.getMember(member_no);
+			if(member != null) {
 			
+			Integer no = member.getMember_no();
+			log.info("member: "+no);
 			
 			//회원 관심사 출력
-			InterestsVo interestvo = service.getMemberInterest(membervo.getMember_no());
+			InterestsVo interestvo = service.getMemberInterest(no);
 			model.addAttribute("interest", interestvo);
+			model.addAttribute("membervo", member);
 			
+			}
 			return "/club/clubNew";
 				 
 	}
@@ -775,8 +779,7 @@ public class ClubController {
 		
 		
 		@RequestMapping(value = "/new", method = RequestMethod.POST)
-		public String createClubPost(@RequestParam("interest_detail_name") String detail,
-				@RequestParam("member_no") int member_no, MultipartFile file,
+		public String createClubPost(@RequestParam("interest_detail_name") String detail,MultipartFile file,
 				ClubsVo clubsvo,Model model,HttpSession session,HttpServletRequest request ) throws IOException {
 		
 				log.info("모임등록 호출");
@@ -811,7 +814,8 @@ public class ClubController {
 				log.info("사진저장 완료");
 				
 				}
-			  
+					
+				MembersVo member = (MembersVo)session.getAttribute("member");
 				
 				  //관심사번호 가져오기 
 				  InterestDetailsVo interDetail = service.getInterestNo(detail);
@@ -824,11 +828,11 @@ public class ClubController {
 				  //모임가입
 				  ClubMembersVo members = new ClubMembersVo(); 
 				  members.setClub_no(club_no);
-				  members.setMember_no(member_no); 
+				  members.setMember_no(member.getMember_no()); 
 				  members.setClub_member_role("admin"); //모임 첫생성은 관리자
 				  service.join(members);
 				  
-				  model.addAttribute("member_no", member_no);
+				  model.addAttribute("member_no", member.getMember_no());
 				 
 				  return "redirect:/club/{club_no}";
 		}
@@ -839,14 +843,13 @@ public class ClubController {
 		// http://localhost:8088/club/5
 		@RequestMapping(value = "/{club_no}", method = RequestMethod.GET)
 		public String info(Model model,HttpSession session, @PathVariable("club_no") int club_no) {
-												//@ModelAttribute("membervo") MembersVo membervo
 			
 				//모임정보
 				ClubsVo clubvo = service.getClubInfo(club_no);
 				model.addAttribute("clubvo", clubvo);
 				
-				Integer memberNo = (Integer)session.getAttribute("member_no");
-				if(memberNo == null) {
+				MembersVo member = (MembersVo)session.getAttribute("member");
+				if(member == null) {
 					
 					//모임회원 리스트
 					List<ClubMembersVo> clubmemberList = service.getClubMembers(club_no);
@@ -865,23 +868,21 @@ public class ClubController {
 					
 				}
 				
-				session.setAttribute("member_no", 7);
-				int m = (int)session.getAttribute("member_no");
 				
-				if(memberNo != null) {
+				if(member != null) {
 				
 				
 					//회원정보(임의)
 					
-					model.addAttribute("member_no",m );
-					log.info("회원넘버: "+m);
+					model.addAttribute("member_no",member.getMember_no() );
+					log.info("회원넘버: "+member.getMember_no());
 					
 					//모임회원 리스트
 					List<ClubMembersVo> clubmemberList = service.getClubMembers(club_no);
 					model.addAttribute("clubmemebrList", clubmemberList);
 					//방문한 모임회원
 					int result = 0; 
-					ClubMembersVo clubmembersvo = service.getClubMemberNo(club_no,m); //membervo.getMember_no();
+					ClubMembersVo clubmembersvo = service.getClubMemberNo(club_no,member.getMember_no());
 					if(clubmembersvo != null) { 
 						result = clubmembersvo.getMember_no(); 
 					}else if(clubmembersvo == null) { 
@@ -893,7 +894,7 @@ public class ClubController {
 					model.addAttribute("clubGrade", gradevo);
 					//별점참여
 					int result2 = 0;
-					Integer graded = service.getGradeinfo(club_no,m);
+					Integer graded = service.getGradeinfo(club_no,member.getMember_no());
 					if(graded != null) { 
 						result2 = graded; 
 					}else if(graded == null) { 
@@ -922,6 +923,9 @@ public class ClubController {
 					List<ClubBoardsVo> boards = service.getBoardImageList(club_no);
 					model.addAttribute("boards", boards);
 					log.info("게시글사진: "+boards);
+					
+					
+					session.setAttribute("member", member);
 					
 				}
 				

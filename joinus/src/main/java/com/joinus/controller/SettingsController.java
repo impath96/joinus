@@ -44,7 +44,6 @@ public class SettingsController {
 		this.memberService = memberService;
 	}
 
-
 	// 회원 계정 설정 페이지
 	@GetMapping("member")
 	public String settings(HttpSession session, Model model) {
@@ -79,14 +78,14 @@ public class SettingsController {
 			return "redirect:/member/signin";
 		}
 		
-		if(file.getOriginalFilename() != null || !file.getOriginalFilename().equals("")) {
+		if(file.getSize() != 0) {
 			// 업로드된 파일이 없을 경우 이미지는 변경하지 않는 것으로 간주.
 			log.info("upload Post ... originalName={}", file.getOriginalFilename());
 			log.info("upload Post ... size={}", file.getSize());
 			log.info("upload Post ... contentType={}", file.getContentType());
 			
 			ServletContext ctx = request.getServletContext();
-			String realPath = ctx.getRealPath("/resources/upload/membersupload");
+			String realPath = ctx.getRealPath("/resources/upload/members");
 			log.info("실제 파일 저장 경로 : {}", realPath);
 			// 실제로 저장된 시스템에서의 파일명 
 			// ex) 실제 파일명 : aaa.png

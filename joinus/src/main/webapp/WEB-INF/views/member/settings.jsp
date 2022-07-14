@@ -98,7 +98,7 @@
 											<img alt="" class="thumbnail_image" src="${member.member_image }">
 										</c:if>
 										<c:if test="${!sessionScope.member.member_image.contains(':') }">
-											<img alt="" class="thumbnail_image" src="${pageContext.request.contextPath }/resources/upload/membersupload/${member.member_image }">
+											<img alt="" class="thumbnail_image" src="${pageContext.request.contextPath }/resources/upload/members/${member.member_image }">
 										</c:if>
 									</span>
 								</label>
