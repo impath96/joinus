@@ -129,8 +129,14 @@ public interface ClubDao {
 	// 내 모임 리스트
 	public List<ClubsVo> ClubListByMemberNo(int member_no);
 
-	// 나가 만든 모임 리스트
+	// 내 모임 리스트에 개수 제한 
+	List<ClubsVo> ClubListByMemberNo(int member_no, int limit);
+
+	// 내가 만든 모임 리스트
 	public List<ClubsVo> myClubList(int member_no);
+
+	public List<ClubsVo> myClubList(int member_no, int limit);
+	
 	
 	//=========================김민호========================
 	

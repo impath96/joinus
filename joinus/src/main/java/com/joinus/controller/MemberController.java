@@ -36,8 +36,8 @@ import com.joinus.service.ClubService;
 import com.joinus.service.InterestService;
 import com.joinus.service.MemberService;
 
-@RequestMapping(value = "/member/*")
 @Controller
+@RequestMapping(value = "/member/*")
 public class MemberController {
 
 	@Autowired
@@ -149,16 +149,16 @@ public class MemberController {
 			return "redirect:/member/signin";
 		}
 		
-		// 내 모임 리스트
-		List<ClubsVo> clubList = clubService.getClubListByMemberNo(member.getMember_no());
+		// 내 모임 리스트 - 제한 5개
+		List<ClubsVo> clubList = clubService.getClubListByMemberNo(member.getMember_no(), 5);
 		log.info("clubList : {}", clubList);
 		
-		// 내가 만든 모임 리스트
-		List<ClubsVo> myClubList = clubService.getMyClubList(member.getMember_no());
+		// 내가 만든 모임 리스트 - 제한 5개
+		List<ClubsVo> myClubList = clubService.getMyClubList(member.getMember_no(), 5);
 		log.info("myClubList : {}", myClubList);
 		
 		// 최근 본 모임 리스트...는 어떻게 구현하지?? 쿠키??
-		CookieGenerator cg = new CookieGenerator();
+		// CookieGenerator cg = new CookieGenerator();
 		
 		model.addAttribute("clubList", clubList);
 		model.addAttribute("myClubList", myClubList);
@@ -251,6 +251,8 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping(value = "/leave", produces = "application/text; charset=UTF-8")
 	public String leave(HttpSession session) {
+		
+		// 탈퇴시 어떠한 작업을 할것인가???
 		
 		session.invalidate();
 		

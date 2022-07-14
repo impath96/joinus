@@ -44,7 +44,6 @@ public class SettingsController {
 		this.memberService = memberService;
 	}
 
-
 	// 회원 계정 설정 페이지
 	@GetMapping("member")
 	public String settings(HttpSession session, Model model) {

@@ -125,9 +125,19 @@ public class ClubServiceImpl implements ClubService{
 	}
 
 	@Override
+	public List<ClubsVo> getClubListByMemberNo(int member_no, int limit) {
+		return dao.ClubListByMemberNo(member_no, limit);
+	}
+
+	@Override
 	public List<ClubsVo> getMyClubList(int member_no) {
 		
 		return dao.myClubList(member_no);
+	}
+	
+	@Override
+	public List<ClubsVo> getMyClubList(int member_no, int limit) {
+		return dao.myClubList(member_no, limit);
 	}
 
 	// ========================================================
@@ -367,6 +377,7 @@ public class ClubServiceImpl implements ClubService{
 		public List<ClubBoardsVo> getBoardsforimg(Integer num) {
 			return dao.getBoards(num);
 		}
+
 
 
 		

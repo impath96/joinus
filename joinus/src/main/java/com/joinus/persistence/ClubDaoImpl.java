@@ -320,13 +320,22 @@ public class ClubDaoImpl implements ClubDao{
 
 	// =========================== 김민호 =============================
 	
+	// 내 모임 리스트 출력 - limit 제한
+	@Override
+	public List<ClubsVo> ClubListByMemberNo(int member_no, int limit) {
+		log.info("회원 번호가 {} 인 회원의 모임 리스트 출력", member_no);
+		Map<String, Integer> paramMap = new HashMap<String, Integer>();
+		paramMap.put("member_no", member_no);
+		paramMap.put("limit", limit);
+		return sqlSession.selectList(NAMESPACE+".ClubListByMemberNoLimit", paramMap);
+	}
+	
+	// 내 모임 리스트 출력 - 제한 X
 	@Override
 	public List<ClubsVo> ClubListByMemberNo(int member_no) {
 		log.info("회원 번호가 {} 인 회원의 모임 리스트 출력", member_no);
-		
-		return sqlSession.selectList(NAMESPACE+".ClubListByMemberNo", member_no);
+		return sqlSession.selectList(NAMESPACE+".ClubListByMember", member_no);
 	}
-	
 
 	@Override
 	public List<ClubsVo> myClubList(int member_no) {
@@ -335,6 +344,18 @@ public class ClubDaoImpl implements ClubDao{
 		return sqlSession.selectList(NAMESPACE+".myClubList", member_no);
 	}
 	
+	@Override
+	public List<ClubsVo> myClubList(int member_no, int limit) {
+		Map<String, Integer> paramMap = new HashMap<String, Integer>();
+		paramMap.put("member_no", member_no);
+		paramMap.put("limit", limit);
+		
+		return sqlSession.selectList(NAMESPACE+".myClubListLimit", paramMap);
+	}
+	
+
+	
+	// =============================================================================
 	
 	
 	//=======================강성민=============================================================
@@ -478,6 +499,8 @@ public class ClubDaoImpl implements ClubDao{
 			public List<ClubBoardsVo> getBoards(Integer num) {
 				return sqlSession.selectList(NAMESPACE+".getBoardImageList", num);
 			}
+
+
 
 			
 			

@@ -314,6 +314,14 @@
 		from club_members
 		where member_no = #{member_no});
 </select>
+<select id="ClubListByMemberNoLimit" resultType="ClubsVo">
+	select * from clubs
+	where club_no in (
+		select club_no 
+		from club_members
+		where member_no = #{member_no})
+	limit 0, #{limit}
+</select>
 
 <select id="myClubList" resultType="ClubsVo">
 	<![CDATA[
@@ -322,6 +330,17 @@
 					select club_no 
 					from club_members 
 					where member_no = #{member_no} and club_member_role = 'admin')
+		]]>
+</select>
+
+<select id="myClubListLimit" resultType="ClubsVo">
+	<![CDATA[
+		select * from clubs
+		where club_no in (
+					select club_no 
+					from club_members 
+					where member_no = #{member_no} and club_member_role = 'admin')
+		limit 0, 5
 		]]>
 </select>
 
