@@ -155,6 +155,16 @@ public class ClubServiceImpl implements ClubService{
 	}
 	
 	
+	@Override
+	public void deleteClubMeeting(Integer club_meeting_no) {
+		
+		dao.deleteMeeting(club_meeting_no);
+		
+		
+	}
+	
+	
+	
 	//===================================================================
 
 
