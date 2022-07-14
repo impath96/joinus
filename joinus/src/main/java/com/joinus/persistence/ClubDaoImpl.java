@@ -168,6 +168,18 @@ public class ClubDaoImpl implements ClubDao{
 		
 	}
 	
+	@Override
+	public void clubUpdate(ClubsVo clubsvo, Integer club_no) {
+		
+		Map<String, Object> param= new HashMap<String, Object>();
+		param.put("clubsvo", clubsvo);
+		param.put("club_no", club_no);
+		
+		sqlSession.update(NAMESPACE+".ClubUpdate", param);
+		log.info("모임 정보 수정 완료");
+		
+	}
+
 	//예약정보 가져오기
 	@Override
 	public List<MeetingTotalBean> getRental(int member_no) {
@@ -187,8 +199,31 @@ public class ClubDaoImpl implements ClubDao{
 		sqlSession.insert(NAMESPACE2+".CreateMeeting", vo);
 	}
 	
+	//정모 정보 가져오기
+	@Override
+	public List<ClubMeetingsVo> getMeetings_no(Integer club_meeting_no) {
+		
+		return sqlSession.selectList(NAMESPACE2+".GetMeeting_no", club_meeting_no);
+	}
+	
+	@Override
+	public Integer updateMeeting(Integer club_meeting_no, ClubMeetingsVo vo) {
+		
+		Map<String, Object> param= new HashMap<String, Object>();
+		param.put("club_meeting_no", club_meeting_no);
+		param.put("vo", vo);
+		
+		return sqlSession.update(NAMESPACE2+".UpdateMeeting", param);
+	}
+
+	
+	
+	
 //=======================허수빈=============================================================
 	
+
+
+
 
 	@Override
 	public void writeBoard(ClubBoardsVo vo) {
@@ -481,7 +516,8 @@ public class ClubDaoImpl implements ClubDao{
 			public List<ClubBoardsVo> getBoards(Integer num) {
 				return sqlSession.selectList(NAMESPACE+".getBoardImageList", num);
 			}
-			
+
+
 			
 
 			

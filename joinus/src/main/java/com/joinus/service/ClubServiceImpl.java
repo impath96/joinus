@@ -114,6 +114,12 @@ public class ClubServiceImpl implements ClubService{
 	}
 	
 	
+	//클럽 정보 수정
+	@Override
+	public void updateClubs(ClubsVo clubsvo, Integer club_no) {
+		dao.clubUpdate(clubsvo, club_no);
+	}
+
 	//예약정보 불러오기 - LIST
 	@Override
 	public List<MeetingTotalBean> getRental(int member_no) {
@@ -135,8 +141,23 @@ public class ClubServiceImpl implements ClubService{
 		
 	}
 	
+	//정모 상세
+	@Override
+	public List<ClubMeetingsVo> getMeeting(Integer club_meeting_no) {
+
+		return dao.getMeetings_no(club_meeting_no);
+	}
+	
+	//정모 수정
+	@Override
+	public Integer updateMeeting(Integer club_meeting_no, ClubMeetingsVo vo) {
+		return dao.updateMeeting(club_meeting_no ,vo);
+	}
+	
 	
 	//===================================================================
+
+
 
 	@Override
 	public void writeBoard(ClubBoardsVo vo) {
@@ -375,6 +396,8 @@ public class ClubServiceImpl implements ClubService{
 		public List<ClubBoardsVo> getBoardsforimg(Integer num) {
 			return dao.getBoards(num);
 		}
+
+
 
 
 		

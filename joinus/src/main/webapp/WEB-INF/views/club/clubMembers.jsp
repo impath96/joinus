@@ -42,7 +42,9 @@
    		<c:forEach var="vo" items="${clubMemberList }" varStatus="status">
       		<div class="col d-flex align-items-start px-2 py-5">
 		      	<div style="height: 105; width: 105;">
-		       	 <img src="${vo.membersVo.member_image}" class="h-100">
+	        	<img src="${PageContext.requeset.contextPath }/resources/upload/members/${vo.membersVo.member_image}" class="h-100" name = image>
+	        	<script type="text/javascript">
+	        	</script>
 	        	</div>
 	        	<div class="px-3">
 	          		<h4 class="d-flex gap-2 w-100 justify-content-between">${vo.membersVo.member_name }</h4>

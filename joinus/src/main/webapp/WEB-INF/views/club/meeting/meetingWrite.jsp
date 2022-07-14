@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-<%@ include file="../include/header.jsp"%>
+<%@ include file="../../include/header.jsp"%>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ce8d060125bcc89e0c25ee69f6b5c7b0&libraries=services"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
@@ -13,21 +13,19 @@
 <div class="container px-5">
 	<div class="row g-5">
       <div class="col-md-5 col-lg-4 order-md-last">
-        <h4 class="d-flex justify-content-between align-items-center mb-3">
-          <span class="text-primary">예약 장소</span>
-          <span class="badge bg-primary rounded-pill">총 개수</span>
+        <h4 class="d-flex justify-content-between align-items-center mb-1">
+          <span class="text-primary">예약 정보</span>
         </h4>
+          <small class="text-mute">버튼을 누르면 자동으로 적용 됩니다.</small> 
        <c:forEach var = "vo" items="${rentalList }" varStatus="status">
         <ul class="list-group mb-3">
           <li class="list-group-item d-flex justify-content-between lh-sm" >
             <div>
-            <input type="text" id="rental_no_${status.index}" value="${vo.rentalPlacesVo.rental_places_no }">
-              <h6 class="my-0">${vo.rentalPlacesVo.rental_date }</h6>
-              <small class="text-muted">${vo.partnerPlacesVo.partner_place_name }</small> <br>
-              <input type="button" class="btn btn-secondary" value='적용하기'
-              onclick="location.href='${PageContext.request.contextPath}/club/${clubInfo[0].club_no}/meeting/${vo.rentalPlacesVo.rental_places_no }';"
-              >
+            <input type="hidden" id="rental_no_${status.index }" name="rental_no_${status.index }" value="${vo.rentalPlacesVo.rental_places_no }">
+              <h6 class="my-2">${vo.rentalPlacesVo.rental_date }</h6> <brㄴ>
+              <h6 class="my-2">${vo.partnerPlacesVo.partner_place_name }</h6> <br>
             </div>
+              <input type="button" id="${vo.rentalPlacesVo.rental_places_no }" name="rental_${status.index }" class="btn btn-secondary my-4" value='적용하기'>
           </li>
         </ul>
         </c:forEach>
@@ -49,7 +47,7 @@
             
             <div class="col-12">
               <label for="address" class="form-label">날짜</label>
-              <input type="date" class="form-control" name="club_meeting_date"  required="">
+              <input type="date" class="form-control" id="club_meeting_date" value="" required="">
               <div class="invalid-feedback">
                 Please enter your shipping address.
               </div>
@@ -68,7 +66,7 @@
             <div class="col-12">
               <label for="address" class="form-label">장소</label>
               	<div class="input-group">
-              		<input type="text" class="form-control" id="keyward" name="club_meeting_location">
+              		<input type="text" class="form-control" id="club_meeting_location">
              		<button type="button" class="btn btn-secondary" id ="search">검색하기</button>
             	</div>
             	<div>
@@ -119,24 +117,40 @@
 <!-- 정모 -->
 
 <script type="text/javascript">
-
+ 
 $(function(){
-	//alert('jquery! check');
+	alert('jquery! check');
 	
-		//alert($('#rental_no'+${status.current}).attr('value'));
+	$("input[name^='rental']").on('click', function(e){
+		
+			//console.log($(this).attr('id')); 
+			var rental_places_no = $(this).attr('id');
+		
+		$.ajax({
+			
+			url : '${PageContext.request.contextPath}/club/${clubInfo[0].club_no}/meeting/rental_no/'+rental_places_no,
+			type : 'GET',
+			contentType : "application/json",
+			success : function(data){
+			alert('갔다옴');
+				//console.log(data);
+				//console.log(data[0].partnerPlacesVo.partner_place_name);
+				//console.log(data[0].rentalPlacesVo.rental_date);
+				
+				var rental_date = data[0].rentalPlacesVo.rental_date;
+				var rental_place = data[0].partnerPlacesVo.partner_place_name;
+				
+				$('#club_meeting_date').attr('value',rental_date);
+				$('#club_meeting_location').attr('value',rental_place);
+				
+				}
+		});//ajax
 	
-	//$('#rental').click(function(){
-		//alert('rental 버튼 클릭');
+	});//클릭
+	
+	
+
 		
-		//$.ajax({
-		//	url : '/club/rental?rental_places_no='+rental_no,
-		//	type :'get',
-		//	success : function(){
-		//		alert('갔다옴');
-		//	}
-		//});//ajax
-		
-	//});//click
 	
 	
 	
@@ -146,4 +160,4 @@ $(function(){
 
 </script>
 
-<%@ include file="../include/footer.jsp"%>
+<%@ include file="../../include/footer.jsp"%>

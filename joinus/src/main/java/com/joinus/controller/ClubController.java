@@ -57,7 +57,7 @@ public class ClubController {
 	//http://localhost:8088/club/clubList?page=1
 	//http://localhost:8088/club/clubList?interest_no=2
 	@RequestMapping(value="/clubList", method = RequestMethod.GET)
-	public void clubList(@ModelAttribute("interest_no") String interest_no,
+	public String clubList(@ModelAttribute("interest_no") String interest_no,
 						Criteria cri, Model model,HttpSession session) {
 		log.info("interest_no : "+interest_no);	
 		if(session.getAttribute("member") != null) {
@@ -85,8 +85,9 @@ public class ClubController {
 			
 		}
 		
+		return "club/clubList";
+		
 	}
-	
 	
 	//http://localhost:8088/club/1/clubMembers
 	@RequestMapping(value="/{club_no}/clubMembers", method = RequestMethod.GET)
@@ -186,29 +187,71 @@ public class ClubController {
 			return "/club/clubModify";
 		}
 
-		//http://localhost:8088/club/1/meetingWrite
-		@RequestMapping(value="/{club_no}/meetingWrite", method = RequestMethod.GET)
+	//http://localhost:8088/club/1/modify
+		@RequestMapping(value = "/{club_no}/modify", method=RequestMethod.POST)
+		public String clubModifyPOST(@PathVariable("club_no") Integer club_no,
+				HttpSession session, RedirectAttributes rttr, Model model, ClubsVo clubsvo,
+				MultipartFile file, HttpServletRequest request) throws IOException{
+			
+			log.info("clubModifyPOST 호출");
+			
+			//모임 사진등록 
+			if(!file.isEmpty()) { 
+			
+			//가상업로드 폴더 설정
+			ServletContext ctx =request.getServletContext();
+			String realpath = ctx.getRealPath("/resources/upload/clubs/");
+			log.info("파일저장경로: " +realpath);		
+			
+			//String FileName = file.getOriginalFilename();
+			String savedFileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+			log.info("파일명: "+savedFileName);
+
+			
+			String fullpath = realpath;
+			fullpath += File.separator + savedFileName;
+			File saveFile = new File(fullpath);
+			
+			file.transferTo(saveFile);
+			
+			clubsvo.setClub_image(savedFileName);
+			log.info("사진저장 완료");
+			
+			}
+			
+			log.info(clubsvo+"");
+			
+			service.updateClubs(clubsvo, club_no);
+		
+			return "redirect:/club/{club_no}/clubMembers";
+		}
+		
+		
+		
+		//http://localhost:8088/club/1/meeting/new
+		@RequestMapping(value="/{club_no}/meeting/new", method = RequestMethod.GET)
 		public String meetingWritegPOST(Model model,
 				@PathVariable("club_no") Integer club_no, HttpSession session) {
 			
 			log.info("meetingWritePOST() 호출");
 			
 			//멤버정보 가져오기
-			//MembersVo member = (MembersVo) session.getAttribute("member");
-			//int member_no =member.getMember_no();
+			MembersVo member = (MembersVo) session.getAttribute("member");
+			int member_no =member.getMember_no();
 			
-			int member_no = 124;
 			
-			//예약정보 불러오기
 			List<MeetingTotalBean> rentalList = (List<MeetingTotalBean>)service.getRental(member_no);
 			log.info(rentalList+"");
+
 			List<ClubsVo> clubInfo = service.clubInfo(club_no);
 			log.info(clubInfo+"");
 			model.addAttribute("clubInfo", clubInfo);
 			model.addAttribute("rentalList", rentalList);
-			return "/club/meetingWrite";
+			return "/club/meeting/meetingWrite";
 			
 		}
+		
+		
 		
 		//http://localhost:8088/club/1/meeting/new
 		@RequestMapping(value="/{club_no}/meeting/new", method = RequestMethod.POST)
@@ -223,6 +266,65 @@ public class ClubController {
 			
 			return "redirect:/club/{club_no}/clubMembers";
 		}
+		
+		//http://localhost:8088/club/1/meeting/1
+		@RequestMapping(value="/{club_no}/meeting/{club_meeting_no}", method = RequestMethod.GET)
+		public String meetingModifyGET(Model model, HttpSession session,
+				@PathVariable("club_no") Integer club_no, @PathVariable("club_meeting_no") Integer club_meeting_no ) {
+			
+			log.info("meetingModifyGET() 호출");
+			
+			List<ClubMeetingsVo> meetingList = service.getMeeting(club_meeting_no);
+			log.info(meetingList+"");
+			
+			List<ClubsVo> clubInfo = service.clubInfo(club_no);
+			log.info(clubInfo+"");
+			model.addAttribute("clubInfo", clubInfo);
+			model.addAttribute("meetingList", meetingList);
+			return "/club/meeting/meetingContent";
+			
+		}
+		
+		//http://localhost:8088/club/1/meeting/1/modify
+		@RequestMapping(value="/{club_no}/meeting/{club_meeting_no}/modify", method = RequestMethod.GET)
+		public String meetingModifyGET(Model model,
+				@PathVariable("club_no") Integer club_no, HttpSession session,
+				 @PathVariable("club_meeting_no") Integer club_meeting_no) {
+			
+			log.info("meetingModifyGET() 호출");
+			
+			List<ClubMeetingsVo> meetingList = service.getMeeting(club_meeting_no);
+			log.info(meetingList+"");
+			
+			List<ClubsVo> clubInfo = service.clubInfo(club_no);
+			log.info(clubInfo+"");
+			model.addAttribute("clubInfo", clubInfo);
+			model.addAttribute("meetingList", meetingList);
+			
+			return "/club/meeting/meetingModify";
+			
+		}
+
+		//http://localhost:8088/club/1/meeting/1/modify
+		@RequestMapping(value="/{club_no}/meeting/{club_meeting_no}/modify", method = RequestMethod.POST)
+		public String meetingModifyPOST(Model model, @PathVariable("club_no") Integer club_no,
+				@PathVariable("club_meeting_no") Integer club_meeting_no, ClubMeetingsVo vo) {
+			
+			log.info("meetingModifyGET() 호출");
+			
+			Integer result = service.updateMeeting(club_meeting_no, vo);
+			//log.info(meetingList+"");
+			
+			List<ClubsVo> clubInfo = service.clubInfo(club_no);
+			log.info(clubInfo+"");
+			model.addAttribute("clubInfo", clubInfo);
+			//model.addAttribute("meetingList", meetingList);
+			
+			return "redirect:/club/{club_no}/meeting/{club_meeting_no}";
+			
+		}
+		
+
 	
 	
 	

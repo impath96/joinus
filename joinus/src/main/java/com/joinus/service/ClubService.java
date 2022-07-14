@@ -29,14 +29,16 @@ import com.joinus.domain.MembersVo;
 		//클럽 정보
 		public List<ClubsVo> clubInfo(int club_no);
 
-		//클럽 리스트
+		//클럽 리스트(관심사별)
 		public List<ClubTotalBean> clubList(int interest_no, Criteria cri);
-
+		
+		//클럽 전체 리스트
 		public List<ClubTotalBean> clubList(Criteria cri);
 		
-		//클럽 개수 조회
+		//클럽 개수 조회(관심사별)
 		public Integer totalCnt(Integer interest_no);
 		
+		//전체 클럽 개수 조회
 		public Integer totalCnt();
 		
 		//모임 회원 권한 조회
@@ -44,18 +46,31 @@ import com.joinus.domain.MembersVo;
 		
 		//강퇴기능
 		public void clubBan(int member_no, int club_no);
-
+		
+		//모임장 양도
 		public void clubAuth(Integer member_no, int club_no);
-
+		
+		//모임 나가기
 		public void clubLeave(MembersVo member, Integer club_no);
+		
+		//모임 정보 수정
+		public void updateClubs(ClubsVo clubsvo, Integer club_no);
 		
 		//예약정보 불러오기
 		public List<MeetingTotalBean> getRental(int member_no);
 		
+		//예약정보 적용하기
 		public List<MeetingTotalBean> getRentalREST(int rental_places_no);
 		
 		//정모생성
 		public void createMeeting(ClubMeetingsVo vo);
+		
+		//정모 정보 가져오기(meeting_no)
+		public List<ClubMeetingsVo> getMeeting(Integer club_meeting_no);
+		
+		//정모 수정
+		public Integer updateMeeting(Integer club_meeting_no, ClubMeetingsVo vo);
+
 		
 		
 //		public List<ClubBoardVo> getBoardListAll(Integer club_no);
@@ -182,6 +197,7 @@ import com.joinus.domain.MembersVo;
 			//게시글 리스트
 			public List<ClubBoardsVo> getBoardsforimg(Integer num);
 
+			
 	
 	
 }

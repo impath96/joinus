@@ -55,13 +55,24 @@ public interface ClubDao {
 	//클럽 나가기
 	public void clubLeave(MembersVo member, Integer club_no);
 	
+	//클럽 정보 수정
+	public void clubUpdate(ClubsVo clubsvo, Integer club_no);
+	
 	//예약정보 가져오기 - LIST
 	public List<MeetingTotalBean> getRental(int member_no);
 	
 	//예약정보 가져오기 - REST
 	public List<MeetingTotalBean> getRentalREST(int rental_places_no);
+	
 	//정모 만들기
 	public void createMeeting(ClubMeetingsVo vo);
+	
+	//정모 정보 가져오기
+	public List<ClubMeetingsVo> getMeetings_no(Integer club_meeting_no);
+	
+	//정모 수정하기
+	public Integer updateMeeting(Integer club_meeting_no, ClubMeetingsVo vo);
+
 	
 	//=========================고은비=========================
 	
@@ -187,6 +198,10 @@ public interface ClubDao {
 	public List<ClubMeetingsVo> getMeetings(Integer num);
 	//게시글 리스트
 	public List<ClubBoardsVo> getBoards(Integer num);
+
+
+
+	
 	
 	//=========================강성민========================
 	
