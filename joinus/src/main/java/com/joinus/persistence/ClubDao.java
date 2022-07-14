@@ -17,9 +17,13 @@ import com.joinus.domain.BoardLikesVo;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubsVo;
 import com.joinus.domain.Criteria;
+import com.joinus.domain.MeetingTotalBean;
+import com.joinus.domain.MembersVo;
+import com.joinus.domain.RentalPlacesVo;
+import com.joinus.domain.ClubBoardsVo;
+import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.InterestDetailsVo;
 import com.joinus.domain.InterestsVo;
-import com.joinus.domain.MembersVo;
 
 public interface ClubDao {
 	
@@ -51,6 +55,25 @@ public interface ClubDao {
 	
 	//클럽 나가기
 	public void clubLeave(MembersVo member, Integer club_no);
+	
+	//클럽 정보 수정
+	public void clubUpdate(ClubsVo clubsvo, Integer club_no);
+	
+	//예약정보 가져오기 - LIST
+	public List<MeetingTotalBean> getRental(int member_no);
+	
+	//예약정보 가져오기 - REST
+	public List<MeetingTotalBean> getRentalREST(int rental_places_no);
+	
+	//정모 만들기
+	public void createMeeting(ClubMeetingsVo vo);
+	
+	//정모 정보 가져오기
+	public List<ClubMeetingsVo> getMeetings_no(Integer club_meeting_no);
+	
+	//정모 수정하기
+	public Integer updateMeeting(Integer club_meeting_no, ClubMeetingsVo vo);
+
 	
 	//=========================고은비=========================
 	
@@ -192,6 +215,9 @@ public interface ClubDao {
 	//=========================강성민========================
 	
 	
+
+
+
 
 
 

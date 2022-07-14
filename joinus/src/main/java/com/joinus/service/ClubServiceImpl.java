@@ -20,10 +20,15 @@ import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubTotalBean;
 import com.joinus.domain.ClubsVo;
 import com.joinus.domain.Criteria;
+import com.joinus.domain.MeetingTotalBean;
 import com.joinus.domain.InterestDetailsVo;
 import com.joinus.domain.InterestsVo;
 import com.joinus.domain.MembersVo;
+import com.joinus.domain.RentalPlacesVo;
 import com.joinus.persistence.ClubDao;
+
+import com.joinus.domain.ClubBoardsVo;
+import com.joinus.domain.ClubMeetingsVo;
 
 @Service
 public class ClubServiceImpl implements ClubService{
@@ -109,7 +114,50 @@ public class ClubServiceImpl implements ClubService{
 	}
 	
 	
+	//클럽 정보 수정
+	@Override
+	public void updateClubs(ClubsVo clubsvo, Integer club_no) {
+		dao.clubUpdate(clubsvo, club_no);
+	}
+
+	//예약정보 불러오기 - LIST
+	@Override
+	public List<MeetingTotalBean> getRental(int member_no) {
+		
+		return dao.getRental(member_no);
+	}
+	
+	//예약정보 불러오기 - REST
+	@Override
+	public List<MeetingTotalBean> getRentalREST(int rental_places_no) {
+		
+		return dao.getRentalREST(rental_places_no);
+	}
+	
+	//정모 생성
+	@Override
+	public void createMeeting(ClubMeetingsVo vo) {
+		dao.createMeeting(vo);
+		
+	}
+	
+	//정모 상세
+	@Override
+	public List<ClubMeetingsVo> getMeeting(Integer club_meeting_no) {
+
+		return dao.getMeetings_no(club_meeting_no);
+	}
+	
+	//정모 수정
+	@Override
+	public Integer updateMeeting(Integer club_meeting_no, ClubMeetingsVo vo) {
+		return dao.updateMeeting(club_meeting_no ,vo);
+	}
+	
+	
 	//===================================================================
+
+
 
 	@Override
 	public void writeBoard(ClubBoardsVo vo) {
@@ -367,6 +415,8 @@ public class ClubServiceImpl implements ClubService{
 		public List<ClubBoardsVo> getBoardsforimg(Integer num) {
 			return dao.getBoards(num);
 		}
+
+
 
 
 		
