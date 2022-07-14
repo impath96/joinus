@@ -19,7 +19,9 @@
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
+    
+    <!-- jQuery Library -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <!-- Libraries Stylesheet -->
     <link href="${PageContext.request.contextPath }/resources/lib/animate/animate.min.css" rel="stylesheet">
     <link href="${PageContext.request.contextPath }/resources/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">

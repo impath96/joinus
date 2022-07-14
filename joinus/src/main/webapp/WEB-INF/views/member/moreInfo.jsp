@@ -10,21 +10,7 @@
 				<div class="p-lg-5 ps-lg-0" align="center">
 					<h6 class="text-primary">Grouping</h6>
 					<h1 class="mb-4">추가정보(필수)</h1>
-					<form action="/member/signup" name="form" method="post">
-						<div class="col-12">
-							<div class="form-floating" style="width: 50%;">
-								<input type="text" class="form-control" id="location" name="location_name"
-									placeholder="주소" onclick="sample4_execDaumPostcode()" > <label for="location">주소</label>
-							</div>
-						</div>
-						<br>
-						<div class="col-12">
-							<div class="form-floating" style="width: 50%;">
-								<input type="tel" class="form-control" id="tel" name="member_tel"
-									placeholder="전화번호"> <label for="subject">전화번호</label>
-							</div>
-						</div>
-						<br>
+					<form action="${pageContext.request.contextPath }/member/more-info" name="form" method="post">
 						<div class="col-12">
 							<div class="form-floating" style="width:50%;">
 								<select name = "interest" id="interest" class="form-select form-select-lg mb-3 pt-2" aria-label="interest">
@@ -36,6 +22,7 @@
 								</select>
 							</div>
 						</div>
+						<br>
 						<div class="col-12">
 							<input type="submit" value="다음"
 								class="btn btn-primary rounded-pill py-3 px-5">
@@ -46,8 +33,8 @@
 		</div>
 	</div>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script>
-    function sample4_execDaumPostcode() {
+	<script>
+    function searchLocation() {
         new daum.Postcode({
             oncomplete: function(data) {
                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.

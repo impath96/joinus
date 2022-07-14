@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubTotalBean;
+import com.joinus.domain.ClubsVo;
 
 @Service
 public interface ClubService {
@@ -25,5 +26,8 @@ public interface ClubService {
 	public void writeBoard(ClubBoardsVo vo);
 	
 //	public List<ClubBoardVo> getBoardListAll(Integer club_no);
+	
+	//====================== 김민호 ======================
+	public List<ClubsVo> getClubListByMemberNo(int member_no);
 	
 }

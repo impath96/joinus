@@ -50,4 +50,17 @@
 		set member_image=#{savedFileName}
 		where member_no=#{member_no}
 	</update>
+	
+	<update id="updatePassword">
+		update members
+		set member_pass=#{member_pass}
+		where member_no=#{member_no}
+	</update>
+	
+	<select id="selectMember" resultType="MembersVo">
+		<![CDATA[
+		select * from members
+		where member_email=#{member_email} and member_pass=#{member_pass}
+		]]>
+	</select>
 </mapper>

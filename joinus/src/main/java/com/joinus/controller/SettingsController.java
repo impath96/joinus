@@ -1,5 +1,7 @@
 package com.joinus.controller;
 
+import java.util.List;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartResolver;
 
+import com.joinus.domain.InterestsVo;
 import com.joinus.domain.MembersVo;
+import com.joinus.service.InterestService;
 import com.joinus.service.MemberService;
 import com.joinus.util.FileUtils;
 
@@ -29,6 +33,9 @@ public class SettingsController {
 	@Autowired
 	MemberService memberService;
 	
+	@Autowired
+	InterestService interestService;
+	
 	private static final Logger log = LoggerFactory.getLogger(SettingsController.class);
 	
 	
@@ -40,7 +47,7 @@ public class SettingsController {
 
 	// 회원 계정 설정 페이지
 	@GetMapping("member")
-	public String settings(HttpSession session) {
+	public String settings(HttpSession session, Model model) {
 		
 		// 1) 세션에 회원 정보가 없으면 메인 페이지로 리다이랙트
 		MembersVo member = (MembersVo)session.getAttribute("member");
@@ -48,7 +55,13 @@ public class SettingsController {
 			return "redirect:/";
 		}
 		
-		// 2) 
+		// 2) mypage 화면에 필요한 데이터 : 관심사, 회원정보(이미지, 닉네임, 비밀번호), 해당 회원의 관심사 정보
+		List<InterestsVo> interestList = interestService.selectInterestAll();
+		// 해당 사용자의 관심사 정보 출력
+		InterestsVo memberInterest = interestService.selectInterestByMemberNo(member.getMember_no());
+		log.info("{} 회원의 관심사 : {}", member.getMember_no(), memberInterest);
+		model.addAttribute("interestList", interestList);
+		model.addAttribute("memberInterest", memberInterest);
 		return "/member/settings";
 	}
 	

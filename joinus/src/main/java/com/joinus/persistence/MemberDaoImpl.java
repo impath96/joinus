@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.joinus.domain.MemberInterestsVo;
 import com.joinus.domain.MembersVo;
 
 @Repository
@@ -44,12 +43,6 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public void insertMemberInterest(MemberInterestsVo memberInterestVo) {
-		log.info("insertMemberInterest 동작 수행");
-		sqlSession.insert(NAMESPACE+".insertMemberInterest", memberInterestVo);
-	}
-
-	@Override
 	public void updateImage(String savedFileName, int member_no) {
 		log.info(" 회원 프로필 사진 변경 SQL 실행");
 		Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -58,6 +51,42 @@ public class MemberDaoImpl implements MemberDao {
 		paramMap.put("member_no", member_no);
 		
 		sqlSession.update(NAMESPACE+".updateImage", paramMap);
+	}
+
+	@Override
+	public MembersVo selectMember(String email, String password) {
+		log.info("이메일과 패스워드를 통해 일치하는 회원 있는지 확인");
+		log.info("전달받은 이메일 : {}, 패스워드 : {}", email, password);
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		
+		paramMap.put("member_email", email);
+		paramMap.put("member_pass", password);
+		
+		// 테스트 하기 쉽게 분리
+		MembersVo member = sqlSession.selectOne(NAMESPACE+".selectMember", paramMap);
+		log.info("이메일과 패스워드 모두 일치하는 회원 : {}", member);
+		return member;
+	}
+
+	@Override
+	public void insertMemberInterest(int member_no, int interest) {
+		log.info("전달받은 회원번호 : {}, 관심사번호 : {}", member_no, interest);
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("member_no", member_no);
+		paramMap.put("interest_no", interest);
+			
+		sqlSession.insert(NAMESPACE+".insertMemberInterest", paramMap);
+	}
+
+	@Override
+	public MembersVo updatePassword(int member_no, String encryptedPassword) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("member_no", member_no);
+		paramMap.put("member_pass", encryptedPassword);
+		
+		sqlSession.update(NAMESPACE+".updatePassword", paramMap);
+		
+		return sqlSession.selectOne(NAMESPACE + ".selectMemberByNo", member_no);
 	}
 	
 	

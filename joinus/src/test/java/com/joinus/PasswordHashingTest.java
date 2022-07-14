@@ -16,7 +16,7 @@ public class PasswordHashingTest {
 		
 	}
 	
-	@Test
+	// @Test
 	public void parse() {
 		String location = "부산시 사하구 감천동 ~~아파트 201";
 		String[] part = location.split(" ");
@@ -47,5 +47,6 @@ public class PasswordHashingTest {
 		}
 		return hashedPassword;
 	}
+
 
 }

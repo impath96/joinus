@@ -15,6 +15,7 @@ import com.github.scribejava.core.oauth.OAuth20Service;
 import com.joinus.domain.MembersVo;
 
 public abstract class AuthLogin {
+	
 	protected AuthInfo authInfo;
 	protected String profileEndPoint;
 	protected String accessTokenEndPoint;

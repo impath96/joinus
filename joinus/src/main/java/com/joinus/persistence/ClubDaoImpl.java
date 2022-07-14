@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubTotalBean;
+import com.joinus.domain.ClubsVo;
 
 @Repository
 public class ClubDaoImpl implements ClubDao{
@@ -74,6 +75,15 @@ public class ClubDaoImpl implements ClubDao{
 		log.info(" getBoardListAll() 호출 ");
 		
 		return sqlSession.selectList(NAMESPACE+".getBoardListAll", club_no);
+	}
+
+	// =========================== 김민호 =============================
+	
+	@Override
+	public List<ClubsVo> ClubListByMemberNo(int member_no) {
+		log.info("회원 번호가 {} 인 회원의 모임 리스트 출력", member_no);
+		
+		return sqlSession.selectList(NAMESPACE+".ClubListByMemberNo", member_no);
 	}
 	
 	

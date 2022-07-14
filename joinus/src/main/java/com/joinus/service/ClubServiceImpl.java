@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubTotalBean;
+import com.joinus.domain.ClubsVo;
 import com.joinus.persistence.ClubDao;
 
 @Service
@@ -56,6 +57,13 @@ public class ClubServiceImpl implements ClubService{
 	public void writeBoard(ClubBoardsVo vo) {
 		dao.writeBoard(vo);
 		
+	}
+
+	//========================= 김민호 =======================
+	
+	@Override
+	public List<ClubsVo> getClubListByMemberNo(int member_no) {
+		return dao.ClubListByMemberNo(member_no);
 	}
 
 //	@Override

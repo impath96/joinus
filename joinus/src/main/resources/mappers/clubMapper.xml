@@ -116,6 +116,15 @@
 <!-- 	<select id="getBoardListAll" resultType="ClubBoardVo"> -->
 <!-- 		select * from club_board where club_no = #{club_no} -->
 <!-- 	</select> -->
+
+<!-- 민호 -->
+<select id="ClubListByMemberNo" resultType="ClubsVo">
+	select * from clubs
+	where club_no in (
+		select club_no 
+		from club_members
+		where member_no = #{member_no});
+</select>
 	
 	
 </mapper> 

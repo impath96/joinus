@@ -69,9 +69,11 @@
 		max-width : 100%;
 	}
 	
-	.form-control {
+	.form-control, .form-select {
 		font-size : 1.5rem;
 	}
+	
+	
 	#location::placeholder {
 		color : 9B9B9B;
 	}
@@ -106,50 +108,53 @@
 								<label for="name" class="input-label">
 									<span>닉네임</span>
 									<input id="name" type="text" class="input"
-											value="aksghcjswo" placeholder="변경할 닉네임을 입력해주세요">
+											value="${member.member_name }" placeholder="변경할 닉네임을 입력해주세요">
 								</label>
 							</div>
 							<input type="submit" class="btn btn-primary fs-3" style="width:100%;" value="저장하기"/>
 						</form>
-						<div class="col-12">
-							<div class="form-floating">
-								<input type="text" class="form-control py-2" id="location" name="location_name"
-									placeholder="주소를 입력해주세요" onclick="sample4_execDaumPostcode()" >
+						<div class="p-4 my-4 border border-dark">
+							<div class="col-12">
+								<div class="form-floating">
+									<input type="text" class="form-control py-2" id="location" name="location_name"
+										placeholder="주소를 입력해주세요" value="${sessionScope.member.member_location }" onclick="sample4_execDaumPostcode()" >
+								</div>
+							</div>
+							<br>
+							<div class="col-12">
+								<div class="form-floating">
+									<select name = "interest" id="interest" class="form-select form-select-lg py-2 mb-3" aria-label="interest">
+			  							<option selected>관심사 선택</option>
+			  							<c:forEach var="interest" items="${interestList}">
+											<option value="${interest.interest_no }" <c:if test="${interest.interest_no == memberInterest.interest_no }">selected</c:if>>${interest.interest_name }</option>
+			  							</c:forEach>
+									</select>
+								<button type="submit" class="btn btn-primary fs-3 mb-4" style="width:100%;">저장하기</button>
+								</div>
 							</div>
 						</div>
-						<br>
-						<form>
-							<div class="row g-3">
-								<div class="col-12 col-sm-6">
-									<input type="text" class="form-control border-0"
-										placeholder="Your Name" style="height: 55px;">
+						<form class="mt-4 p-4 my-4 border border-dark password-edit" method="post">
+							<div class="row g-3 form-floating">
+								<div class="col-12 col-sm-12">
+									<input type="password" class="form-control border-0" id="password" name="password"
+										placeholder="현재 비밀번호" style="height: 55px;">
 								</div>
-								<div class="col-12 col-sm-6">
-									<input type="email" class="form-control border-0"
-										placeholder="Your Email" style="height: 55px;">
+								<div class="col-12 col-sm-12">
+									<input type="password" class="form-control border-0" id="new-password" name="new-password"
+										placeholder="새 비밀번호" style="height: 55px;">
 								</div>
-								<div class="col-12 col-sm-6">
-									<input type="text" class="form-control border-0"
-										placeholder="Your Mobile" style="height: 55px;">
+								<div class="col-12 col-sm-12">
+									<input type="password" class="form-control border-0" id="new-password-confirm" name="new-password-confirm"
+										placeholder="새 비밀번호 확인" style="height: 55px;">
 								</div>
-								<div class="col-12 col-sm-6">
-									<select class="form-select border-0" style="height: 55px;">
-										<option selected="">Select A Service</option>
-										<option value="1">Service 1</option>
-										<option value="2">Service 2</option>
-										<option value="3">Service 3</option>
-									</select>
-								</div>
-								<div class="col-12">
-									<textarea class="form-control border-0"
-										placeholder="Special Note"></textarea>
-								</div>
-								<div class="col-12">
-									<button class="btn btn-primary rounded-pill py-3 px-5"
-										type="submit">Submit</button>
+								<div class="col-12 col-sm-12">
+									<input type="submit" class="btn btn-primary fs-3 e-password-edit" style="width:100%;" value="저장하기"/>
 								</div>
 							</div>
 						</form>
+						<div class="col-12 col-sm-12">
+							<input type="button" class="btn btn-primary fs-3 e-leave" style="width:100%;" value="탈퇴하기"/>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -188,5 +193,56 @@
             }
         }).open();
     }
+</script>
+<script>
+	$(function(){
+		
+		// 패스워드 변경 동작 수행
+		$('.e-password-edit').click(function(e){
+			// 기본 submit 동작 이벤트 제거
+			e.preventDefault();
+			
+			const newPassword = $('#new-password').val();
+			const newPasswordConfirm = $('#new-password-confirm').val();
+			const currentPassword = $('#password').val();
+			
+			const resetPasswordInfo = {
+					'currentPassword' : currentPassword,
+					'newPassword' : newPassword,
+					'newPasswordConfirm':newPasswordConfirm
+			}
+			
+			$.ajax({
+				url: "/member/reset-pass",
+				type: "POST",
+				data : JSON.stringify(resetPasswordInfo),
+				contentType: "application/json; charset=UTF-8",
+				success: function(data){
+					alert(data);
+					location.reload();
+				},
+				error : function(error){
+					alert(error.responseText);
+					location.reload();
+				}
+			})
+		}) // 패스워드 변경 수행
+		
+		// 탈퇴 동작 수행
+		$('.e-leave').click(function(){
+			
+			if(confirm("정말 탈퇴하시겠습니까??")){
+				// 탈퇴할 경우에만 동작하도록 구현
+				$.ajax({
+					url: "/member/leave",
+					type: "POST",
+					success: function(data){
+						alert(data);
+						location.reload();
+					}
+				})
+			}
+		}); // 탈퇴 동작 수행 
+	})
 </script>
 	<%@ include file="../include/footer.jsp"%>
