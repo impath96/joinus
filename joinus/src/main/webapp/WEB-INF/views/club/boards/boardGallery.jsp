@@ -7,13 +7,15 @@
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script type="text/javascript">
-	alert("모임원 체크 : "+${checkMember});
+// 	alert("모임원 체크 : "+${checkMember});
 	
 	// 모임원만 상세보기 가능
 	function linkContent(club_board_no){
 		if(${checkMember == 0}){
 			alert('모임가입을 해주세요.');
 			return false;
+		} else if(${checkMember == -1}){
+			location.href = "/member/signin";
 		} else {
 			location.href= "/club/${club_no}/boards/"+club_board_no;
 		}

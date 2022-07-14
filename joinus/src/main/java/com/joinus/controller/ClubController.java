@@ -381,18 +381,10 @@ public class ClubController {
 		log.info(" boardWriteGet() 호출 ");
 		log.info(" club_no : "+club_no);
 		
-		session.setAttribute("member_no", 9);
-		int member_no = (int) session.getAttribute("member_no");
-		
 		// 로그인안했으면 로그인페이지로
-//		if(session.getAttribute("member") == null) {
-//			return "redirect:/member/signin";
-//		}
-		
-//		MembersVo member = (MembersVo) session.getAttribute("member");
-//		int member_no = member.getMember_no();
-		log.info("세션에 저장된 member_no : "+member_no);
-		
+		if(session.getAttribute("member") == null) {
+			return "redirect:/member/signin";
+		}
 		
 		return "/club/boards/boardWrite";
 	}
@@ -401,7 +393,6 @@ public class ClubController {
 	@RequestMapping(value = "/{club_no}/boards/new", method = RequestMethod.POST)
 	public String boardWritePost(ClubBoardsVo vo) {
 		log.info(" boardWritePost() 호출 ");
-		
 		
 		// 전달된 정보 저장(글쓰기 정보)
 		log.info("글쓰기 정보 : "+vo);
@@ -413,7 +404,6 @@ public class ClubController {
 		int club_no = vo.getClub_no();
 		
 		return "redirect:/club/"+club_no+"/boards";
-		//return "redirect:/club/boardList?club_no="+club_no;
 	}
 	
 	// 파일 O
@@ -474,7 +464,6 @@ public class ClubController {
 		int club_no = vo.getClub_no();
 		
 		return "redirect:/club/"+club_no+"/boards";
-		//return "redirect:/club/boardList?club_no="+club_no;
 	}
 	
 	
@@ -493,17 +482,17 @@ public class ClubController {
 		log.info(pageMarker+"");
 		model.addAttribute("pm", pageMarker);
 		
-		// 모임원일 때만 글쓰기 버튼이 보이도록 제어(1:모임가입O / 0:모임가입X)
-		// club_members 더미 채우고 실행해야 함
-		session.setAttribute("member_no", 9);
-//		if(session.getAttribute("member") != null) {
-//			MembersVo member = (MembersVo) session.getAttribute("member");
-//			int member_no = member.getMember_no();
-			int member_no = (int) session.getAttribute("member_no");
-			int checkMember = service.checkClubMember(club_no, member_no);
-			log.info("모임원 확인 : "+checkMember);
-			model.addAttribute("checkMember", checkMember);
-//		}
+		// 모임원일 때만 글쓰기 버튼이 보이도록 제어(1:모임가입O / 0:모임가입X / -1:로그인X)
+		int checkMember = -1;
+		
+		if(session.getAttribute("member") != null) {
+			MembersVo member = (MembersVo) session.getAttribute("member");
+			int member_no = member.getMember_no();
+			checkMember = service.checkClubMember(club_no, member_no);
+		}
+		
+		log.info("모임원 확인 : "+checkMember);
+		model.addAttribute("checkMember", checkMember);
 		
 		return "/club/boards/boardList";
 			
@@ -528,13 +517,15 @@ public class ClubController {
 		log.info(pageMarker+"");
 		model.addAttribute("pm", pageMarker);
 		
-		// 모임원일 때만 글쓰기 버튼이 보이도록 제어(1:모임가입O / 0:모임가입X)
-		// club_members 더미 채우고 실행해야 함
-		session.setAttribute("member_no", 9);
-//		MembersVo member = (MembersVo) session.getAttribute("member");
-//		int member_no = member.getMember_no();
-		int member_no = (int) session.getAttribute("member_no");
-		int checkMember = service.checkClubMember(club_no, member_no);
+		// 모임원일 때만 글쓰기 버튼이 보이도록 제어(1:모임가입O / 0:모임가입X / -1:로그인X)
+		int checkMember = -1;
+		
+		if(session.getAttribute("member") != null) {
+			MembersVo member = (MembersVo) session.getAttribute("member");
+			int member_no = member.getMember_no();
+			checkMember = service.checkClubMember(club_no, member_no);
+		}
+		
 		log.info("모임원 확인 : "+checkMember);
 		model.addAttribute("checkMember", checkMember);
 		
@@ -551,12 +542,16 @@ public class ClubController {
 		
 		model.addAttribute("imageList", service.getBoardImageList(club_no));
 		
-		// 모임원이 아니면 상세보기가 안되도록 제어
-		session.setAttribute("member_no", 9);
-//		MembersVo member = (MembersVo) session.getAttribute("member");
-//		int member_no = member.getMember_no();
-		int member_no = (int) session.getAttribute("member_no");
-		model.addAttribute("checkMember", service.checkClubMember(club_no, member_no));
+		// 모임원이 아니면 상세보기가 안되도록 제어(1:모임가입O / 0:모임가입X / -1:로그인X)
+		int checkMember = -1;
+		
+		if(session.getAttribute("member") != null) {
+			MembersVo member = (MembersVo) session.getAttribute("member");
+			int member_no = member.getMember_no();
+			checkMember = service.checkClubMember(club_no, member_no);
+		}
+		
+		model.addAttribute("checkMember", checkMember);
 		
 		return "/club/boards/boardGallery";
 	}
@@ -587,10 +582,13 @@ public class ClubController {
 		model.addAttribute("likeCnt", service.getLikeCnt(club_board_no));
 		
 		// 좋아요 체크 (세션에 저장된 member 체크)
-		session.setAttribute("member_no", 9);
-		int member_no = (int) session.getAttribute("member_no");
-//		MembersVo member = (MembersVo) session.getAttribute("member");
-//		int member_no = member.getMember_no();
+		if(session.getAttribute("member") == null) {
+			return "/member/signin";
+		}
+		
+		MembersVo member = (MembersVo) session.getAttribute("member");
+		int member_no = member.getMember_no();
+		
 		// checkLike - 1:좋아요O / 0:좋아요X (해당 회원이 좋아요를 눌렀는지 체크)
 		model.addAttribute("checkLike", service.checkLike(club_board_no, member_no));
 		
@@ -653,8 +651,8 @@ public class ClubController {
 		log.info("commentVo : "+vo);
 		
 		// 작성자(member_no) 세션에서 꺼내쓰기
-		session.setAttribute("member_no", 9);
-		int member_no = (int) session.getAttribute("member_no");
+		MembersVo member = (MembersVo) session.getAttribute("member");
+		int member_no = member.getMember_no();
 		vo.setMember_no(member_no);
 		log.info("member추가 vo : "+vo);
 		
@@ -702,9 +700,10 @@ public class ClubController {
 			BoardLikesVo vo, HttpSession session) {
 		log.info(" LikePost() 호출 ");
 		log.info("좋아요 vo : "+vo);
+		
 		// 세션에서 member_no
-		session.setAttribute("member_no", 9);
-		int member_no = (int) session.getAttribute("member_no");
+		MembersVo member = (MembersVo) session.getAttribute("member");
+		int member_no = member.getMember_no();
 		vo.setMember_no(member_no);
 		log.info("member추가 vo : "+vo);
 		
@@ -720,9 +719,10 @@ public class ClubController {
 	public void cancleLikePost(@PathVariable("club_no") int club_no, @PathVariable("club_board_no") int club_board_no, 
 			HttpSession session) {
 		log.info(" cancleLikePost() 호출 ");
+		
 		// 세션에서 member_no
-		session.setAttribute("member_no", 9);
-		int member_no = (int) session.getAttribute("member_no");
+		MembersVo member = (MembersVo) session.getAttribute("member");
+		int member_no = member.getMember_no();
 		
 		service.cancelLike(club_board_no, member_no);
 		service.decreaseLikeCnt(club_board_no);
