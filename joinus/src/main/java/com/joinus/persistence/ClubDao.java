@@ -73,6 +73,9 @@ public interface ClubDao {
 	
 	//정모 수정하기
 	public Integer updateMeeting(Integer club_meeting_no, ClubMeetingsVo vo);
+	
+	//정모 삭제하기
+	public void deleteMeeting(Integer club_meeting_no);
 
 	
 	//=========================고은비=========================
@@ -145,6 +148,9 @@ public interface ClubDao {
 	// 좋아요수 - 1
 	public void decreaseLikeCnt(int club_board_no);
 	
+	// 모임원이 맞는지 확인(1:모임가입O / 0:모임가입X)
+	public int checkClubMember(int club_no, int member_no);
+	
 	//=========================허수빈========================
 
 	//=========================김민호========================
@@ -211,17 +217,11 @@ public interface ClubDao {
 	//게시글 리스트
 	public List<ClubBoardsVo> getBoards(Integer num);
 
+
+
 	
 	//=========================강성민========================
 	
 	
-
-
-
-
-
-
-	
-
 	
 }

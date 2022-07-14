@@ -70,7 +70,9 @@ import com.joinus.domain.MembersVo;
 		
 		//정모 수정
 		public Integer updateMeeting(Integer club_meeting_no, ClubMeetingsVo vo);
-
+		
+		//정모 삭제
+		public void deleteClubMeeting(Integer club_meeting_no);
 		
 		
 //		public List<ClubBoardVo> getBoardListAll(Integer club_no);
@@ -143,65 +145,69 @@ import com.joinus.domain.MembersVo;
 	
 	// 좋아요수 - 1
 	public void decreaseLikeCnt(int club_board_no);
+	
+	// 모임원이 맞는지 확인(1:모임가입O / 0:모임가입X)
+	public int checkClubMember(int club_no, int member_no);
 
 	
-	
-	//=========================강성민========================
-	
-			//회원정보 가져오기
-			public MembersVo getMember(Integer num);
-			//회원관심사 가져오기
-			public InterestsVo getMemberInterest(Integer num);
-			//회원이 선택한 관심사의 세부관심사리스트 가져오기
-			public List<InterestDetailsVo> getDetailName(Integer num);
-			
-			//회원이 입력한 클럽정보 저장
-			public void newClub(ClubsVo vo);
-			//회원이 선택한 관심사 넘버값 가져오기
-			public InterestDetailsVo getInterestNo(String name);
-			//회원이 입력한 클럽관심사 저장하기
-			public void newClubInterest(Integer club_no, Integer interest_no,Integer interest_detail_no);
-			
-			// 모임 이름 중복체크
-			public ClubsVo checkClubName(String name);
-			
-			//모임가입하기
-			public void join(ClubMembersVo members);
-			//모임별점주기
-			public void clubGrade(ClubGradesVo vo);
-			//모임 별점 참여자
-			public Integer getGradeinfo(Integer num, Integer num2);
-			//모임 별점 정보 가져오기
-			public List<ClubGradesVo> getClubGrade(Integer num);
-			//모임 별점 평균값, 참여자 수 가져오기
-			public List<Map<String, Integer>> getClubAvgCnt(Integer num);
-			
-			//모임 정보 가져오기
-			public ClubsVo getClubInfo(Integer num);
-			// 모임 관심사 가져오기
-			public String getClubInterestDName(Integer num);
-			//모임 회원 정보 가져오기
-			public List<ClubMembersVo> getClubMembers(Integer num);	
-			//모임 회원 정보 가져오기(특정)
-			public ClubMembersVo getClubMemberNo(Integer num, Integer num2);
 		
-			// 모임 찜하기
-			public void clubDip(Integer num,Integer num2);
-			// 모임 찜 여부 확인
-			public List<Integer> dip(Integer num);
-			// 모임 찜 취소
-			public void dipX(Integer num,Integer num2);
-			
-			//정모 리스트
-			public List<ClubMeetingsVo> getMeetings(Integer num);
-			//게시글 리스트
-			public List<ClubBoardsVo> getBoardsforimg(Integer num);
-
-			
 	
 	
 	//====================== 김민호 ======================
 	public List<ClubsVo> getClubListByMemberNo(int member_no);
 	public List<ClubsVo> getMyClubList(int member_no);
+
 	
+	
+	
+	//=========================강성민========================
+	
+		//회원정보 가져오기
+		public MembersVo getMember(Integer num);
+		//회원관심사 가져오기
+		public InterestsVo getMemberInterest(Integer num);
+		//회원이 선택한 관심사의 세부관심사리스트 가져오기
+		public List<InterestDetailsVo> getDetailName(Integer num);
+		
+		//회원이 입력한 클럽정보 저장
+		public void newClub(ClubsVo vo);
+		//회원이 선택한 관심사 넘버값 가져오기
+		public InterestDetailsVo getInterestNo(String name);
+		//회원이 입력한 클럽관심사 저장하기
+		public void newClubInterest(Integer club_no, Integer interest_no,Integer interest_detail_no);
+		
+		// 모임 이름 중복체크
+		public ClubsVo checkClubName(String name);
+		
+		//모임가입하기
+		public void join(ClubMembersVo members);
+		//모임별점주기
+		public void clubGrade(ClubGradesVo vo);
+		//모임 별점 참여자
+		public Integer getGradeinfo(Integer num, Integer num2);
+		//모임 별점 정보 가져오기
+		public List<ClubGradesVo> getClubGrade(Integer num);
+		//모임 별점 평균값, 참여자 수 가져오기
+		public List<Map<String, Integer>> getClubAvgCnt(Integer num);
+		
+		//모임 정보 가져오기
+		public ClubsVo getClubInfo(Integer num);
+		// 모임 관심사 가져오기
+		public String getClubInterestDName(Integer num);
+		//모임 회원 정보 가져오기
+		public List<ClubMembersVo> getClubMembers(Integer num);	
+		//모임 회원 정보 가져오기(특정)
+		public ClubMembersVo getClubMemberNo(Integer num, Integer num2);
+	
+		// 모임 찜하기
+		public void clubDip(Integer num,Integer num2);
+		// 모임 찜 여부 확인
+		public  List<Integer> dip(Integer num);
+		// 모임 찜 취소
+		public void dipX(Integer num,Integer num2);
+		
+		//정모 리스트
+		public List<ClubMeetingsVo> getMeetings(Integer num);
+		//게시글 리스트
+		public List<ClubBoardsVo> getBoardsforimg(Integer num);
 }

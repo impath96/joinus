@@ -16,6 +16,7 @@ import com.joinus.domain.BoardCriteria;
 import com.joinus.domain.BoardLikesVo;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
+import com.joinus.domain.Criteria;
 import com.joinus.domain.ClubGradesVo;
 import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.ClubMembersVo;
@@ -168,6 +169,7 @@ public class ClubDaoImpl implements ClubDao{
 		
 	}
 	
+	//클럽 정보 수정
 	@Override
 	public void clubUpdate(ClubsVo clubsvo, Integer club_no) {
 		
@@ -206,6 +208,7 @@ public class ClubDaoImpl implements ClubDao{
 		return sqlSession.selectList(NAMESPACE2+".GetMeeting_no", club_meeting_no);
 	}
 	
+	//정모 정보 수정
 	@Override
 	public Integer updateMeeting(Integer club_meeting_no, ClubMeetingsVo vo) {
 		
@@ -216,7 +219,15 @@ public class ClubDaoImpl implements ClubDao{
 		return sqlSession.update(NAMESPACE2+".UpdateMeeting", param);
 	}
 
+	//정모 삭제
 	
+	@Override
+	public void deleteMeeting(Integer club_meeting_no) {
+		
+		sqlSession.delete(NAMESPACE+".DeleteMeeting", club_meeting_no);
+
+	}
+
 	
 	
 //=======================허수빈=============================================================
@@ -245,7 +256,6 @@ public class ClubDaoImpl implements ClubDao{
 		
 		return sqlSession.selectList(NAMESPACE+".getBoardListAll", param);
 	}
-	
 	@Override
 	public Integer getTotalBoardCnt(int club_no) {
 		return sqlSession.selectOne(NAMESPACE+".totalBoardCnt", club_no);
@@ -388,6 +398,15 @@ public class ClubDaoImpl implements ClubDao{
 		log.info("회원 번호가 {}인 회원이 만든 모임 리스트 출력", member_no);
 		
 		return sqlSession.selectList(NAMESPACE+".myClubList", member_no);
+	}
+	
+	@Override
+	public int checkClubMember(int club_no, int member_no) {
+		Map<String, Integer> param = new HashMap<String, Integer>();
+		param.put("club_no", club_no);
+		param.put("member_no", member_no);
+		
+		return sqlSession.selectOne(NAMESPACE+".checkClubMember", param);
 	}
 	
 	
@@ -541,8 +560,6 @@ public class ClubDaoImpl implements ClubDao{
 	
 	
 	
-	
-
 }
 	
 
