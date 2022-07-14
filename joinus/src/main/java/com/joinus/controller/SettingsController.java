@@ -85,7 +85,7 @@ public class SettingsController {
 			log.info("upload Post ... contentType={}", file.getContentType());
 			
 			ServletContext ctx = request.getServletContext();
-			String realPath = ctx.getRealPath("/resources/upload/membersupload");
+			String realPath = ctx.getRealPath("/resources/upload/members");
 			log.info("실제 파일 저장 경로 : {}", realPath);
 			// 실제로 저장된 시스템에서의 파일명 
 			// ex) 실제 파일명 : aaa.png
