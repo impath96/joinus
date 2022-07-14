@@ -235,10 +235,10 @@ public class ClubController {
 			
 			log.info("meetingWritePOST() 호출");
 			
-			//멤버정보 가져오기
 			MembersVo member = (MembersVo) session.getAttribute("member");
-			int member_no =member.getMember_no();
+			log.info(member+"");
 			
+			int member_no =member.getMember_no();
 			
 			List<MeetingTotalBean> rentalList = (List<MeetingTotalBean>)service.getRental(member_no);
 			log.info(rentalList+"");
@@ -250,7 +250,6 @@ public class ClubController {
 			return "/club/meeting/meetingWrite";
 			
 		}
-		
 		
 		
 		//http://localhost:8088/club/1/meeting/new
@@ -273,6 +272,11 @@ public class ClubController {
 				@PathVariable("club_no") Integer club_no, @PathVariable("club_meeting_no") Integer club_meeting_no ) {
 			
 			log.info("meetingModifyGET() 호출");
+			
+			MembersVo member = (MembersVo) session.getAttribute("member");
+			log.info(member+"");
+			
+			int member_no =member.getMember_no();
 			
 			List<ClubMeetingsVo> meetingList = service.getMeeting(club_meeting_no);
 			log.info(meetingList+"");
@@ -308,7 +312,7 @@ public class ClubController {
 		//http://localhost:8088/club/1/meeting/1/modify
 		@RequestMapping(value="/{club_no}/meeting/{club_meeting_no}/modify", method = RequestMethod.POST)
 		public String meetingModifyPOST(Model model, @PathVariable("club_no") Integer club_no,
-				@PathVariable("club_meeting_no") Integer club_meeting_no, ClubMeetingsVo vo) {
+				@PathVariable("club_meeting_no") Integer club_meeting_no, ClubMeetingsVo vo, HttpSession session) {
 			
 			log.info("meetingModifyGET() 호출");
 			
@@ -320,12 +324,19 @@ public class ClubController {
 			model.addAttribute("clubInfo", clubInfo);
 			//model.addAttribute("meetingList", meetingList);
 			
-			return "redirect:/club/{club_no}/meeting/{club_meeting_no}";
+			return "/club/meeting/meetingContent";
 			
 		}
 		
-
-	
+		
+		@RequestMapping(value="/{club_no}/meeting/{club_meeting_no}/delete", method = RequestMethod.GET)
+		public String meetingDelete(Model model, @PathVariable("club_no") Integer club_no,
+				@PathVariable("club_meeting_no") Integer club_meeting_no, ClubMeetingsVo vo, HttpSession session) {
+			
+			
+		
+			return "redirect:/club/{club_no}";
+		}
 	
 	
 	//================================================================================================
