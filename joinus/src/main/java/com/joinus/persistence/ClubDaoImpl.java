@@ -436,8 +436,8 @@ public class ClubDaoImpl implements ClubDao{
 			}
 			// 모임 찜 여부 확인
 			@Override
-			public Integer dip(Integer num) {
-				return sqlSession.selectOne(NAMESPACE+".dipCheck", num);
+			public List<Integer> dip(Integer num) {
+				return sqlSession.selectList(NAMESPACE+".dipCheck", num);
 			}
 			
 			// 모임 찜 취소

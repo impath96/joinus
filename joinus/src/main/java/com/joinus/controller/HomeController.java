@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.joinus.domain.ClubsVo;
+import com.joinus.domain.MembersVo;
 import com.joinus.service.MainService;
 
 @Controller
@@ -23,7 +24,7 @@ public class HomeController {
 	private MainService service;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Locale locale, Model model, MembersVo members) {
 		
 		List<ClubsVo> vo1 = service.getMostPopularClub();
 		model.addAttribute("popular", vo1);
@@ -31,6 +32,12 @@ public class HomeController {
 		model.addAttribute("latest", vo2);
 		List<ClubsVo> vo3 = service.getMostNumerousClub();
 		model.addAttribute("Numerous", vo3);
+		
+		members.setMember_location("부산진구");
+		if(members != null) {
+			List<ClubsVo> vo4 = service.getMyClubs(members.getMember_location());
+			model.addAttribute("my", vo4);
+		}
 		
 		return "main";
 	}

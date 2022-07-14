@@ -1,87 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <%@ include file="../include/header.jsp"%>
-
-
-	<style>
-		.container .contact .px-lg-0 {
-			height: 1000px;
-		}
-		.sub {
-		font-size: 0.8em;  color: #32C36C; font-weight: normal; font-style: italic;
-		}
-		.sub2 {
-		font-size: 2em; font-weight: 500; margin-top: 20px; margin-bottom: 30px; color: #343a40;
-		}
-		.sub3 {
-		font-size: 1.3em; font-weight: bold;margin-top: 30px; color: #343a40;
-		}
-		h1>.mb-4 {
-			font-size: 3em;
-		}
-		.detail, .detail2 , #select2 {
-			display: none; 
-		}
-		
-		form {
-			width: 50%; 
-			margin-bottom: 200px;
-		}
-		
-		.GreenP {
-			color:#32C36C;font-size: 0.9em;
-		}
-		.marginTOP {
-			margin-top: 150px;
-		}
-		
-		#NewTitle {
-			margin-top: 80px;
-			margin-bottom: 80px;
-		}
-		#NewContent {
-			margin-right: 300px;
-		}
-		
-		#centercontrol {
-			width: 100%;
-		}
-		
-		#inters {
-			cursor: pointer;
-		}
-		
-		#inter,#inter1,#inter2,#inter3,#inter4,#inter5,#inter6,#inter7,#inter8 {
-		    font-weight: bold;
-			color: white;
-			
-		}
-		
-		#newDetail {
-		    font-weight: bold;
-			color: white;
-		}
-		
-		.interTable {
-			padding: 0;
-			}
-		.interTable>li {
-			border-bottom: solid 6px #F6F7F8;
-			width: 260;
-			padding: 1em;
-			display: inline-block;
-			background-color: 32C36C;
-			font-size: large;
-			text-align:center;
-			vertical-align: middle;
-		    cursor: pointer;
- 		  	border-radius: 35px;
- 		  	color:white;
-		}
-		
-		
-	</style>
+<link href="${PageContext.request.contextPath }/resources/css/ksm.css" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script type="text/javascript">
@@ -99,22 +19,24 @@ $(document).ready(function(){
 	//상세관심사 출력 ajax
 	//관심사 텍스트를 클릭하면
 	$('#inter,#inter1,#inter2,#inter3,#inter4,#inter5,#inter6,#inter7,#inter8').click(function(){
+		
 			
 			var item = $(this).text();
 			var itemNum;
-			$('#interest').val(item);
+			
+			$('#interest').val(item); // 관심사 자동입력
 			
 			//관심사 넘버로 변환 후 
-			if(item=="요리/제조"){ itemNum = 1; }
+			if(item == "요리/제조"){ itemNum = 1; }
 			else if(item == "봉사활동"){ itemNum = 2;}
 			else if(item == "운동/스포츠"){ itemNum = 3;}
 			else if(item == "오락/게임"){ itemNum = 4;}
 			else if(item == "음악/악기"){ itemNum = 5;}
-			else if(item == "여행"){ itemNum = 6;}
+			else if(item == "아웃도어/여행"){ itemNum = 6;}
 			else if(item == "외국/언어"){ itemNum = 7;}
 			else if(item == "문화/공연/축제"){ itemNum = 8;}
-			
-			$('#inter').unbind('click'); //중복클릭 막기
+		
+			$('#inter,#inter1,#inter2,#inter3,#inter4,#inter5,#inter6,#inter7,#inter8').unbind('click'); //중복클릭 막기
 				
 			//상세관심사 텍스트를 출력
 		  $.ajax({
@@ -135,8 +57,13 @@ $(document).ready(function(){
 				$('.detail').slideDown(); //숨겨진 detail 출력
 				$('html,body').animate({ scrollTop: $('#newDetail').offset().top }, 200); //포커스이동
 				
+				
+				
+				
 				}
-		 
+		 		
+			
+			
 		});
 			
 	}); 
@@ -246,7 +173,7 @@ function select(item){
                   			<li id="inter3">운동/스포츠</li>
                   			<li id="inter4">오락/게임</li> <br>
                   			<li id="inter5">음악/악기</li>
-                  			<li id="inter6">여행</li>
+                  			<li id="inter6">아웃도어/여행</li>
                   			<li id="inter7">외국/언어</li>
                   			<li id="inter8">문화/공연/축제</li>
                   			</ul>

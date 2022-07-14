@@ -167,7 +167,7 @@ public interface ClubDao {
 	// 모임 찜하기
 	public void clubDip(Integer num,Integer num2);
 	// 모임 찜 여부 확인
-	public Integer dip(Integer num);
+	public List<Integer> dip(Integer num);
 	// 모임 찜 취소
 	public void dipX(Integer num,Integer num2);
 	

@@ -327,7 +327,7 @@ public class ClubServiceImpl implements ClubService{
 		}
 		// 모임 찜 여부 확인
 		@Override
-		public Integer dip(Integer num) {
+		public List<Integer> dip(Integer num) {
 			return dao.dip(num);
 		}
 

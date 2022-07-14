@@ -33,13 +33,17 @@ import com.joinus.service.MemberService;
 @RequestMapping(value="/member/*")
 @Controller
 public class MemberController {
+
+/*	에러떠서 주석처리ㅜㅜ
 	
 	@Autowired
 	MemberService memberService;
-	/* 요 밑에꺼가 계속 에러떠서 주석처리
-	 * @Autowired private AuthInfo kakaoAuthInfo;
-	 * 
-	 * @Autowired private AuthInfo googleAuthInfo;
+	
+	@Autowired 
+	 private AuthInfo kakaoAuthInfo;
+	 
+	 @Autowired 
+	 private AuthInfo googleAuthInfo;
 	
 	@Autowired
 	InterestService interestService;
@@ -132,7 +136,9 @@ public class MemberController {
 	public String signIn(@RequestParam("email") String email, @RequestParam("password") String password, HttpSession session, Model model) {
 		// 1) 입력받은 정보를 통해 실제 가입된 회원인지 확인
 		// 회원찾기에서 비밀번호 암호화까지 다 하자.
-		MembersVo findMember = null;/*memberService.회원찾기(email, password);
+		MembersVo findMember = null;
+		
+		//memberService.회원찾기(email, password);
 		
 		// 만약 member가 null -> 이메일이나 비밀번호가 틀렸다는 의미 
 		if(findMember == null) {
@@ -224,10 +230,9 @@ public class MemberController {
 			log.info("비밀번호 암호화 완료(password) : ", hashedPassword);
 			
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	 */
-	
+	 
+	*/
 }

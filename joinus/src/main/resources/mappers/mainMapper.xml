@@ -9,13 +9,15 @@
 	select * from clubs where club_no in (select club_no from member_dips group by club_no having count(*) > 1 order by club_no desc ) limit 4
 	</select>
 	<select id="getMostRecentClub" resultType="ClubsVo" >
-	select * from clubs order by club_regdate desc limit 4;
+	select * from clubs order by club_regdate desc limit 4
 	</select>
 	<select id="getMostNumerousClub" resultType="ClubsVo" >
 	select * from clubs where club_no in (
 	select club_no from ( select club_no from club_members group by club_no having count(*) > 1 order by count(*) desc limit 4) as a )  order by club_regdate desc
 	</select>
-	
+	<select id="getMyClubs" resultType="ClubsVo">
+	select * from clubs where club_location = #{member_location} order by club_regdate desc limit 4
+	</select>
 	
 
 </mapper>

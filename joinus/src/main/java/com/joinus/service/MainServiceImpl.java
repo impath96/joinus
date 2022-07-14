@@ -31,4 +31,9 @@ public class MainServiceImpl implements MainService {
 		return dao.getMostNumerousClub();
 	}
 
+	@Override
+	public List<ClubsVo> getMyClubs(String location) {
+		return dao.getMyClubs(location);
+	}
+
 }

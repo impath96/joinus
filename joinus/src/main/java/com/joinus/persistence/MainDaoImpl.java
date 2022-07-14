@@ -33,6 +33,11 @@ public class MainDaoImpl implements MainDao{
 
 	}
 
+	@Override
+	public List<ClubsVo> getMyClubs(String location) {
+		return sqlSession.selectList(NAMESPACE+".getMyClubs", location);
+	}
+
 	
 
 }
