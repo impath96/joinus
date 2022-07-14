@@ -1,7 +1,12 @@
 package com.joinus.domain;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class BoardCriteria {
 	// 게시판 리스트 페이징 처리에 필요한 정보를 저장하는 객체
+	
+	private static final Logger log = LoggerFactory.getLogger(BoardCriteria.class);
 	
 	private int page;	// 페이지 시작번호
 	private int perPageNum;	// 페이지 크기
@@ -9,7 +14,7 @@ public class BoardCriteria {
 	// 기본생성자 (1페이지 10개씩)
 	public BoardCriteria() {
 		this.page = 1;
-		this.perPageNum = 10;
+		this.perPageNum = 6;
 	}
 
 	public void setPage(int page) {

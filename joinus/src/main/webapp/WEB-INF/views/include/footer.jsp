@@ -85,5 +85,40 @@
     <script src="${PageContext.request.contextPath }/resources/js/main.js"></script>
     <div id="lightboxOverlay" class="lightboxOverlay" style="display: none;"></div>
     <div id="lightbox" class="lightbox" style="display: none;"><div class="lb-outerContainer"><div class="lb-container"><img class="lb-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="><div class="lb-nav"><a class="lb-prev" href=""></a><a class="lb-next" href=""></a></div><div class="lb-loader"><a class="lb-cancel"></a></div></div></div><div class="lb-dataContainer"><div class="lb-data"><div class="lb-details"><span class="lb-caption"></span><span class="lb-number"></span></div><div class="lb-closeContainer"><a class="lb-close"></a></div></div></div></div>
+    	<script type="text/javascript">
+			function readImage(input){
+				// input 태그에 파일이 있을 경우
+				if(input.files && input.files[0]){
+					// 1) 이미지 파일인지 검사
+					// 2) FileReader 인스턴스 생성
+					const reader = new FileReader();
+					// 3) 이미지가 load가 된 경우
+					reader.onload = e => {
+						if(!checkImageType(input.files[0].name)){
+							alert("이미지 파일이 아닙니다.");							
+							e.preventDefault();
+							return false;
+						}
+						const previewImage = document.querySelector('.thumbnail_image');
+						previewImage.src = e.target.result;
+					}
+					reader.readAsDataURL(input.files[0]);
+				}
+			}
+			
+			// jpg, png, gif 파일만 가능하도록 체크
+			function checkImageType(fileName) {
+			    let pattern = /(.png|.jpg|.jpeg|.gif)$/i;
+			    return fileName.match(pattern);
+			}
+			
+			const inputImage = document.querySelector(".file-input");
+			if(inputImage){
+				inputImage.addEventListener("change", function(e) {
+					return readImage(e.target);
+				})			
+			}
+			
+	</script>
   </body>
  </html>

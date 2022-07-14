@@ -9,6 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.joinus.domain.BoardCommentsVo;
+import com.joinus.domain.BoardCriteria;
+import com.joinus.domain.BoardLikesVo;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubGradesVo;
@@ -19,6 +22,7 @@ import com.joinus.domain.ClubsVo;
 import com.joinus.domain.Criteria;
 import com.joinus.domain.InterestDetailsVo;
 import com.joinus.domain.InterestsVo;
+import com.joinus.domain.MeetingTotalBean;
 import com.joinus.domain.MembersVo;
 import com.joinus.persistence.ClubDao;
 
@@ -106,7 +110,50 @@ public class ClubServiceImpl implements ClubService{
 	}
 	
 	
+	//클럽 정보 수정
+	@Override
+	public void updateClubs(ClubsVo clubsvo, Integer club_no) {
+		dao.clubUpdate(clubsvo, club_no);
+	}
+
+	//예약정보 불러오기 - LIST
+	@Override
+	public List<MeetingTotalBean> getRental(int member_no) {
+		
+		return dao.getRental(member_no);
+	}
+	
+	//예약정보 불러오기 - REST
+	@Override
+	public List<MeetingTotalBean> getRentalREST(int rental_places_no) {
+		
+		return dao.getRentalREST(rental_places_no);
+	}
+	
+	//정모 생성
+	@Override
+	public void createMeeting(ClubMeetingsVo vo) {
+		dao.createMeeting(vo);
+		
+	}
+	
+	//정모 상세
+	@Override
+	public List<ClubMeetingsVo> getMeeting(Integer club_meeting_no) {
+
+		return dao.getMeetings_no(club_meeting_no);
+	}
+	
+	//정모 수정
+	@Override
+	public Integer updateMeeting(Integer club_meeting_no, ClubMeetingsVo vo) {
+		return dao.updateMeeting(club_meeting_no ,vo);
+	}
+	
+	
 	//===================================================================
+
+
 
 	@Override
 	public void writeBoard(ClubBoardsVo vo) {
@@ -114,14 +161,43 @@ public class ClubServiceImpl implements ClubService{
 		
 	}
 
+	//========================= 김민호 =======================
+	
 	@Override
-	public List<BoardTotalBean> getBoardListAll(Integer club_no) {
-		return dao.getBoardListAll(club_no);
+	public List<ClubsVo> getClubListByMemberNo(int member_no) {
+		return dao.ClubListByMemberNo(member_no);
 	}
 
 	@Override
-	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no) {
-		return dao.getBoardList(club_no, board_type_no);
+	public List<ClubsVo> getMyClubList(int member_no) {
+		
+		return dao.myClubList(member_no);
+	}
+
+	// ========================================================
+
+//	@Override
+//	public List<ClubBoardVo> getBoardListAll(Integer club_no) {
+//		return dao.getBoardListAll(club_no);
+//	}
+	@Override
+	public List<BoardTotalBean> getBoardListAll(Integer club_no, BoardCriteria cri) {
+		return dao.getBoardListAll(club_no, cri);
+	}
+	
+	@Override
+	public Integer getTotalBoardCnt(int club_no) {
+		return dao.getTotalBoardCnt(club_no);
+	}
+
+	@Override
+	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no, BoardCriteria cri) {
+		return dao.getBoardList(club_no, board_type_no, cri);
+	}
+	
+	@Override
+	public Integer getTypeBoardCnt(int club_no, int board_type_no) {
+		return dao.getTypeBoardCnt(club_no, board_type_no);
 	}
 
 	@Override
@@ -144,6 +220,76 @@ public class ClubServiceImpl implements ClubService{
 		dao.deleteBoard(club_board_no);
 	}
 
+	@Override
+	public void writeComment(BoardCommentsVo vo) {
+		dao.writeComment(vo);
+	}
+
+	@Override
+	public int getCommentCnt(int club_board_no) {
+		return dao.getCommentCnt(club_board_no);
+	}
+
+	@Override
+	public List<BoardTotalBean> getCommentList(int club_board_no) {
+		return dao.getCommentList(club_board_no);
+	}
+
+	@Override
+	public void updateCommentCnt(int club_board_no) {
+		dao.updateCommentCnt(club_board_no);
+	}
+
+	@Override
+	public void updateComment(BoardCommentsVo vo) {
+		dao.updateComment(vo);
+	}
+
+	@Override
+	public void deleteComment(int board_comment_no) {
+		dao.deleteComment(board_comment_no);
+	}
+
+	@Override
+	public void decreaseCommentCnt(int club_board_no) {
+		dao.decreaseCommentCnt(club_board_no);
+	}
+
+	@Override
+	public int getLikeCnt(int club_board_no) {
+		return dao.getLikeCnt(club_board_no);
+	}
+
+	@Override
+	public int checkLike(int club_board_no, int member_no) {
+		return dao.checkLike(club_board_no, member_no);
+	}
+
+	@Override
+	public List<BoardTotalBean> getLikeList(int club_board_no) {
+		return dao.getLikeList(club_board_no);
+	}
+
+	@Override
+	public void insertLike(BoardLikesVo vo) {
+		dao.insertLike(vo);
+	}
+
+	@Override
+	public void increaseLikeCnt(int club_board_no) {
+		dao.increaseLikeCnt(club_board_no);
+	}
+
+	@Override
+	public void cancelLike(int club_board_no, int member_no) {
+		dao.cancelLike(club_board_no, member_no);
+	}
+
+	@Override
+	public void decreaseLikeCnt(int club_board_no) {
+		dao.decreaseLikeCnt(club_board_no);
+	}
+	
 	
 	
 	
@@ -244,7 +390,7 @@ public class ClubServiceImpl implements ClubService{
 		}
 		// 모임 찜 여부 확인
 		@Override
-		public Integer dip(Integer num) {
+		public List<Integer> dip(Integer num) {
 			return dao.dip(num);
 		}
 
@@ -257,19 +403,13 @@ public class ClubServiceImpl implements ClubService{
 		//정모 리스트
 		@Override
 		public List<ClubMeetingsVo> getMeetings(Integer num) {
-			// TODO Auto-generated method stub
-			return null;
+			return dao.getMeetings(num);
 		}
 
 		//게시글 리스트
 		@Override
-		public List<ClubBoardsVo> getBoards(Integer num) {
-			// TODO Auto-generated method stub
-			return null;
+		public List<ClubBoardsVo> getBoardsforimg(Integer num) {
+			return dao.getBoards(num);
 		}
-
-
-		
-		
 	
 }

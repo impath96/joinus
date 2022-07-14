@@ -15,6 +15,7 @@ import com.github.scribejava.core.oauth.OAuth20Service;
 import com.joinus.domain.MembersVo;
 
 public abstract class AuthLogin {
+	
 	protected AuthInfo authInfo;
 	protected String profileEndPoint;
 	protected String accessTokenEndPoint;
@@ -30,7 +31,6 @@ public abstract class AuthLogin {
 		
 	}
 
-	//
 	public OAuth2AccessToken getAccessToken(String code) throws IOException, InterruptedException, ExecutionException {
 
 //		OAuthRequest request = new OAuthRequest(Verb.POST, oauthService.getApi().getAccessTokenEndpoint());

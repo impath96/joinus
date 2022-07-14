@@ -1,0 +1,264 @@
+@charset "UTF-8";
+
+
+	/* 메인페이지  */
+
+	.maincSize { width: 1500px; }
+	.mainImg {
+		width: 336px; height: 180px;
+		margin-bottom: 10px;
+	}
+	.Main4 {
+		width: 300px; height: 160px;
+		display: inline-block;
+		box-shadow: 0 0 45px rgb(0 0 0 / 8%);
+		margin-right: 20px;
+	}
+	.margin0 {
+		margin: 0px;
+	}		
+	.mainSize {
+		 width: 300px; height: 150px;
+	 	background-color:transparent;
+	}
+	
+	.mainGr {
+		color: #32C36C;
+	}
+	.textGnW {
+		padding: 6px;
+		text-align: center;
+	 	font-style: italic;
+		color: white;
+		background-color: #32C36C;
+		border-radius: 10px;
+		vertical-align: middle;
+		width: 50%;
+	}
+			
+	.MainListTitle {
+		font-size: large;
+		text-align: left;
+		font-weight: 500;
+		margin-top: 100px;
+		margin-bottom: 0px;
+		padding: 0px;
+	}
+	.MainBtn {
+		width: 200px;
+		box-shadow: 0 0 45px rgb(0 0 0 / 8%);
+		margin-bottom: 70px;
+	}
+	.mainJoinus {
+		width: 270px; height: 120px;
+	}
+	.mainP {
+		color: var(--dark);
+	    font-size: 15px;
+	    font-weight: 500;
+	    margin: 0px;
+	}
+	.MainSubTitle {
+		font-size: small;
+		margin-bottom: 30px;
+		vertical-align: top;
+	}
+	.mainTopTitle {
+		font-size: x-large;
+		font-weight: 600;
+		margin: 0px;
+	}
+	.mainTopSubTitle {
+		font-style: italic;
+		font-size: medium;
+		margin: 0px;
+	}
+
+	/* 모임 상세페이지 */
+
+.datail_vertical {
+			margin-top: 70px;
+			width: 1296px;
+			text-align: center;
+		}
+		#detail_nav {
+			align-content: center;
+		}
+		#meetingTitle {
+			cursor: pointer;
+		}
+		
+		#myform fieldset{
+	    display: inline-block;
+	    direction: rtl;
+	    border:0;
+		}
+		#myform fieldset legend{
+		    text-align: right;
+		}
+		#myform input[type=radio]{
+		    display: none;
+		}
+		#myform label{
+		    font-size: 3em;
+		    color: transparent;
+		    text-shadow: 0 0 0 #f0f0f0;
+		}
+		#myform label:hover{
+		    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+		}
+		#myform label:hover ~ label{
+		    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+		}
+		#myform input[type=radio]:checked ~ label{
+		    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+		}
+		#reviewContents {
+		    width: 100%;
+		    height: 150px;
+		    padding: 10px;
+		    box-sizing: border-box;
+		    border: solid 1.5px #D3D3D3;
+		    border-radius: 5px;
+		    font-size: 16px;
+		    resize: none;
+		}
+				
+		#club_image {
+			width: 800px;
+			height: auto;
+			margin-top: 30px; margin-bottom: 30px;
+		}		
+		#imgDiv {
+			text-align: center;
+		}
+		#Dip {
+			width: 30px; height: 30px;
+			cursor: pointer;
+		}
+		#DDone {
+			width: 30px; height: 30px;
+			cursor: pointer;
+		} 
+		
+		#detailcss {
+			width: 1296px;
+			margin-top: 50px;  
+		}
+		#datailbtn {
+			width: 1296px;
+			margin-top: 50px; margin-bottom: 50px; 
+		}
+		#club_name {
+			font-size: 5em;
+		}
+		#club_content {
+			color: #32C36C;
+			margin-top: 20px;
+			font-weight: 500;
+		}
+		#club_capa {
+			text-align: right;
+			font-style: italic;
+			font-size: medium;
+		}
+		.clubInfoMeeting {
+			display: inline-block;
+			width: 300px; height: 180px;
+		}
+		.clubInfoMeetingSize {
+			width: 330px; 
+		}
+		.meetingIconSize {
+			width: 50px; height: 20px;
+		}
+		.meetingDues { 
+		background-image: url("../resource/img/meeting2");
+		}				
+		.meetingLo { 
+		background-image: url("../resource/img/meeting3");
+		}				
+		.meetingCapa { 
+		background-image: url("../resource/img/meeting1");
+		}		
+		.meetingDetail {
+			 font-size: medium;
+		}		
+
+
+	/* 모임 등록페이지  */
+
+	.container .contact .px-lg-0 {
+			height: 1000px;
+		}
+		.sub {
+		font-size: 0.8em;  color: #32C36C; font-weight: normal; font-style: italic;
+		}
+		.sub2 {
+		font-size: 2em; font-weight: 500; margin-top: 20px; margin-bottom: 30px; color: #343a40;
+		}
+		.sub3 {
+		font-size: 1.3em; font-weight: bold;margin-top: 30px; color: #343a40;
+		}
+		h1>.mb-4 {
+			font-size: 3em;
+		}
+		.detail, .detail2 , #select2 {
+			display: none; 
+		}
+		
+		form {
+			width: 50%; 
+			margin-bottom: 200px;
+		}
+		
+		.GreenP {
+			color:#32C36C;font-size: 0.9em;
+		}
+		.marginTOP {
+			margin-top: 150px;
+		}
+		
+		#NewTitle {
+			margin-top: 80px;
+			margin-bottom: 80px;
+		}
+		#NewContent {
+			margin-right: 300px;
+		}
+		
+		#centercontrol {
+			width: 100%;
+		}
+		
+		#inters {
+			cursor: pointer;
+		}
+		
+		#inter,#inter1,#inter2,#inter3,#inter4,#inter5,#inter6,#inter7,#inter8 {
+		    font-weight: bold;
+			color: white;
+			
+		}
+		
+		#newDetail {
+		    font-weight: bold;
+			color: white;
+		}
+		
+		.interTable {
+			padding: 0;
+			}
+		.interTable>li {
+			border-bottom: solid 6px #F6F7F8;
+			width: 260;
+			padding: 1em;
+			display: inline-block;
+			background-color: 32C36C;
+			font-size: large;
+			text-align:center;
+			vertical-align: middle;
+		    cursor: pointer;
+ 		  	border-radius: 35px;
+ 		  	color:white;
+		}

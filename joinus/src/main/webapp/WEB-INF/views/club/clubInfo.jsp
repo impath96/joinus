@@ -1,111 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    
 <%@ include file="../include/header.jsp"%>
-
-
-	<style>
-		
-		.datail_vertical {
-			margin-top: 70px;
-			width: 1296px;
-			text-align: center;
-		}
-		#detail_nav {
-			align-content: center;
-		}
-		#meetingTitle {
-			cursor: pointer;
-		}
-		
-		#myform fieldset{
-	    display: inline-block;
-	    direction: rtl;
-	    border:0;
-		}
-		#myform fieldset legend{
-		    text-align: right;
-		}
-		#myform input[type=radio]{
-		    display: none;
-		}
-		#myform label{
-		    font-size: 3em;
-		    color: transparent;
-		    text-shadow: 0 0 0 #f0f0f0;
-		}
-		#myform label:hover{
-		    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-		}
-		#myform label:hover ~ label{
-		    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-		}
-		#myform input[type=radio]:checked ~ label{
-		    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-		}
-		#reviewContents {
-		    width: 100%;
-		    height: 150px;
-		    padding: 10px;
-		    box-sizing: border-box;
-		    border: solid 1.5px #D3D3D3;
-		    border-radius: 5px;
-		    font-size: 16px;
-		    resize: none;
-		}
-				
-		#club_image {
-			width: 800px;
-			height: auto;
-			margin-top: 30px; margin-bottom: 30px;
-		}		
-		#imgDiv {
-			text-align: center;
-		}
-		#Dip {
-			width: 30px; height: 30px;
-			cursor: pointer;
-		}
-		#DDone {
-			width: 30px; height: 30px;
-			cursor: pointer;
-		} 
-		
-		#detailcss {
-			width: 1296px;
-			margin-top: 50px; margin-bottom: 200px; 
-		}
-		#datailbtn {
-			width: 1296px;
-			margin-top: 50px; margin-bottom: 50px; 
-		}
-		#club_name {
-			font-size: 5em;
-		}
-		#club_content {
-			color: #9B9B9B;
-			margin-top: 20px;
-		}
-		#club_capa {
-			text-align: right;
-			font-style: italic;
-			font-size: medium;
-		}
-						
-	</style>
+<%@ include file="../include/club_header.jsp"%>
+<link href="${PageContext.request.contextPath }/resources/css/ksm.css" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-<script type="text/javascript">
+	<script type="text/javascript">
 	
 		 $(document).ready(function(){
 	
 			 // 모임가입
 			$('#joinClub').click(function(){
 				
+				var member_no = ${member_no};
+						
+				if( member_no == null ){
+					alert('회원만 모임에 가입할 수 있습니다');
+					return false
+				}else if(member_no != null){
+					
+				
 				 if(confirm("모임에 가입하시겠어요?") == true){
 					
-						var member_no = ${member_no};
 					$.ajax({
 						url:'${pageContext.request.contextPath}/club/${clubvo.club_no}',
 						type:'POST',
@@ -126,6 +43,7 @@
 				}else{
 				        return false;
 				    } 
+				}				
 
 				});
 		
@@ -208,8 +126,6 @@
 				
 		 });
 	
-		 
-		 
 
 </script>
 
@@ -222,33 +138,30 @@
  <div class="container">
 	    <div class="container-xxl py-5">
     
-    <!-- 게시판 nav -->
-   	 <div class="col-12 text-center">
-			<ul class="list-inline mb-5" id="portfolio-flters">
-			<li class="mx-2 active" >모임정보</li>
-			<li class="mx-2"  onclick="listClubBoard()">모임게시판</li>
-			<li class="mx-2"  onclick="listClubPhoto()">사진첩</li>
-			<li class="mx-2"  onclick="listClubMember()">모임회원</li>
-			</ul>
-	</div><br>
 	
 	
     <!-- About Start  모임 설명 -->
     	<!-- 	<div class="container-fluid bg-light overflow-hidden my-5 px-lg-0"> -->
     	  <div class="container">
-                  <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 1296px; ">
+                  <div class="text-center" >
                     <div class="datail_vertical">
                         <h6 class="text-primary" >${interDetail }</h6>
                         <h1 class="mb-4" id="club_name">${clubvo.club_name }
+						
+					<c:if test="${!empty member_no} ">
 						<!-- 찜기능 -->	
                         <c:if test="${empty dipMember }">
 	                        <img src="../resources/img/heart.png" id="Dip">
                        </c:if>
-                        <c:if test="${dipMember eq member_no }">
+                       <c:forEach var="dip" items="${dipMember}">
+                        <c:if test="${dip eq member_no }">
 	                        <img src="../resources/img/heartt.png"  id="DDone">
                         </c:if>
+                       </c:forEach>
+					</c:if>	
                         </h1>
-		</div>
+                        
+				</div>
                         
                         <hr>
                           <div class="container about px-lg-0" >
@@ -259,22 +172,18 @@
 						</div>
 					</c:if>
                        
-					 
 					  <div id="detailcss">
-					
-						  <h5 class="text-primary">소개글</h5>
          	               <h4 id="club_content" style="white-space: pre-wrap;">${clubvo.club_content }</h4>
          	               </div>
-					  <hr>
-					 
-					 <div id="datailbtn"> <!--  모임멤버면 별점, 별점 후 평균값 / 멤버가 아니면 가입하기 버튼 /  --> 
+					</div>
+					
+					<!--  모임멤버면 별점, 별점 후 평균값 / 멤버가 아니면 가입하기 버튼 /  --> 
+					<div id="datailbtn"> 
 					 <!-- 회원인 경우만 출력 -->
 					<c:if test="${!empty member_no}">
 					 <!-- 모임X 벤 당한 회원은 가입버튼X -->
 					<c:if test="${ graded eq '0' &&  clubmember  eq '0' }">
-							<div id="joinBTN">
 								<div class="btn btn-primary rounded-pill py-3 px-5 mt-3" id="joinClub">가입하기</div>
-							</div>
 					</c:if>
 					 <!-- 모임O / 별점X  -->
                 	<c:if test="${ graded eq '0' &&  clubmember eq member_no}">
@@ -299,9 +208,8 @@
 							<p>(참여자수 : ${gradeAvgCnt[0].cnt}명 ) </p><br>
 					</c:if>
 					</c:if>
+					<br><br>
 						</div>
-					
-					</div>
 					
                 	    </div>
                     </div>
@@ -322,23 +230,21 @@
                 </c:forEach>
            			 </div>
                 <hr><br><br>
-            <div class="row g-5" align="center" >
-                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s" >
-                    <div class="d-flex align-items-center mb-4" >
-                        <div class="btn-lg-square bg-primary rounded-circle me-3">
+            <c:forEach var="m" items="${meetings }">
+            <div class="g-5 clubInfoMeeting" align="center" >
+                <div class="col-md-6 col-lg-3 wow fadeIn clubInfoMeetingSize" data-wow-delay="0.1s" >
+                    <div class="align-items-center mb-4" >
+                        <div class="btn-lg-square bg-primary rounded-circle">
                             <i class="fa fa-users text-white" ></i>
                         </div>
                     </div>
-                    <c:forEach var="m" items="${meetings }">
-                    	<c:if test="${m.length()<4 }">
-                    <h3 class="mb-3" onclick="meetingTitle()" id="meetingTitle">${m.club_meeting_title }</h3>
-                    <span>${m.club_meeting_title }</span><br>
-                    <span>${m.club_meeting_location }</span><br>
-                    <span>${m.club_meeting_capacity }</span><br>
-                    	</c:if>
+                    <h3 class="mb-3" onclick="location.href='#'" id="meetingTitle" class="clubInfoMeetingSize">${m.club_meeting_title }</h3>
+                   <p class="meetingDetail"><b>회비 </b>${m.club_meeting_dues }</p>
+                 	<p class="meetingDetail"><b>장소 </b>${m.club_meeting_location }</p>
+                   <p class="meetingDetail"><b>인원 </b>${m.club_meeting_capacity }명</p>
+                </div>
+                </div>
                     </c:forEach>
-                </div>
-                </div>
             </div>
         </div>
     <!-- Feature Start -->
@@ -367,12 +273,11 @@
                         </div>
                     </div>
                 </div>
+                <c:forEach var="b" items="${boards }">
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="team-item rounded overflow-hidden">
                         <div class="d-flex">
-                            <img class="img-fluid w-75" src="" alt="">
-                            <div class="team-social w-25">
-                            </div>
+                            <img src="${PageContext.requeset.contextPath }/resources/upload/boards/${b.club_board_image}" >
                         </div>
                         <div class="p-4">
                             <h5>Full Name</h5>
@@ -380,38 +285,26 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="team-item rounded overflow-hidden">
-                        <div class="d-flex">
-                            <img class="img-fluid w-75" src="" alt="">
-                            <div class="team-social w-25">
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <h5>Full Name</h5>
-                            <span>Designation</span>
-                        </div>
-                    </div>
-                </div>
+                </c:forEach>
+                
             </div>
         </div>
     </div>
+    
+    
     <!-- Team End -->
     
     <script type="text/javascript">
   
   //모임 게시판으로 이동
   function listClubMember(){
-	  location.href='${PageContext.request.contextPath }/test';
+	  location.href='${PageContext.request.contextPath }/club/${clubvo.club_no}/boards/new';
   }
   // 모임 사진첩으로 이동
   function listClubBoard(){
-	  location.href='${PageContext.request.contextPath }/test';
+	  location.href='${PageContext.request.contextPath }/club/${clubvo.club_no}/gallery';
   }
-  // 정모페이지로 이동  	
-  function meetingTitle(){
-	  location.href='${PageContext.request.contextPath }/test';
-  }
+  
 	
     </script>
     </body>
