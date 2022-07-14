@@ -35,10 +35,10 @@
                                 <br>
                                 <hr>
  								<div class="col-12">
-									<a href="https://kauth.kakao.com/oauth/authorize?client_id=e56b53633c44d91056a98f83b04e7bfe&redirect_uri=http://localhost:8088/member/oauth/kakao&response_type=code">
+									<a href="https://kauth.kakao.com/oauth/authorize?client_id=e56b53633c44d91056a98f83b04e7bfe&redirect_uri=http://localhost:8088/oauth/kakao&response_type=code">
 										<img alt="카카오 로그인" src="${pageContext.request.contextPath }/resources/img/kakao_login.png">
 									</a>
-									<a href="https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&prompt=consent&response_type=code&client_id=463761723189-9objhtfnhck66j6bbvi2h0b7hmgnpsf9.apps.googleusercontent.com&redirect_uri=http://localhost:8088/member/oauth/google&scope=https://www.googleapis.com/auth/userinfo.email">
+									<a href="https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&prompt=consent&response_type=code&client_id=463761723189-9objhtfnhck66j6bbvi2h0b7hmgnpsf9.apps.googleusercontent.com&redirect_uri=http://localhost:8088/oauth/google&scope=https://www.googleapis.com/auth/userinfo.email">
 										<img alt="구글 로그인" src="${pageContext.request.contextPath }/resources/img/google_login.png">
 									</a>
 								</div>
