@@ -308,6 +308,14 @@ public class ClubController {
 			
 			log.info("meetingModifyGET() 호출");
 			
+			MembersVo member = (MembersVo) session.getAttribute("member");
+			log.info(member+"");
+			
+			int member_no =member.getMember_no();
+			
+			List<MeetingTotalBean> rentalList = (List<MeetingTotalBean>)service.getRental(member_no);
+			log.info(rentalList+"");
+			
 			List<ClubMeetingsVo> meetingList = service.getMeeting(club_meeting_no);
 			log.info(meetingList+"");
 			
@@ -315,6 +323,7 @@ public class ClubController {
 			log.info(clubInfo+"");
 			model.addAttribute("clubInfo", clubInfo);
 			model.addAttribute("meetingList", meetingList);
+			model.addAttribute("rentalList", rentalList);
 			
 			return "/club/meeting/meetingModify";
 			
