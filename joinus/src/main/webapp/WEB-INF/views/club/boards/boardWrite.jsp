@@ -83,7 +83,7 @@
 				<form name="fr" action="" method="post" enctype="multipart/form-data">
 <!-- 					<input type="hidden" name="count" id="count" value=""> -->
 					<input type="hidden" name="club_no" value="${club_no }">
-					<input type="hidden" name="member_no" value="${sessionScope.member_no }">
+					<input type="hidden" name="member_no" value="${sessionScope.member.member_no }">
 					<div class="row g-3">
 						<div class="col-md-4">
 							<select class="form-select" style="height: 55px;"

@@ -28,8 +28,8 @@
 
 .clubBoardList_smImage {
 	border-radius: 10px;
-	float: left;
-	margin-right: 2em;
+	float: right;
+	margin-left: 2em;
 }
 
 .clubBoardList_content {

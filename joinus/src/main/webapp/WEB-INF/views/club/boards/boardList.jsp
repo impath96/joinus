@@ -9,7 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script type="text/javascript">
 // 	alert("접속한 member_no : "+${sessionScope.member_no});
-	alert("모임원 체크 : "+${checkMember});
+// 	alert("모임원 체크 : "+${checkMember});
 	
 	$(document).ready(function(){
 		
@@ -36,9 +36,16 @@
 		if(${checkMember == 0}){
 			alert('모임가입을 해주세요.');			
 			return false;
+		} else if(${checkMember == -1}){
+			location.href = "/member/signin";
 		} else {
 			location.href= "/club/${club_no}/boards/"+club_board_no;
 		}
+	}
+	
+	// 삭제메세지
+	if(${result == "DELOK" }){
+		alert("글이 정삭적으로 삭제되었습니다.");
 	}
 
 </script>
@@ -48,18 +55,6 @@
 	<div class="container">
 		<div class="row g-5">
 		
-			<!-- Projects Start -->
-<!-- 			<div class="row mt-n2 wow fadeInUp" data-wow-delay="0.3s"> -->
-<!-- 				<div class="col-12 text-center"> -->
-<!-- 				    <ul class="list-inline mb-5" id="portfolio-flters"> -->
-<!-- 				        <li class="mx-2 active"><a href="">정보</a></li> -->
-<%-- 				        <li class="mx-2"><a href="/club/${club_no}/boards">게시판</a></li> --%>
-<%-- 				        <li class="mx-2"><a href="/club/${club_no }/gallery">사진첩</a></li> --%>
-<!-- 				    </ul> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-		    <!-- Projects End -->
-
 			<div style="margin-bottom: 2em;">
 				<button type="button" class="btn btn-primary" id="all">전체</button>
 				<button type="button" class="btn btn-primary" id="notice">공지사항</button>
@@ -74,7 +69,7 @@
 			<c:forEach var="board" items="${boardList }">
 				<div class="wow fadeIn" onclick="return linkContent(${board.clubBoardsVo.club_board_no});" style="cursor: pointer;">
 				<c:if test="${board.clubBoardsVo.club_board_image != null }">
-					<img src="${PageContext.request.contextPath }/resources/upload/boards/sm_${board.clubBoardsVo.club_board_image }" class="clubBoardList_smImage">
+					<img src="${PageContext.request.contextPath }/resources/upload/boards/sm_${board.clubBoardsVo.club_board_image }" class="clubBoardList_smImage" style="height: 200px;">
 				</c:if>
 					<h5 class="mb-3" style="display: inline-block;">${board.clubBoardsVo.club_board_title }</h5><br>
 					<p class="clubBoardList_content">${board.clubBoardsVo.club_board_content }</p>
