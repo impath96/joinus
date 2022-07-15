@@ -75,10 +75,29 @@ public class ClubRestController {
 		log.info(entity+"");
 		
 		return entity;
-		
 	
 	}
 	
+	@RequestMapping(value="/{club_no}/meeting/{club_meeting_no}/address",
+			produces = "application/text; charset=utf8")
+	public ResponseEntity<String> getAddressREST(@PathVariable("club_no") int club_no,
+							@PathVariable("club_meeting_no") int club_meeting_no
+													){
+	log.info(club_meeting_no+"");	
+	String address = service.getMeetingAddr(club_meeting_no);
 	
+	log.info(address+"");
 	
+	ResponseEntity<String> entity = null;
+	
+	try {
+		entity = new ResponseEntity<String>(address, HttpStatus.OK);
+	} catch (Exception e) {
+		entity = new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	log.info(entity+"");
+	
+	return entity;
+	}
 }

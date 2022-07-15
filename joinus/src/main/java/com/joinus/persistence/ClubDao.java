@@ -76,6 +76,9 @@ public interface ClubDao {
 	
 	//정모 삭제하기
 	public void deleteMeeting(Integer club_meeting_no);
+	
+	//정모 주소 가져오기
+	public String getMeetingAddr(int club_meeting_no);
 
 	
 	//=========================고은비=========================
@@ -222,6 +225,8 @@ public interface ClubDao {
 	public List<ClubMeetingsVo> getMeetings(Integer num);
 	//게시글 리스트
 	public List<ClubBoardsVo> getBoards(Integer num);
+
+	
 
 
 

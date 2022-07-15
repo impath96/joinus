@@ -14,5 +14,6 @@ public class ClubMeetingsVo {
 	private Date club_meeting_date; 
 	private String club_meeting_location; 
 	private int club_meeting_dues;
+	private String club_meeting_address;
 
 }
