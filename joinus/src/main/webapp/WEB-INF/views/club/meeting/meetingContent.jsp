@@ -14,31 +14,22 @@
 	<div class="row g-5">
       
       <div class="col-md-7 col-lg-8">
-        <h4 class="mb-3">일정 수정하기</h4>
-        <form class="needs-validation" action ="" method="post">
+        <h4 class="mb-3">일정 상세보기</h4>
+        <form class="needs-validation" action ="" role ="form">
           <div class="row g-3">
             <div class="col-12">
               <label for="firstName" class="form-label">제목</label>
               <input type="text" class="form-control" name="club_meeting_title" value="${meetingList[0].club_meeting_title}" disabled="disabled">
-              <div class="invalid-feedback">
-                Valid first name is required. 
-              </div>
             </div>
             
             <div class="col-12">
               <label for="address" class="form-label">날짜</label>
               <input type="date" class="form-control" id="club_meeting_date" value="${meetingList[0].club_meeting_date}" disabled="disabled">
-              <div class="invalid-feedback">
-                Please enter your shipping address.
-              </div>
             </div>
             
             <div class="col-12">
               <label for="address" class="form-label">정원</label>
               <input type="number" class="form-control" name="club_meeting_capacity" value="${meetingList[0].club_meeting_capacity}" disabled="disabled">
-              <div class="invalid-feedback">
-                Please enter your shipping address.
-              </div>
             </div>
             
             <div class="col-12">
@@ -58,6 +49,57 @@
 				</p>
 				<div id="map" style="width:100%;height:350px;"></div>
 				
+			</div> 
+            <div class="col-12">
+              <label for="address2" class="form-label">참가비 <span class="text-muted">(선택)</span></label>
+              <input type="number" class="form-control" name="club_meeting_dues" value="${meetingList[0].club_meeting_dues}" disabled="disabled">
+            </div>
+
+          </div>
+
+          <hr class="my-4">
+
+          <h4 class="mb-3">Payment</h4>
+
+          <div class="my-3">
+            <div class="form-check">
+              <label class="form-check-label" for="credit">Credit card</label>
+            </div>
+          </div>
+
+          <div class="row gy-3">
+            <div class="col-md-6">
+              <label for="cc-name" class="form-label">계좌번호</label>
+              <input type="text" class="form-control" id="cc-name" placeholder="">
+              <small class="text-muted">계좌번호는 모임 회원에게만 보여요!</small>
+            </div>
+
+          </div>
+     </form>
+          <hr class="my-4">
+	
+			<div class="margin">
+			
+			<div class="btn-group">
+			<button type="submit" class="btn btn-secondary btn-flat" id ="modify">수정하기</button>
+			</div>
+			
+			<div class="btn-group">
+			<button type="submit" class="btn btn-danger btn-flat" id ="delete">삭제하기</button>
+			</div>
+			
+			<div class="btn-group">
+			<button type="submit" class="btn btn-success btn-flat" id ="colse">마감하기</button>
+			</div>
+			
+			</div>
+
+
+      </div>
+    </div>
+</div>
+<!-- 정모 -->
+
 			<script>
 			
 $(function(){
@@ -72,7 +114,6 @@ $(function(){
 		var map = new kakao.maps.Map(mapContainer, mapOption); 
 		var location = $('input#club_meeting_location').val();
 		
-		
 		// 주소-좌표 변환 객체를 생성합니다
 		var geocoder = new kakao.maps.services.Geocoder();
 		
@@ -81,9 +122,7 @@ $(function(){
 		url : '/club/${club_no}/meeting/${club_meeting_no}/address',
 		type : 'GET',
 		success : function(data){
-			alert('갔다옴');
 			console.log(data);
-		
 		
 		// 주소로 좌표를 검색합니다
 		geocoder.addressSearch(data, function(result, status) {
@@ -108,70 +147,37 @@ $(function(){
 		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 		        map.setCenter(coords); 
 		        
-		    } 
-		}); 
+		    } //if
+		  });//search 
 		}	
 	});//ajax
+	
+	var formObj = $('form[role="form"]')
+	
+	$('#modify').click(function(){
+
+		formObj.attr("action", "/club/${clubInfo[0].club_no}/meeting/${meetingList[0].club_meeting_no}/modify");
+		formObj.submit();
+	});
+	
+	$('#delete').click(function(){
+		formObj.attr("action", "/club/${clubInfo[0].club_no}/meeting/${meetingList[0].club_meeting_no}/delete");
+		formObj.submit();
+	});
+	
+	$('#close').click(function(){
+		formObj.attr("action", "/club/${clubInfo[0].club_no}/meeting/${meetingList[0].club_meeting_no}/close");
+		formObj.submit();
+	});
+	
+	
+	
 });//jquery
 
+
+
+
 </script>
-				
-			</div> 
-            <div class="col-12">
-              <label for="address2" class="form-label">참가비 <span class="text-muted">(선택)</span></label>
-              <input type="number" class="form-control" name="club_meeting_dues" value="${meetingList[0].club_meeting_dues}" disabled="disabled">
-            </div>
-
-          </div>
-
-          <hr class="my-4">
-
-          <h4 class="mb-3">Payment</h4>
-
-          <div class="my-3">
-            <div class="form-check">
-              <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked="" required="">
-              <label class="form-check-label" for="credit">Credit card</label>
-            </div>
-          </div>
-
-          <div class="row gy-3">
-            <div class="col-md-6">
-              <label for="cc-name" class="form-label">계좌번호</label>
-              <input type="text" class="form-control" id="cc-name" placeholder="">
-              <small class="text-muted">계좌번호는 모임 회원에게만 보여요!</small>
-            </div>
-
-          </div>
-          <hr class="my-4">
-	
-			<div class="margin">
-			
-			<div class="btn-group">
-			<button type="button" class="btn btn-secondary btn-flat"
-				onclick ="${PageContext.request.contextPath}/club/${clubInfo[0].club_no}/meeting/${meetingList[0].club_meeting_no}/modify">수정하기</button>
-			</div>
-			
-			<div class="btn-group">
-			<button type="button" class="btn btn-danger btn-flat"
-				onclick ="${PageContext.request.contextPath}/club/${clubInfo[0].club_no}/meeting/${meetingList[0].club_meeting_no}/delete">삭제하기</button>
-			</div>
-			
-			<div class="btn-group">
-			<button type="button" class="btn btn-success btn-flat"
-				onclick ="${PageContext.request.contextPath}/club/${clubInfo[0].club_no}/meeting/${meetingList[0].club_meeting_no}/close">마감하기</button>
-			</div>
-			
-			</div>
-
-
-
-        </form>
-      </div>
-    </div>
-</div>
-<!-- 정모 -->
-
 
 
 
