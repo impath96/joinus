@@ -53,7 +53,9 @@ public class SettingsController {
 		if(member == null) {
 			return "redirect:/";
 		}
-		
+//		MembersVo findMember = memberService.findMemberByNo(member.getMember_no());
+//		session.setAttribute("member", findMember);
+		log.info("/settings/member -> member : {}", member);
 		// 2) mypage 화면에 필요한 데이터 : 관심사, 회원정보(이미지, 닉네임, 비밀번호), 해당 회원의 관심사 정보
 		List<InterestsVo> interestList = interestService.selectInterestAll();
 		// 해당 사용자의 관심사 정보 출력
