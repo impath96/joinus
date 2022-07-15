@@ -74,6 +74,8 @@ import com.joinus.domain.MembersVo;
 		//정모 삭제
 		public void deleteClubMeeting(Integer club_meeting_no);
 		
+		//정모 주소 호출
+		public String getMeetingAddr(int club_meeting_no);
 		
 //		public List<ClubBoardVo> getBoardListAll(Integer club_no);
 		
@@ -212,4 +214,5 @@ import com.joinus.domain.MembersVo;
 		public List<ClubMeetingsVo> getMeetings(Integer num);
 		//게시글 리스트
 		public List<ClubBoardsVo> getBoardsforimg(Integer num);
+
 }

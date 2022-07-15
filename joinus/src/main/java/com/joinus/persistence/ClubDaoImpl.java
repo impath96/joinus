@@ -227,14 +227,16 @@ public class ClubDaoImpl implements ClubDao{
 		sqlSession.delete(NAMESPACE+".DeleteMeeting", club_meeting_no);
 
 	}
+	
+	@Override
+	public String getMeetingAddr(int club_meeting_no) {
+		
+		return sqlSession.selectOne(NAMESPACE2+".SelectAddr", club_meeting_no);
+	}
 
 	
 	
 //=======================허수빈=============================================================
-	
-
-
-
 
 	@Override
 	public void writeBoard(ClubBoardsVo vo) {
