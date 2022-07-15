@@ -5,6 +5,7 @@
 <%@ include file="../../include/header.jsp"%>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
 <script type="text/javascript">
 	
 	var count = 0;
@@ -102,10 +103,10 @@
 						</div> 
 						<div class="col-12">
 							<div class="form-floating">
-								<textarea class="form-control" placeholder="content"
+								<textarea class="form-control" placeholder="내용"
 									id="club_board_content" name="club_board_content"
 									style="height: 100px"></textarea>
-								<label for="club_board_content">내용</label>
+								<!-- <label for="club_board_content">내용</label> -->
 							</div>
 						</div>
 
@@ -131,6 +132,13 @@
 		</div>
 	</div>
 </div>
-
+<script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
+<script>
+	ClassicEditor
+		.create(document.querySelector('#club_board_content'))
+		.catch(error=>{
+			console.error(error);
+	});
+</script>
 
 <%@ include file="../../include/footer.jsp"%>

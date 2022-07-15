@@ -4,7 +4,7 @@
 <html lang="ko">
 <head>
     <meta charset="utf-8">
-    <title>Solartec - Renewable Energy Website Template</title>
+    <title>JoinUs - More Happy</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -86,7 +86,8 @@
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
         <a href="${PageContext.request.contextPath }/" class="navbar-brand d-flex align-items-center border-end px-4 px-lg-5">
-            <h2 class="m-0 text-primary">JOINUS</h2>
+ 			<img src="${PageContext.request.contextPath }/resources/img/joinus.jpg" alt="" width="180" height="80">
+           <!--  <h2 class="m-0 text-primary">JOINUS</h2> -->
         </a>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
