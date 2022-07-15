@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -85,6 +86,18 @@ public class RentalController {
 		model.addAttribute("partnerPlace", rentalService.getPartnerPlaceContent(partner_place_no));
 		
 		return "/rental/partnerPlaceContent";
+	}
+	
+	// 예약
+	@RequestMapping(value = "/partnerPlaces/{partner_place_no}", method = RequestMethod.POST)
+	public void partnerPlaceContentPost(@PathVariable("partner_place_no") int partner_place_no) {
+		log.info(" partnerPlaceContentPost() 호출");
+		
+		// 결제
+		
+		// 결제 후 예약정보저장
+		// 주문번호 생성한다고 가정(이걸로 예약할 때 이미 예약된 시간또는 날짜는 선택하지 못하도록 제어)
+		
 	}
 	
 	
