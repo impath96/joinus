@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+.clubWrite_mb-4 {
+	margin-bottom: 3.5rem !important;
+}
+
+.clubWrite_buttonMargin {
+	margin-top: 3.5rem !important;
+}
+
+.clubWrite_imageSpan {
+	text-align: left;
+}
+
+.clubWrite_imageGroup {
+	text-align: left;
+}
+
+.clubBoardList_likeCnt {
+	margin-right: 1em;
+	color: #51cc82;
+}
+
+.clubBoardList_commentCnt {
+	margin-right: 1em;
+	color: #51cc82;
+}
+
+.clubBoardList_smImage {
+	border-radius: 10px;
+	float: left;
+	margin-right: 2em;
+}
+
+.clubBoardList_content {
+	color: black;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp:2;
+	-webkit-box-orient: vertical;
+}
+
+.clubBoardList_writer {
+	margin-top: 0.5em;
+	margin-right: 1em;
+}
+
+.boardContent_writeImage {
+	width: 50px;
+	border-radius: 100%;
+}
+
+.likeMemberBtn {
+	color: black;
+	background-color: white;
+}
+
+.boardContent {
+	font-family: inherit;
+	font-size: inherit;
+	line-height: 40px;
+	white-space: pre-line;
+}
+
+.ContentImage {
+	max-width: 500px;
+	max-height: 300px;
+}
+
+#comment_content {
+	padding-top: 1em;
+	padding-bottom: 1em;
+	text-align: left;
+	color: black;
+}
