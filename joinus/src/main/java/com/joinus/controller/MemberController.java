@@ -31,6 +31,7 @@ import org.springframework.web.util.CookieGenerator;
 import com.joinus.domain.ClubsVo;
 import com.joinus.domain.InterestsVo;
 import com.joinus.domain.MembersVo;
+import com.joinus.domain.MyClubDto;
 import com.joinus.domain.PasswordCheckDto;
 import com.joinus.service.ClubService;
 import com.joinus.service.InterestService;
@@ -276,6 +277,8 @@ public class MemberController {
 			return "member/signin";
 		}
 		
+		List<MyClubDto> list = memberService.getMyClubList(member.getMember_no());
+		model.addAttribute("myClubList", list);
 		return "/member/myClubList";
 	}
 

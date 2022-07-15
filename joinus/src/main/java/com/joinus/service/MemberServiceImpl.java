@@ -2,6 +2,7 @@ package com.joinus.service;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.joinus.domain.MemberInterestsVo;
 import com.joinus.domain.MembersVo;
+import com.joinus.domain.MyClubDto;
 import com.joinus.persistence.MemberDao;
 import com.joinus.util.SHA256;
 
@@ -119,6 +121,13 @@ public class MemberServiceImpl implements MemberService {
 	public void updateName(String memberName, int member_no) {
 		memberDao.updateName(memberName, member_no);
 		
+	}
+
+	@Override
+	public List<MyClubDto> getMyClubList(int member_no) {
+		List<MyClubDto> list = memberDao.myClubList(member_no);
+		
+		return list;
 	}
 
 }
