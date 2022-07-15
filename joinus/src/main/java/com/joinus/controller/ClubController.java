@@ -629,11 +629,12 @@ public class ClubController {
 	// http://localhost:8088/club/53/boards/26/delete
 	// 게시글 삭제
 	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/delete", method = RequestMethod.POST)
-	public String deleteBoardPost(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no) {
+	public String deleteBoardPost(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no, RedirectAttributes rttr) {
 		log.info(" deleteBoardPost() 호출 ");
 		log.info("club_no : "+club_no);
 		
 		service.deleteBoard(club_board_no);
+		rttr.addFlashAttribute("result", "DELOK");
 		
 		return "redirect:/club/"+club_no+"/boards";
 	}
