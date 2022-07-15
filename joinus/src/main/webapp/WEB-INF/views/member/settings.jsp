@@ -117,7 +117,7 @@
 							<div class="col-12">
 								<div class="form-floating">
 									<input type="text" class="form-control py-2" id="location" name="location_name"
-										placeholder="주소를 입력해주세요" value="${sessionScope.member.member_location }" onclick="sample4_execDaumPostcode()" >
+										placeholder="주소를 입력해주세요" value="${sessionScope.member.member_location }" onclick="searchLocation()" >
 								</div>
 							</div>
 							<br>
@@ -133,6 +133,7 @@
 								</div>
 							</div>
 						</div>
+						<c:if test="${sessionScope.member.member_signup_type == 'common' }">
 						<form class="mt-4 p-4 my-4 border border-dark password-edit" method="post">
 							<div class="row g-3 form-floating">
 								<div class="col-12 col-sm-12">
@@ -152,6 +153,7 @@
 								</div>
 							</div>
 						</form>
+						</c:if>
 						<div class="col-12 col-sm-12">
 							<input type="button" class="btn btn-primary fs-3 e-leave" style="width:100%;" value="탈퇴하기"/>
 						</div>
@@ -162,7 +164,7 @@
 	</div>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-    function sample4_execDaumPostcode() {
+    function searchLocation() {
         new daum.Postcode({
             oncomplete: function(data) {
                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
