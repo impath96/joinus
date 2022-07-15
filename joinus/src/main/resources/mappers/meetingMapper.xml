@@ -83,5 +83,12 @@
 	where club_meeting_no = #{vo.club_meeting_no}
 
 </update>
-	
+
+<select id="SelectAddr" resultType="string">
+	select club_meeting_address
+	from club_meetings
+	where club_meeting_no = #{club_meeting_no}
+</select>
+
+
 </mapper> 

@@ -69,6 +69,10 @@ public class RentalController {
 	@RequestMapping(value = "/placeList", method = RequestMethod.GET)
 	public void placeListGet() {
 		log.info(" placeListGet() 호출 ");
+		
+		// 모임장의 정보에 장소가 있으면 구 를 중심(위치)
+		// 장소유형은 일단 전체로
+		
 	}
 	
 	// http://localhost:8088/rental/partnerPlaces/{partner_place_no}

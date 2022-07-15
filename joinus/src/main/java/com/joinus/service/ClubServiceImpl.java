@@ -150,13 +150,19 @@ public class ClubServiceImpl implements ClubService{
 		return dao.updateMeeting(club_meeting_no ,vo);
 	}
 	
-	
+	//정모 삭제
 	@Override
 	public void deleteClubMeeting(Integer club_meeting_no) {
 		
 		dao.deleteMeeting(club_meeting_no);
 		
 		
+	}
+	
+	@Override
+	public String getMeetingAddr(int club_meeting_no) {
+		
+		return dao.getMeetingAddr(club_meeting_no);
 	}
 	
 	
@@ -433,5 +439,7 @@ public class ClubServiceImpl implements ClubService{
 		public List<ClubBoardsVo> getBoardsforimg(Integer num) {
 			return dao.getBoards(num);
 		}
+
+
 	
 }

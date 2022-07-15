@@ -42,6 +42,11 @@
 			location.href= "/club/${club_no}/boards/"+club_board_no;
 		}
 	}
+	
+	// 삭제메세지
+	if(${result == "DELOK" }){
+		alert("글이 정삭적으로 삭제되었습니다.");
+	}
 
 </script>
 
@@ -50,18 +55,6 @@
 	<div class="container">
 		<div class="row g-5">
 		
-			<!-- Projects Start -->
-<!-- 			<div class="row mt-n2 wow fadeInUp" data-wow-delay="0.3s"> -->
-<!-- 				<div class="col-12 text-center"> -->
-<!-- 				    <ul class="list-inline mb-5" id="portfolio-flters"> -->
-<!-- 				        <li class="mx-2 active"><a href="">정보</a></li> -->
-<%-- 				        <li class="mx-2"><a href="/club/${club_no}/boards">게시판</a></li> --%>
-<%-- 				        <li class="mx-2"><a href="/club/${club_no }/gallery">사진첩</a></li> --%>
-<!-- 				    </ul> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-		    <!-- Projects End -->
-
 			<div style="margin-bottom: 2em;">
 				<button type="button" class="btn btn-primary" id="all">전체</button>
 				<button type="button" class="btn btn-primary" id="notice">공지사항</button>
