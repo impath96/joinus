@@ -1,6 +1,7 @@
 package com.joinus.persistence;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.joinus.domain.MembersVo;
+import com.joinus.domain.MyClubDto;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
@@ -98,6 +100,13 @@ public class MemberDaoImpl implements MemberDao {
 		
 		sqlSession.update(NAMESPACE+".updateName", paramMap);
 		
+	}
+
+	@Override
+	public List<MyClubDto> myClubList(int member_no) {
+		List<MyClubDto> list = sqlSession.selectList(NAMESPACE+".myClubList", member_no);
+		log.info("내가 참여하고 있는 모든 모임 리스트 : {}", list);
+		return list;
 	}
 	
 	

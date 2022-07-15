@@ -1,6 +1,5 @@
 package com.joinus.domain;
 
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import com.joinus.util.SHA256;
@@ -32,7 +31,7 @@ public class PasswordCheckDto {
 
 	// 전달받은 새로운 비밀번호와 재확인용 새 비밀번호가 동일한가?
 	public boolean equalsNewPasswordAndConfirm() {
-		if (newPassword.equals(newPasswordConfirm)) {
+		if (newPassword.equals(newPasswordConfirm) && !newPassword.equals("") && !newPasswordConfirm.equals("")) {
 			return true;
 		}
 		return false;

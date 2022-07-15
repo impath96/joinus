@@ -1,8 +1,10 @@
 package com.joinus.service;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import com.joinus.domain.MembersVo;
+import com.joinus.domain.MyClubDto;
 
 public interface MemberService {
 	
@@ -14,5 +16,6 @@ public interface MemberService {
 	public void addInterest(int member_no, int interest);
 	public MembersVo resetPassword(int member_no, String newPassword);
 	public void updateName(String memberName, int member_no);
+	public List<MyClubDto> getMyClubList(int member_no);
 
 }
