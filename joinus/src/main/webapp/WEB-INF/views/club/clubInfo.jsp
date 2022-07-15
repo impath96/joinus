@@ -78,6 +78,13 @@
 				// 찜
 				$('#Dip').click(function(){
 					
+					var member_no = ${member_no};
+					
+					if( member_no == null ){
+						alert('회원만 찜기능을 이용할 수 있습니다');
+						return false
+					}else{
+						
 					if(confirm(" 우리모임을 찜하시겠어요? ") == true){
 						
 						$.ajax({
@@ -86,7 +93,7 @@
 							type:'POST',
 							data: {
 								'club_no' : '${clubvo.club_no}',
-								'member_no' : '${member_no}'
+								'member_no' : member_no
 								},
 							dataType: 'json'
 							
@@ -96,11 +103,17 @@
 					 }else{
 					        return false;
 					    } 
+					
+					
+					}
+					
 				});
 				
 				
 				// 찜취소
 				$('#DDone').click(function(){
+					
+					var member_no = ${member_no};
 					
 					if(confirm(" 찜하기를 취소하시겠어요? ") == true){
 						
@@ -110,7 +123,7 @@
 							type:'POST',
 							data: {
 								'club_no' : '${clubvo.club_no}',
-								'member_no' : '${member_no}'
+								'member_no' : member_no
 								},
 							dataType: 'json'
 							
@@ -124,9 +137,102 @@
 				 });
 				
 				
-		 });
-	
+/* 				var meeting_no = $('#JoinMeeting').val();
+				alert('meeting_no'); */
+		 
+		 
+		 // 정모참석
+			$('#JoinMeeting').click(function(){
+				
+				
+			var meeting_no = $(this).prop('value');
+			 console.log("정모번호: "+ meeting_no);
+				
+			if( ${member_no} == null ){
+					alert('회원만 정모에 참석할 수 있습니다');
+					return false
+				}else if(${member_no} != null){
+					
+				
+				 if(confirm("정모에 참석하시겠어요?") == true){
+					
+					$.ajax({
+						url:'${pageContext.request.contextPath}/club/${clubvo.club_no}/meeting/'+meeting_no+'/join',
+						type:'POST',
+						data: {
+							'club_no' : '${clubvo.club_no}',
+							'member_no' : '${member_no}',
+							'club_meeting_no' : meeting_no
+							},
+						dataType: 'json',
+						success: function(){
+						},
+						fail: function(data){
+				              alert('failed');
+							location.reload();
 
+				        }
+
+				        });
+							alert(' 정모참석 신청이 완료되었습니다! ');
+							location.reload();
+				    
+				}else{
+				        return false;
+				    } 
+				}			 
+
+				});
+				
+			 // 정모참석 취소
+			$('#outMeeting').click(function(){
+				
+				
+			var meeting_no = $(this).prop('value');
+			 console.log("정모번호: "+ meeting_no);
+				
+			if( ${member_no} == null ){
+					alert('회원만 정모에 참석할 수 있습니다');
+					return false
+				}else if(${member_no} != null){
+					
+				
+				 if(confirm("정모참석을 취소하시겠어요?") == true){
+					
+					$.ajax({
+						url:'${pageContext.request.contextPath}/club/${clubvo.club_no}/meeting/'+meeting_no+'/leave',
+						type:'POST',
+						data: {
+							'club_no' : '${clubvo.club_no}',
+							'member_no' : '${member_no}',
+							'club_meeting_no' : meeting_no
+							},
+						dataType: 'json',
+						success: function(){
+						},
+						fail: function(data){
+				              alert('failed');
+							location.reload();
+
+				        }
+
+				        });
+							alert(' 정모 참석 신청이 취소되었습니다! ');
+							location.reload();
+				    
+				}else{
+				        return false;
+				    } 
+				}			 
+
+				});
+				
+				
+				
+				
+				
+		
+			});
 </script>
 
 
@@ -148,17 +254,15 @@
                         <h6 class="text-primary" >${interDetail }</h6>
                         <h1 class="mb-4" id="club_name">${clubvo.club_name }
 						
-					<c:if test="${!empty member_no} ">
 						<!-- 찜기능 -->	
                         <c:if test="${empty dipMember }">
 	                        <img src="../resources/img/heart.png" id="Dip">
-                       </c:if>
+                        </c:if>
                        <c:forEach var="dip" items="${dipMember}">
                         <c:if test="${dip eq member_no }">
 	                        <img src="../resources/img/heartt.png"  id="DDone">
                         </c:if>
                        </c:forEach>
-					</c:if>	
                         </h1>
                         
 				</div>
@@ -187,7 +291,7 @@
 					</c:if>
 					 <!-- 모임O / 별점X  -->
                 	<c:if test="${ graded eq '0' &&  clubmember eq member_no}">
-						<div id="grade">
+						<div id="grade" align="center">
 							<span class="text-bold">우리 모임의 별점을 선택해주세요</span>
 		             		<form class="mb-3" name="myform" id="myform" method="post">
 							<fieldset>
@@ -225,28 +329,52 @@
                 <!-- 정모만들기 모임장만 보일 수 있도록  -->
                 <c:forEach var="member" items="${clubmemebrList}" >
                 <c:if test="${member.member_no == member_no && member.club_member_role == 'admin' }">
-                <a class="small fw-medium" href="">모임장 정모만들기<i class="fa fa-arrow-right ms-2"></i></a>
+                <a class="small fw-medium" href="${pageContext.request.contextPath}/club/${clubvo.club_no}/meeting/new'">모임장 정모만들기<i class="fa fa-arrow-right ms-2"></i></a>
                 </c:if>
                 </c:forEach>
            			 </div>
+           			 
                 <hr><br><br>
-            <c:forEach var="m" items="${meetings }">
+                <c:if test="${!empty meetings}" >
             <div class="g-5 clubInfoMeeting" align="center" >
                 <div class="col-md-6 col-lg-3 wow fadeIn clubInfoMeetingSize" data-wow-delay="0.1s" >
+			            <c:forEach var="m" items="${meetings }" varStatus="status">
                     <div class="align-items-center mb-4" >
-                        <div class="btn-lg-square bg-primary rounded-circle">
-                            <i class="fa fa-users text-white" ></i>
-                        </div>
-                    </div>
-                    <h3 class="mb-3" onclick="location.href='#'" id="meetingTitle" class="clubInfoMeetingSize">${m.club_meeting_title }</h3>
+			         		   <c:forEach var="mm" items="${meetingMbrs }" >
+                    			<c:if test="${m.club_meeting_no eq mm.club_meeting_no}">
+                    			<button id="outMeeting" class="btn btn-primary" value="${m.club_meeting_no }">참석취소하기</button>
+                    			</c:if>
+                    			<c:if test="${m.club_meeting_no ne mm.club_meeting_no}">
+	                    		<button id="JoinMeeting" class="btn btn-primary" value="${m.club_meeting_no }">참석하기</button>
+                    			</c:if>
+                    			</c:forEach>
+                    <h3 class="mb-3" id="meetingTitle" class="clubInfoMeetingSize">${m.club_meeting_title }</h3>
                    <p class="meetingDetail"><b>회비 </b>${m.club_meeting_dues }</p>
                  	<p class="meetingDetail"><b>장소 </b>${m.club_meeting_location }</p>
                    <p class="meetingDetail"><b>인원 </b>${m.club_meeting_capacity }명</p>
-                </div>
-                </div>
+                        </div>
                     </c:forEach>
+                    </div>
+                </div>
+                </c:if>
+                <c:if test="${empty meetings}" >
+                 <div class="g-5 mNbSize" align="center" >
+               	 <div class="col-md-6 col-lg-3 wow fadeIn clubInfoMeetingSize" data-wow-delay="0.1s" >
+               	  <div class="align-items-center mb-4" >
+               	  
+               	  	<h4 class="mainGr mNbSize"> 생성된 정모가 없습니다 </h4>
+               	  
+                 </div>
+                </div>
+                </div>
+                </c:if>
+                
+                
+                
+                
+                
+                </div>
             </div>
-        </div>
     <!-- Feature Start -->
 
 
@@ -259,54 +387,42 @@
                 <h1 class="mb-4">활동사진</h1>
             </div>
             <hr><br><br>
+            
+             <c:if test="${!empty boards}" >
             <div class="row g-4">
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="team-item rounded overflow-hidden">
-                        <div class="d-flex">
-                            <img class="img-fluid w-75" src="" alt="">
-                            <div class="team-social w-25">
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <h5>Full Name</h5>
-                            <span>Designation</span>
-                        </div>
-                    </div>
-                </div>
                 <c:forEach var="b" items="${boards }">
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="team-item rounded overflow-hidden">
-                        <div class="d-flex">
-                            <img src="${PageContext.requeset.contextPath }/resources/upload/boards/${b.club_board_image}" >
+                        <div class="mainImg" >
+                            <img src="${PageContext.requeset.contextPath }/resources/upload/boards/${b.club_board_image}" 
+                            onclick="location.href='${PageContext.requeset.contextPath }/club/${clubvo.club_no}/boards/${b.club_board_no}'">
                         </div>
                         <div class="p-4">
-                            <h5>Full Name</h5>
-                            <span>Designation</span>
                         </div>
                     </div>
                 </div>
                 </c:forEach>
                 
             </div>
+            </c:if>
+             <c:if test="${empty boards}" >
+          	   <div class="g-5 mNbSize" align="center" >
+               	 <div class="col-md-6 col-lg-3 wow fadeIn clubInfoMeetingSize" data-wow-delay="0.1s" >
+               	  <div class="align-items-center mb-4" >
+               	  
+               	  	<h4 class="mainGr mNbSize"> 등록된 모임사진이 없습니다 </h4>
+               	  
+                 </div>
+                </div>
+                </div>
+             </c:if>
+            
+            
+            
+            
         </div>
     </div>
-    
-    
-    <!-- Team End -->
-    
-    <script type="text/javascript">
-  
-  //모임 게시판으로 이동
-  function listClubMember(){
-	  location.href='${PageContext.request.contextPath }/club/${clubvo.club_no}/boards/new';
-  }
-  // 모임 사진첩으로 이동
-  function listClubBoard(){
-	  location.href='${PageContext.request.contextPath }/club/${clubvo.club_no}/gallery';
-  }
-  
-	
-    </script>
+
     </body>
 	
 

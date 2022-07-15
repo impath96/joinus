@@ -37,6 +37,7 @@ import com.joinus.domain.ClubsVo;
 import com.joinus.domain.Criteria;
 import com.joinus.domain.InterestDetailsVo;
 import com.joinus.domain.InterestsVo;
+import com.joinus.domain.MeetingMembersVo;
 import com.joinus.domain.MeetingTotalBean;
 import com.joinus.domain.MemberDipsVo;
 import com.joinus.domain.MembersVo;
@@ -882,7 +883,6 @@ public class ClubController {
 				if(member != null) {
 				
 				
-					//회원정보(임의)
 					
 					model.addAttribute("member_no",member.getMember_no() );
 					log.info("회원넘버: "+member.getMember_no());
@@ -890,6 +890,7 @@ public class ClubController {
 					//모임회원 리스트
 					List<ClubMembersVo> clubmemberList = service.getClubMembers(club_no);
 					model.addAttribute("clubmemebrList", clubmemberList);
+					
 					//방문한 모임회원
 					int result = 0; 
 					ClubMembersVo clubmembersvo = service.getClubMemberNo(club_no,member.getMember_no());
@@ -898,10 +899,12 @@ public class ClubController {
 					}else if(clubmembersvo == null) { 
 						result = 0; }
 					model.addAttribute("clubmember", result);
-					log.info("모임회원일시 회원번호, 아닐시 0: "+result);
+					log.info("모임회원일시 회원번호, 아닐시 0 으로 출력 : "+result);
+					
 					//별점정보
 					List<ClubGradesVo> gradevo = service.getClubGrade(club_no);
 					model.addAttribute("clubGrade", gradevo);
+					
 					//별점참여
 					int result2 = 0;
 					Integer graded = service.getGradeinfo(club_no,member.getMember_no());
@@ -927,7 +930,11 @@ public class ClubController {
 					//정모리스트 
 					List<ClubMeetingsVo> meetings = service.getMeetings(club_no);
 					model.addAttribute("meetings", meetings);
-					log.info("정모리스트: "+meetings);
+					log.info("정모리스트: "+meetings);  
+					
+					//정모참석자 리스트
+					List<MeetingMembersVo> meetingMbrs = service.checkMeetingMember(club_no,member.getMember_no());
+					model.addAttribute("meetingMbrs",meetingMbrs);
 					
 					//게시글(사진빼오기)
 					List<ClubBoardsVo> boards = service.getBoardImageList(club_no);
@@ -954,7 +961,7 @@ public class ClubController {
 				members.setClub_no(club_no);
 				members.setClub_member_role("common"); //상세페이지에서 가입하면 무조건 회원
 				service.join(members);
-				System.out.println("모임가입완료");
+				log.info("모임가입완료");
 				
 			}
 			
@@ -963,26 +970,40 @@ public class ClubController {
 		@RequestMapping(value = "/{club_no}/grade", method = RequestMethod.POST)
 		public void clubGrade(@ModelAttribute ClubGradesVo vo) {
 					service.clubGrade(vo);
-					System.out.println("별점주기 완료");
+					log.info("별점주기 완료");
 			}
 		
 		// 찜하기 ajax (상세페이지에서 클릭)
 		@ResponseBody
-		@RequestMapping(value = "/{clubvo.club_no}/dip", method = RequestMethod.POST)
+		@RequestMapping(value = "/{club_no}/dip", method = RequestMethod.POST)
 		public void clubDip(@ModelAttribute MemberDipsVo vo) {
 			service.clubDip(vo.getMember_no(),vo.getClub_no());
-			System.out.println("찜하기 완료");
+			log.info("찜하기 완료");
 			
 		}
 		// 찜취소 ajax (상세페이지에서 클릭)
 		@ResponseBody
-		@RequestMapping(value = "/{clubvo.club_no}/dipX", method = RequestMethod.POST)
+		@RequestMapping(value = "/{club_no}/dipX", method = RequestMethod.POST)
 		public void clubDipX(@ModelAttribute MemberDipsVo vo) {
 			service.dipX(vo.getMember_no(),vo.getClub_no());
-			System.out.println("찜 취소완료");
+			log.info("찜 취소완료");
 			
 		}
 		
+		// 정모참석 ajax (상세페이지에서 alert창 띄움)
+				@ResponseBody
+				@RequestMapping(value = "/{club_no}/meeting/{meeting_no}/join",method=RequestMethod.POST)
+				public void joinMeeting(@ModelAttribute MeetingMembersVo vo) {
+						service.joinMeeting(vo);
+						log.info("정모참석 신청이 완료되었습니다");
+					}
+		// 정모참석취소 ajax (상세페이지에서 alert창 띄움)
+				@ResponseBody
+				@RequestMapping(value = "/{club_no}/meeting/{meeting_no}/leave",method=RequestMethod.POST)
+				public void outMeeting(@ModelAttribute MeetingMembersVo vo) {
+					service.outMeeting(vo);
+					log.info("정모신청이 취소되었습니다");
+				}
 		
 		
 	
