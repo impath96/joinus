@@ -4,10 +4,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="../../include/header.jsp"%>
+<%@ include file="../../include/club_header.jsp"%>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script type="text/javascript">
-
+// 	alert("접속한 member_no : "+${sessionScope.member_no});
+// 	alert("모임원 체크 : "+${checkMember});
+	
 	$(document).ready(function(){
 		
 		$('#all').click(function(){
@@ -25,49 +28,53 @@
 		$('#write').click(function(){
 			$(location).attr('href','/club/${club_no}/boards/new');
 		});
+		
 	});
+	
+	// 모임원만 상세보기 가능
+	function linkContent(club_board_no){
+		if(${checkMember == 0}){
+			alert('모임가입을 해주세요.');			
+			return false;
+		} else if(${checkMember == -1}){
+			location.href = "/member/signin";
+		} else {
+			location.href= "/club/${club_no}/boards/"+club_board_no;
+		}
+	}
+	
+	// 삭제메세지
+	if(${result == "DELOK" }){
+		alert("글이 정삭적으로 삭제되었습니다.");
+	}
 
 </script>
-
-    <!-- Projects Start -->
-	<div class="row mt-n2 wow fadeInUp" data-wow-delay="0.3s">
-		<div class="col-12 text-center">
-		    <ul class="list-inline mb-5" id="portfolio-flters">
-		        <li class="mx-2 active"><a href="">정보</a></li>
-		        <li class="mx-2"><a href="/club/${club_no}/boards">게시판</a></li>
-		        <li class="mx-2"><a href="/club/${club_no }/gallery">사진첩</a></li>
-		    </ul>
-		</div>
-	</div>
-    <!-- Projects End -->
-
 
 <!-- Feature Start -->
 <div class="container-xxl py-5">
 	<div class="container">
 		<div class="row g-5">
-
+		
 			<div style="margin-bottom: 2em;">
 				<button type="button" class="btn btn-primary" id="all">전체</button>
 				<button type="button" class="btn btn-primary" id="notice">공지사항</button>
 				<button type="button" class="btn btn-primary" id="free">자유글</button>
 				<button type="button" class="btn btn-primary" id="review">정모후기</button>
-				<button type="button" class="btn btn-primary" id="write" style="float: right;">글쓰기</button>
+				<c:if test="${checkMember == 1 }">
+					<button type="button" class="btn btn-primary" id="write" style="float: right;">글쓰기</button>
+				</c:if>
 			</div>
 
 
 			<c:forEach var="board" items="${boardList }">
-				<div class="wow fadeIn" onclick="location.href='/club/${club_no}/boards/${board.clubBoardsVo.club_board_no }';" style="cursor: pointer;">
-<!-- 				<img src="/resources/img/airplaneSky.jpg" style="border-radius: 10px; float: left; width: 200px; height: 150px; margin-right: 2em;"> -->
+				<div class="wow fadeIn" onclick="return linkContent(${board.clubBoardsVo.club_board_no});" style="cursor: pointer;">
 				<c:if test="${board.clubBoardsVo.club_board_image != null }">
-					<img src="${PageContext.request.contextPath }/resources/upload/boards/sm_${board.clubBoardsVo.club_board_image }" class="clubBoardList_smImage">
+					<img src="${PageContext.request.contextPath }/resources/upload/boards/sm_${board.clubBoardsVo.club_board_image }" class="clubBoardList_smImage" style="height: 200px;">
 				</c:if>
-	<!-- 				<div> -->
-	<!-- 					<h3 style="margin-top: 0.5em;">제목</h3> -->
-	<!-- 				</div> -->
 					<h5 class="mb-3" style="display: inline-block;">${board.clubBoardsVo.club_board_title }</h5><br>
 					<p class="clubBoardList_content">${board.clubBoardsVo.club_board_content }</p>
-					<div style="margin-bottom: 1px;">
+					<div style="margin-bottom: 1em;">
+						<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${board.membersVo.member_image }">
 						<span class="clubBoardList_writer">${board.membersVo.member_name }</span>
 						
 						<c:if test="${board.clubBoardsVo.club_board_updatedate == null }">
@@ -80,49 +87,32 @@
 					<i class="bi bi-heart"></i> <span class="clubBoardList_likeCnt">${board.clubBoardsVo.club_board_likecnt }</span>
 					<i class="fa fa-comments fa-fw"></i> <span class=clubBoardList_commentCnt>${board.clubBoardsVo.club_board_commentcnt }</span>
 				</div>
-				<hr>
+				<hr style="margin-top: 1em;">
 			</c:forEach>
 			
-<!-- 			<div> -->
-<!-- 				<ul class="pagination pagination-sm no-margin pull-right" style="float: right;"> -->
-		
-<!-- 				<li style="margin-right: 1em;"><a href="#">«</a></li> -->
-			
-<!-- 				<li > -->
-<!-- 					<a href="#" style="margin-right: 1em;">1</a> -->
-<!-- 					<a href="#" style="margin-right: 1em;">2</a> -->
-<!-- 					<a href="#" style="margin-right: 1em;">3</a> -->
-<!-- 					<a href="#" style="margin-right: 1em;">4</a> -->
-<!-- 				</li>			 -->
-			
-<!-- 				<li><a href="#">»</a></li> -->
-			
-<!-- 				</ul> -->
-<!-- 			</div> -->
+			<!-- 페이징블럭 -->
+			<!-- 카테고리선택했으면 링크다르게 걸어줘야 할 듯 -->
+			<c:if test="${board_type_no > 0 }">
 
-				<!-- 페이징블럭 -->
-				<!-- 카테고리선택했으면 링크다르게 걸어줘야 할 듯 -->
-				<c:if test="${board_type_no > 0 }">
-				
-				</c:if>
-				
-				<div class="d-flex justify-content-center py-3">
-		        	<ul class="list-group list-group-horizontal">
-		        		<c:if test="${pm.prev }">
-		        			<li><a href="${PageContext.request.contextPath }/club/${club_no }/boards?page=${pm.startPage-1}">&laquo;</a></li>
-		        		</c:if>
-		        		<c:forEach var ="idx" begin ="${pm.startPage }" end="${pm.endPage }">
-		        			<li class="list-group-item" <c:out value="${pm.cri.page == idx? 'class=active':'' }"/>>
-		        			<a href = "${PageContext.request.contextPath }/club/${club_no }/boards?page=${idx}" >${idx }</a>
-		        			</li>
-		        		</c:forEach>
-		        		
-		        		<c:if test="${pm.next && pm.endPage>0 }">
-		        			<li> <a href ="${PageContext.request.contextPath }/club/${club_no }/boards?page=${pm.endPage+1}">&raquo;</a></li>
-		        		</c:if>
-		        	
-		        	</ul>
-		        </div>
+			</c:if>
+			
+			<div class="d-flex justify-content-center py-3">
+	        	<ul class="list-group list-group-horizontal">
+	        		<c:if test="${pm.prev }">
+	        			<li><a href="${PageContext.request.contextPath }/club/${club_no }/boards?page=${pm.startPage-1}">&laquo;</a></li>
+	        		</c:if>
+	        		<c:forEach var ="idx" begin ="${pm.startPage }" end="${pm.endPage }">
+	        			<li class="list-group-item" <c:out value="${pm.cri.page == idx? 'class=active':'' }"/>>
+	        			<a href = "${PageContext.request.contextPath }/club/${club_no }/boards?page=${idx}" >${idx }</a>
+	        			</li>
+	        		</c:forEach>
+	        		
+	        		<c:if test="${pm.next && pm.endPage>0 }">
+	        			<li> <a href ="${PageContext.request.contextPath }/club/${club_no }/boards?page=${pm.endPage+1}">&raquo;</a></li>
+	        		</c:if>
+	        	
+	        	</ul>
+	        </div>
 			
 			
 		</div>

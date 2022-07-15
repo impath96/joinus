@@ -227,14 +227,16 @@ public class ClubDaoImpl implements ClubDao{
 		sqlSession.delete(NAMESPACE+".DeleteMeeting", club_meeting_no);
 
 	}
+	
+	@Override
+	public String getMeetingAddr(int club_meeting_no) {
+		
+		return sqlSession.selectOne(NAMESPACE2+".SelectAddr", club_meeting_no);
+	}
 
 	
 	
 //=======================허수빈=============================================================
-	
-
-
-
 
 	@Override
 	public void writeBoard(ClubBoardsVo vo) {
@@ -385,19 +387,48 @@ public class ClubDaoImpl implements ClubDao{
 
 	// =========================== 김민호 =============================
 	
+	// 내 모임 리스트 출력 - limit 제한
+	@Override
+	public List<ClubsVo> ClubListByMemberNo(int member_no, int limit) {
+		log.info("회원 번호가 {} 인 회원의 모임 리스트 출력", member_no);
+		Map<String, Integer> paramMap = new HashMap<String, Integer>();
+		paramMap.put("member_no", member_no);
+		paramMap.put("limit", limit);
+		return sqlSession.selectList(NAMESPACE+".ClubListByMemberNoLimit", paramMap);
+	}
+	
+	// 내 모임 리스트 출력 - 제한 X
 	@Override
 	public List<ClubsVo> ClubListByMemberNo(int member_no) {
 		log.info("회원 번호가 {} 인 회원의 모임 리스트 출력", member_no);
-		
-		return sqlSession.selectList(NAMESPACE+".ClubListByMemberNo", member_no);
+		return sqlSession.selectList(NAMESPACE+".ClubListByMember", member_no);
 	}
-	
 
 	@Override
 	public List<ClubsVo> myClubList(int member_no) {
 		log.info("회원 번호가 {}인 회원이 만든 모임 리스트 출력", member_no);
 		
 		return sqlSession.selectList(NAMESPACE+".myClubList", member_no);
+	}
+	
+	@Override
+	public List<ClubsVo> myClubList(int member_no, int limit) {
+		Map<String, Integer> paramMap = new HashMap<String, Integer>();
+		paramMap.put("member_no", member_no);
+		paramMap.put("limit", limit);
+		
+		return sqlSession.selectList(NAMESPACE+".myClubListLimit", paramMap);
+	}
+	
+
+	
+	// =============================================================================
+	public int checkClubMember(int club_no, int member_no) {
+		Map<String, Integer> param = new HashMap<String, Integer>();
+		param.put("club_no", club_no);
+		param.put("member_no", member_no);
+		
+		return sqlSession.selectOne(NAMESPACE+".checkClubMember", param);
 	}
 	
 	
@@ -543,6 +574,8 @@ public class ClubDaoImpl implements ClubDao{
 			public List<ClubBoardsVo> getBoards(Integer num) {
 				return sqlSession.selectList(NAMESPACE+".getBoardImageList", num);
 			}
+
+
 
 			
 			

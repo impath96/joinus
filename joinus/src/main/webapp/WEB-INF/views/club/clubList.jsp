@@ -95,7 +95,7 @@
                         <div class="position-relative p-4 pt-0">
                             <div class="service-icon">
                             <!-- 클럽관심사 아이콘  -->
-                                <img src="${PageContext.requeset.contextPath }/resources/upload/interests/${vo.interestsVo.interest_icon }" class="w-75 py-auto">
+                                <img src="${PageContext.requeset.contextPath }/resources/upload/interests/${vo.interestsVo.interest_icon }" class="w-100 py-auto">
                             </div>
                             <h4 class="mb-3 py-2">${vo.clubsVo.club_name }</h4>
                             <p>${vo.clubsVo.club_content }</p>

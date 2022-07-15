@@ -119,7 +119,6 @@
 <script type="text/javascript">
  
 $(function(){
-	alert('jquery! check');
 	
 	$("input[name^='rental']").on('click', function(e){
 		
@@ -132,7 +131,7 @@ $(function(){
 			type : 'GET',
 			contentType : "application/json",
 			success : function(data){
-			alert('갔다옴');
+			//alert('갔다옴');
 				//console.log(data);
 				//console.log(data[0].partnerPlacesVo.partner_place_name);
 				//console.log(data[0].rentalPlacesVo.rental_date);
@@ -147,13 +146,6 @@ $(function(){
 		});//ajax
 	
 	});//클릭
-	
-	
-
-		
-	
-	
-	
 	
 });//jquery
 

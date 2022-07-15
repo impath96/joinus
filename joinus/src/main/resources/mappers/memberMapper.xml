@@ -68,4 +68,23 @@
 		where member_email=#{member_email} and member_pass=#{member_pass}
 		]]>
 	</select>
+	<select id="myClubList" resultType="MyClubDto">
+		<![CDATA[
+		select 
+				c.club_no,
+				c.club_name, 
+				c.club_content, 
+				c.club_image, 
+				i.interest_icon 
+		from clubs c 
+		join club_interests ci
+			on c.club_no = ci.club_no
+		join interests i
+			on ci.interest_no = i.interest_no
+		where c.club_no in (
+							select club_no 
+							from club_members 
+							where member_no = #{member_no})
+		]]>
+	</select>
 </mapper>

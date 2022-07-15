@@ -150,13 +150,19 @@ public class ClubServiceImpl implements ClubService{
 		return dao.updateMeeting(club_meeting_no ,vo);
 	}
 	
-	
+	//정모 삭제
 	@Override
 	public void deleteClubMeeting(Integer club_meeting_no) {
 		
 		dao.deleteMeeting(club_meeting_no);
 		
 		
+	}
+	
+	@Override
+	public String getMeetingAddr(int club_meeting_no) {
+		
+		return dao.getMeetingAddr(club_meeting_no);
 	}
 	
 	
@@ -179,9 +185,19 @@ public class ClubServiceImpl implements ClubService{
 	}
 
 	@Override
+	public List<ClubsVo> getClubListByMemberNo(int member_no, int limit) {
+		return dao.ClubListByMemberNo(member_no, limit);
+	}
+
+	@Override
 	public List<ClubsVo> getMyClubList(int member_no) {
 		
 		return dao.myClubList(member_no);
+	}
+	
+	@Override
+	public List<ClubsVo> getMyClubList(int member_no, int limit) {
+		return dao.myClubList(member_no, limit);
 	}
 
 	// ========================================================
@@ -300,8 +316,10 @@ public class ClubServiceImpl implements ClubService{
 		dao.decreaseLikeCnt(club_board_no);
 	}
 	
-	
-	
+	@Override
+	public int checkClubMember(int club_no, int member_no) {
+		return dao.checkClubMember(club_no, member_no);
+	}
 	
 	
 	
@@ -421,5 +439,7 @@ public class ClubServiceImpl implements ClubService{
 		public List<ClubBoardsVo> getBoardsforimg(Integer num) {
 			return dao.getBoards(num);
 		}
+
+
 	
 }

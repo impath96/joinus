@@ -74,6 +74,8 @@ import com.joinus.domain.MembersVo;
 		//정모 삭제
 		public void deleteClubMeeting(Integer club_meeting_no);
 		
+		//정모 주소 호출
+		public String getMeetingAddr(int club_meeting_no);
 		
 //		public List<ClubBoardVo> getBoardListAll(Integer club_no);
 		
@@ -145,6 +147,9 @@ import com.joinus.domain.MembersVo;
 	
 	// 좋아요수 - 1
 	public void decreaseLikeCnt(int club_board_no);
+	
+	// 모임원이 맞는지 확인(1:모임가입O / 0:모임가입X)
+	public int checkClubMember(int club_no, int member_no);
 
 	
 		
@@ -152,7 +157,9 @@ import com.joinus.domain.MembersVo;
 	
 	//====================== 김민호 ======================
 	public List<ClubsVo> getClubListByMemberNo(int member_no);
+	List<ClubsVo> getClubListByMemberNo(int member_no, int limit);
 	public List<ClubsVo> getMyClubList(int member_no);
+	public List<ClubsVo> getMyClubList(int member_no, int limit);
 
 	
 	
@@ -207,4 +214,5 @@ import com.joinus.domain.MembersVo;
 		public List<ClubMeetingsVo> getMeetings(Integer num);
 		//게시글 리스트
 		public List<ClubBoardsVo> getBoardsforimg(Integer num);
+
 }

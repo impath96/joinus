@@ -76,6 +76,9 @@ public interface ClubDao {
 	
 	//정모 삭제하기
 	public void deleteMeeting(Integer club_meeting_no);
+	
+	//정모 주소 가져오기
+	public String getMeetingAddr(int club_meeting_no);
 
 	
 	//=========================고은비=========================
@@ -148,6 +151,9 @@ public interface ClubDao {
 	// 좋아요수 - 1
 	public void decreaseLikeCnt(int club_board_no);
 	
+	// 모임원이 맞는지 확인(1:모임가입O / 0:모임가입X)
+	public int checkClubMember(int club_no, int member_no);
+	
 	//=========================허수빈========================
 
 	//=========================김민호========================
@@ -155,8 +161,14 @@ public interface ClubDao {
 	// 내 모임 리스트
 	public List<ClubsVo> ClubListByMemberNo(int member_no);
 
-	// 나가 만든 모임 리스트
+	// 내 모임 리스트에 개수 제한 
+	List<ClubsVo> ClubListByMemberNo(int member_no, int limit);
+
+	// 내가 만든 모임 리스트
 	public List<ClubsVo> myClubList(int member_no);
+
+	public List<ClubsVo> myClubList(int member_no, int limit);
+	
 	
 	//=========================김민호========================
 	
@@ -213,6 +225,8 @@ public interface ClubDao {
 	public List<ClubMeetingsVo> getMeetings(Integer num);
 	//게시글 리스트
 	public List<ClubBoardsVo> getBoards(Integer num);
+
+	
 
 
 

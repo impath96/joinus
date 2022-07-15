@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.joinus.service.ClubService;
+import com.joinus.service.RentalService;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
@@ -28,18 +29,19 @@ public class RentalController {
 	@Inject
 	private ClubService service;
 	
-	
+	@Inject
+	private RentalService rentalService;
 	
 	private static final Logger log = LoggerFactory.getLogger(ClubController.class);
 	
 	// 결제(정보 받는 페이지, 안에서 ajax)
 	// http://localhost:8088/rental/pay
-			@RequestMapping(value ="/payment",method=RequestMethod.GET)
-			public void pay() {
-				
-				//form으로 받은 정보들로 결제 후 결제완료 페이지 출력
-				
-			}
+	@RequestMapping(value ="/payment",method=RequestMethod.GET)
+	public void pay() {
+		
+		//form으로 받은 정보들로 결제 후 결제완료 페이지 출력
+		
+	}
 	
 	
 	private IamportClient api;
@@ -58,6 +60,32 @@ public class RentalController {
 			
 	}
 	
+	
+	//================================================================================================
+	
+	
+	// http://localhost:8088/rental/placeList
+	// 대관리스트
+	@RequestMapping(value = "/placeList", method = RequestMethod.GET)
+	public void placeListGet() {
+		log.info(" placeListGet() 호출 ");
+		
+		// 모임장의 정보에 장소가 있으면 구 를 중심(위치)
+		// 장소유형은 일단 전체로
+		
+	}
+	
+	// http://localhost:8088/rental/partnerPlaces/{partner_place_no}
+	// http://localhost:8088/rental/partnerPlaces/1
+	// 대관상세
+	@RequestMapping(value = "/partnerPlaces/{partner_place_no}", method = RequestMethod.GET)
+	public String partnerPlaceContentGet(@PathVariable("partner_place_no") int partner_place_no, Model model) {
+		log.info(" partnerPlaceContentGet() 호출 ");
+		
+		model.addAttribute("partnerPlace", rentalService.getPartnerPlaceContent(partner_place_no));
+		
+		return "/rental/partnerPlaceContent";
+	}
 	
 	
 	

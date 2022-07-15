@@ -1,19 +1,18 @@
 package com.joinus;
 
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import org.junit.Test;
 
+import com.joinus.util.SHA256;
+
 public class PasswordHashingTest {
 	
-	//@Test
-	public void hashTest() {
+	@Test
+	public void hashTest() throws NoSuchAlgorithmException {
 		
-		String algorithm = "SHA-256";
-		
-		System.out.println("admin123 SHA-256 암호화 결과 : " + hashPassword(algorithm));
-		
+		String password = SHA256.encrypt("비밀번호");
+		System.out.println(password);
 	}
 	
 	// @Test
@@ -27,26 +26,7 @@ public class PasswordHashingTest {
 		System.out.println(savedLocation);
 		
 	}
-	
-	private String hashPassword(String hashAlgorithm) {
-		String password = "admin123";
-		String hashedPassword = "";
-		MessageDigest messageDigest = null;
-		try {
-			messageDigest = MessageDigest.getInstance(hashAlgorithm);
-			messageDigest.update(password.getBytes());
-			
-			byte[] encPassword = messageDigest.digest();
-			
-			for(int i=0; i<encPassword.length; i++) {
-				hashedPassword += Integer.toHexString(encPassword[i]&0xFF).toUpperCase();
-			}
-			
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-		return hashedPassword;
-	}
+
 
 
 }

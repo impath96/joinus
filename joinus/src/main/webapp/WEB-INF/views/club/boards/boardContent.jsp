@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="../../include/header.jsp"%>
+<%@ include file="../../include/club_header.jsp" %>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script type="text/javascript">
@@ -11,8 +12,9 @@
 	$(document).ready(function(){
 		
 		// 글을 상세보기 할 때 그 때의 세션값 확인(나중에 지우기)
-		var sessionMember = ${sessionScope.member_no};
-		alert("현재 보고 있는 회원의 member_no : "+sessionMember);
+// 		var sessionMember = ${sessionScope.member.member_no};
+// 		alert("접속한 member_no : "+sessionMember);
+// 		alert("글 작성자 member_no : "+${vo.membersVo.member_no});
 		
 		// 폼태그 정보
 		var formObj = $('form[role="form"]');
@@ -22,9 +24,11 @@
 			location.href = "/club/${club_no}/boards/${club_board_no}/modify";
 		});
 		$('#delBtn').click(function(){
-			formObj.attr("action", "/club/${club_no}/boards/${club_board_no}/delete");
-			formObj.attr("method","POST");
-			formObj.submit();
+			if(confirm("게시글을 삭제하시겠습니까?")){
+				formObj.attr("action", "/club/${club_no}/boards/${club_board_no}/delete");
+				formObj.attr("method","POST");
+				formObj.submit();
+			}
 		});
 		$('#backBtn').click(function(){
 			location.href = "/club/${club_no}/boards";
@@ -126,17 +130,17 @@
 		$('#like').click(function(){{
 // 			alert('좋아요클릭');
 			var like_check = ${checkLike};
-			alert("좋아요 확인 : "+like_check);
+// 			alert("좋아요 확인 : "+like_check);
 			
 			if(like_check == 1){
-				alert('좋아요 누른 회원');
+// 				alert('좋아요 누른 회원');
 				// 좋아요 취소
 				$.ajax({
 					type : "post",
 					url : "${pageContext.request.contextPath}/club/${club_no}/boards/${club_board_no}/likeDown",
 					// 만약 data를 넘겨줄것같으면 세션값에 저장된 member_no -> 근데 굳이 view에서 세션값을 넘겨줄 필요가..? 컨트롤러에서 세션값 바로 쓰면 될 것 같은데
 					success : function(){
-						alert('좋아요 취소');
+// 						alert('좋아요 취소');
 						location.reload();
 					},
 					erorr : function error(){
@@ -145,13 +149,13 @@
 				});
 			} else {
 				// 좋아요 안누른 회원
-				alert('좋아요 안누른 회원');
+// 				alert('좋아요 안누른 회원');
 				// 좋아요
 				$.ajax({
 					type : "post",
 					url : "${pageContext.request.contextPath}/club/${club_no}/boards/${club_board_no}/likeUp",
 					success : function(){
-						alert('좋아요');
+// 						alert('좋아요');
 						location.reload();
 					},
 					error : function error(){
@@ -177,17 +181,6 @@
 
 </script>
 
-<!-- nav -->
-<div class="row mt-n2 wow fadeInUp" data-wow-delay="0.3s">
-	<div class="col-12 text-center">
-	    <ul class="list-inline mb-5" id="portfolio-flters">
-	        <li class="mx-2"><a href="">정보</a></li>
-	        <li class="mx-2"><a href="/club/${club_no}/boards">게시판</a></li>
-	        <li class="mx-2"><a href="/club/${club_no }/gallery">사진첩</a></li>
-	    </ul>
-	</div>
-</div>
-<!-- nav -->
 
 <form action="" role="form">
 	<input type="hidden" name="club_board_no" value="${club_board_no }">
@@ -219,14 +212,18 @@
 						</div> 
 						<div class="col-12">
 							<div class="form-floating" style="color: black;">
-								<pre class="boardContent">내용 : ${vo.clubBoardsVo.club_board_content }</pre>
+								<pre class="boardContent" style="margin-top: 2em;">${vo.clubBoardsVo.club_board_content }</pre>
 							</div>
-							<img src="${PageContext.request.contextPath }/resources/upload/boards/${vo.clubBoardsVo.club_board_image }" class="ContentImage">
+							<c:if test="${vo.clubBoardsVo.club_board_image != null}">
+								<img src="${PageContext.request.contextPath }/resources/upload/boards/${vo.clubBoardsVo.club_board_image }" class="ContentImage">
+							</c:if>
 						</div>
 						
 						<div class="col-12 clubWrite_buttonMargin" style="text-align: right;">
-							<button type="button" class="btn btn-primary py-2 mt-2 me-2" id="modBtn">수정</button>
-							<button type="button" class="btn btn-primary py-2 mt-2 me-2" id="delBtn">삭제</button>
+							<c:if test="${sessionScope.member.member_no == vo.membersVo.member_no }">
+								<button type="button" class="btn btn-primary py-2 mt-2 me-2" id="modBtn">수정</button>
+								<button type="button" class="btn btn-primary py-2 mt-2 me-2" id="delBtn">삭제</button>
+							</c:if>
 							<button type="button" class="btn btn-primary py-2 mt-2 me-2" id="backBtn">목록</button>
 						</div>
 						
@@ -282,7 +279,7 @@
 							<article class="comment${comment.boardCommentsVo.board_comment_no }">
 							
 								<div class="col-md-12">
-									<div class="form-floating" style="float: left">
+									<div class="form-floating" style="text-align: left;">
 										<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${comment.membersVo.member_image }">
 										<span style="color: black; margin-left: 5px;">${comment.membersVo.member_name }</span>
 										<small style="margin-left: 1em;">
@@ -294,10 +291,11 @@
 											</c:if>
 										</small>
 									</div>
-									<div class="form-group pull-right" style="text-align: right;">
-										<!-- 세션값과 댓글작성자비교 -->
-										<input type="button" id="commentUpBtn${comment.boardCommentsVo.board_comment_no }" class="btn btn-primary py-2 mt-2 me-2 tabActive" value="수정">
-										<input type="button" id="commentDelBtn${comment.boardCommentsVo.board_comment_no }" class="btn btn-primary py-2 mt-2 me-2" value="삭제">
+									<div class="form-group pull-right" style="float: right;">
+										<c:if test="${sessionScope.member.member_no == comment.membersVo.member_no }">
+											<input type="button" id="commentUpBtn${comment.boardCommentsVo.board_comment_no }" class="btn btn-primary py-2 mt-2 me-2 tabActive" value="수정">
+											<input type="button" id="commentDelBtn${comment.boardCommentsVo.board_comment_no }" class="btn btn-primary py-2 mt-2 me-2" value="삭제">
+										</c:if>
 									</div>
 									<div id="comment_content">
 										${comment.boardCommentsVo.board_comment_content }
