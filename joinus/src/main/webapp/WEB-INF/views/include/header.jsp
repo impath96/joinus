@@ -112,6 +112,12 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         white-space: nowrap;
       }
     </style>
+    <style type="text/css">
+/*     	* {
+    		font-size : 1.5rem !important;
+    		font-weight : 700 !important;
+    	} */
+    </style>
   </head>
 
   <body>

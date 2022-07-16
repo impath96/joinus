@@ -14,6 +14,13 @@
 	<select id="selectMemberByNo" resultType="MembersVo">
 		select * from members where member_no=#{member_no}
 	</select>
+	
+	<select id="getMemberAll" resultType="MembersVo">
+		<![CDATA[
+			select * from members
+		]]>
+	</select>
+	
 	<insert id="insertMember" parameterType="MembersVo">
 		<![CDATA[
 		insert into members

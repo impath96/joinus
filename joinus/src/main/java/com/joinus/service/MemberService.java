@@ -17,5 +17,6 @@ public interface MemberService {
 	public MembersVo resetPassword(int member_no, String newPassword);
 	public void updateName(String memberName, int member_no);
 	public List<MyClubDto> getMyClubList(int member_no);
+	public List<MembersVo> findMemberAll();
 
 }
