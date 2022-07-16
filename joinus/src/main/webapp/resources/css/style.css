@@ -50,7 +50,7 @@
 
 /*** Button ***/
 .btn {
-    font-weight: 500;
+    font-weight: 800;
     transition: .5s;
     font-family: 'NanumSquare';
 }
@@ -100,8 +100,8 @@
     margin-right: 30px;
     padding: 25px 0;
     color: var(--dark);
-    font-size: 15px;
-    font-weight: 500;
+    font-size: 27px;
+    font-weight: 750;
     font-family: 'NanumSquare';
     text-transform: uppercase;
     outline: none;
