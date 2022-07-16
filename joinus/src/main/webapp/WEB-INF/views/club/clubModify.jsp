@@ -14,7 +14,7 @@
 		<div class="col-md-7 order-md-2">
 		<input type="text" class="form-control border-1 py-3 md-3" style="height: 55px;" value = "${clubInfo[0].club_name}" name="club_name">
 		<br>
-		<textarea class="form-control border-1" style="resize: none;" rows="15" name="club_content">${clubInfo[0].club_content}</textarea>
+		<textarea class="form-control border-1" style="resize: none;" rows="15" name="club_content" id="editor_textarea">${clubInfo[0].club_content}</textarea>
       	</div>
 	    <div class="col-md-5 order-md-1">
 	    	<img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${clubInfo[0].club_image}" class="w-100 py-auto">
@@ -33,5 +33,13 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"> </script>
+<script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
 
+<script>
+	ClassicEditor
+		.create(document.querySelector('#editor_textarea'))
+		.catch(error=>{
+			console.error(error);
+		});
+</script>
 <%@ include file="../include/footer.jsp"%>

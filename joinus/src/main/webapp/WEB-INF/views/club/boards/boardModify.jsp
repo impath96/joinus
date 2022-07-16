@@ -5,6 +5,7 @@
 <%@ include file="../../include/header.jsp"%>
 <%@ include file="../../include/club_header.jsp" %>
 
+
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script type="text/javascript">
 	
@@ -21,10 +22,10 @@
 				document.fr.club_board_title.focus();
 				return false;
 			}
-			if(!document.fr.club_board_content.value){
-				document.fr.club_board_content.focus();
-				return false;
-			}
+//			if(!document.fr.club_board_content.value){
+//				document.fr.club_board_content.focus();
+//				return false;
+//			}
 			
 		}); //등록버튼
 		
@@ -36,6 +37,7 @@
 	});
 	
 </script>
+
 
 <div class="container-fluid bg-light overflow-hidden px-lg-0">
 	<div class="container contact px-lg-0" style="width: 60%">
@@ -74,10 +76,10 @@
 						</div> 
 						<div class="col-12">
 							<div class="form-floating">
-								<textarea class="form-control" placeholder="content"
+								<textarea class="form-control" placeholder="내용"
 									id="club_board_content" name="club_board_content"
 									style="height: 100px">${board.clubBoardsVo.club_board_content }</textarea>
-								<label for="club_board_content">내용</label>
+								<!-- <label for="club_board_content">내용</label> -->
 							</div>
 						</div>
 						
@@ -93,6 +95,14 @@
 		</div>
 	</div>
 </div>
+<script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
+<script>
+	ClassicEditor
+		.create(document.querySelector('#club_board_content'))
+		.catch(error=>{
+			console.error(error);
+	});
+</script>
 
 
 <%@ include file="../../include/footer.jsp"%>

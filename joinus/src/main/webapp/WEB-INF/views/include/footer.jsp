@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-  <div class="container-fluid bg-dark text-body footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeIn;">
+  <div class="container-fluid bg-dark text-body footer mt-5 pt-2 wow fadeIn" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeIn;">
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col-lg-50 col-md-6">
                     <h5 class="text-white mb-4">About</h5>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
                     <p class="mb-2"><i class="fa-brands fa-github me-3"></i>https://github.com/impath96/joinus.git</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>ITWill-Busan </p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
                     <div class="d-flex pt-2">
                         <a class="btn btn-square btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
                         <a class="btn btn-square btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
@@ -17,11 +17,11 @@
                 </div>
                 <div class="col-lg-50 col-md-6">
                     <h5 class="text-white mb-4">Contact Us</h5>
-                    <i class="fa-solid fa-envelope me-3"></i> 3unbbb@gmail.com <br>
-                    <i class="fa-solid fa-envelope me-3"></i> rlaqlstjd0206@naver.com <br>
-                    <i class="fa-solid fa-envelope me-3"></i> anmedi3623@naver.com <br>
-                    <i class="fa-solid fa-envelope me-3"></i> anmedi3623@naver.com <br>
-                    <i class="fa-solid fa-envelope me-3"></i> xoxomini4@kakao.com <br> 
+                    <i class="fa-solid fa-envelope me-3"></i> Kang Sungmin - xoxomini4@kakao.com <br>
+                    <i class="fa-solid fa-envelope me-3"></i> Goh Eunbi - 3unbbb@gmail.com <br> 
+                    <i class="fa-solid fa-envelope me-3"></i> Kim Minho - impath96@gmail.com <br>
+                    <i class="fa-solid fa-envelope me-3"></i> Kim SungBin - rlaqlstjd0206@naver.com <br>
+                    <i class="fa-solid fa-envelope me-3"></i> Heo Subin - anmedi3623@naver.com <br>
                 </div>
 
             </div>
@@ -30,7 +30,7 @@
             <div class="copyright">
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        © <a href="#">Your Site Name</a>, All Right Reserved.
+                        © <a href="#">JoinUs</a>, All Right Reserved.
                     </div>
                     <div class="col-md-6 text-center text-md-end">
                         <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
