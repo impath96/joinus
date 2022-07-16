@@ -13,7 +13,7 @@
 	var config = {
 			dateFormat : 'yy-mm-dd',
 			showOn : "button",
-			buttonText : "날짜 선택",
+			buttonText : "선택",
 			prevText : '이전 달',
 			nextText : '다음 달',
 			monthNames : ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
@@ -65,7 +65,7 @@
 			<h1>${partnerPlace.partner_place_name }</h1>
 			
 			<div style="width: 70%;">
-				<img style="width: 95%;" src="${PageContext.request.contextPath }/resources/upload/partner_place/${partnerPlace.partner_place_image}">
+				<img style="width: 95%; max-height: 550px;" src="${PageContext.request.contextPath }/resources/upload/partner_place/${partnerPlace.partner_place_image}">
 				<div style="margin-top: 3em;">
 					<pre class="boardContent">${partnerPlace.partner_place_content }</pre>
 				</div>
@@ -115,7 +115,7 @@
 					
 					<!-- 일자 -->
 					<div style="margin-bottom: 2em;">
-					날짜 선택
+					날짜 선택 (아래의 버튼을 클릭해주세요)
 						<input class="form-control" id="rental_date" name="rental_date" autocomplete="off" readonly style="background-color: white;">
 					</div>
 					
