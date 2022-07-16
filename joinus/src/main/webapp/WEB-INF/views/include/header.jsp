@@ -38,6 +38,9 @@
     <!-- hsb css -->
     <link href="${PageContext.request.contextPath }/resources/css/hsb.css" rel="stylesheet">
     
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/774827a7a5.js" crossorigin="anonymous"></script>
+    
     <style type="text/css">
     	.service-item {
     		height : 100%;
@@ -70,6 +73,8 @@
 		    text-align: right;
 		    white-space: nowrap;
     	}
+    	#login, #logout{
+    		font-size : 30;}
     	
     </style>
 </head>
@@ -87,10 +92,10 @@
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
         <a href="${PageContext.request.contextPath }/" class="navbar-brand d-flex align-items-center border-end px-4 px-lg-5">
- 			<img src="${PageContext.request.contextPath }/resources/img/joinus.jpg" alt="" width="180" height="80">
+ 			<img src="${PageContext.request.contextPath }/resources/img/joinus.png" alt="" width="200" height="60" >
            <!--  <h2 class="m-0 text-primary">JOINUS</h2> -->
         </a>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="collapse navbar-collapse px-3" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="${PageContext.request.contextPath }/" class="nav-item nav-link">Home</a>
                 <a href="project.html" class="nav-item nav-link">JOINUS</a>
@@ -111,16 +116,14 @@
             </c:if>    
             </div>
             <c:if test="${empty member_no }">
-            <a href="${PageContext.request.contextPath }/member/signin" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">LOGIN<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="${PageContext.request.contextPath }/member/signin" id="login" class="btn btn-primary rounded-2 py-3 px-lg-5 d-none d-lg-block">LOGIN<i class="fa-solid fa-arrow-right-to-bracket px-2"></i></a>
             </c:if>    
             <c:if test="${!empty member_no }">
-            <a href="${PageContext.request.contextPath }/member/signin" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">LOGOUT<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="${PageContext.request.contextPath }/member/signin" id="logout" class="btn btn-primary rounded-2 py-3 px-lg-5 d-none d-lg-block">LOGOUT<i class="fa-solid fa-arrow-right-to-bracket px-2"></i></a>
             </c:if>    
         </div>
     </nav>
     <!-- Navbar End -->
-
-<<<<<<< HEAD
     <!-- Page Header Start -->
 <!--     <div class="container-fluid page-header py-5 mb-5">
       <div class="container py-5">

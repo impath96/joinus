@@ -21,12 +21,12 @@ $(document).ready(function(){
     
    <!-- Projects Start -->
     <div class="container-xxl py-5 ">
-        <div class="container maincSize">
-            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+        <div class="container maincSize py-5">
+            <div class="text-center mx-auto mb-5 wow fadeInUp py-5" data-wow-delay="0.1s" style="max-width: 600px;">
                 <h6 class="mainP">함께하는, 보다 행복한 삶</h6>
-            	<div ><img src="../resources/img/joinus.jpg" class="mainJoinus"></div><br>
+            	<div ><img src="../resources/img/joinus.png" class="mainJoinus"></div><br>
                 <h1 class="mb-4">지금 바로 시작해보세요.</h1><hr>
-                <button class="btn btn-primary MainBtn" onclick="location.href='${PageContext.requeset.contextPath }/club/new'"> 모임만들기 </button>
+                <button class="btn btn-primary MainBtn m-5 py-3" onclick="location.href='${PageContext.requeset.contextPath }/club/new'"> 모임만들기 </button>
             </div><br><br>
           
     
