@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.joinus.domain.Criteria;
 import com.joinus.domain.MemberInterestsVo;
 import com.joinus.domain.MembersVo;
 import com.joinus.domain.MyClubDto;
@@ -132,9 +133,14 @@ public class MemberServiceImpl implements MemberService {
 
 	// 모든 회원 목록 출력
 	@Override
-	public List<MembersVo> findMemberAll() {
+	public List<MembersVo> findMemberAll(Criteria cri) {
 		
-		return memberDao.getMemberAll();
+		return memberDao.getMemberAll(cri);
+	}
+
+	@Override
+	public int getTotalCount() {
+		return memberDao.getTotalCount();
 	}
 
 }
