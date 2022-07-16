@@ -38,10 +38,10 @@
 				document.fr.club_board_title.focus();
 				return false;
 			}
-			if(!document.fr.club_board_content.value){
-				document.fr.club_board_content.focus();
-				return false;
-			}
+//			if(!document.fr.club_board_content.value){
+//				document.fr.club_board_content.focus();
+//				return false;
+//			}
 			
 			$('#count').val(count);
 			
