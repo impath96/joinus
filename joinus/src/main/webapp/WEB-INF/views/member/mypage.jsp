@@ -85,13 +85,13 @@
 								<h4 class="mb-2">내가 만든 모임</h4>
 								<div class="box-content">
 									<c:forEach var="myClub" items="${myClubList }">
-									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+									<a href="${pageContext.request.contextPath }/club/${myClub.club_no}" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
 										<div class="club_name">${myClub.club_name }</div>
 										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
 									</a>
 									</c:forEach>
 								</div>
-								<a class="small fw-medium bottom-right" href="/members/my-clublist">내 모임 전체보기<i
+								<a class="small fw-medium bottom-right" href="/member/my-clublist">내 모임 전체보기<i
 									class="fa fa-arrow-right ms-2"></i></a>
 							</div>
 						</div>

@@ -108,6 +108,12 @@ public class MemberDaoImpl implements MemberDao {
 		log.info("내가 참여하고 있는 모든 모임 리스트 : {}", list);
 		return list;
 	}
+
+	@Override
+	public List<MembersVo> getMemberAll() {
+		List<MembersVo> members = sqlSession.selectList(NAMESPACE+".getMemberAll");
+		return members;
+	}
 	
 	
 	

@@ -130,4 +130,11 @@ public class MemberServiceImpl implements MemberService {
 		return list;
 	}
 
+	// 모든 회원 목록 출력
+	@Override
+	public List<MembersVo> findMemberAll() {
+		
+		return memberDao.getMemberAll();
+	}
+
 }
