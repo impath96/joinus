@@ -22,6 +22,7 @@ import com.joinus.domain.ClubsVo;
 import com.joinus.domain.Criteria;
 import com.joinus.domain.InterestDetailsVo;
 import com.joinus.domain.InterestsVo;
+import com.joinus.domain.MeetingMembersVo;
 import com.joinus.domain.MeetingTotalBean;
 import com.joinus.domain.MembersVo;
 import com.joinus.persistence.ClubDao;
@@ -158,11 +159,17 @@ public class ClubServiceImpl implements ClubService{
 		
 		
 	}
-	
+	//정모 장소
 	@Override
 	public String getMeetingAddr(int club_meeting_no) {
 		
 		return dao.getMeetingAddr(club_meeting_no);
+	}
+	
+	//정모 멤버
+	@Override
+	public List<MeetingTotalBean> getMeetingMember(Integer club_meeting_no, Integer club_no) {
+		return dao.getMeetingMember(club_meeting_no, club_no);
 	}
 	
 	
@@ -179,6 +186,8 @@ public class ClubServiceImpl implements ClubService{
 
 	//========================= 김민호 =======================
 	
+
+
 	@Override
 	public List<ClubsVo> getClubListByMemberNo(int member_no) {
 		return dao.ClubListByMemberNo(member_no);

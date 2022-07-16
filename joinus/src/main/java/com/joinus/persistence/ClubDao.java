@@ -4,6 +4,9 @@ package com.joinus.persistence;
 import java.util.List;
 import java.util.Map;
 
+import com.joinus.domain.BoardCommentsVo;
+import com.joinus.domain.BoardCriteria;
+import com.joinus.domain.BoardLikesVo;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubGradesVo;
@@ -11,19 +14,12 @@ import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubTotalBean;
 import com.joinus.domain.ClubsVo;
-import com.joinus.domain.BoardCommentsVo;
-import com.joinus.domain.BoardCriteria;
-import com.joinus.domain.BoardLikesVo;
-import com.joinus.domain.BoardTotalBean;
-import com.joinus.domain.ClubsVo;
 import com.joinus.domain.Criteria;
-import com.joinus.domain.MeetingTotalBean;
-import com.joinus.domain.MembersVo;
-import com.joinus.domain.RentalPlacesVo;
-import com.joinus.domain.ClubBoardsVo;
-import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.InterestDetailsVo;
 import com.joinus.domain.InterestsVo;
+import com.joinus.domain.MeetingMembersVo;
+import com.joinus.domain.MeetingTotalBean;
+import com.joinus.domain.MembersVo;
 
 public interface ClubDao {
 	
@@ -79,6 +75,10 @@ public interface ClubDao {
 	
 	//정모 주소 가져오기
 	public String getMeetingAddr(int club_meeting_no);
+	
+	//정모 인원
+	public List<MeetingTotalBean> getMeetingMember(Integer club_meeting_no, Integer club_no);
+
 
 	
 	//=========================고은비=========================
@@ -226,6 +226,7 @@ public interface ClubDao {
 	//게시글 리스트
 	public List<ClubBoardsVo> getBoards(Integer num);
 
+	
 	
 
 

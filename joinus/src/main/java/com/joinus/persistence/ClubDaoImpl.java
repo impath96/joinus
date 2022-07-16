@@ -16,18 +16,17 @@ import com.joinus.domain.BoardCriteria;
 import com.joinus.domain.BoardLikesVo;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
-import com.joinus.domain.Criteria;
 import com.joinus.domain.ClubGradesVo;
 import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubTotalBean;
 import com.joinus.domain.ClubsVo;
 import com.joinus.domain.Criteria;
-import com.joinus.domain.MeetingTotalBean;
 import com.joinus.domain.InterestDetailsVo;
 import com.joinus.domain.InterestsVo;
+import com.joinus.domain.MeetingMembersVo;
+import com.joinus.domain.MeetingTotalBean;
 import com.joinus.domain.MembersVo;
-import com.joinus.domain.RentalPlacesVo;
 
 @Repository
 public class ClubDaoImpl implements ClubDao{
@@ -220,7 +219,6 @@ public class ClubDaoImpl implements ClubDao{
 	}
 
 	//정모 삭제
-	
 	@Override
 	public void deleteMeeting(Integer club_meeting_no) {
 		
@@ -228,15 +226,28 @@ public class ClubDaoImpl implements ClubDao{
 
 	}
 	
+	//정모 주소
 	@Override
 	public String getMeetingAddr(int club_meeting_no) {
 		
 		return sqlSession.selectOne(NAMESPACE2+".SelectAddr", club_meeting_no);
 	}
-
+	
+	//정모 멤버
+	@Override
+	public List<MeetingTotalBean> getMeetingMember(Integer club_meeting_no, Integer club_no) {
+		
+		Map<String, Object> param= new HashMap<String, Object>();
+		param.put("club_meeting_no", club_meeting_no);
+		param.put("club_no", club_no);
+		
+		return sqlSession.selectList(NAMESPACE2+".GetMeetingMember", param);
+	}
 	
 	
 //=======================허수빈=============================================================
+
+
 
 	@Override
 	public void writeBoard(ClubBoardsVo vo) {

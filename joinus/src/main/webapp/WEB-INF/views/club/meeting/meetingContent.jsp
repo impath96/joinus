@@ -10,30 +10,45 @@
 
 <body> 
 <!-- 정모 -->
-<div class="container px-5">
-	<div class="row g-5">
+<div class="container px-5 py-5">
+	<div class="row g-5 py-5">
+	
+		<!-- 참가인원 -->
+	  <div class="col-md-5 col-lg-4 order-md-last">
+        <h4 class="d-flex justify-content-between align-items-center mb-1">
+          <span class="text-primary py-5">🌟 현재 참가인원</span>
+        </h4>
+       <c:forEach var = "vo" items="${meetingMember }" varStatus="status">
+        <ul class="list-group mb-3">
+          <li class="list-group-item d-flex justify-content-between lh-sm" >
+              <h6 class="my-2">${vo.membersVo.member_name }</h6> <br>
+          </li>
+        </ul>
+        </c:forEach>
+      </div>
+      <!-- 참가인원 -->
       
       <div class="col-md-7 col-lg-8">
-        <h4 class="mb-3">일정 상세보기</h4>
         <form class="needs-validation" action ="" role ="form">
+        <h4 class="mb-5">${meetingList[0].club_meeting_title}</h4>
           <div class="row g-3">
             <div class="col-12">
-              <label for="firstName" class="form-label">제목</label>
-              <input type="text" class="form-control" name="club_meeting_title" value="${meetingList[0].club_meeting_title}" disabled="disabled">
-            </div>
-            
-            <div class="col-12">
-              <label for="address" class="form-label">날짜</label>
+              <label for="address" class="form-label">🗓️ 날짜</label>
               <input type="date" class="form-control" id="club_meeting_date" value="${meetingList[0].club_meeting_date}" disabled="disabled">
             </div>
             
             <div class="col-12">
-              <label for="address" class="form-label">정원</label>
+              <label for="address" class="form-label">⏰ 시간</label>
+              <input type="text" class="form-control" id="club_meeting_time" value="${meetingList[0].club_meeting_time}" disabled="disabled">
+            </div>
+            
+            <div class="col-12">
+              <label for="address" class="form-label">🙋 정원</label>
               <input type="number" class="form-control" name="club_meeting_capacity" value="${meetingList[0].club_meeting_capacity}" disabled="disabled">
             </div>
             
             <div class="col-12">
-              <label for="address" class="form-label">장소</label>
+              <label for="address" class="form-label">🏩 장소</label>
               	<div class="input-group">
               		<input type="text" class="form-control" id="club_meeting_location" value="${meetingList[0].club_meeting_location}" disabled="disabled">
             	</div>

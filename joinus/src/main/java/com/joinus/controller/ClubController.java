@@ -37,6 +37,7 @@ import com.joinus.domain.ClubsVo;
 import com.joinus.domain.Criteria;
 import com.joinus.domain.InterestDetailsVo;
 import com.joinus.domain.InterestsVo;
+import com.joinus.domain.MeetingMembersVo;
 import com.joinus.domain.MeetingTotalBean;
 import com.joinus.domain.MemberDipsVo;
 import com.joinus.domain.MembersVo;
@@ -290,12 +291,14 @@ public class ClubController {
 			}
 			
 			List<ClubMeetingsVo> meetingList = service.getMeeting(club_meeting_no);
-			log.info(meetingList+"");
+			List<MeetingTotalBean> meetingMember = service.getMeetingMember(club_meeting_no, club_no);
+			log.info(meetingMember+"");
 			
 			List<ClubsVo> clubInfo = service.clubInfo(club_no);
 			log.info(clubInfo+"");
 			model.addAttribute("clubInfo", clubInfo);
 			model.addAttribute("meetingList", meetingList);
+			model.addAttribute("meetingMember", meetingMember);
 			model.addAttribute("result", result);
 			return "/club/meeting/meetingContent";
 			

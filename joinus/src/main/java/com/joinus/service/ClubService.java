@@ -18,6 +18,7 @@ import com.joinus.domain.ClubsVo;
 import com.joinus.domain.Criteria;
 import com.joinus.domain.InterestDetailsVo;
 import com.joinus.domain.InterestsVo;
+import com.joinus.domain.MeetingMembersVo;
 import com.joinus.domain.MeetingTotalBean;
 import com.joinus.domain.MembersVo;
 
@@ -77,7 +78,9 @@ import com.joinus.domain.MembersVo;
 		//정모 주소 호출
 		public String getMeetingAddr(int club_meeting_no);
 		
-//		public List<ClubBoardVo> getBoardListAll(Integer club_no);
+		//정모 멤버
+		public List<MeetingTotalBean> getMeetingMember(Integer club_meeting_no, Integer club_no);
+
 		
 
 
@@ -214,5 +217,5 @@ import com.joinus.domain.MembersVo;
 		public List<ClubMeetingsVo> getMeetings(Integer num);
 		//게시글 리스트
 		public List<ClubBoardsVo> getBoardsforimg(Integer num);
-
+		
 }
