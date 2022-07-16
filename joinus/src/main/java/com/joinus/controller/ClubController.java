@@ -268,6 +268,7 @@ public class ClubController {
 		}
 		
 		//http://localhost:8088/club/1/meeting/1
+		
 		@RequestMapping(value="/{club_no}/meeting/{club_meeting_no}", method = RequestMethod.GET)
 		public String meetingModifyGET(Model model, HttpSession session,
 				@PathVariable("club_no") Integer club_no, @PathVariable("club_meeting_no") Integer club_meeting_no ) {
