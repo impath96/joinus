@@ -29,7 +29,7 @@
                 <div class="accordion-body p-2">
                   <ul class="p-0 mb-2">
                     <li class="py-2 text-center">
-                      <a href="${pageContext.request.contextPath }/admin/members">전체 회원 목록</a>
+                      <a href="">전체 회원 목록</a>
                     </li>
                     <li class="py-2 text-center">
                       <a href="">정지 회원 목록</a>
@@ -113,7 +113,60 @@
               </form>
             </div>
           </div>
-          
+          <section class="row box mt-4 p-3">
+            <div class="box-header mt-2 p-2 fs-5 fw-bold border border-dark">
+              header
+            </div>
+            <div class="box-content mt-2 ">
+              <table style="width: 100%">
+                <thead class="fs-5 border-bottom">
+                  <tr>
+                    <th class="py-2 px-3">닉네임</th>
+                    <th class="p-2">계정</th>
+                    <th class="p-2">상태</th>
+                    <th class="p-2">가입일</th>
+                  </tr>
+                </thead>
+                <tbody class="fs-5">
+                <c:forEach var="member" items="${members }">
+                  <tr>
+                    <td class="py-2 px-3">${member.member_name }</td>
+                    <td class="p-2">${member.member_email }</td>
+                    <td class="p-2">${member.member_status }</td>
+                    <td class="p-2">${member.member_regdate }</td>
+                  </tr>
+                </c:forEach>
+                </tbody>
+              </table>
+            </div>
+            <div class="box-footer mt-2">
+              <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end mb-0">
+                	<c:if test="${pageMaker.prev }">
+	                	<li class="page-item">
+	                    	<a class="page-link" href="members?page=${pageMaker.startPage-1 }" aria-label="Previous">
+	                      		<span aria-hidden="true">&laquo;</span>
+	                    	</a>
+	                  	</li>
+	                </c:if>
+	                <c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">			
+                 		<li class="page-item <c:out value="${pageMaker.cri.page == idx?'active':'' }"/>" 
+                 				<c:out value="${pageMaker.cri.page == idx?'aria-current = page':'' }"/>
+                 				>
+                 			<a class="page-link" href="members?page=${idx }">${idx }</a>
+                 		</li>
+					</c:forEach>
+					<c:if test="${pageMaker.next && pageMaker.endPage > 0 }">
+	                  	<li class="page-item">
+	                    	<a class="page-link" href="members?page=${pageMaker.endPage+1 }" aria-label="Next">
+	                      		<span aria-hidden="true">&raquo;</span>
+	                    	</a>
+	                  	</li>
+					</c:if>
+                </ul>
+              </nav>
+            </div>
+          </section>
         </div>
       </div>
     </div>

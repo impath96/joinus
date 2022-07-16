@@ -18,9 +18,16 @@
 	<select id="getMemberAll" resultType="MembersVo">
 		<![CDATA[
 			select * from members
+			where member_no > 0
+			order by member_no asc, member_regdate asc
+			limit #{pageStart}, ${perPageNum}
 		]]>
 	</select>
-	
+	<select id="getTotalCount" resultType="int">
+		<![CDATA[
+			select count(*) from members;
+		]]>
+	</select>
 	<insert id="insertMember" parameterType="MembersVo">
 		<![CDATA[
 		insert into members
@@ -43,6 +50,7 @@
 			#{member_location}
 			)
 		]]>
+		
 	</insert>
 	<insert id="insertMemberInterest">
 		insert into member_interests(member_no, interest_no)

@@ -3,6 +3,7 @@ package com.joinus.persistence;
 
 import java.util.List;
 
+import com.joinus.domain.Criteria;
 import com.joinus.domain.MembersVo;
 import com.joinus.domain.MyClubDto;
 
@@ -35,6 +36,8 @@ public interface MemberDao {
 	public List<MyClubDto> myClubList(int member_no);
 
 	// 모든 회원 목록 
-	public List<MembersVo> getMemberAll();
+	public List<MembersVo> getMemberAll(Criteria cri);
+
+	public int getTotalCount();
 	
 }

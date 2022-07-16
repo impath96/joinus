@@ -23,9 +23,9 @@ public class MemberDaoTest {
 	@Test
 	public void getMemberAll() {
 		
-		List<MembersVo> members = memberDao.getMemberAll();
+//		List<MembersVo> members = memberDao.getMemberAll();
 		
-		log.info("members : {}", members);
+//		log.info("members : {}", members);
 		
 	}
 
