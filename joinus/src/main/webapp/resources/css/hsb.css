@@ -80,3 +80,18 @@
 	border: 1px solid black;
 	padding: 18px 20px 14px;
 }
+
+#memberCnt {
+	margin-bottom: 2em;
+}
+
+.payBtn {
+	text-align: center;
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
+
+#seePrice {
+	color: #198754;
+	font-size: xx-large;
+}

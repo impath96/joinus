@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.joinus.domain.Criteria;
 import com.joinus.domain.MembersVo;
 import com.joinus.domain.MyClubDto;
 
@@ -108,6 +109,20 @@ public class MemberDaoImpl implements MemberDao {
 		log.info("내가 참여하고 있는 모든 모임 리스트 : {}", list);
 		return list;
 	}
+
+	@Override
+	public List<MembersVo> getMemberAll(Criteria cri) {
+		log.info("Criteria : {}", cri);
+		List<MembersVo> members = sqlSession.selectList(NAMESPACE+".getMemberAll", cri);
+		return members;
+	}
+
+	@Override
+	public int getTotalCount() {
+		int totalCount = sqlSession.selectOne(NAMESPACE+".getTotalCount");
+		return totalCount;
+	}
+	
 	
 	
 	

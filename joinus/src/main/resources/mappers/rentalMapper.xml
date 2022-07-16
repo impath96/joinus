@@ -10,5 +10,10 @@
 		select * from partner_places
 		where partner_place_no = #{partner_place_no}
 	</select>
+	
+	<!-- 제휴시설 리스트 -->
+	<select id="getAllPartnerPlaceList" resultType="PartnerPlacesVo">
+		select * from partner_places
+	</select>
 
 </mapper>  

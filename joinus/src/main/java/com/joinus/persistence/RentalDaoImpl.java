@@ -1,5 +1,7 @@
 package com.joinus.persistence;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -22,6 +24,11 @@ public class RentalDaoImpl implements RentalDao {
 	@Override
 	public PartnerPlacesVo getPartnerPlaceContent(int partner_place_no) {
 		return sqlSession.selectOne(NAMESPACE+".getPlaceContent", partner_place_no);
+	}
+
+	@Override
+	public List<PartnerPlacesVo> getAllPartnerPlaceList() {
+		return sqlSession.selectList(NAMESPACE+".getAllPartnerPlaceList");
 	}
 	
 	

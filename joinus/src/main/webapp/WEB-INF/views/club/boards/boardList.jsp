@@ -91,11 +91,6 @@
 			</c:forEach>
 			
 			<!-- 페이징블럭 -->
-			<!-- 카테고리선택했으면 링크다르게 걸어줘야 할 듯 -->
-			<c:if test="${board_type_no > 0 }">
-
-			</c:if>
-			
 			<div class="d-flex justify-content-center py-3">
 	        	<ul class="list-group list-group-horizontal">
 	        		<c:if test="${pm.prev }">

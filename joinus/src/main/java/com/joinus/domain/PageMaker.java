@@ -1,5 +1,8 @@
 package com.joinus.domain;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class PageMaker {
 	
 	//상단부 페이징 처리
@@ -17,11 +20,13 @@ public class PageMaker {
 	
 	//상단부 페이징 정보 가져오기
 	public void setCri(Criteria cri) {
+		log.info("criteria : {}", cri);
 		this.cri = cri;
 	}
 	
 	//현재 클럽 수
 	public void setTotalCount(int totalCount) {
+		log.info("totalCount : {}", totalCount);
 		this.totalCount = totalCount;
 		
 		calData();
@@ -33,7 +38,7 @@ public class PageMaker {
 		// 반올림(13/10) => 2 * 10 = 20
 		// 내가 13페이지에 있으면 페이지 블럭의 마지막 페이지는 20
 		endPage = (int)(Math.ceil(cri.getPage()/(double)displayPageNum) * displayPageNum);
-		
+		log.info("endPage : {}", endPage);
 		// 페이지 블럭 시작페이지 = 20 -10
 		// 13페이지에 있으면 (endPage)20 - 10 = 10 
 		startPage = (endPage - displayPageNum)+1;
