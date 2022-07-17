@@ -11,6 +11,7 @@ import com.joinus.domain.BoardLikesVo;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubGradesVo;
+import com.joinus.domain.ClubListDto;
 import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubTotalBean;
@@ -160,7 +161,7 @@ import com.joinus.domain.MembersVo;
 	List<ClubsVo> getClubListByMemberNo(int member_no, int limit);
 	public List<ClubsVo> getMyClubList(int member_no);
 	public List<ClubsVo> getMyClubList(int member_no, int limit);
-
+	public List<ClubListDto> getClubListForAdmin(Criteria cri);
 	
 	
 	

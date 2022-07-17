@@ -15,6 +15,7 @@ import com.joinus.domain.BoardLikesVo;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubGradesVo;
+import com.joinus.domain.ClubListDto;
 import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubTotalBean;
@@ -198,6 +199,12 @@ public class ClubServiceImpl implements ClubService{
 	@Override
 	public List<ClubsVo> getMyClubList(int member_no, int limit) {
 		return dao.myClubList(member_no, limit);
+	}
+	
+
+	@Override
+	public List<ClubListDto> getClubListForAdmin(Criteria cri) {
+		return dao.clubListForAdmin(cri);
 	}
 
 	// ========================================================
@@ -439,6 +446,7 @@ public class ClubServiceImpl implements ClubService{
 		public List<ClubBoardsVo> getBoardsforimg(Integer num) {
 			return dao.getBoards(num);
 		}
+
 
 
 	

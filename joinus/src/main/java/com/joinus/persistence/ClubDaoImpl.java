@@ -18,6 +18,7 @@ import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.Criteria;
 import com.joinus.domain.ClubGradesVo;
+import com.joinus.domain.ClubListDto;
 import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubTotalBean;
@@ -419,6 +420,16 @@ public class ClubDaoImpl implements ClubDao{
 		
 		return sqlSession.selectList(NAMESPACE+".myClubListLimit", paramMap);
 	}
+	
+
+	@Override
+	public List<ClubListDto> clubListForAdmin(Criteria cri) {
+		List<ClubListDto> clubList = sqlSession.selectList(NAMESPACE+".clubListForAdmin", cri);
+		return clubList;
+	}
+
+	
+	
 	
 
 	

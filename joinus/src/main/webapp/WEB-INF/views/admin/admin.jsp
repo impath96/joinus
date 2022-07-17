@@ -48,20 +48,24 @@
                   aria-expanded="false"
                   aria-controls="flush-collapseTwo"
                 >
-                  Accordion Item #2
+                  모임 관리
                 </button>
               </h2>
-              <div
+				<div
                 id="flush-collapseTwo"
                 class="accordion-collapse collapse"
                 aria-labelledby="flush-headingTwo"
                 data-bs-parent="#accordionFlushExample"
               >
-                <div class="accordion-body">
-                  Placeholder content for this accordion, which is intended to
-                  demonstrate the <code>.accordion-flush</code> class. This is
-                  the second item's accordion body. Let's imagine this being
-                  filled with some actual content.
+                <div class="accordion-body p-2">
+                  <ul class="p-0 mb-2" style="list-style:none;">
+                    <li class="py-2 text-center">
+                      <a href="${pageContext.request.contextPath }/admin/clubs">전체 모임 목록</a>
+                    </li>
+                    <li class="py-2 text-center">
+                      <a href="">정지 회원 목록</a>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
