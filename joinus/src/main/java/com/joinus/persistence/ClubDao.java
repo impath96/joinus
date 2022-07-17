@@ -33,6 +33,9 @@ public interface ClubDao {
 	
 	//클럽리스트(관심사o)
 	public List<ClubTotalBean> clubList(int interest_no, Criteria cri);
+	
+	//관심사 디테일
+	public List<InterestDetailsVo> interestDetail(Integer interest_no);
 
 	//클럽리스트(관심사x)
 	public List<ClubTotalBean> clubList(Criteria cri);
@@ -225,6 +228,8 @@ public interface ClubDao {
 	public List<ClubMeetingsVo> getMeetings(Integer num);
 	//게시글 리스트
 	public List<ClubBoardsVo> getBoards(Integer num);
+
+
 
 	
 	

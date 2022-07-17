@@ -67,6 +67,13 @@ public class ClubServiceImpl implements ClubService{
 		
 		return result;
 	}
+	
+	//관심사 디테일 조회
+	@Override
+	public List<InterestDetailsVo> getInterestDetail(Integer interest_no) {
+		List<InterestDetailsVo> result = dao.interestDetail(interest_no);
+		return result;
+	}
 
 	//전체 클럽 리스트 조회
 	@Override

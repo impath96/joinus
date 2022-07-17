@@ -181,6 +181,12 @@
 	]]>
 </select>
 
+<select id="InterestDetail" resultType="InterestDetailsVo">
+	select interest_detail_name from interest_details
+	where interest_no = #{interest_no}
+
+</select>
+
 <select id="CountClub" resultType="int" parameterType="Integer">
 	select count(club_no) from club_interests
 	<where>

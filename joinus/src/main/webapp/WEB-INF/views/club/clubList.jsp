@@ -104,7 +104,7 @@
         	<!-- 카테고리 -->
             <div class="row mt-n2 wow fadeInUp" data-wow-delay="0.3s">
                 <div class="text-center py-5 border-dark">
-                    <ul class="list-inline mb-5" id="portfolio-flters">
+                    <ul class="list-inline mb-3" id="portfolio-flters">
                         <li class="mx-2 active fw-bold"><a href="/club/clubList">전체</a></li>
                         <li class="mx-2 fw-bold"><a href="/club/clubList?interest_no=1">요리/제조</a></li>
                         <li class="mx-2 fw-bold"><a href="/club/clubList?interest_no=2">봉사활동</a></li>
@@ -116,8 +116,17 @@
                         <li class="mx-2 fw-bold"><a href="/club/clubList?interest_no=8">문화/공연/축제</a></li>
                     </ul>
                 </div>
+					
+				<c:set var="interest_no" value="${interest_no }" />
+				<c:if test="${not empty interest_no}">
+                	<div id="detail" class="rounded-2 py-3 mb-4" style="background-color: #EFEFEF;">
+                	<h5 class="px-3"> ✔️ 좀 더 상세한 결과를 원하세요?  </h5>
+                	</div>
+                </c:if>	
+                
             </div>
             <!-- 카테고리 -->
+            
   
 		<div class="row g-4">
 			<c:forEach var = "vo" items="${clubList }">
@@ -159,12 +168,58 @@
         </div>
         
         
-        
-        
     </div>
     <!-- Projects End -->
      
+<script type="text/javascript">
+$(function(){
+	
+	var interest_no = ${interest_no};
+	//alert(interest_no);
+	
+	
+$.ajax({
+		
+		url :'${PageContext.request.contextPath}/club/clubList/'+interest_no,
+		type : 'GET',
+		dataType : "json",
+		contentType : "application/json",
+		success : function(data){
+		console.log(data);
+		console.log(data.interest_detail_name);
+			
+			$(data).each(function(idx,item){
+				
+				var tag = "<input type='button' class='btn py-2 px-lg-5' value='# "+item.interest_detail_name+"'>"
+				
+				$('#detail').append(tag);
+				
+			});//each
+			
+		}	
+			
+		
+	});//ajax
+	
+//테이블에 요소 추가
 
+	
+/* 	var tag="<tr>";
+	tag += "<td>"+item.bno+"</td>"
+	tag += "<td><a href='/web/"+item.bno+"'>"+item.title+"</a></td>"
+	tag += "<td>"+item.writer+"</td>"
+	tag += "<td>"+new Date(item.regdate)+"</td>"
+	tag += "<td>"+item.viewcnt+"</td>"
+	tag += "</tr>";
+	
+	$('table').append(tag);
+}); */
+	
+	
+});
+
+
+</script>
 
 
 

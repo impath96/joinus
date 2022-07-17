@@ -77,6 +77,14 @@ public class ClubDaoImpl implements ClubDao{
 		return result;
 		
 	}
+	
+	
+	//관심사 디테일
+	@Override
+	public List<InterestDetailsVo> interestDetail(Integer interest_no) {
+		List<InterestDetailsVo> reslt = sqlSession.selectList(NAMESPACE+".InterestDetail", interest_no);
+		return reslt;
+	}
 
 	//전체 클럽 리스트 조회
 	@Override

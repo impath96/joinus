@@ -27,6 +27,7 @@ import com.joinus.domain.MembersVo;
 
 		//클럽 회원 리스트
 		public List<ClubTotalBean> clubMemberListAll(int club_no);
+		
 		//클럽 정보
 		public List<ClubsVo> clubInfo(int club_no);
 
@@ -35,6 +36,9 @@ import com.joinus.domain.MembersVo;
 		
 		//클럽 전체 리스트
 		public List<ClubTotalBean> clubList(Criteria cri);
+		
+		//관심사 불러오기
+		public List<InterestDetailsVo> getInterestDetail(Integer interest_no);
 		
 		//클럽 개수 조회(관심사별)
 		public Integer totalCnt(Integer interest_no);
@@ -217,5 +221,6 @@ import com.joinus.domain.MembersVo;
 		public List<ClubMeetingsVo> getMeetings(Integer num);
 		//게시글 리스트
 		public List<ClubBoardsVo> getBoardsforimg(Integer num);
+
 		
 }

@@ -9,11 +9,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.joinus.domain.Criteria;
+import com.joinus.domain.InterestDetailsVo;
 import com.joinus.domain.MeetingTotalBean;
 import com.joinus.service.ClubService;
 
@@ -100,4 +104,29 @@ public class ClubRestController {
 	
 	return entity;
 	}
+	
+	
+	@RequestMapping(value="/clubList/{interest_no}", method=RequestMethod.GET)
+	public ResponseEntity<List<InterestDetailsVo>> getInterestDetailREST(
+			@PathVariable("interest_no") Integer interest_no, Model model){
+		
+		log.info(interest_no+"");	
+		
+		List<InterestDetailsVo> interest_list = service.getInterestDetail(interest_no);
+		
+		ResponseEntity<List<InterestDetailsVo>> entity = null;
+		
+		try {
+			entity = new ResponseEntity<List<InterestDetailsVo>>(interest_list, HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		
+		log.info(entity+"");
+		
+	return entity;
+	}
+	
+	
+	
 }

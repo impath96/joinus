@@ -76,10 +76,12 @@ public class ClubController {
 			log.info("clubList() 호출");
 			
 		}else{
+			
 			model.addAttribute("clubList", service.clubList(Integer.parseInt(interest_no),cri));
 			PageMaker pageMaker = new PageMaker();
 			pageMaker.setCri(cri);
 			pageMaker.setTotalCount(service.totalCnt(Integer.parseInt(interest_no)));
+			model.addAttribute("interest_no",Integer.parseInt(interest_no));
 			log.info(pageMaker+"");
 			model.addAttribute("pm", pageMaker);
 			log.info("clubList(no) 호출");
