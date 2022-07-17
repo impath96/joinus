@@ -3,6 +3,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -893,13 +894,18 @@ public class ClubController {
 					
 					//방문한 모임회원
 					int result = 0; 
+					String roleResult = "";
 					ClubMembersVo clubmembersvo = service.getClubMemberNo(club_no,member.getMember_no());
 					if(clubmembersvo != null) { 
 						result = clubmembersvo.getMember_no(); 
+						roleResult = clubmembersvo.getClub_member_role();
 					}else if(clubmembersvo == null) { 
-						result = 0; }
+						result = 0;
+						roleResult = ""; }
 					model.addAttribute("clubmember", result);
-					log.info("모임회원일시 회원번호, 아닐시 0 으로 출력 : "+result);
+					model.addAttribute("clubmemberRole", roleResult);
+					log.info("모임회원O = 회원번호 / 모임회원X = 0 :   "+result);
+					log.info("roleResult(admin/com): "+roleResult);
 					
 					//별점정보
 					List<ClubGradesVo> gradevo = service.getClubGrade(club_no);
@@ -932,9 +938,18 @@ public class ClubController {
 					model.addAttribute("meetings", meetings);
 					log.info("정모리스트: "+meetings);  
 					
-					//정모참석자 리스트
+					//내 회원번호로 해당 클럽 정모멤버리스트 조회하기
 					List<MeetingMembersVo> meetingMbrs = service.checkMeetingMember(club_no,member.getMember_no());
-					model.addAttribute("meetingMbrs",meetingMbrs);
+					List<MeetingMembersVo> mtMbrs = new ArrayList<MeetingMembersVo>();
+					if(meetingMbrs != null) { 
+						mtMbrs = meetingMbrs; }
+					model.addAttribute("meetingMbrs",mtMbrs);
+					int result3 = 100;
+					if(meetingMbrs.isEmpty()) { 
+						result3 = 0;	}
+					model.addAttribute("meetingMbrsNull",result3);
+					log.info("정모멤버리스트: "+meetingMbrs); 
+					log.info("정모멤버리스트: "+result3); 
 					
 					//게시글(사진빼오기)
 					List<ClubBoardsVo> boards = service.getBoardImageList(club_no);
