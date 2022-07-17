@@ -135,7 +135,9 @@
                 <c:forEach var="club" items="${clubList }">
                   <tr>
                   	<td class="p-2"><input class="form-check-input" type="checkbox" name="club_no" value="${club.club_no }"/></td>
-                    <td class="py-2 px-3">${club.club_name }</td>
+                    <td class="py-2 px-3">
+                    	<a href="${pageContext.request.contextPath }/club/${club.club_no}">${club.club_name }</a>
+                    </td>
                     <td class="p-2">${club.club_location }</td>
                     <td class="p-2">${club.club_capacity }</td>
                     <td class="p-2">${club.club_regdate }</td>

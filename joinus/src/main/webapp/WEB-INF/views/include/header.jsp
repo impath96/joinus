@@ -172,7 +172,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                         <a href="404.html" class="dropdown-item">404 Page</a> 
                     </div>
                 </div>-->
-          <c:if test="${!empty member_no }">
+          <c:if test="${!empty member }">
             <a
               href="${PageContext.request.contextPath }/member/mypage"
               class="nav-item nav-link"
@@ -180,7 +180,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             >
           </c:if>
         </div>
-        <c:if test="${empty member_no }">
+        <c:if test="${empty member }">
           <a
             href="${PageContext.request.contextPath }/member/signin"
             id="login"
@@ -188,9 +188,9 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             >LOGIN<i class="fa-solid fa-arrow-right-to-bracket px-2"></i
           ></a>
         </c:if>
-        <c:if test="${!empty member_no }">
+        <c:if test="${!empty member }">
           <a
-            href="${PageContext.request.contextPath }/member/signin"
+            href="${PageContext.request.contextPath }/member/signout"
             id="logout"
             class="btn btn-primary rounded-2 py-3 px-lg-5 d-none d-lg-block"
             >LOGOUT<i class="fa-solid fa-arrow-right-to-bracket px-2"></i

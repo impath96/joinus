@@ -222,7 +222,7 @@ public class MemberController {
 		// 존재하는 회원일 경우 session에 해당 회원정보 저장
 		session.setAttribute("member", findMember);
 
-		// 그리고 메인 페이지로 이동 - 하지만 지금은 일단 마이페이지로
+		// 그리고 메인 페이지로 이동
 		return "redirect:/";
 	}
 	
@@ -266,7 +266,7 @@ public class MemberController {
 		
 		session.invalidate();
 		
-		return "/";
+		return "redirect:/";
 	}
 	
 	@GetMapping(value = "/my-clublist")
