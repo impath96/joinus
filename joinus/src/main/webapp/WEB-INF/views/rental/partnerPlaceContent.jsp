@@ -127,13 +127,13 @@
 					
 					<!-- 일자 -->
 					<div style="margin-bottom: 2em;">
-					날짜 선택 (아래의 버튼을 클릭해주세요)
+						날짜 선택 (아래의 버튼을 클릭해주세요)
 						<input class="form-control" id="rental_date" name="rental_date" autocomplete="off" readonly style="background-color: white;">
 					</div>
 					
 					<!-- 시간 -->
 					<div style="margin-bottom: 2em;">
-					시간 선택
+						시간 선택
 						<select class="form-select" id="rental_time" name="rental_time">
 							<option value="">시간을 선택해주세요.</option>
 							<option value="1">10:00~12:00</option>
@@ -147,9 +147,9 @@
 
 					<!--  총 결제금액 -->
 					<div>
-					총 결제금액<br>
-					<span id="seePrice"></span>
-					<input type="hidden" id="totalPrice" name="totalPrice">
+						총 결제금액<br>
+						<span id="seePrice"></span>
+						<input type="hidden" id="totalPrice" name="totalPrice">
 					</div>
 					
 					<div class="payBtn">
