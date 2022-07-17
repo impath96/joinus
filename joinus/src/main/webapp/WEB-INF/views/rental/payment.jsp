@@ -8,17 +8,19 @@
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script type="text/javascript">
 
+ 
+
 	window.onload=function iamport(){
+		
+		$(document).ready(function(){
 	//가맹점 식별코드
 	IMP.init('imp93879156');
 	IMP.request_pay({
 	    pg : 'kcp',
 	    pay_method : 'card',
-	    merchant_uid : 'merchant_' + new Date().getTime(),
-	    name : '상품이름' , //결제창에서 보여질 이름
-	    amount : 100, //실제 결제되는 가격
-	    buyer_name : '구매자이름',
-	    buyer_email : 'xoxomini4@naver.com'
+	    merchant_uid : 'rs_' + new Date().getTime(),
+	    name : 'rental place',//결제창에서 보여질 이름
+	    amount : ${totalp},//실제 결제되는 가격
 	}, function(rsp){
 		console.log(rsp);
 		
@@ -30,15 +32,21 @@
 	            // rsp.paid_amount와 result.response.amount(서버 검증) 비교 후 로직 실행
 		            if(rsp.paid_amount === result.response.amount){
 	                alert("결제 검증완료"); console.log("결제 검증완료");
-	        		
+	                
     					$.ajax({
-    						url : '${PageContext.request.contextPath }/rental/paypay', 
-    				        type :'get',
-    				        data : 'amount',
+    						url : '${PageContext.request.contextPath }/rental/partnerPlaces/'+${payment.partner_place_no}+'/payment', 
+    				        type :'POST',
+    				        data :{'partner_place_price':${payment.partner_place_price},
+    				        	'payment_price':${totalp},
+    				        	'rental_time':${rental_time}},
     				        dataType: 'json', //서버에서 보내줄 데이터 타입
-    				        success: function(res){
-    				        	 alert(res); 
-    				        	 $('#add').append('데이터 받기 성공 = '+res);
+    				        success: function(paymentvo){
+    				        	 alert('데이터 저장 모두 완료!'); 
+    				        	 $('#add').append('결제완료');
+    				        	 $('#add2').append('5초 후 대관 예약 페이지로 이동합니다');
+    				        	 setTimeout(function(){
+    				        		 location.href="${PageContext.request.contextPath }/"
+    				        	 },5000);
     				        }
     				        });
 	        			}
@@ -50,6 +58,7 @@
                 alert('결제에 실패했습니다'+'에러코드 : '+rsp.error_code+'에러 메시지 : '+rsp.error_message);
             }
 		});
+	});
         
 		// 결제 후 페이지 리로드, 결제가 완료된다면 결제 완료 페이지로 출력
 	
@@ -62,9 +71,10 @@
         <div class="container text-center">
             <div class="row justify-content-center">
                 <div class="col-lg-6">
-                    <h3 class="display-1">결제페이지</h3>
-                    <h1 class="mb-4"> </h1>
-                    	<div id="add"></div>
+                
+                    	<h4 id="add"></h4>
+                    	<h5 id="add2"></h5>
+                    	
                     <a class="btn btn-primary rounded-pill py-3 px-5" href="">Go Back To Home</a>
                 </div>
             </div>

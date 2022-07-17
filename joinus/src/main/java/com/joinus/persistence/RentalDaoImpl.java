@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.joinus.domain.PartnerPlacesVo;
+import com.joinus.domain.PaymentsVo;
+import com.joinus.domain.RentalPlacesVo;
 
 @Repository
 public class RentalDaoImpl implements RentalDao {
@@ -29,6 +31,16 @@ public class RentalDaoImpl implements RentalDao {
 	@Override
 	public List<PartnerPlacesVo> getAllPartnerPlaceList() {
 		return sqlSession.selectList(NAMESPACE+".getAllPartnerPlaceList");
+	}
+
+	@Override
+	public Integer pay(PaymentsVo vo) {
+		return sqlSession.insert(NAMESPACE+".pay", vo);
+	}
+
+	@Override
+	public void place(RentalPlacesVo vo) {
+		sqlSession.insert(NAMESPACE+".place", vo);
 	}
 	
 	

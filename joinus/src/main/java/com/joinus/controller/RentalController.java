@@ -2,7 +2,8 @@ package com.joinus.controller;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.util.Arrays;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -13,15 +14,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.joinus.domain.MembersVo;
 import com.joinus.domain.PartnerPlacesVo;
+import com.joinus.domain.PaymentsVo;
+import com.joinus.domain.RentalPlacesVo;
 import com.joinus.service.ClubService;
 import com.joinus.service.RentalService;
 import com.siot.IamportRestClient.IamportClient;
@@ -34,35 +39,12 @@ import com.siot.IamportRestClient.response.Payment;
 public class RentalController {
 	
 	@Inject
-	private ClubService service;
+	private ClubService clubService;
 	
 	@Inject
 	private RentalService rentalService;
 	
 	private static final Logger log = LoggerFactory.getLogger(ClubController.class);
-	
-	
-	// 결제(정보 받는 페이지, 안에서 ajax)
-	// http://localhost:8088/rental/payment
-	@RequestMapping(value ="/payment",method=RequestMethod.GET)
-	public void pay() {
-			
-		//form으로 받은 정보들로 결제 후 결제완료 페이지 출력
-		
-	}
-	
-	@ResponseBody
-	@RequestMapping(value ="/paypay",method=RequestMethod.GET)
-	public String pay2(@ModelAttribute("amount") int price ) {
-		
-		String res = "두번째 에이젝스 데이터왔다감";
-		log.info(res + price);
-		return res;
-		
-		//form으로 받은 정보들로 결제 후 결제완료 페이지 출력
-		
-	}
-	
 	
 	private IamportClient api;
 	
@@ -71,19 +53,6 @@ public class RentalController {
 		this.api = new IamportClient("4450940620010058",
 				"cd721e413ac18a65fe657ac002c45a9427ca9cb46aa7cca4e0600788bf9c7b4d1de7fcb996d24ccd");
 	}
-	
-	@ResponseBody
-	@RequestMapping(value="/verifyIamport/{imp_uid}")
-	public IamportResponse<Payment> paymentByImpUid(
-			Model model, Locale locale, HttpSession session
-			, @PathVariable("imp_uid") String imp_uid ) throws IamportResponseException, IOException{	
-			log.info("결제 다녀감");
-			return api.paymentByImpUid(imp_uid);
-			
-	}
-	
-	
-	
 	
 	
 	
@@ -123,18 +92,102 @@ public class RentalController {
 		return "/rental/partnerPlaceContent";
 	}
 	
-	// 예약
+	
+
 	@RequestMapping(value = "/partnerPlaces/{partner_place_no}", method = RequestMethod.POST)
-	public void partnerPlaceContentPost(@PathVariable("partner_place_no") int partner_place_no) {
+	public String partnerPlaceContentPost(PartnerPlacesVo partnerplacevo ,PaymentsVo paymentvo, 
+			RentalPlacesVo rentalplacevo,Model model, @RequestParam("rental_time") int rentaltime,
+			HttpSession session,@RequestParam("totalPrice") int totalprice) {
 		log.info(" partnerPlaceContentPost() 호출");
 		
-		// 결제
+		String ppname = partnerplacevo.getPartner_place_name();
+		model.addAttribute("ppname", ppname);
+		model.addAttribute("totalp", totalprice);
+		log.info("장소이름,결제금액: "+ppname+totalprice);
+		
+		MembersVo vo = (MembersVo)session.getAttribute("member");
+		model.addAttribute("members", vo);
+		model.addAttribute("rental_time", rentaltime);
+		model.addAttribute("payment", paymentvo);
+		log.info("결제정보: "+paymentvo);
 		
 		// 결제 후 예약정보저장
-		// 주문번호 생성한다고 가정(이걸로 예약할 때 이미 예약된 시간또는 날짜는 선택하지 못하도록 제어)
+		
+		return "/rental/payment";
 		
 	}
-	
+		
+		@ResponseBody
+		@RequestMapping(value="/verifyIamport/{imp_uid}")
+		public IamportResponse<Payment> paymentByImpUid(
+				Model model, Locale locale, HttpSession session
+				, @PathVariable("imp_uid") String imp_uid ) throws IamportResponseException, IOException{	
+				log.info("아임포트 결제 호출");
+				return api.paymentByImpUid(imp_uid);
+				
+		}
+		
+		@ResponseBody
+		@RequestMapping(value ="/partnerPlaces/{partner_place_no}/payment",method=RequestMethod.POST)
+		public PaymentsVo payment( Model model, 
+				@RequestParam("partner_place_price") int partner_place_price,
+				@RequestParam("payment_price") int payment_price,
+				@RequestParam("rental_time") int rental_time,
+				@PathVariable("partner_place_no") int partner_place_no,
+				RentalPlacesVo rentalplacevo, PaymentsVo paymentvo,HttpSession session) {
+			log.info(" 결제 정보 저장시작 ");
+			log.info(" 결제 정보 저장 호출 " + paymentvo);
+			
+			log.info("받아온 vo정보 . paymentvo : "+paymentvo);
+			log.info("받아온 vo정보 . RentalPlacesVo : "+rentalplacevo);
+			
+
+			// 주문번호 생성 (날짜-place_no)
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			Calendar cal = Calendar.getInstance();
+			java.util.Date date = cal.getTime();
+		
+			String rsNum = sdf.format(date)+"-"+partner_place_no;
+			log.info("예약번호"+rsNum);
+			
+			paymentvo.setReservation_no(rsNum);
+			MembersVo mvo = (MembersVo)session.getAttribute("member");
+			paymentvo.setMember_no(mvo.getMember_no());
+			paymentvo.setPartner_place_no(partner_place_no);
+			paymentvo.setPartner_place_price(partner_place_price);
+			paymentvo.setPayment_status(1);
+			
+			Integer pay = rentalService.pay(paymentvo);
+			rentalplacevo.setPayment_no(paymentvo.getPayment_no());
+			
+			if(pay == 1) {
+				log.info("결제 정보 저장 성공");
+			}else {
+				log.info("결제 정보 저장 실패..");
+			}
+			
+			log.info("rentalplace 저장시작");
+			//session 멤버정보처럼 클럽도 계속 넘겨서 받아와야함.. 일단 임의로 작성
+			rentalplacevo.setClub_no(46);
+			rentalplacevo.setMember_no(mvo.getMember_no());
+			rentalplacevo.setRental_places_no(partner_place_no);
+			rentalplacevo.setReservation_no(rsNum);
+			rentalplacevo.setRental_time_no(rental_time);
+			//rentalplacevo.setRental_date(paymentvo.getPayment_date()); 데이터 받아오는 것보다 바로 넣어버리는건??
+			rentalplacevo.setRental_status(1);
+			
+			rentalService.place(rentalplacevo);
+			log.info("rentalPlace 저장완료 : "+rentalplacevo);
+			
+			
+			return paymentvo;
+			
+			//form으로 받은 정보들로 결제 후 결제완료 페이지 출력
+			
+		}
+		
+		
+		
 	
 	
 	
