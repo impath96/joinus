@@ -123,20 +123,24 @@
                 <thead class="fs-5 border-bottom">
                   <tr>
                   	<th class="p-2 "><input id="all" class="form-check-input" type="checkbox" /></th>
-                    <th class="py-2 px-3">닉네임</th>
-                    <th class="p-2">계정</th>
-                    <th class="p-2">상태</th>
-                    <th class="p-2">가입일</th>
+                    <th class="py-2 px-3">모임 이름</th>
+                    <th class="p-2">모임 장소</th>
+                    <th class="p-2">정원</th>
+                    <th class="p-2">모임 등록일</th>
+                    <th class="p-2">모임 회원 수</th>
+                    <th class="p-2">모임장</th>
                   </tr>
                 </thead>
                 <tbody class="fs-5">
-                <c:forEach var="member" items="${members }">
+                <c:forEach var="club" items="${clubList }">
                   <tr>
-                  	<td class="p-2"><input class="form-check-input" type="checkbox" name="member_no" value="${member.member_no }"/></td>
-                    <td class="py-2 px-3">${member.member_name }</td>
-                    <td class="p-2">${member.member_email }</td>
-                    <td class="p-2">${member.member_status }</td>
-                    <td class="p-2">${member.member_regdate }</td>
+                  	<td class="p-2"><input class="form-check-input" type="checkbox" name="club_no" value="${club.club_no }"/></td>
+                    <td class="py-2 px-3">${club.club_name }</td>
+                    <td class="p-2">${club.club_location }</td>
+                    <td class="p-2">${club.club_capacity }</td>
+                    <td class="p-2">${club.club_regdate }</td>
+                    <td class="p-2">${club.total }</td>
+                    <td class="p-2">${club.member_name }</td>
                   </tr>
                 </c:forEach>
                 </tbody>
@@ -151,7 +155,7 @@
 	                <ul class="pagination justify-content-end mb-0">
 	                	<c:if test="${pageMaker.prev }">
 		                	<li class="page-item">
-		                    	<a class="page-link" href="members?page=${pageMaker.startPage-1 }" aria-label="Previous">
+		                    	<a class="page-link" href="clubs?page=${pageMaker.startPage-1 }" aria-label="Previous">
 		                      		<span aria-hidden="true">&laquo;</span>
 		                    	</a>
 		                  	</li>
@@ -160,12 +164,12 @@
 	                 		<li class="page-item <c:out value="${pageMaker.cri.page == idx?'active':'' }"/>" 
 	                 				<c:out value="${pageMaker.cri.page == idx?'aria-current = page':'' }"/>
 	                 				>
-	                 			<a class="page-link" href="members?page=${idx }">${idx }</a>
+	                 			<a class="page-link" href="clubs?page=${idx }">${idx }</a>
 	                 		</li>
 						</c:forEach>
 						<c:if test="${pageMaker.next && pageMaker.endPage > 0 }">
 		                  	<li class="page-item">
-		                    	<a class="page-link" href="members?page=${pageMaker.endPage+1 }" aria-label="Next">
+		                    	<a class="page-link" href="clubs?page=${pageMaker.endPage+1 }" aria-label="Next">
 		                      		<span aria-hidden="true">&raquo;</span>
 		                    	</a>
 		                  	</li>

@@ -39,5 +39,7 @@ public interface MemberDao {
 	public List<MembersVo> getMemberAll(Criteria cri);
 
 	public int getTotalCount();
+
+	public void deleteMember(List<Integer> idList);
 	
 }

@@ -77,6 +77,10 @@
 		where member_no=#{member_no}
 	</update>
 	
+	<update id="deleteMembers" parameterType="java.util.List">
+		update 
+	</update>
+	
 	<select id="selectMember" resultType="MembersVo">
 		<![CDATA[
 		select * from members

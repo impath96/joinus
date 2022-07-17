@@ -143,4 +143,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.getTotalCount();
 	}
 
+	@Override
+	public void deleteMember(List<Integer> idList) {
+
+		memberDao.deleteMember(idList);
+	}
+
 }
