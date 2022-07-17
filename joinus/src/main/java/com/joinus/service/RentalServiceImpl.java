@@ -1,5 +1,7 @@
 package com.joinus.service;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -20,6 +22,11 @@ public class RentalServiceImpl implements RentalService {
 	@Override
 	public PartnerPlacesVo getPartnerPlaceContent(int partner_place_no) {
 		return dao.getPartnerPlaceContent(partner_place_no);
+	}
+
+	@Override
+	public List<PartnerPlacesVo> getAllPartnerPlaceList() {
+		return dao.getAllPartnerPlaceList();
 	}
 	
 	
