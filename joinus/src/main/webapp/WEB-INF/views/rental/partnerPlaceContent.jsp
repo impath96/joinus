@@ -35,7 +35,7 @@
 		
 		
 		$('#subBtn').click(function(){
-			alert('결제버튼클릭');
+			//alert('결제버튼클릭');
 			
 			if($('#rental_date').val() == ''){
 				$('#rental_date').focus();
@@ -49,8 +49,14 @@
 				$('#memberCnt').focus();
 				return false;
 			}
-			
  			//alert("hidden price value : "+$('#totalPrice').val());
+			
+ 			// 모임장만 결제가 가능
+ 			if(${checkClubAdmin == 0}){
+ 				alert('모임장만 결제가 가능합니다.');
+ 				return false;
+ 			}
+			
 			
 		});
 		
@@ -68,6 +74,12 @@
 				<img style="width: 95%; max-height: 550px;" src="${PageContext.request.contextPath }/resources/upload/partner_place/${partnerPlace.partner_place_image}">
 				<div style="margin-top: 3em;">
 					<pre class="boardContent">${partnerPlace.partner_place_content }</pre>
+				</div>
+				<div style="margin-bottom: 16px;">
+					<i class="fa fa-phone-alt me-3" aria-hidden="true"></i>${partnerPlace.partner_place_tel }
+				</div>
+				<div>
+					${partnerPlace.partner_place_address }
 				</div>
 				
 				<!-- 주소로 장소 표시 -->
@@ -147,7 +159,6 @@
 				</form>
 			</div>
 			<!-- 전달할 정보 -->
-			
 			
 			
 		</div>

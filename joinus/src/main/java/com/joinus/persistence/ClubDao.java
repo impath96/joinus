@@ -154,6 +154,12 @@ public interface ClubDao {
 	// 모임원이 맞는지 확인(1:모임가입O / 0:모임가입X)
 	public int checkClubMember(int club_no, int member_no);
 	
+	// 모임장인지 확인(0보다 크면 모임장)
+	public int checkClubAdmin(int member_no);
+	
+	// 모임장 주소
+	public String getClubAdminAddr(int member_no);
+	
 	//=========================허수빈========================
 
 	//=========================김민호========================

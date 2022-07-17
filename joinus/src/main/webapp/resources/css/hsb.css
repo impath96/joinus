@@ -95,3 +95,17 @@
 	color: #198754;
 	font-size: xx-large;
 }
+
+#typeSelect {
+	color: black;
+	height: 55px;
+	width: 20%;
+	margin-right: 2em;
+	margin-left: 12px;
+}
+
+#guSelect {
+	color: black;
+	height: 55px;
+	width: 20%;
+}

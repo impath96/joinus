@@ -321,10 +321,21 @@ public class ClubServiceImpl implements ClubService{
 		return dao.checkClubMember(club_no, member_no);
 	}
 	
+	@Override
+	public int checkClubAdmin(int member_no) {
+		return dao.checkClubAdmin(member_no);
+	}
+	
+	@Override
+	public String getClubAdminAddr(int member_no) {
+		return dao.getClubAdminAddr(member_no);
+	}
+	
 	
 	
 	//=========================강성민========================
 	
+
 		//회원정보 가져오기
 		@Override
 		public MembersVo getMember(Integer num) {

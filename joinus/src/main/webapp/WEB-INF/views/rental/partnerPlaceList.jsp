@@ -5,38 +5,124 @@
     
 <%@ include file="../include/header.jsp"%>
 
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script>
+	
+	$(document).ready(function(){
+// 		alert($('#typeSelect').val());
+// 		alert($('#guSelect').val());
+		
+		
+		// 셀렉트 옵션값들고가서 조건건 쿼리문 들고오기
+		// 장소유형 선택(장소 셀렉트 옵션값들고가기)
+		$('#typeSelect').change(function(){
+			//alert($(this).vla());
+			var type = $(this).val();
+			var gu = $('#guSelect').val();
+			location.href="${pageContext.request.contextPath}/rental/partnerPlaceList?type="+type+"&location="+gu;
+// 			$.ajax({
+// 				type : "get",
+// 				url : "${pageContext.request.contextPath}/rental/partnerPlaceList?type="+type+"&location="+gu,
+// 				success : function(data){
+// 					alert('성공');
+// 					location.reload();
+// 				},
+// 				error : function(){
+// 					alert('시스템 문제발생');
+// 				}
+// 			});
+		});
+		
+		$('#guSelect').change(function(){
+			var type = $('#typeSelect').val();
+			var gu = $(this).val();
+			location.href = "${pageContext.request.contextPath}/rental/partnerPlaceList?type="+type+"&location="+gu;
+		});
+		
+		
+	});
+	
+// 	$(document).ready(function(){
+// 		//alert('제이쿼리');
+// 		$('#guSelect').change(function(){
+// 			//alert('선택변경');
+// 			//alert($(this).val());	// 선택한 옵션값
+// 			var partner_place_address = $(this).val();
+// 			$.ajax({
+// 				type : 'GET',
+// 				url : '${PageContext.request.contextPath}/rental/location/'+partner_place_address,
+// 				contentType : "application/json",
+// 				data : {
+// 					location_gu : $(this).val()
+// 				},
+// 				success : function(data){
+// 					alert('갔다옴');
+// 					console.log(data);
+// 				},
+// 				error: function error(){
+// 					 alert('시스템 문제발생');
+// 				}
+// 			}); // ajax
+			
+// 		});
+// 	});
+	
+
+</script>
+
 
 <div class="container-xxl py-5">
 	<div class="container">
 		<div class="row g-5">
+		
+			<select class="form-select" id="typeSelect">
+				<option value="0">전체</option>
+				<option value="음악연습실" 
+					<c:if test="${type == '음악연습실' }">
+						selected
+					</c:if>
+				>음악연습실</option>
+				<option value="공유주방" 
+					<c:if test="${type == '공유주방' }">
+						selected
+					</c:if>
+				>공유주방</option>
+				<option value="스터디룸" 
+					<c:if test="${type == '스터디룸' }">
+						selected
+					</c:if>
+				>스터디룸</option>
+				<option value="운동시설" 
+					<c:if test="${type == '운동시설' }">
+						selected
+					</c:if>
+				>운동시설</option>
+				<option value="카페" 
+					<c:if test="${type == '카페' }">
+						selected
+					</c:if>
+				>카페</option>
+			</select>
 
-<!-- 			<div style="margin-bottom: 2em;"> -->
-<!-- 				<button type="button" class="btn btn-primary" id="all">전체</button> -->
-<!-- 				<button type="button" class="btn btn-primary" id="notice">공지사항</button> -->
-<!-- 				<button type="button" class="btn btn-primary" id="free">자유글</button> -->
-<!-- 				<button type="button" class="btn btn-primary" id="review">정모후기</button> -->
-<!-- 			</div> -->
+			<select class="form-select" id="guSelect">
+					<option value="0">전체</option>
+					<c:forEach var="gu" items="${guList }">
+						<option value="${gu.location_gu_name }" 
+							<c:if test="${gu.location_gu_name == location }">
+								selected
+							</c:if>
+						><c:out value="${gu.location_gu_name }" /></option>
+					</c:forEach>
+			</select>
 			
-			<!-- 모서리 각진 버전 -->
-<%-- 			<c:forEach var="partnerPlace" items="${partnerPlaceList }"> --%>
-<!-- 	            <div class="col-lg-4 col-md-6" onclick=" location.href='/rental/partnerPlaces/1'; " style="cursor: pointer;"> -->
-<!-- 	                <div class="portfolio-img overflow-hidden"> -->
-<%-- 	                    <img class="img-fluid" src="${PageContext.request.contextPath }/resources/upload/partner_place/${partnerPlace.partner_place_image}"> --%>
-<!-- 	                </div> -->
-<!-- 	                <div class="pt-3 placeListContent"> -->
-<%-- 	                    <p class="text-primary mb-0">${partnerPlace.partner_place_address }</p> --%>
-<!-- 	                    <hr class="text-primary w-25 my-2"> -->
-<%-- 	                    <h5 class="lh-base">${partnerPlace.partner_place_name }</h5> --%>
-<%-- 	                    <div>${partnerPlace.partner_place_price }</div> --%>
-<!-- 	                </div> -->
-<!-- 	            </div> -->
-<%--             </c:forEach> --%>
-
+						
 			<div class="row g-4">
+				<c:if test="${partnerPlaceList.isEmpty() }">
+					검색결과가 없습니다.
+				</c:if>
 				<c:forEach var="partnerPlace" items="${partnerPlaceList }">
 	                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s" onclick=" location.href='/rental/partnerPlaces/${partnerPlace.partner_place_no}'; " style="cursor: pointer;">
 	                    <div class="service-item rounded overflow-hidden" style="height: auto;">
-	                    <!-- 클럽 대표 이미지 -->
 	                        <img src="${PageContext.requeset.contextPath }/resources/upload/partner_place/${partnerPlace.partner_place_image}" class="w-100 py-auto" style="height: 225px;">
 	                        <div class="position-relative p-4 pt-0">
 	                            <h4 class="mb-3 py-2">${partnerPlace.partner_place_name }</h4>

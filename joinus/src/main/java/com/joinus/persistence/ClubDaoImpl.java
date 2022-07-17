@@ -384,9 +384,30 @@ public class ClubDaoImpl implements ClubDao{
 	public void decreaseLikeCnt(int club_board_no) {
 		sqlSession.update(NAMESPACE+".decreaseLikeCnt", club_board_no);
 	}
+	
+	@Override
+	public int checkClubMember(int club_no, int member_no) {
+		Map<String, Integer> param = new HashMap<String, Integer>();
+		param.put("club_no", club_no);
+		param.put("member_no", member_no);
+		
+		return sqlSession.selectOne(NAMESPACE+".checkClubMember", param);
+	}
+	
+	@Override
+	public int checkClubAdmin(int member_no) {
+		return sqlSession.selectOne(NAMESPACE+".checkClubAdmin", member_no);
+	}
+	
+	@Override
+	public String getClubAdminAddr(int member_no) {
+		return sqlSession.selectOne(NAMESPACE+".getClubAdminAddr", member_no);
+	}
+	
 
 	// =========================== 김민호 =============================
 	
+
 	// 내 모임 리스트 출력 - limit 제한
 	@Override
 	public List<ClubsVo> ClubListByMemberNo(int member_no, int limit) {
@@ -423,13 +444,7 @@ public class ClubDaoImpl implements ClubDao{
 
 	
 	// =============================================================================
-	public int checkClubMember(int club_no, int member_no) {
-		Map<String, Integer> param = new HashMap<String, Integer>();
-		param.put("club_no", club_no);
-		param.put("member_no", member_no);
-		
-		return sqlSession.selectOne(NAMESPACE+".checkClubMember", param);
-	}
+
 	
 	
 	
