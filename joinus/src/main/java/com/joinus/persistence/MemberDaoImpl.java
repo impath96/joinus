@@ -122,6 +122,12 @@ public class MemberDaoImpl implements MemberDao {
 		int totalCount = sqlSession.selectOne(NAMESPACE+".getTotalCount");
 		return totalCount;
 	}
+
+	@Override
+	public void deleteMember(List<Integer> idList) {
+
+		sqlSession.update(NAMESPACE+".deleteMembers", idList);
+	}
 	
 	
 	

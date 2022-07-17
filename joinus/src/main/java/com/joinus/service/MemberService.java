@@ -20,5 +20,6 @@ public interface MemberService {
 	public List<MyClubDto> getMyClubList(int member_no);
 	public List<MembersVo> findMemberAll(Criteria cri);
 	public int getTotalCount();
+	public void deleteMember(List<Integer> idList);
 
 }
