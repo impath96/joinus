@@ -4,14 +4,20 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 <html lang="ko">
   <head>
     <meta charset="utf-8" />
-    <title>Solartec - Renewable Energy Website Template</title>
+    <title>JoinUs - More than Alone</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta content="" name="keywords" />
     <meta content="" name="description" />
 
     <!-- Favicon -->
+    <%--
     <link
       href="${PageContext.request.contextPath }/resources/img/favicon.ico"
+      rel="icon"
+    />
+    --%>
+    <link
+      href="${PageContext.request.contextPath }/resources/img/faviconju.png"
       rel="icon"
     />
 
@@ -20,14 +26,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
     <link
       href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&amp;family=Roboto:wght@500;700;900&amp;display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap"
       rel="stylesheet"
     />
 
@@ -40,10 +38,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
       rel="stylesheet"
     />
-    <script
-      src="https://kit.fontawesome.com/774827a7a5.js"
-      crossorigin="anonymous"
-    ></script>
 
     <!-- jQuery Library -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -79,6 +73,12 @@ uri="http://java.sun.com/jsp/jstl/core"%>
       rel="stylesheet"
     />
 
+    <!-- fontawesome -->
+    <script
+      src="https://kit.fontawesome.com/774827a7a5.js"
+      crossorigin="anonymous"
+    ></script>
+
     <style type="text/css">
       .service-item {
         height: 100%;
@@ -111,6 +111,10 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         text-align: right;
         white-space: nowrap;
       }
+      #login,
+      #logout {
+        font-size: 30;
+      }
     </style>
   </head>
 
@@ -136,9 +140,15 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         href="${PageContext.request.contextPath }/"
         class="navbar-brand d-flex align-items-center border-end px-4 px-lg-5"
       >
-        <h2 class="m-0 text-primary">JOINUS</h2>
+        <img
+          src="${PageContext.request.contextPath }/resources/img/joinus.png"
+          alt=""
+          width="200"
+          height="60"
+        />
+        <!--  <h2 class="m-0 text-primary">JOINUS</h2> -->
       </a>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
+      <div class="collapse navbar-collapse px-3" id="navbarCollapse">
         <div class="navbar-nav ms-auto p-4 p-lg-0">
           <a
             href="${PageContext.request.contextPath }/"
@@ -162,7 +172,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                         <a href="404.html" class="dropdown-item">404 Page</a> 
                     </div>
                 </div>-->
-          <c:if test="${!empty member}">
+          <c:if test="${!empty member_no }">
             <a
               href="${PageContext.request.contextPath }/member/mypage"
               class="nav-item nav-link"
@@ -170,37 +180,52 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             >
           </c:if>
         </div>
-        <c:if test="${empty member }">
+        <c:if test="${empty member_no }">
           <a
             href="${PageContext.request.contextPath }/member/signin"
-            class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block"
-            >LOGIN<i class="fa fa-arrow-right ms-3"></i
+            id="login"
+            class="btn btn-primary rounded-2 py-3 px-lg-5 d-none d-lg-block"
+            >LOGIN<i class="fa-solid fa-arrow-right-to-bracket px-2"></i
           ></a>
         </c:if>
-        <c:if test="${!empty member }">
+        <c:if test="${!empty member_no }">
           <a
             href="${PageContext.request.contextPath }/member/signin"
-            class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block"
-            >LOGOUT<i class="fa fa-arrow-right ms-3"></i
+            id="logout"
+            class="btn btn-primary rounded-2 py-3 px-lg-5 d-none d-lg-block"
+            >LOGOUT<i class="fa-solid fa-arrow-right-to-bracket px-2"></i
           ></a>
         </c:if>
       </div>
     </nav>
     <!-- Navbar End -->
-
     <!-- Page Header Start -->
-    <div class="container-fluid page-header py-5 mb-5">
+    <!--     <div class="container-fluid page-header py-5 mb-5">
       <div class="container py-5">
         <h1 class="display-3 text-white mb-3 animated slideInDown"></h1>
         <nav aria-label="breadcrumb animated slideInDown">
           <ol class="breadcrumb">
-            <!--                     <li class="breadcrumb-item"><a class="text-white" href="#"></a></li>
+                                <li class="breadcrumb-item"><a class="text-white" href="#"></a></li>
                     <li class="breadcrumb-item"><a class="text-white" href="#"></a></li>
-                    <li class="breadcrumb-item text-white active" aria-current="page"></li> -->
+                    <li class="breadcrumb-item text-white active" aria-current="page"></li>
           </ol>
         </nav>
       </div>
-    </div>
+=======
+<!--     Page Header Start
+    <div class="container-fluid page-header py-5 mb-5">
+        <div class="container py-5">
+            <h1 class="display-3 text-white mb-3 animated slideInDown">JOINUS</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
+                    <li class="breadcrumb-item text-white active" aria-current="page">Services</li>
+                </ol>
+            </nav>
+        </div>
+>>>>>>> 789269ce0ed3037434a040b862425debf61078d4
+    </div> -->
     <!-- Page Header End -->
   </body>
 </html>

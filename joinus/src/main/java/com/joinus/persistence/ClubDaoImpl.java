@@ -17,6 +17,7 @@ import com.joinus.domain.BoardLikesVo;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubGradesVo;
+import com.joinus.domain.ClubListDto;
 import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubTotalBean;
@@ -226,14 +227,16 @@ public class ClubDaoImpl implements ClubDao{
 		sqlSession.delete(NAMESPACE+".DeleteMeeting", club_meeting_no);
 
 	}
+	
+	@Override
+	public String getMeetingAddr(int club_meeting_no) {
+		
+		return sqlSession.selectOne(NAMESPACE2+".SelectAddr", club_meeting_no);
+	}
 
 	
 	
 //=======================허수빈=============================================================
-	
-
-
-
 
 	@Override
 	public void writeBoard(ClubBoardsVo vo) {
@@ -416,6 +419,16 @@ public class ClubDaoImpl implements ClubDao{
 		
 		return sqlSession.selectList(NAMESPACE+".myClubListLimit", paramMap);
 	}
+	
+
+	@Override
+	public List<ClubListDto> clubListForAdmin(Criteria cri) {
+		List<ClubListDto> clubList = sqlSession.selectList(NAMESPACE+".clubListForAdmin", cri);
+		return clubList;
+	}
+
+	
+	
 	
 
 	

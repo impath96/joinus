@@ -7,6 +7,7 @@ import java.util.Map;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubGradesVo;
+import com.joinus.domain.ClubListDto;
 import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubTotalBean;
@@ -77,6 +78,9 @@ public interface ClubDao {
 	
 	//정모 삭제하기
 	public void deleteMeeting(Integer club_meeting_no);
+	
+	//정모 주소 가져오기
+	public String getMeetingAddr(int club_meeting_no);
 
 	
 	//=========================고은비=========================
@@ -166,6 +170,9 @@ public interface ClubDao {
 	public List<ClubsVo> myClubList(int member_no);
 
 	public List<ClubsVo> myClubList(int member_no, int limit);
+	
+	// 관리자 페이지 - 모임 리스트
+	public List<ClubListDto> clubListForAdmin(Criteria cri);
 	
 	
 	//=========================김민호========================

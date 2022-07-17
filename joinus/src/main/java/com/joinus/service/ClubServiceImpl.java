@@ -15,6 +15,7 @@ import com.joinus.domain.BoardLikesVo;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubGradesVo;
+import com.joinus.domain.ClubListDto;
 import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubTotalBean;
@@ -151,13 +152,19 @@ public class ClubServiceImpl implements ClubService{
 		return dao.updateMeeting(club_meeting_no ,vo);
 	}
 	
-	
+	//정모 삭제
 	@Override
 	public void deleteClubMeeting(Integer club_meeting_no) {
 		
 		dao.deleteMeeting(club_meeting_no);
 		
 		
+	}
+	
+	@Override
+	public String getMeetingAddr(int club_meeting_no) {
+		
+		return dao.getMeetingAddr(club_meeting_no);
 	}
 	
 	
@@ -193,6 +200,12 @@ public class ClubServiceImpl implements ClubService{
 	@Override
 	public List<ClubsVo> getMyClubList(int member_no, int limit) {
 		return dao.myClubList(member_no, limit);
+	}
+	
+
+	@Override
+	public List<ClubListDto> getClubListForAdmin(Criteria cri) {
+		return dao.clubListForAdmin(cri);
 	}
 
 	// ========================================================
@@ -450,7 +463,8 @@ public class ClubServiceImpl implements ClubService{
 		public List<MeetingMembersVo> checkMeetingMember(Integer num,Integer num2) {
 			return dao.checkMeetingMember(num, num2);
 		}
-	
+
+
 		
 		
 		

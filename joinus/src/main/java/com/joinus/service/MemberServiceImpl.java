@@ -2,6 +2,7 @@ package com.joinus.service;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -10,8 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.joinus.domain.Criteria;
 import com.joinus.domain.MemberInterestsVo;
 import com.joinus.domain.MembersVo;
+import com.joinus.domain.MyClubDto;
 import com.joinus.persistence.MemberDao;
 import com.joinus.util.SHA256;
 
@@ -23,6 +26,7 @@ public class MemberServiceImpl implements MemberService {
 
 	private static final Logger log = LoggerFactory.getLogger(MemberServiceImpl.class);
 
+	// 회원가입 처리
 	@Override
 	public MembersVo join(MembersVo member) throws NoSuchAlgorithmException {
 		// 1) 먼저 회원을 등록
@@ -48,6 +52,7 @@ public class MemberServiceImpl implements MemberService {
 		return selectMember;
 	}
 
+	// 회원 이메일로 회원 찾기
 	@Override
 	public MembersVo findMemberByEmail(String member_email) {
 		log.info("전달받은 이메일 주소 : {}", member_email);
@@ -56,6 +61,7 @@ public class MemberServiceImpl implements MemberService {
 		return findMember;
 	}
 
+	// 회원 번호로 회원 찾기
 	@Override
 	public MembersVo findMemberByNo(int member_no) {
 
@@ -64,6 +70,7 @@ public class MemberServiceImpl implements MemberService {
 		return findMember;
 	}
 
+	// 이미지 변경 
 	@Override
 	public void updateImage(String savedFileName, int member_no) {
 		log.info("회원 프로필 사진 변경 savedFileName : {}, member_no : {}", savedFileName, member_no);
@@ -115,6 +122,31 @@ public class MemberServiceImpl implements MemberService {
 	public void updateName(String memberName, int member_no) {
 		memberDao.updateName(memberName, member_no);
 		
+	}
+
+	@Override
+	public List<MyClubDto> getMyClubList(int member_no) {
+		List<MyClubDto> list = memberDao.myClubList(member_no);
+		
+		return list;
+	}
+
+	// 모든 회원 목록 출력
+	@Override
+	public List<MembersVo> findMemberAll(Criteria cri) {
+		
+		return memberDao.getMemberAll(cri);
+	}
+
+	@Override
+	public int getTotalCount() {
+		return memberDao.getTotalCount();
+	}
+
+	@Override
+	public void deleteMember(List<Integer> idList) {
+
+		memberDao.deleteMember(idList);
 	}
 
 }

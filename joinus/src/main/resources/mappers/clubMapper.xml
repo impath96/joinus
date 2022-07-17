@@ -362,6 +362,28 @@
 		]]>
 </select>
 
+	<select id="clubListForAdmin" resultType="ClubListDto">
+		select 
+				c.club_no, 
+				c.club_name, 
+				c.club_location, 
+				c.club_capacity, 
+				c.club_regdate, 
+				cm.member_no, 
+				cm2.total, 
+				m.member_name
+		from club_members cm join (select club_no, count(club_no) total
+									from club_members
+									group by club_no) cm2
+		on cm.club_no = cm2.club_no
+		join members m
+		on cm.member_no = m.member_no
+		join clubs c
+		on c.club_no = cm.club_no
+		where club_member_role = 'admin'
+		limit #{pageStart}, ${perPageNum}
+	</select>
+
 <!-- ================================= -->
 	<select id="getBoardContent" resultMap="boardContentMap">
 		select c.club_name, b.board_type_no, bt.board_type_name, m.member_no, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate 

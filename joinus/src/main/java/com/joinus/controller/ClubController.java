@@ -270,6 +270,7 @@ public class ClubController {
 		}
 		
 		//http://localhost:8088/club/1/meeting/1
+		
 		@RequestMapping(value="/{club_no}/meeting/{club_meeting_no}", method = RequestMethod.GET)
 		public String meetingModifyGET(Model model, HttpSession session,
 				@PathVariable("club_no") Integer club_no, @PathVariable("club_meeting_no") Integer club_meeting_no ) {
@@ -310,6 +311,14 @@ public class ClubController {
 			
 			log.info("meetingModifyGET() 호출");
 			
+			MembersVo member = (MembersVo) session.getAttribute("member");
+			log.info(member+"");
+			
+			int member_no =member.getMember_no();
+			
+			List<MeetingTotalBean> rentalList = (List<MeetingTotalBean>)service.getRental(member_no);
+			log.info(rentalList+"");
+			
 			List<ClubMeetingsVo> meetingList = service.getMeeting(club_meeting_no);
 			log.info(meetingList+"");
 			
@@ -317,6 +326,7 @@ public class ClubController {
 			log.info(clubInfo+"");
 			model.addAttribute("clubInfo", clubInfo);
 			model.addAttribute("meetingList", meetingList);
+			model.addAttribute("rentalList", rentalList);
 			
 			return "/club/meeting/meetingModify";
 			
@@ -631,11 +641,12 @@ public class ClubController {
 	// http://localhost:8088/club/53/boards/26/delete
 	// 게시글 삭제
 	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/delete", method = RequestMethod.POST)
-	public String deleteBoardPost(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no) {
+	public String deleteBoardPost(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no, RedirectAttributes rttr) {
 		log.info(" deleteBoardPost() 호출 ");
 		log.info("club_no : "+club_no);
 		
 		service.deleteBoard(club_board_no);
+		rttr.addFlashAttribute("result", "DELOK");
 		
 		return "redirect:/club/"+club_no+"/boards";
 	}

@@ -24,9 +24,11 @@
 			location.href = "/club/${club_no}/boards/${club_board_no}/modify";
 		});
 		$('#delBtn').click(function(){
-			formObj.attr("action", "/club/${club_no}/boards/${club_board_no}/delete");
-			formObj.attr("method","POST");
-			formObj.submit();
+			if(confirm("게시글을 삭제하시겠습니까?")){
+				formObj.attr("action", "/club/${club_no}/boards/${club_board_no}/delete");
+				formObj.attr("method","POST");
+				formObj.submit();
+			}
 		});
 		$('#backBtn').click(function(){
 			location.href = "/club/${club_no}/boards";

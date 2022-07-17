@@ -14,6 +14,20 @@
 	<select id="selectMemberByNo" resultType="MembersVo">
 		select * from members where member_no=#{member_no}
 	</select>
+	
+	<select id="getMemberAll" resultType="MembersVo">
+		<![CDATA[
+			select * from members
+			where member_no > 0
+			order by member_no asc, member_regdate asc
+			limit #{pageStart}, ${perPageNum}
+		]]>
+	</select>
+	<select id="getTotalCount" resultType="int">
+		<![CDATA[
+			select count(*) from members;
+		]]>
+	</select>
 	<insert id="insertMember" parameterType="MembersVo">
 		<![CDATA[
 		insert into members
@@ -36,6 +50,7 @@
 			#{member_location}
 			)
 		]]>
+		
 	</insert>
 	<insert id="insertMemberInterest">
 		insert into member_interests(member_no, interest_no)
@@ -62,10 +77,33 @@
 		where member_no=#{member_no}
 	</update>
 	
+	<update id="deleteMembers" parameterType="java.util.List">
+		update 
+	</update>
+	
 	<select id="selectMember" resultType="MembersVo">
 		<![CDATA[
 		select * from members
 		where member_email=#{member_email} and member_pass=#{member_pass}
+		]]>
+	</select>
+	<select id="myClubList" resultType="MyClubDto">
+		<![CDATA[
+		select 
+				c.club_no,
+				c.club_name, 
+				c.club_content, 
+				c.club_image, 
+				i.interest_icon 
+		from clubs c 
+		join club_interests ci
+			on c.club_no = ci.club_no
+		join interests i
+			on ci.interest_no = i.interest_no
+		where c.club_no in (
+							select club_no 
+							from club_members 
+							where member_no = #{member_no})
 		]]>
 	</select>
 </mapper>

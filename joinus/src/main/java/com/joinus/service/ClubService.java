@@ -11,6 +11,7 @@ import com.joinus.domain.BoardLikesVo;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubGradesVo;
+import com.joinus.domain.ClubListDto;
 import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubTotalBean;
@@ -75,6 +76,8 @@ import com.joinus.domain.MembersVo;
 		//정모 삭제
 		public void deleteClubMeeting(Integer club_meeting_no);
 		
+		//정모 주소 호출
+		public String getMeetingAddr(int club_meeting_no);
 		
 //		public List<ClubBoardVo> getBoardListAll(Integer club_no);
 		
@@ -159,7 +162,7 @@ import com.joinus.domain.MembersVo;
 	List<ClubsVo> getClubListByMemberNo(int member_no, int limit);
 	public List<ClubsVo> getMyClubList(int member_no);
 	public List<ClubsVo> getMyClubList(int member_no, int limit);
-
+	public List<ClubListDto> getClubListForAdmin(Criteria cri);
 	
 	
 	
@@ -221,4 +224,5 @@ import com.joinus.domain.MembersVo;
 		
 		//게시글 리스트
 		public List<ClubBoardsVo> getBoardsforimg(Integer num);
+
 }
