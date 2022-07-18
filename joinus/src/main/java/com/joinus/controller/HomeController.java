@@ -14,6 +14,10 @@ import com.joinus.domain.ClubsVo;
 import com.joinus.domain.MembersVo;
 import com.joinus.service.MainService;
 
+import jdk.internal.org.jline.utils.Log;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class HomeController {
 	
@@ -31,6 +35,7 @@ public class HomeController {
 		model.addAttribute("Numerous", vo3);
 		
 		MembersVo member = (MembersVo)session.getAttribute("member");
+		log.info("member : {}", member);
 		if(member != null) {
 			
 			List<ClubsVo> vo4 = service.getMyClubs(member.getMember_location());
