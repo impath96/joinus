@@ -285,7 +285,7 @@
 				<c:if test="${!empty member_no}">
 						
 					<!-- 모임X 벤 당한 회원은 가입버튼X 벤당한거 아직안함-->
-					<c:if test="${ graded eq '0' &&  clubmember  eq '0' }">
+					<c:if test="${ graded eq '0' &&  clubmember eq '0' }">
 						<br><button class="btn btn-primary rounded-pill py-3 px-5 mt-3" id="joinClub">가입하기</button>
 					</c:if>
 					
@@ -340,21 +340,39 @@
            		
            <c:if test="${!empty meetings}" >
  			<div class="row g-4 text-center justify" >
-			    <c:forEach var="m" items="${meetings}">
-           			 
+ 			
+ 			
+			   <c:forEach var="m" items="${meetings}">
+	             
+	           			 	 				
+						 <c:set var="doneLoop" value="false"/><!-- break 기능 -->
+	    	    <c:forEach var="mm" items="${meetingMbrs}">
+	                    		<c:if test="${not doneLoop}">
+	             
 	                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s" >
 			        
-			        <!-- 모임가입시 출력 -->
-			        <c:if test="${clubmember ne '0'}">
-					
-					 <c:set var="doneLoop" value="false"/>
-			    	    <c:forEach var="mm" items="${meetingMbrs}">
-				       	 <c:if test="${not doneLoop}">
+			     		   <!-- 모임가입시 참석하기 버튼 출력 -->
+			       		  <c:if test="${clubmember ne '0'}">
+				       	 
 			         		${m.club_meeting_no }
 			         		${mm.club_meeting_no }
-			        
-			         
-			       	  	<c:choose>
+								<!-- 내가 참석신청을 한 정모list에 해당 정모no이 있는지로 비교 -->
+                    			<c:if test="${m.club_meeting_no eq mm.club_meeting_no}">
+	                    			<button id="outMeeting" class="btn btn-primary" value="${m.club_meeting_no}">참석취소하기</button>
+					                  <c:set var="doneLoop" value="true"/>
+                    			</c:if>
+                    		 
+						 
+			         			<c:if test="${m.club_meeting_no ne mm.club_meeting_no}">
+		                    		<button id="JoinMeeting" class="btn btn-primary" value="${m.club_meeting_no}">참석하기</button>
+					                  <c:set var="doneLoop" value="true"/>
+                    			</c:if>
+                    		
+                    		</c:if>
+                    	
+                    			
+                    	
+			       	  <%-- 	<c:choose>
 							  	<c:when test="${m.club_meeting_no ne mm.club_meeting_no}">
 		                    		<button id="JoinMeeting" class="btn btn-primary" value="${m.club_meeting_no}">참석하기</button>
 					                  <c:set var="doneLoop" value="true"/>
@@ -363,16 +381,16 @@
 	                    			<button id="outMeeting" class="btn btn-primary" value="${m.club_meeting_no}">참석취소하기</button>
 					                  <c:set var="doneLoop" value="true"/>
 	                    		</c:otherwise>
-			       	  	</c:choose>
-                    	
-                    	
-	                  </c:if>
-                  	  </c:forEach>
+			       	  	</c:choose> --%>
+	                	 
+                 
+                  	  
+                  	  			<!-- 내 정모list가 없다면 참석하기 버튼 띄우기  -->
                     			<c:if test="${meetingMbrsNull eq '0'}">
 		                    		<button id="JoinMeeting" class="btn btn-primary" value="${m.club_meeting_no}">참석하기</button>
 	                    		</c:if>
 	                    		
-                    </c:if>	
+                 
                     
                     
                   	<div class="service-item rounded overflow-hidden Grrrr">
@@ -383,9 +401,10 @@
                 </div>
               
               
+                
                 </div>
-                
-                
+                   </c:if>	
+            	    </c:forEach>
                     </c:forEach>
                     </div>
                 </c:if>

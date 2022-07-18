@@ -36,11 +36,14 @@ public class HomeController {
 		
 		MembersVo member = (MembersVo)session.getAttribute("member");
 		log.info("member : {}", member);
+		
+		
 		if(member != null) {
 			
 			List<ClubsVo> vo4 = service.getMyClubs(member.getMember_location());
 			model.addAttribute("my", vo4);
 		}
+		
 		session.setAttribute("member", member);
 		return "main";
 	}

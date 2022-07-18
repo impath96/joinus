@@ -946,19 +946,35 @@ public class ClubController {
 					
 					//정모리스트 
 					List<ClubMeetingsVo> meetings = service.getMeetings(club_no);
+					List<ClubMeetingsVo> meetings2 = service.getMeetings(club_no);
 					model.addAttribute("meetings", meetings);
 					log.info("정모리스트: "+meetings);  
 					
 					//내 회원번호로 해당 클럽 정모멤버리스트 조회하기
 					List<MeetingMembersVo> meetingMbrs = service.checkMeetingMember(club_no,member.getMember_no());
 					List<MeetingMembersVo> mtMbrs = new ArrayList<MeetingMembersVo>();
+					int myMeeting = 0;
 					if(meetingMbrs != null) { 
-						mtMbrs = meetingMbrs; }
+						mtMbrs = meetingMbrs; 
+						
+						List<Integer> MN1 = new ArrayList<Integer>();
+						for(int i = 0; i < mtMbrs.size(); i++) {
+							int MN = mtMbrs.get(i).getClub_meeting_no();
+						}
+						
+						meetings2.retainAll(mtMbrs);
+						log.info("중복값?"+meetings2);
+					}
+//					log.info("내 정모 번호: "+myMeeting);  
+//					model.addAttribute("myMeeting",myMeeting);
 					model.addAttribute("meetingMbrs",mtMbrs);
 					int result3 = 100;
 					if(meetingMbrs.isEmpty()) { 
 						result3 = 0;	}
 					model.addAttribute("meetingMbrsNull",result3);
+					
+					
+					
 					log.info("정모멤버리스트: "+meetingMbrs); 
 					log.info("정모멤버리스트: "+result3); 
 					
