@@ -77,7 +77,7 @@
 					<pre class="boardContent">${partnerPlace.partner_place_content }</pre>
 				</div>
 				
-				<hr>
+				<hr class="partnerPlaceContentHr">
 				
 				<div style="margin-bottom: 16px;">
 					<i class="fa fa-phone-alt me-3" aria-hidden="true"></i>${partnerPlace.partner_place_tel }
@@ -102,7 +102,6 @@
 				
 					<div>
 						<div style="font-size: x-large; float: left;">
-<!-- 							<i class="fa fa-check-circle text-primary me-3"></i> -->
 							${partnerPlace.partner_place_name }
 						</div>
 						<div style="color: #32C36C; text-align: right; margin-bottom: 2em;">
