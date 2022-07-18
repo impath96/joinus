@@ -15,5 +15,45 @@
 	<select id="getAllPartnerPlaceList" resultType="PartnerPlacesVo">
 		select * from partner_places
 	</select>
+	
+	<!-- 부산 (구) 리스트 -->
+	<select id="getBusanGuList" resultType="LocationCityVo">
+		select * from location_city
+		where location_city_name like '부산%'
+		order by location_gu_name;
+	</select>
+	
+	<!-- (구) 별 제휴시설리스트 -->
+	<select id="getCityPartnerPlaceList" resultType="PartnerPlacesVo">
+		select * from partner_places
+		where partner_place_address like concat('%',#{partner_place_address},'%')
+	</select>
+	
+	<!-- 장소유형, 위치 제휴시설리스트 -->
+	<select id="getPartnerPlaceList" resultType="PartnerPlacesVo">
+		select * from partner_places
+		where partner_place_type = #{partner_place_type} and partner_place_address like concat('%',#{partner_place_address},'%')
+	</select>
+	
+	<!-- 장소유형별 제휴시설리스트 -->
+	<select id="getTypePartnerPlaceList" resultType="PartnerPlacesVo">
+		select * from partner_places
+		where partner_place_type = #{partner_place_type}
+	</select>
+
+
+	<!-- 결제 -->
+	<insert id="pay">
+		insert into payments(reservation_no,member_no,partner_place_no,partner_place_price,payment_price,payment_status)
+		 values(#{reservation_no},#{member_no},#{partner_place_no},#{partner_place_price},#{payment_price},#{payment_status})
+		 <selectKey resultType="Integer" keyProperty="payment_no" order="AFTER">
+		SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<insert id="place">
+		insert into rental_places(reservation_no,club_no,member_no,partner_place_no,payment_no,rental_time_no,rental_status)
+		values(#{reservation_no},#{club_no},#{member_no},#{partner_place_no},#{payment_no},#{rental_time_no},#{rental_status})
+	</insert>
 
 </mapper>  

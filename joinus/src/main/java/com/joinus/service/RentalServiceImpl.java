@@ -8,7 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.joinus.domain.LocationCityVo;
 import com.joinus.domain.PartnerPlacesVo;
+import com.joinus.domain.PaymentsVo;
+import com.joinus.domain.RentalPlacesVo;
 import com.joinus.persistence.RentalDao;
 
 @Service
@@ -27,6 +30,36 @@ public class RentalServiceImpl implements RentalService {
 	@Override
 	public List<PartnerPlacesVo> getAllPartnerPlaceList() {
 		return dao.getAllPartnerPlaceList();
+	}
+
+	@Override
+	public List<LocationCityVo> getBusanGuList() {
+		return dao.getBusanGuList();
+	}
+
+	@Override
+	public List<PartnerPlacesVo> getCityPartnerPlaceList(String partner_place_address) {
+		return dao.getCityPartnerPlaceList(partner_place_address);
+	}
+
+	@Override
+	public List<PartnerPlacesVo> getPartnerPlaceList(String partner_place_type, String partner_place_address) {
+		return dao.getPartnerPlaceList(partner_place_type, partner_place_address);
+	}
+
+	@Override
+	public List<PartnerPlacesVo> getTypePartnerPlaceList(String partner_place_type) {
+		return dao.getTypePartnerPlaceList(partner_place_type);
+	}
+	
+	@Override
+	public Integer pay(PaymentsVo vo) {
+		return dao.pay(vo);
+	}
+
+	@Override
+	public void place(RentalPlacesVo vo) {
+		dao.place(vo);
 	}
 	
 	

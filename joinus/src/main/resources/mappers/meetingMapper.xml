@@ -84,6 +84,23 @@
 
 </update>
 
+
+	<!-- 정모 참석 신청  -->
+	<insert id="joinMeeting">
+		insert into meeting_members (club_no,club_meeting_no,member_no)
+		values(#{club_no},#{club_meeting_no},#{member_no})
+	</insert>
+	<!-- 정모 참석 취소  -->
+	<delete id="outMeeting">
+		delete from meeting_members where club_no=#{club_no} and club_meeting_no=#{club_meeting_no} and member_no=#{member_no}
+	</delete>
+	<!-- 정모 참석여부 확인 -->
+	<select id="getMeetingMember" resultType="MeetingMembersVo">
+		select * from meeting_members where club_no=#{club_no} and member_no=#{member_no}
+	</select>
+	
+	
+	
 <select id="SelectAddr" resultType="string">
 	select club_meeting_address
 	from club_meetings

@@ -505,6 +505,21 @@
 		select count(member_no) from club_members
 		where club_no = #{club_no} and member_no = #{member_no}
 	</select>
+	
+	<!-- 모임장인지 확인 -->
+	<select id="checkClubAdmin" resultType="java.lang.Integer">
+		select count(club_member_no) from club_members
+		where club_member_role = 'admin' and member_no = #{member_no}
+	</select>
+	
+	<!-- 모임장 주소 -->
+	<select id="getClubAdminAddr" resultType="String">
+		select distinct m.member_location
+		from members m
+		join club_members cm
+			on (m.member_no = cm.member_no)
+		where cm.club_member_role = 'admin' and m.member_no = #{member_no}
+	</select>
 
 
 

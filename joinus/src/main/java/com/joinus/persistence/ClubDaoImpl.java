@@ -16,7 +16,6 @@ import com.joinus.domain.BoardCriteria;
 import com.joinus.domain.BoardLikesVo;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
-import com.joinus.domain.Criteria;
 import com.joinus.domain.ClubGradesVo;
 import com.joinus.domain.ClubListDto;
 import com.joinus.domain.ClubMeetingsVo;
@@ -24,11 +23,11 @@ import com.joinus.domain.ClubMembersVo;
 import com.joinus.domain.ClubTotalBean;
 import com.joinus.domain.ClubsVo;
 import com.joinus.domain.Criteria;
-import com.joinus.domain.MeetingTotalBean;
 import com.joinus.domain.InterestDetailsVo;
 import com.joinus.domain.InterestsVo;
+import com.joinus.domain.MeetingMembersVo;
+import com.joinus.domain.MeetingTotalBean;
 import com.joinus.domain.MembersVo;
-import com.joinus.domain.RentalPlacesVo;
 
 @Repository
 public class ClubDaoImpl implements ClubDao{
@@ -385,9 +384,30 @@ public class ClubDaoImpl implements ClubDao{
 	public void decreaseLikeCnt(int club_board_no) {
 		sqlSession.update(NAMESPACE+".decreaseLikeCnt", club_board_no);
 	}
+	
+	@Override
+	public int checkClubMember(int club_no, int member_no) {
+		Map<String, Integer> param = new HashMap<String, Integer>();
+		param.put("club_no", club_no);
+		param.put("member_no", member_no);
+		
+		return sqlSession.selectOne(NAMESPACE+".checkClubMember", param);
+	}
+	
+	@Override
+	public int checkClubAdmin(int member_no) {
+		return sqlSession.selectOne(NAMESPACE+".checkClubAdmin", member_no);
+	}
+	
+	@Override
+	public String getClubAdminAddr(int member_no) {
+		return sqlSession.selectOne(NAMESPACE+".getClubAdminAddr", member_no);
+	}
+	
 
 	// =========================== 김민호 =============================
 	
+
 	// 내 모임 리스트 출력 - limit 제한
 	@Override
 	public List<ClubsVo> ClubListByMemberNo(int member_no, int limit) {
@@ -434,13 +454,7 @@ public class ClubDaoImpl implements ClubDao{
 
 	
 	// =============================================================================
-	public int checkClubMember(int club_no, int member_no) {
-		Map<String, Integer> param = new HashMap<String, Integer>();
-		param.put("club_no", club_no);
-		param.put("member_no", member_no);
-		
-		return sqlSession.selectOne(NAMESPACE+".checkClubMember", param);
-	}
+
 	
 	
 	
@@ -585,7 +599,26 @@ public class ClubDaoImpl implements ClubDao{
 			public List<ClubBoardsVo> getBoards(Integer num) {
 				return sqlSession.selectList(NAMESPACE+".getBoardImageList", num);
 			}
-
+			
+			//정모참여
+			@Override
+			public void joinMeeting(MeetingMembersVo vo) {
+				sqlSession.insert(NAMESPACE2+".joinMeeting", vo);
+			}
+			// 정모 참석취소
+			@Override
+			public void outMeeting(MeetingMembersVo vo) {
+				sqlSession.delete(NAMESPACE2+".outMeeting", vo);
+			}
+			// 정모 참석자 리스트
+			@Override
+			public List<MeetingMembersVo> checkMeetingMember(Integer num,Integer num2) {
+				Map<String, Integer> meetingMlist = new HashMap<String, Integer>();
+				meetingMlist.put("club_no", num);
+				meetingMlist.put("member_no", num2);
+				return sqlSession.selectList(NAMESPACE2+".getMeetingMember", meetingMlist);
+			}
+			
 
 
 			
