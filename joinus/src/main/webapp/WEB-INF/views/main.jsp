@@ -77,13 +77,13 @@ $(document).ready(function(){
                      <!-- 인기모임(찜) -->
             	  <div class="mainGroup">
             	  			<div class="wow fadeInUp marginB" data-wow-delay="0.1s">
-                         	<h2> &#128293; 지금 가장 인기있는 TOP 9 </h2>
+                         	<h2> &#128293; 지금 가장 인기있는 TOP 6 </h2>
                          	<p class="MainSubTitle">회원들이 가장 많이 찜한 모임을 구경해보세요!</p><hr>
                           	</div>
 				            <div class="row g-4">              
-							<c:forEach var = "po" items="${popular }">
+							<c:forEach var = "po" items="${popular }" begin="0" end="9">
 				                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
-				                    <div class="service-item rounded overflow-hidden Grrrr">
+				                    <div class="service-item rounded overflow-hidden Grrrr shadow">
 				                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${po.club_image}" class="w-100 py-auto mainImg"
 				                        onclick="location.href='${PageContext.request.contextPath }/club/${po.club_no}'">
 				                    <!-- 클럽 대표 이미지 -->
@@ -92,10 +92,14 @@ $(document).ready(function(){
 						                    	onclick="location.href='${PageContext.request.contextPath }/club/${po.club_no}'">
 						                    </c:if>
 					                        <div class="position-relative p-4 pt-0">
+						                    <a class="small fw-medium textGnW" href="${PageContext.request.contextPath }/club/${po.club_no}">
+						                    <i class="fa fa-arrow-right ms-2"></i></a>
 					                            <h4 class="mb-3 py-2 MainTextTitle">${po.club_name }</h4>
 					                           
 					                            <p class="MainTextSub ">${po.club_content }</p>
 					                        </div>
+						                    <a class="small fw-medium textGnW" href="${PageContext.request.contextPath }/club/${po.club_no}">모임보러가기<i class="fa fa-arrow-right ms-2"></i></a>
+					                        
 				                    </div>
 				                </div>
 				            </c:forEach>
@@ -106,7 +110,7 @@ $(document).ready(function(){
 					<!-- 회원많은모임 -->
 				 <div class="mainGroup">
             	  			<div class="wow fadeInUp marginB" data-wow-delay="0.1s">
-                         	<h2> &#128588; 참여회원이 가장 많은 TOP 9 </h2>
+                         	<h2> &#128588; 참여회원이 가장 많은 TOP 6 </h2>
                          	<p class="MainSubTitle">가장 회원이 많은 모임을 구경해보세요!</p><hr>
                           	</div>
 				            <div class="row g-4">              
@@ -136,7 +140,7 @@ $(document).ready(function(){
 					<!-- 최근에 생성된 모임  -->
 				 <div class="mainGroup">
 	            	  			<div class="wow fadeInUp marginB" data-wow-delay="0.1s">
-	                         	<h2>  &#10024; 가장 최근에 생긴 TOP 9 </h2>
+	                         	<h2>  &#10024; 최근에 생긴 모임 </h2>
 	                         	<p class="MainSubTitle">방금 생긴 따끈따끈한 모임을 구경해보세요!</p><hr>
 	                          	</div>
 					            <div class="row g-4">              
