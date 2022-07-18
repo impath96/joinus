@@ -61,6 +61,7 @@
 	font-size: inherit;
 	line-height: 40px;
 	white-space: pre-line;
+	padding-right: 3em;
 }
 
 .ContentImage {
@@ -108,4 +109,14 @@
 	color: black;
 	height: 55px;
 	width: 20%;
+}
+
+#placeTypeSelect {
+	height: auto;
+	box-shadow: 0 0 0px;
+}
+
+.placeHr {
+	color: #32C36C;
+	height: 10px;
 }

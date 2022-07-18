@@ -7,12 +7,81 @@
 	<div class="container">
 		<div class="row g-5">
 			<div class="row g-4">
+				
+				<div style="margin-left: 6px;">
+					<h2>어떤 공간을 찾고 있나요?</h2>
+				</div>
+				
+				<hr class="placeHr" style="height: 10px;">
+			
+				
+				<div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
+                    <div id="placeTypeSelect" class="service-item">
+                    	<a href="${PageContext.request.contextPath}/rental/partnerPlaceList?type=음악연습실">
+	                        <div class="position-relative p-4 pt-0">
+	                            <div class="service-icon">
+	                            	<div>
+	                                	<img src="${PageContext.requeset.contextPath }/resources/img/음악연습실.png" class="w-100 py-auto">
+	                                </div>
+	                            </div>
+	                            <h4 class="mb-3" style="margin-top: 1em;">음악연습실</h4>
+	                        </div>
+                        </a>
+                    </div>
+                </div>
+                
+				<div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
+                    <div id="placeTypeSelect" class="service-item">
+                    	<a href="${PageContext.request.contextPath}/rental/partnerPlaceList?type=공유주방">
+	                        <div class="position-relative p-4 pt-0">
+	                            <div class="service-icon">
+	                                <img src="${PageContext.requeset.contextPath }/resources/img/공유주방.png" class="w-100 py-auto">
+	                            </div>
+	                            <h4 class="mb-3" style="margin-top: 1em;">공유주방</h4>
+	                        </div>
+                        </a>
+                    </div>
+                </div>
+                
+				<div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
+                    <div id="placeTypeSelect" class="service-item">
+                    	<a href="${PageContext.request.contextPath}/rental/partnerPlaceList?type=스터디룸">
+	                        <div class="position-relative p-4 pt-0">
+	                            <div class="service-icon">
+	                                <img src="${PageContext.requeset.contextPath }/resources/img/스터디룸.png" class="w-100 py-auto">
+	                            </div>
+	                            <h4 class="mb-3" style="margin-top: 1em;">스터디룸</h4>
+	                        </div>
+                        </a>
+                    </div>
+                </div>
+                
+				<div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
+                    <div id="placeTypeSelect" class="service-item">
+                    	<a href="${PageContext.request.contextPath}/rental/partnerPlaceList?type=운동시설">
+	                        <div class="position-relative p-4 pt-0">
+	                            <div class="service-icon">
+	                                <img src="${PageContext.requeset.contextPath }/resources/img/운동시설.png" class="w-100 py-auto">
+	                            </div>
+	                            <h4 class="mb-3" style="margin-top: 1em;">운동시설</h4>
+	                        </div>
+                        </a>
+                    </div>
+                </div>
+                
+				<div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
+                    <div id="placeTypeSelect" class="service-item">
+                    	<a href="${PageContext.request.contextPath}/rental/partnerPlaceList?type=카페">
+	                        <div class="position-relative p-4 pt-0">
+	                            <div class="service-icon">
+	                                <img src="${PageContext.requeset.contextPath }/resources/img/카페.png" class="w-100 py-auto">
+	                            </div>
+	                            <h4 class="mb-3" style="margin-top: 1em;">카페</h4>
+	                        </div>
+                        </a>
+                    </div>
+                </div>
 
-				<a href="${PageContext.request.contextPath}/rental/partnerPlaceList?type=음악연습실">음악연습실</a><br>
-				<a href="${PageContext.request.contextPath}/rental/partnerPlaceList?type=공유주방">공유주방</a><br>
-				<a href="${PageContext.request.contextPath}/rental/partnerPlaceList?type=스터디룸">스터디룸</a><br>
-				<a href="${PageContext.request.contextPath}/rental/partnerPlaceList?type=운동시설">운동시설</a><br>
-				<a href="${PageContext.request.contextPath}/rental/partnerPlaceList?type=카페">카페</a><br>
 			
 			</div>
 		</div>

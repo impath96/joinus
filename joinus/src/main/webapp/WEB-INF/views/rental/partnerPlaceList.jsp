@@ -118,7 +118,9 @@
 						
 			<div class="row g-4">
 				<c:if test="${partnerPlaceList.isEmpty() }">
-					검색결과가 없습니다.
+					<div style="margin-left: 6px;">
+						<h2><span style="color: #198754;">${type }</span> <span style="color: #198754;">${location }</span> 에 해당하는 검색결과가 없습니다.</h2>
+					</div>
 				</c:if>
 				<c:forEach var="partnerPlace" items="${partnerPlaceList }">
 	                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s" onclick=" location.href='/rental/partnerPlaces/${partnerPlace.partner_place_no}'; " style="cursor: pointer;">
