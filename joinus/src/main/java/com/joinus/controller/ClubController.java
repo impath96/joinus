@@ -74,6 +74,7 @@ public class ClubController {
 			pageMaker.setTotalCount(service.totalCnt());
 			log.info(pageMaker+"");
 			model.addAttribute("pm", pageMaker);
+			model.addAttribute("interest_no", 0);
 			rttr.addFlashAttribute("check","ClubList");
 			log.info("clubList() 호출");
 			
