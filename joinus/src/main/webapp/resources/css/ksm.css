@@ -103,6 +103,7 @@
 			height: auto;
 			margin-top: 30px;
 			text-align: center;
+			border-radius: 10px;
 		}		
 		.justify {
 			justify-content: center;
@@ -128,6 +129,10 @@
 		#joinClub {
 			width: 300px;
 		} 
+		
+		.joinClub {
+			width: 300px;
+		} 
 		#club_name {
 			margin-top: 20px; margin-bottom: 50px;
 			font-size: 5em;
@@ -137,6 +142,7 @@
 			padding: 100px;
 			font-weight: 500;
 			background-color: #F6F7F8;
+			border-radius: 10px;
 		}
 		#club_capa {
 			text-align: center;
@@ -156,6 +162,8 @@
    			 border-color: #32C36C;
    			 border-radius: 50% !important;
 		}
+		
+	
 		
 		/* .clubInfoMeeting {
 			display: inline-block;

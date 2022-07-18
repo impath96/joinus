@@ -326,7 +326,7 @@
  				<!-- 정모 -->
  				
  				
-                  <div class="text-center mx-auto mb-5 wow fadeInUp marginTOP " data-wow-delay="0.1s" style="max-width: 600px; ">
+                  <div class="text-center mx-auto mb-5 marginTOP ">
                 <h6 class="text-primary">${clubvo.club_name } </h6>
                 <h1 class="mb-4">정모</h1>
            
@@ -409,23 +409,20 @@
                 
                 
                 
-                </div>
+          
            
-    <!-- Feature Start -->
 
 
 
-    <!-- Team Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;"><br>
+    <!-- 사진 -->
+          <div class="text-center mx-auto mb-5 marginTOP ">
                 <h6 class="text-primary">${clubvo.club_name }</h6>
                 <h1 class="mb-4">활동사진</h1>
-            </div>
-            <hr><br><br>
+            </div><hr><br><br>
             
-             <c:if test="${!empty boards}" >
-            <div class="row g-4">
+         <c:if test="${!empty boards}" >
+        
+         <div class="row g-4 text-center justify">
                 <c:forEach var="b" items="${boards }">
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="team-item rounded overflow-hidden">
@@ -433,21 +430,20 @@
                             <img src="${PageContext.requeset.contextPath }/resources/upload/boards/${b.club_board_image}" 
                             onclick="location.href='${PageContext.requeset.contextPath }/club/${clubvo.club_no}/boards/${b.club_board_no}'">
                         </div>
-                        <div class="p-4">
-                        </div>
                     </div>
                 </div>
                 </c:forEach>
                 
             </div>
             </c:if>
+            
+            
+            
              <c:if test="${empty boards}" >
-          	   <div class="g-5" align="center" >
+          	   <div class="row g-4 text-center justify">
                	 <div class="col-md-6 col-lg-3 wow fadeIn clubInfoMeetingSize" data-wow-delay="0.1s" >
                	  <div class="align-items-center mb-4" >
-               	  
                	  	<h4 class="mainGr"> 등록된 모임사진이 없습니다 </h4>
-               	  
                  </div>
                 </div>
                 </div>
@@ -455,15 +451,6 @@
             
             
             
-            
-        </div>
-    </div>
-    
-    
-    
-    
-    
-    </div>
     </div>
  </div>
     </body>

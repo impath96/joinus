@@ -161,7 +161,9 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             class="nav-item nav-link"
             >CLUB</a
           >
-          <a href="service.html" class="nav-item nav-link">PLACE</a>
+          <a 
+          	href="${PageContext.request.contextPath }/rental/partnerPlaceList" 
+         	class="nav-item nav-link">PLACE</a>
           <!--  <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                     <div class="dropdown-menu bg-light m-0">

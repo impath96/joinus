@@ -30,7 +30,7 @@ $(document).ready(function(){
                 <h6 class="MainTextSub">함께하는, 보다 행복한 삶</h6>
             	<div ><img src="../resources/img/joinus.png" class="mainJoinus"></div><br>
                 <h1 class="mb-4">지금 바로 시작해보세요.</h1><hr>
-                <button class="btn btn-primary MainBtn m-5 py-3" onclick="location.href='${PageContext.requeset.contextPath }/club/new'"> 모임만들기 </button>
+                <button class="btn btn-primary MainBtn m-5 py-3 joinClub" onclick="location.href='${PageContext.requeset.contextPath }/club/new'"> 모임만들기 </button>
             </div><br><br>
           
           
