@@ -14,7 +14,7 @@ public class RentalPlacesVo {
 	private int partner_place_no;
 	private int payment_no;
 	private Date rental_date;
-	private int rental_time;
+	private int rental_time_no;
 	private int rental_status;
 	
 }

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.joinus.domain.LocationCityVo;
 import com.joinus.domain.PartnerPlacesVo;
+import com.joinus.domain.PaymentsVo;
+import com.joinus.domain.RentalPlacesVo;
 import com.joinus.persistence.RentalDao;
 
 @Service
@@ -48,6 +50,16 @@ public class RentalServiceImpl implements RentalService {
 	@Override
 	public List<PartnerPlacesVo> getTypePartnerPlaceList(String partner_place_type) {
 		return dao.getTypePartnerPlaceList(partner_place_type);
+	}
+	
+	@Override
+	public Integer pay(PaymentsVo vo) {
+		return dao.pay(vo);
+	}
+
+	@Override
+	public void place(RentalPlacesVo vo) {
+		dao.place(vo);
 	}
 	
 	

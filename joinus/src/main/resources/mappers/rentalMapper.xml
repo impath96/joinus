@@ -41,4 +41,19 @@
 		where partner_place_type = #{partner_place_type}
 	</select>
 
+
+	<!-- 결제 -->
+	<insert id="pay">
+		insert into payments(reservation_no,member_no,partner_place_no,partner_place_price,payment_price,payment_status)
+		 values(#{reservation_no},#{member_no},#{partner_place_no},#{partner_place_price},#{payment_price},#{payment_status})
+		 <selectKey resultType="Integer" keyProperty="payment_no" order="AFTER">
+		SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<insert id="place">
+		insert into rental_places(reservation_no,club_no,member_no,partner_place_no,payment_no,rental_time_no,rental_status)
+		values(#{reservation_no},#{club_no},#{member_no},#{partner_place_no},#{payment_no},#{rental_time_no},#{rental_status})
+	</insert>
+
 </mapper>  

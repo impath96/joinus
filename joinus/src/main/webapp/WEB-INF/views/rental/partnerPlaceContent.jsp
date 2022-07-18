@@ -97,6 +97,7 @@
 			<div style="width: 30%; border: 1px solid #32C36C; padding-top: 1em; height: 70%;">
 				<form name="fr" action="" method="post">
 					<input type="hidden" name="partner_place_no" value="${partner_place_no }">
+					<input type="hidden" name="partner_place_name" value="${partnerPlace.partner_place_name }">
 					<input type="hidden" name="partner_place_price" value="${partnerPlace.partner_place_price }">
 				
 					<div>
