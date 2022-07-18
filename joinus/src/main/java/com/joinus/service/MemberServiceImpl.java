@@ -1,6 +1,5 @@
 package com.joinus.service;
 
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.UUID;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.joinus.domain.Criteria;
-import com.joinus.domain.MemberInterestsVo;
 import com.joinus.domain.MembersVo;
 import com.joinus.domain.MyClubDto;
 import com.joinus.persistence.MemberDao;
@@ -147,6 +145,13 @@ public class MemberServiceImpl implements MemberService {
 	public void deleteMember(List<Integer> idList) {
 
 		memberDao.deleteMember(idList);
+	}
+
+	@Override
+	public void updateLocation(String parsedLocation, int member_no) {
+		
+		memberDao.updateLocation(parsedLocation, member_no);
+		
 	}
 
 }

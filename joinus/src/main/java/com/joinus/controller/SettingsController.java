@@ -70,16 +70,19 @@ public class SettingsController {
 	public String profile(
 			@RequestParam("profile_image") MultipartFile file
 			, @RequestParam("member_name") String memberName
+			, @RequestParam("location_name") String locationName
 			, HttpServletRequest request
 			, HttpSession session) throws Exception {
 
 		MembersVo member = (MembersVo)session.getAttribute("member");
 		log.info("member : {}", member);
 		log.info("닉네임 : {}", memberName);
+		log.info("지역 : {}", locationName);
 		if(member == null) {
 			return "redirect:/member/signin";
 		}
-		
+		String parsedLocation = parseLocation(locationName);
+
 		if(file.getSize() != 0) {
 			// 업로드된 파일이 없을 경우 이미지는 변경하지 않는 것으로 간주.
 			log.info("upload Post ... originalName={}", file.getOriginalFilename());
@@ -104,11 +107,21 @@ public class SettingsController {
 		
 		// 닉네임은 전달받은 닉네임을 통해 무조건 update 되도록 하기
 		memberService.updateName(memberName, member.getMember_no());
+		memberService.updateLocation(parsedLocation, member.getMember_no());
 		MembersVo updateMember = memberService.findMemberByNo(member.getMember_no());
 		session.setAttribute("member", updateMember);
 		
-		
 		return "redirect:/settings/member";
+	}
+	
+	// 시, 구, 동만 저장하도록 파싱작업 수행
+	private String parseLocation(String location_name) {
+		String[] part = location_name.split(" ");
+		String savedLocation = part[0];
+		for (int i = 1; i < 3; i++) {
+			savedLocation += " " + part[i];
+		}
+		return savedLocation;
 	}
 
 	// 2명의 사람이 동시에 동일한 파일명의 파일을 올릴 경우 하나의 파일명이 덮어쓰기가 되어진다.

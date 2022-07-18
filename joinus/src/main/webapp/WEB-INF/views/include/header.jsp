@@ -174,7 +174,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                         <a href="404.html" class="dropdown-item">404 Page</a> 
                     </div>
                 </div>-->
-          <c:if test="${!empty member }">
+          <c:if test="${!empty sessionScope.member }">
             <a
               href="${PageContext.request.contextPath }/member/mypage"
               class="nav-item nav-link"
@@ -182,7 +182,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             >
           </c:if>
         </div>
-        <c:if test="${empty member }">
+        <c:if test="${empty sessionScope.member }">
           <a
             href="${PageContext.request.contextPath }/member/signin"
             id="login"
@@ -190,7 +190,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             >LOGIN<i class="fa-solid fa-arrow-right-to-bracket px-2"></i
           ></a>
         </c:if>
-        <c:if test="${!empty member }">
+        <c:if test="${!empty sessionScope.member }">
           <a
             href="${PageContext.request.contextPath }/member/signout"
             id="logout"
