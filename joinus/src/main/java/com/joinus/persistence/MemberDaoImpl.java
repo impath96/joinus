@@ -128,6 +128,14 @@ public class MemberDaoImpl implements MemberDao {
 
 		sqlSession.update(NAMESPACE+".deleteMembers", idList);
 	}
+
+	@Override
+	public void updateLocation(String parsedLocation, int member_no) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("member_no", member_no);
+		paramMap.put("member_location", parsedLocation);
+		sqlSession.update(NAMESPACE+".updateLocation", paramMap);
+	}
 	
 	
 	

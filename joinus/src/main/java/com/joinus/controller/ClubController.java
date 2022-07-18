@@ -3,6 +3,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -900,7 +901,6 @@ public class ClubController {
 				if(member != null) {
 				
 				
-					//회원정보(임의)
 					
 					model.addAttribute("member_no",member.getMember_no() );
 					log.info("회원넘버: "+member.getMember_no());
@@ -908,18 +908,26 @@ public class ClubController {
 					//모임회원 리스트
 					List<ClubMembersVo> clubmemberList = service.getClubMembers(club_no);
 					model.addAttribute("clubmemebrList", clubmemberList);
+					
 					//방문한 모임회원
 					int result = 0; 
+					String roleResult = "";
 					ClubMembersVo clubmembersvo = service.getClubMemberNo(club_no,member.getMember_no());
 					if(clubmembersvo != null) { 
 						result = clubmembersvo.getMember_no(); 
+						roleResult = clubmembersvo.getClub_member_role();
 					}else if(clubmembersvo == null) { 
-						result = 0; }
+						result = 0;
+						roleResult = ""; }
 					model.addAttribute("clubmember", result);
-					log.info("모임회원일시 회원번호, 아닐시 0: "+result);
+					model.addAttribute("clubmemberRole", roleResult);
+					log.info("모임회원O = 회원번호 / 모임회원X = 0 :   "+result);
+					log.info("roleResult(admin/com): "+roleResult);
+					
 					//별점정보
 					List<ClubGradesVo> gradevo = service.getClubGrade(club_no);
 					model.addAttribute("clubGrade", gradevo);
+					
 					//별점참여
 					int result2 = 0;
 					Integer graded = service.getGradeinfo(club_no,member.getMember_no());
@@ -945,7 +953,20 @@ public class ClubController {
 					//정모리스트 
 					List<ClubMeetingsVo> meetings = service.getMeetings(club_no);
 					model.addAttribute("meetings", meetings);
-					log.info("정모리스트: "+meetings);
+					log.info("정모리스트: "+meetings);  
+					
+					//내 회원번호로 해당 클럽 정모멤버리스트 조회하기
+					List<MeetingMembersVo> meetingMbrs = service.checkMeetingMember(club_no,member.getMember_no());
+					List<MeetingMembersVo> mtMbrs = new ArrayList<MeetingMembersVo>();
+					if(meetingMbrs != null) { 
+						mtMbrs = meetingMbrs; }
+					model.addAttribute("meetingMbrs",mtMbrs);
+					int result3 = 100;
+					if(meetingMbrs.isEmpty()) { 
+						result3 = 0;	}
+					model.addAttribute("meetingMbrsNull",result3);
+					log.info("정모멤버리스트: "+meetingMbrs); 
+					log.info("정모멤버리스트: "+result3); 
 					
 					//게시글(사진빼오기)
 					List<ClubBoardsVo> boards = service.getBoardImageList(club_no);
@@ -972,7 +993,7 @@ public class ClubController {
 				members.setClub_no(club_no);
 				members.setClub_member_role("common"); //상세페이지에서 가입하면 무조건 회원
 				service.join(members);
-				System.out.println("모임가입완료");
+				log.info("모임가입완료");
 				
 			}
 			
@@ -981,26 +1002,40 @@ public class ClubController {
 		@RequestMapping(value = "/{club_no}/grade", method = RequestMethod.POST)
 		public void clubGrade(@ModelAttribute ClubGradesVo vo) {
 					service.clubGrade(vo);
-					System.out.println("별점주기 완료");
+					log.info("별점주기 완료");
 			}
 		
 		// 찜하기 ajax (상세페이지에서 클릭)
 		@ResponseBody
-		@RequestMapping(value = "/{clubvo.club_no}/dip", method = RequestMethod.POST)
+		@RequestMapping(value = "/{club_no}/dip", method = RequestMethod.POST)
 		public void clubDip(@ModelAttribute MemberDipsVo vo) {
 			service.clubDip(vo.getMember_no(),vo.getClub_no());
-			System.out.println("찜하기 완료");
+			log.info("찜하기 완료");
 			
 		}
 		// 찜취소 ajax (상세페이지에서 클릭)
 		@ResponseBody
-		@RequestMapping(value = "/{clubvo.club_no}/dipX", method = RequestMethod.POST)
+		@RequestMapping(value = "/{club_no}/dipX", method = RequestMethod.POST)
 		public void clubDipX(@ModelAttribute MemberDipsVo vo) {
 			service.dipX(vo.getMember_no(),vo.getClub_no());
-			System.out.println("찜 취소완료");
+			log.info("찜 취소완료");
 			
 		}
 		
+		// 정모참석 ajax (상세페이지에서 alert창 띄움)
+				@ResponseBody
+				@RequestMapping(value = "/{club_no}/meeting/{meeting_no}/join",method=RequestMethod.POST)
+				public void joinMeeting(@ModelAttribute MeetingMembersVo vo) {
+						service.joinMeeting(vo);
+						log.info("정모참석 신청이 완료되었습니다");
+					}
+		// 정모참석취소 ajax (상세페이지에서 alert창 띄움)
+				@ResponseBody
+				@RequestMapping(value = "/{club_no}/meeting/{meeting_no}/leave",method=RequestMethod.POST)
+				public void outMeeting(@ModelAttribute MeetingMembersVo vo) {
+					service.outMeeting(vo);
+					log.info("정모신청이 취소되었습니다");
+				}
 		
 		
 	

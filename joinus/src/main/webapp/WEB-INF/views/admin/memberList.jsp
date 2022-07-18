@@ -102,21 +102,6 @@
           </div>
         </div>
         <div class="col-10">
-          <div class="row">
-            <div class="container-fluid">
-              <form class="d-flex">
-                <input
-                  class="form-control me-2"
-                  type="search"
-                  placeholder="회원 검색"
-                  aria-label="Search"
-                />
-                <button class="btn btn-outline-success" type="submit">
-                  Search
-                </button>
-              </form>
-            </div>
-          </div>
           <form class="row box mt-4 p-3" method="post" action="/admin/members/delete">
             <div class="box-content mt-2 ">
               <table style="width: 100%">

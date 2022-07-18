@@ -22,6 +22,7 @@ import com.joinus.domain.MeetingMembersVo;
 import com.joinus.domain.MeetingTotalBean;
 import com.joinus.domain.MembersVo;
 
+
 public interface ClubDao {
 	
 	//=========================고은비=========================
@@ -165,6 +166,12 @@ public interface ClubDao {
 	// 모임원이 맞는지 확인(1:모임가입O / 0:모임가입X)
 	public int checkClubMember(int club_no, int member_no);
 	
+	// 모임장인지 확인(0보다 크면 모임장)
+	public int checkClubAdmin(int member_no);
+	
+	// 모임장 주소
+	public String getClubAdminAddr(int member_no);
+	
 	//=========================허수빈========================
 
 	//=========================김민호========================
@@ -189,6 +196,7 @@ public interface ClubDao {
 	
 	
 	//=========================강성민========================
+	
 	
 	// 회원정보
 	public MembersVo getMember(Integer num);
@@ -235,8 +243,17 @@ public interface ClubDao {
 	// 모임 찜 취소
 	public void dipX(Integer num,Integer num2);
 	
-	//정모 리스트
+	// 정모 리스트
 	public List<ClubMeetingsVo> getMeetings(Integer num);
+	
+	// 정모 참석하기
+	public void joinMeeting(MeetingMembersVo vo);
+	// 정모 참석취소
+	public void outMeeting(MeetingMembersVo vo);
+	// 정모 참석여부확인
+	public List<MeetingMembersVo> checkMeetingMember(Integer num,Integer num2);
+		
+	
 	//게시글 리스트
 	public List<ClubBoardsVo> getBoards(Integer num);
 
@@ -250,8 +267,6 @@ public interface ClubDao {
 
 	
 	
-
-
 
 	
 	//=========================강성민========================
