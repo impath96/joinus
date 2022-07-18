@@ -59,7 +59,7 @@ public class ClubController {
 	//http://localhost:8088/club/clubList?interest_no=2
 	@RequestMapping(value="/clubList", method = RequestMethod.GET)
 	public String clubList(@ModelAttribute("interest_no") String interest_no,
-						Criteria cri, Model model,HttpSession session) {
+						Criteria cri, Model model,HttpSession session, RedirectAttributes rttr) {
 		log.info("interest_no : "+interest_no);	
 		if(session.getAttribute("member") != null) {
 			MembersVo member = (MembersVo) session.getAttribute("member");
@@ -73,6 +73,7 @@ public class ClubController {
 			pageMaker.setTotalCount(service.totalCnt());
 			log.info(pageMaker+"");
 			model.addAttribute("pm", pageMaker);
+			rttr.addFlashAttribute("check","ClubList");
 			log.info("clubList() 호출");
 			
 		}else{
@@ -84,6 +85,7 @@ public class ClubController {
 			model.addAttribute("interest_no",Integer.parseInt(interest_no));
 			log.info(pageMaker+"");
 			model.addAttribute("pm", pageMaker);
+			rttr.addFlashAttribute("check","ClubList");
 			log.info("clubList(no) 호출");
 			
 		}

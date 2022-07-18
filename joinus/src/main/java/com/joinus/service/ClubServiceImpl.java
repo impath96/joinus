@@ -55,6 +55,13 @@ public class ClubServiceImpl implements ClubService{
 	public Integer totalCnt() {
 		return dao.getTotalCnt();
 	}
+	
+
+	@Override
+	public int totalCntDetail(Integer interest_detail_no) {
+		
+		return dao.getDetailCnt(interest_detail_no);
+	}
 
 	//클럽 리스트(관심사별) 조회
 	@Override
@@ -69,6 +76,27 @@ public class ClubServiceImpl implements ClubService{
 		return result;
 	}
 	
+	
+	@Override
+	public List<ClubTotalBean> clubListDetail(Integer interest_detail_no, Criteria cri) {
+		log.info("clubList(interest_detail_no) 호출");
+		
+		List<ClubTotalBean> result = dao.clubListDetail(interest_detail_no, cri);
+		
+		log.info(result+"");
+		
+		return result;
+	}
+	
+
+	@Override
+	public List<ClubTotalBean> clubListMonth() {
+		
+		List<ClubTotalBean> result = dao.clubListMonth();
+		
+		return result;
+	}
+
 	//관심사 디테일 조회
 	@Override
 	public List<InterestDetailsVo> getInterestDetail(Integer interest_no) {

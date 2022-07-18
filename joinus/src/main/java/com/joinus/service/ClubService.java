@@ -35,14 +35,25 @@ import com.joinus.domain.MembersVo;
 		//클럽 리스트(관심사별)
 		public List<ClubTotalBean> clubList(int interest_no, Criteria cri);
 		
+		//클럽 리스트(디테일)
+		public List<ClubTotalBean> clubListDetail(Integer interest_detail_no, Criteria cri);
+		
 		//클럽 전체 리스트
 		public List<ClubTotalBean> clubList(Criteria cri);
+		
+		//이달의 모임
+		public List<ClubTotalBean> clubListMonth();
 		
 		//관심사 불러오기
 		public List<InterestDetailsVo> getInterestDetail(Integer interest_no);
 		
 		//클럽 개수 조회(관심사별)
 		public Integer totalCnt(Integer interest_no);
+		
+		//클럽 개수 조회(관심사 디테일)
+		public int totalCntDetail(Integer interest_detail_no);
+		
+		
 		
 		//전체 클럽 개수 조회
 		public Integer totalCnt();
@@ -222,6 +233,12 @@ import com.joinus.domain.MembersVo;
 		public List<ClubMeetingsVo> getMeetings(Integer num);
 		//게시글 리스트
 		public List<ClubBoardsVo> getBoardsforimg(Integer num);
+
+
+
+
+
+
 
 		
 }

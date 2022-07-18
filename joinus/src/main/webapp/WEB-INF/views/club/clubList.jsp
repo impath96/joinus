@@ -19,46 +19,46 @@
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                 <h1 class="mb-4">이달의 모임</h1>
             </div>
-            <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
-                <div class="testimonial-item text-center">
+            <div class="owl-carousel testimonial-carousel wow fadeInUp py-5" data-wow-delay="0.1s">
+                 <div class="testimonial-item text-center">
                     <div class="testimonial-img position-relative">
-                        <img class="img-fluid rounded-circle mx-auto mb-5" src="${PageContext.request.contextPath }/resources/img/testimonial-1.jpg">
+                        <img class="img-fluid rounded-circle mx-auto mb-5" id="club_image1" src="">
                         <div class="btn-square bg-primary rounded-circle">
                             <i class="fa fa-quote-left text-white"></i>
                         </div>
                     </div>
                     <div class="testimonial-text text-center rounded p-4">
-                        <p>Clita clita tempor justo dolor ipsum amet kasd amet duo justo duo duo labore sed sed. Magna ut diam sit et amet stet eos sed clita erat magna elitr erat sit sit erat at rebum justo sea clita.</p>
-                        <h5 class="mb-1">Client Name</h5>
-                        <span class="fst-italic">Profession</span>
+                        <p id="club_content1"></p>
+                        <h5 class="mb-1" id="club_name1"></h5>
                     </div>
                 </div>
+                
                 <div class="testimonial-item text-center">
                     <div class="testimonial-img position-relative">
-                        <img class="img-fluid rounded-circle mx-auto mb-5" src="${PageContext.request.contextPath }/resources/img/testimonial-2.jpg">
+                        <img class="img-fluid rounded-circle mx-auto mb-5" id="club_image2" src=""> 
                         <div class="btn-square bg-primary rounded-circle">
                             <i class="fa fa-quote-left text-white"></i>
                         </div>
                     </div>
                     <div class="testimonial-text text-center rounded p-4">
-                        <p>Clita clita tempor justo dolor ipsum amet kasd amet duo justo duo duo labore sed sed. Magna ut diam sit et amet stet eos sed clita erat magna elitr erat sit sit erat at rebum justo sea clita.</p>
-                        <h5 class="mb-1">Client Name</h5>
-                        <span class="fst-italic">Profession</span>
+                    <p id="club_content2"></p>
+                        <h5 class="mb-1" id="club_name2"></h5>
                     </div>
                 </div>
                 <div class="testimonial-item text-center">
                     <div class="testimonial-img position-relative">
-                        <img class="img-fluid rounded-circle mx-auto mb-5" src="${PageContext.request.contextPath }/resources/img/testimonial-3.jpg">
+                        <img class="img-fluid rounded-circle mx-auto mb-5" id="club_image3" src="">
                         <div class="btn-square bg-primary rounded-circle">
                             <i class="fa fa-quote-left text-white"></i>
                         </div>
                     </div>
                     <div class="testimonial-text text-center rounded p-4">
-                        <p>Clita clita tempor justo dolor ipsum amet kasd amet duo justo duo duo labore sed sed. Magna ut diam sit et amet stet eos sed clita erat magna elitr erat sit sit erat at rebum justo sea clita.</p>
-                        <h5 class="mb-1">Client Name</h5>
-                        <span class="fst-italic">Profession</span>
+                    <p id="club_content3"></p>
+                        <h5 class="mb-1" id="club_name3"></h5>
                     </div>
-                </div>
+                </div> 
+                
+
             </div>
         </div>
     </div>
@@ -104,7 +104,7 @@
         	<!-- 카테고리 -->
             <div class="row mt-n2 wow fadeInUp" data-wow-delay="0.3s">
                 <div class="text-center py-5 border-dark">
-                    <ul class="list-inline mb-3" id="portfolio-flters">
+                    <ul class="list-inline mb-3" style="font-size : 1.3rem;" id="portfolio-flters">
                         <li class="mx-2 active fw-bold"><a href="/club/clubList">전체</a></li>
                         <li class="mx-2 fw-bold"><a href="/club/clubList?interest_no=1">요리/제조</a></li>
                         <li class="mx-2 fw-bold"><a href="/club/clubList?interest_no=2">봉사활동</a></li>
@@ -119,8 +119,14 @@
 					
 				<c:set var="interest_no" value="${interest_no }" />
 				<c:if test="${not empty interest_no}">
-                	<div id="detail" class="rounded-2 py-3 mb-4" style="background-color: #EFEFEF;">
-                	<h5 class="px-3"> ✔️ 좀 더 상세한 결과를 원하세요?  </h5>
+                	<div class="rounded-2 py-3 mb-4" style="background-color: #EFEFEF;">
+                	<h5 class="px-3 m-3"> ✔️ 좀 더 상세한 결과를 원하세요?  </h5>
+                		<div id="detail" class="mb-5">
+                		
+                		</div>
+                		<div id="detailList" class="row container ">
+                		
+                		</div>
                 	</div>
                 </c:if>	
                 
@@ -175,8 +181,8 @@
 $(function(){
 	
 	var interest_no = ${interest_no};
+	var interest_detail_no = null;
 	//alert(interest_no);
-	
 	
 $.ajax({
 		
@@ -186,34 +192,97 @@ $.ajax({
 		contentType : "application/json",
 		success : function(data){
 		console.log(data);
-		console.log(data.interest_detail_name);
+		//console.log(data.interest_detail_name);
 			
 			$(data).each(function(idx,item){
 				
-				var tag = "<input type='button' class='btn py-2 px-lg-5' value='# "+item.interest_detail_name+"'>"
-				
+				var tag = "<input type='button' id="+item.interest_detail_no+" name='interest_detail_no_"+item.interest_detail_no+"' style='color : #1A2A36;' class='btn py-2 px-lg-5' value='# "+item.interest_detail_name+"'>"
+					//tag += "<input type='hidden' name ='interest_detail_no' value=
+				//console.log(item.interest_detail_no);
+				interest_detail_no = item.interest_detail_no;
 				$('#detail').append(tag);
 				
 			});//each
-			
 		}	
 			
-		
 	});//ajax
 	
-//테이블에 요소 추가
+	$('body').on('click', '[name^=interest_detail_no_]', function() {
+	
+		 var interest_detail_no = $(this).attr('id');
+		 console.log(interest_detail_no);
+		 $("#detailList").empty();
+		 
+		 
+	$.ajax({
+		url : '${PageContext.request.contextPath}/club/clubList/'+${interest_no}+'/'+interest_detail_no,
+		dataType : "json",
+		contentType : "application/json",
+		success : function(data){
+			console.log(data);
+			$(data).each(function(idx,item){ 
+				var	tag = "<div class='col-lg-2 container text-center'>"
+				 	tag += "<a href='${PageContext.request.contextPath}/club/"+item.clubsVo.club_no+"'>"
+					tag += "<img style='width: 150; height: 150;' class='img-fluid rounded-circle mx-auto mb-2' src='${PageContext.request.contextPath}/resources/upload/clubs/"+item.clubsVo.club_image+"'>"
+					tag += "<div class='testimonial-text text-center rounded p-4'>"
+					tag += "<h7 class='mb-1'>"+item.clubsVo.club_name+"</h7>"
+					tag += "</div>"
+					tag += "</a>"
+					tag += "</div>"
+				
+					$('#detailList').append(tag);
+				});
+			} 
+		});//ajax	
+	});//디테일 버튼 클릭	
+	
+	
+	$.ajax({
+			url :'${PageContext.request.contextPath}/club/clubList/Month',
+			type : 'GET',
+			dataType : "json",
+			contentType : "application/json",
+			success : function(data){
+			//console.log(data);
+			//console.log(data[0].clubsVo.club_image);
+			
+				$('#club_image1').attr('src',"${PageContext.request.contextPath}/resources/upload/clubs/"+data[0].clubsVo.club_image);
+				$('#club_content1').append(data[0].clubsVo.club_content);
+				$('#club_name1').append(data[0].clubsVo.club_name); 
+				
+				$('#club_image2').attr('src',"${PageContext.request.contextPath}/resources/upload/clubs/"+data[1].clubsVo.club_image);
+				$('#club_content2').append(data[1].clubsVo.club_content);
+				$('#club_name2').append(data[1].clubsVo.club_name); 
+				
+				$('#club_image3').attr('src',"${PageContext.request.contextPath}/resources/upload/clubs/"+data[2].clubsVo.club_image);
+				$('#club_content3').append(data[2].clubsVo.club_content);
+				$('#club_name3').append(data[2].clubsVo.club_name); 
+				
+			}	
+			
+		//	$(data).each(function(idx,item){
+				
+				/* var tag = "<div class='testimonial-item text-center'>"
+					tag += "<div class='testimonial-img position-relative'>"
+					tag += "<img style='width: 200;' class='img-fluid rounded-circle mx-auto mb-5' src='${PageContext.request.contextPath}/resources/upload/clubs/"+item.clubsVo.club_image+"'>"
+					tag += "<div class='btn-square bg-primary rounded-circle'>"
+					tag += "<i class='fa fa-quote-left text-white'></i>"
+					tag += "</div>"
+					tag += "</div>"
+					tag += "<div class='testimonial-text text-center rounded p-4'>"
+					tag += "<p>"+item.clubsVo.club_content+"</p>"
+					tag += "<h5 class='mb-1'>"+item.clubsVo.club_name+"</h5>"
+					tag += "</div>"
+					tag += "</div>"
+				
+				$('#month').append(tag); */
 
+		//	});//each
+				
+		});//ajax
 	
-/* 	var tag="<tr>";
-	tag += "<td>"+item.bno+"</td>"
-	tag += "<td><a href='/web/"+item.bno+"'>"+item.title+"</a></td>"
-	tag += "<td>"+item.writer+"</td>"
-	tag += "<td>"+new Date(item.regdate)+"</td>"
-	tag += "<td>"+item.viewcnt+"</td>"
-	tag += "</tr>";
 	
-	$('table').append(tag);
-}); */
+	
 	
 	
 });

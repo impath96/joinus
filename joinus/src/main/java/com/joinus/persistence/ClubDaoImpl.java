@@ -61,6 +61,13 @@ public class ClubDaoImpl implements ClubDao{
 		return sqlSession.selectOne(NAMESPACE+".CountClub");
 	}
 	
+	//클럽 수(디테일)
+	@Override
+	public int getDetailCnt(Integer interest_detail_no) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NAMESPACE+".CountClubDetail");
+	}
+
 	//클럽 리스트(관심사별) 조회
 	@Override
 	public List<ClubTotalBean> clubList(int interest_no, Criteria cri) {
@@ -69,7 +76,7 @@ public class ClubDaoImpl implements ClubDao{
 		param.put("interest_no", interest_no);
 		param.put("cri", cri);
 		
-		//log.info(param+"");
+		log.info(param+"");
 		
 		List<ClubTotalBean> result = sqlSession.selectList(NAMESPACE+".ClubList", param);
 		
@@ -79,7 +86,30 @@ public class ClubDaoImpl implements ClubDao{
 		
 	}
 	
+	//클럽 리스트(디테일)
+	@Override
+	public List<ClubTotalBean> clubListDetail(Integer interest_detail_no, Criteria cri) {
+		Map<String, Object> param= new HashMap<String, Object>();
+		param.put("interest_detail_no", interest_detail_no);
+		param.put("cri", cri);
+		
+		log.info(param+"");
+		
+		List<ClubTotalBean> result = sqlSession.selectList(NAMESPACE+".ClubListDetail", param);
+		
+		log.info(result+"");
+		
+		return result;
+	}
 	
+	
+
+	@Override
+	public List<ClubTotalBean> clubListMonth() {
+		List<ClubTotalBean> result = sqlSession.selectList(NAMESPACE+".ClubListMonth");
+		return result;
+	}
+
 	//관심사 디테일
 	@Override
 	public List<InterestDetailsVo> interestDetail(Integer interest_no) {

@@ -31,15 +31,22 @@ public interface ClubDao {
 	//클럽 전체 개수 조회
 	public Integer getTotalCnt(Integer interest_no);
 	public Integer getTotalCnt();
+	public int getDetailCnt(Integer interest_detail_no);
 	
 	//클럽리스트(관심사o)
 	public List<ClubTotalBean> clubList(int interest_no, Criteria cri);
+	
+	//클럽리스트(디테일)
+	public List<ClubTotalBean> clubListDetail(Integer interest_detail_no, Criteria cri);
 	
 	//관심사 디테일
 	public List<InterestDetailsVo> interestDetail(Integer interest_no);
 
 	//클럽리스트(관심사x)
 	public List<ClubTotalBean> clubList(Criteria cri);
+	
+	//이달의 모임
+	public List<ClubTotalBean> clubListMonth();
 	
 	//클럽 정보
 	public List<ClubsVo> clubInfo(int club_no);
@@ -232,6 +239,12 @@ public interface ClubDao {
 	public List<ClubMeetingsVo> getMeetings(Integer num);
 	//게시글 리스트
 	public List<ClubBoardsVo> getBoards(Integer num);
+
+
+
+
+
+
 
 
 
