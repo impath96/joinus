@@ -8,6 +8,13 @@
 		alert('${error}');
 	}
 </script>
+<style>
+	#email::placeholder,
+	#password::placeholder {
+		color : currentColor;
+		font-size : 1.5rem;
+	}
+</style>
  <!-- Contact Start -->
     <div class="container-fluid bg-light overflow-hidden px-lg-0" >
         <div class="container contact px-lg-0" style="width: 60%">
@@ -18,25 +25,23 @@
                      <form action="/member/signin" method="post">
                          <div class="col-12" >
                              <div class="form-floating" style="width: 50%;">
-                                 <input type="email" class="form-control" id="email" name="email" placeholder="이메일 주소를 입력해주세요.">
-                                 <label for="email">메일주소</label>
+                                 <input type="email" class="form-control p-2 fs-2" id="email" name="email" placeholder="이메일 주소를 입력해주세요.">
                              </div>
                          </div><br>
                          <div class="col-12">
                              <div class="form-floating" style="width: 50%;">
-                                 <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호를 입력해주세요.">
-                                 <label for="email">비밀번호</label>
+                                 <input type="password" class="form-control p-2 fs-2" id="password" name="password" placeholder="비밀번호를 입력해주세요.">
                              </div>
                          </div>
                          <br>
                          <div class="col-12" >
-                         	<input type="submit" value="login" class="btn btn-primary rounded-pill py-3 px-5">
+                         	<input type="submit" value="login" class="btn btn-primary rounded-pill py-3 px-5 fs-2">
                          </div>
                          <br>
                      </form>
                      	<hr>
  						<div class="col-12">
-							<a href="https://kauth.kakao.com/oauth/authorize?client_id=e56b53633c44d91056a98f83b04e7bfe&redirect_uri=http://localhost:8088/oauth/kakao&response_type=code">
+							<a href="https://kauth.kakao.com/oauth/authorize?client_id=e56b53633c44d91056a98f83b04e7bfe&redirect_uri=http://localhost:8088/oauth/kakao&response_type=code" >
 								<img alt="카카오 로그인" src="${pageContext.request.contextPath }/resources/img/kakao_login.png">
 							</a>
 							<a href="https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&prompt=consent&response_type=code&client_id=463761723189-9objhtfnhck66j6bbvi2h0b7hmgnpsf9.apps.googleusercontent.com&redirect_uri=http://localhost:8088/oauth/google&scope=https://www.googleapis.com/auth/userinfo.email">
@@ -44,7 +49,7 @@
 							</a>
 						</div>
                          <div class="col-12">
-                     		<p class="mb-4" align="center"> 아직 회원이 아니신가요? <a href="${pageContext.request.contextPath }/member/signup">회원가입하기</a></p>
+                     		<p class="mb-4 fs-3" align="center"> 아직 회원이 아니신가요? <a href="${pageContext.request.contextPath }/member/signup">회원가입하기</a></p>
                         </div>
                     </div>
                 </div>

@@ -138,7 +138,6 @@
 				$.ajax({
 					type : "post",
 					url : "${pageContext.request.contextPath}/club/${club_no}/boards/${club_board_no}/likeDown",
-					// 만약 data를 넘겨줄것같으면 세션값에 저장된 member_no -> 근데 굳이 view에서 세션값을 넘겨줄 필요가..? 컨트롤러에서 세션값 바로 쓰면 될 것 같은데
 					success : function(){
 // 						alert('좋아요 취소');
 						location.reload();

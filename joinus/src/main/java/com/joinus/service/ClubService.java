@@ -28,17 +28,32 @@ import com.joinus.domain.MembersVo;
 
 		//클럽 회원 리스트
 		public List<ClubTotalBean> clubMemberListAll(int club_no);
+		
 		//클럽 정보
 		public List<ClubsVo> clubInfo(int club_no);
 
 		//클럽 리스트(관심사별)
 		public List<ClubTotalBean> clubList(int interest_no, Criteria cri);
 		
+		//클럽 리스트(디테일)
+		public List<ClubTotalBean> clubListDetail(Integer interest_detail_no, Criteria cri);
+		
 		//클럽 전체 리스트
 		public List<ClubTotalBean> clubList(Criteria cri);
 		
+		//이달의 모임
+		public List<ClubTotalBean> clubListMonth();
+		
+		//관심사 불러오기
+		public List<InterestDetailsVo> getInterestDetail(Integer interest_no);
+		
 		//클럽 개수 조회(관심사별)
 		public Integer totalCnt(Integer interest_no);
+		
+		//클럽 개수 조회(관심사 디테일)
+		public int totalCntDetail(Integer interest_detail_no);
+		
+		
 		
 		//전체 클럽 개수 조회
 		public Integer totalCnt();
@@ -79,7 +94,9 @@ import com.joinus.domain.MembersVo;
 		//정모 주소 호출
 		public String getMeetingAddr(int club_meeting_no);
 		
-//		public List<ClubBoardVo> getBoardListAll(Integer club_no);
+		//정모 멤버
+		public List<MeetingTotalBean> getMeetingMember(Integer club_meeting_no, Integer club_no);
+
 		
 
 
@@ -152,7 +169,12 @@ import com.joinus.domain.MembersVo;
 	
 	// 모임원이 맞는지 확인(1:모임가입O / 0:모임가입X)
 	public int checkClubMember(int club_no, int member_no);
-
+	
+	// 모임장인지 체크( 값이 0보다 크면 모임장)
+	public int checkClubAdmin(int member_no);
+	
+	// 모임장 주소
+	public String getClubAdminAddr(int member_no);
 	
 		
 	
@@ -225,4 +247,11 @@ import com.joinus.domain.MembersVo;
 		//게시글 리스트
 		public List<ClubBoardsVo> getBoardsforimg(Integer num);
 
+
+
+
+
+
+
+		
 }

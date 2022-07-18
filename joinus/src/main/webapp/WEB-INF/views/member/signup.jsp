@@ -7,11 +7,41 @@
 <%@ include file="../include/header.jsp"%>
 
 <script type="text/javascript">
+	// 이메일 유효성 체크
+	function CheckEmail(str) {                                                 
+	     var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+	     if(!reg_email.test(str)) {                            
+	          return false;         
+	     }                            
+	     else {                       
+	          return true;         
+	     }                            
+	}  
+	
+	// 비밀번호 길이 제한 체크
+	function checkPasswordLength(str){
+		if(str.length >= 8 && str.length <= 20){
+			return true;
+		}
+		return false;
+	}
+	
+	// 비밀번호 유효성 체크
+	function checkPassword(str) {
+		const pattern1 = /[0-9]/; // 숫자
+		const pattern2 = /[a-zA-Z]/; // 문자
+		const pattern3 = /[~!@#$%^&*()_+|<>?:{}]/; // 특수문자
+		if(!pattern1.test(str) || !pattern2.test(str) || !pattern3.test(str)) {
+			return false;
+		} 
+		return true;
+	}
+	//
 	// jQuery 시작
 	$(function() {
 		let email_auth_cd = '';
-		
-		// 
+		let isValidPassword = false;
+		let isValidEmailAuth = false;
 		$('#email_check_btn').click(function() {
 			var email = $('#member_email').val(); //email값이 "member_email"인 입력란의 값을 저장
 			if (email == '') {
@@ -36,14 +66,83 @@
 				}
 			});
 		});
+		
 		$('#pass_confirm').click(function() {
-			if ($('#member_pass').val() != $('#member_passConfirm').val()) {
+			const member_pass = $('#member_pass').val();
+			const member_passwordConfirm = $('#member_passConfirm').val();
+			if(member_pass === "") {
+				alert("비밀번호를 입력해주세요");
+				// 포커스 동작 수행
+				return false;
+			}
+			if (member_passConfirm === "" || (member_pass !== member_passwordConfirm) ) {
 				alert("비밀번호가 일치하지 않습니다.");
 				return false;
 			} else {
 				alert("비밀번호가 일치합니다.");
+				isValidPassword = true;
+				if(isValidEmailAuth && isValidPassword){
+					$(".e-submit").removeAttr("disabled")
+				}
+				
 			}
 		});
+
+		$("#member_pass").focus(function(){
+			$(".password-error-check").removeClass("d-none");
+		})
+		
+		$("#member_pass").keyup(function(){
+			
+			// 비밀번호 유효성 체크 
+			const password = $(this).val();
+			
+			// 먼저 비밀번호 길이 체크 
+			if(checkPasswordLength(password)){
+				$(".password-length").removeClass("text-danger");
+				$(".password-length").addClass("text-success");
+			}else {
+				$(".password-length").removeClass("text-success");
+				$(".password-length").addClass("text-danger");
+				isValidPassword = false;
+				$(".e-submit").attr("disabled", "disabled")
+			}
+			
+			// 비밀번호 유효성(정규식) 체크
+			if(checkPassword(password)){
+				$(".password-character").removeClass("text-danger");
+				$(".password-character").addClass("text-success");
+			}else {
+				$(".password-character").removeClass("text-success");
+				$(".password-character").addClass("text-danger");
+				isValidPassword = false;
+				$(".e-submit").attr("disabled", "disabled")
+			}
+			
+		}); // 
+		
+		$("#member_passConfirm").focus(function(){
+			$(".password-confirm-check").removeClass("d-none");
+		})
+		
+		$("#member_passConfirm").keyup(function(){
+			
+			const passwordConfirm = $(this).val();
+			const password = $("#member_pass").val();
+			const $span = $("span.password-confirm");
+			if(passwordConfirm !== "" && (passwordConfirm === password)){
+				$span.removeClass("text-danger");
+				$span.addClass("text-success");
+				$span.html("비밀번호가 일치합니다.");
+			}else {
+				$span.removeClass("text-success");
+				$span.addClass("text-danger");
+				$span.html("비밀번호가 일치하지 않습니다.");
+				isValidPassword = false;
+				$(".e-submit").attr("disabled", "disabled")
+			}
+		})
+		
 		$('#email_auth_confirm').click(function() {
 			if ($('#email_auth_key').val() == '') {
 				alert("인증번호를 입력해주세요.");
@@ -52,6 +151,10 @@
 				return false;
 			} else {
 				alert("인증번호가 일치합니다.");
+				isValidEmailAuth = true;
+				if(isValidEmailAuth && isValidPassword){
+					$(".e-submit").removeAttr("disabled")
+				}
 			}
 		});
 		$("#email_auth_btn").click(function() {
@@ -82,71 +185,70 @@
 	<div class="container-fluid bg-light overflow-hidden px-lg-0">
 		<div class="container contact px-lg-0" style="width: 60%">
 			<div class="row g-0 mx-lg-0">
-				<div class="p-lg-5 ps-lg-0" align="center">
-					<h6 class="text-primary">JOINUS</h6>
-					<h1 class="mb-4">회원가입</h1>
-					<form:form modelAttribute="member" method="POST" action="/member/signup">
-						<div class="col-12">
-							<div class="form-floating" style="width: 50%;">
-								<form:input path="member_email" type="email" class="form-control" id="member_email"/>
+				<div class="d-flex flex-column my-5 justify-content-center align-items-center">
+					<h1 class="text-primary">JOINUS</h1>
+					<h2 class="mb-4 fs-1" >회원가입</h2>
+					<form:form modelAttribute="member" method="POST" action="/member/signup" class="w-75">
+						<div class="col-12 my-3">
+							<div class="py-3">
+								<label for="member_email" class="form-label">이메일</label>
+								<form:input path="member_email" type="email" class="form-control p-2 fs-2 mb-4" id="member_email"/>
 								<form:errors cssStyle="color: red;" path="member_email"/>
-								<label for="member_email">이메일주소</label> <br>
-								<button class="btn btn-primary rounded-pill py-3 px-5"
+								<button class="btn btn-primary py-3 px-5 w-100"
 									type="button" id="email_auth_btn">인증번호 받기</button>
 							</div>
 						</div>
-						<br>
-						<div class="col-12">
-							<div class="form-floating" style="width: 50%;">
-								<input type="text" class="form-control" id="email_auth_key"
-									maxlength="6"> <label for="email_auth_key">인증번호
-									입력</label> <br>
-								<button class="btn btn-primary rounded-pill py-3 px-5"
+						<div class="col-12 my-3">
+							<div class="py-3">
+								<label for="member_email" class="form-label">이메일 인증</label>
+								<input type="text" class="form-control mb-4 p-2 fs-2" id="email_auth_key"
+									maxlength="6">
+								<button class="btn btn-primary py-3 px-5 w-100"
 									type="button" id="email_auth_confirm">이메일 인증</button>
 							</div>
 						</div>
-						<br>
-						<div class="col-12">
-							<div class="form-floating" style="width: 50%;">
-								<form:input path="member_pass" type="password" class="form-control" id="member_pass"/>
+						<div class="col-12 mt-3">
+							<div class="py-3">
+								<label for="member_email" class="form-label">비밀번호</label>
+								<form:input path="member_pass" type="password" class="form-control p-2 fs-2" id="member_pass" />
+								<div class="password-error-check d-flex flex-column d-none">
+				          			<span class="text-danger password-character">영문 대소문자/숫자/특수 문자 3가지 필수 조합</span>
+				          			<span class="text-danger password-length">8자 이상 20자 이하 입력</span>
+	        					</div>
 								<form:errors cssStyle="color: red;" path="member_pass" />
-								<label for="member_pass">비밀번호</label>
 							</div>
 						</div>
-						<br>
-						<div class="col-12">
-							<div class="form-floating" style="width: 50%;">
-								<input type="password" class="form-control" id="member_passConfirm">
-									<label for="member_passConfirm">비밀번호 확인</label>
-									<br>
-								<button class="btn btn-primary rounded-pill py-3 px-5"
+						<div class="col-12 mb-3">
+							<div class="py-3">
+								<label for="member_email" class="form-label">비밀번호 재확인</label>
+								<input type="password" class="form-control px-2 pb-2 fs-2 mb-4" id="member_passConfirm">
+								<div class="password-confirm-check d-flex flex-column d-none">
+				          			<span class="text-danger password-confirm">비밀번호가 일치하지 않습니다.</span>
+	        					</div>
+								<button class="btn btn-primary py-3 px-5 w-100"
 									type="button" id="pass_confirm">비밀번호 확인</button>
 							</div>
 						</div>
-						<br>
-						<div class="col-12">
-							<div class="form-floating" style="width: 50%;">
-								<form:input path="member_name" type="text" class="form-control" id="member_name"/>
+						<div class="col-12 my-3">
+							<div class="py-3">
+								<label for="member_email" class="form-label">이름</label>
+								<form:input path="member_name" type="text" class="form-control p-2 fs-2 mb-4" id="member_name"/>
 								<form:errors cssStyle="color: red;" path="member_name" />
-								<label for="member_name">이름</label>
 							</div>
 						</div>
-						<br>
-						<div class="col-12">
-							<div class="form-floating" style="width: 50%;">
-								<form:input path="member_location" type="text" class="form-control" id="member_location" onclick="searchLocation()"/>
+						<div class="col-12 my-3">
+							<div class="py-3">
+								<label for="member_email" class="form-label">주소</label>
+								<form:input path="member_location" type="text" class="form-control p-2 fs-2 mb-4" id="member_location" onclick="searchLocation()"/>
 								<form:errors cssStyle="color: red;" path="member_location" />
-								<label for="member_location">주소</label>
 							</div>
 						</div>
-						<br>
-						<div class="col-12">
+						<div class="col-12 my-3">
 							<input type="submit" value="회원가입"
-								class="btn btn-primary rounded-pill py-3 px-5">
+								class="btn btn-primary py-3 px-5 mb-4 w-100 e-submit" disabled>
 						</div>
 						<hr>
-
- 						<div class="col-12">
+ 						<div class="col-12 my-3">
 							<a href="https://kauth.kakao.com/oauth/authorize?client_id=e56b53633c44d91056a98f83b04e7bfe&redirect_uri=http://localhost:8088/oauth/kakao&response_type=code">
 								<img alt="카카오 로그인" src="${pageContext.request.contextPath }/resources/img/kakao_login.png">
 							</a>

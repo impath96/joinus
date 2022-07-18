@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.joinus.domain.LocationCityVo;
 import com.joinus.domain.MembersVo;
 import com.joinus.domain.PartnerPlacesVo;
 import com.joinus.domain.PaymentsVo;
@@ -58,36 +59,154 @@ public class RentalController {
 	
 	//================================================================================================
 	
+	// http://localhost:8088/rental/partnerPlace
+	// 장소 유형 선택
+	@RequestMapping(value = "/partnerPlace", method = RequestMethod.GET)
+	public void placeTypeGet() {
+		log.info(" placeTypeGet() 호출 ");
+	}
 	
-	// http://localhost:8088/rental/partnerPlaceList
+	
+	// http://localhost:8088/rental/partnerPlaceList?type=음악연습실&location=동래구
 	// 대관리스트
 	@RequestMapping(value = "/partnerPlaceList", method = RequestMethod.GET)
-	public void placeListGet(Model model) {
+	public String placeListGet(Model model, HttpSession session, @ModelAttribute("type") String type, @ModelAttribute("location") String location) {
 		log.info(" placeListGet() 호출 ");
 		
-		// 모임장의 정보에 장소가 있으면 구 를 중심(위치), 없으면 시 중심 (구는 이름이 겹치는 게 많아서)
-		// 장소유형은 일단 전체로
-		List<PartnerPlacesVo> partnerPlaceList = rentalService.getAllPartnerPlaceList();
+		if(type.isEmpty()) {
+			type = "0";
+		}
+		log.info("type : "+type);
+		log.info("location : "+location);
+//		log.info(location.isEmpty()+"");
 		
-		// 리스트에서 주소는 (시 구)까지만 보이게
+		List<PartnerPlacesVo> partnerPlaceList = null;
+		
+		// 위에서 type  location 값이 없으면 전체가 출력될 수 있게 0으로 값을 줬음
+		// 1. 장소유형 선택 후 리스트 화면으로 이동 => type에 값이 있는 상태
+		if(!type.equals("0") && (location.isEmpty() || location.equals("0"))) {
+			// 장소유형이 선택된 경우(기본- location은 아직 아무것도 선택X -> empty)
+			
+			// 로그인 세션값이 있으면 모임장인지 확인하고 모임장의 주소가 있는지 확인
+			if(session.getAttribute("member") != null) {
+				// 회원
+				MembersVo member = (MembersVo) session.getAttribute("member");
+				int member_no = member.getMember_no();
+				int result = clubService.checkClubAdmin(member_no);
+				
+				// result 값이 0보다 크면 모임장
+				if(result > 0) {
+					// 모임장
+					String clubAdminAddr = clubService.getClubAdminAddr(member_no);
+					log.info("@@@@@@@@@clubAdminAddr : "+clubAdminAddr);
+					
+					// 모임장의 주소가 있을 경우("구"만 뽑아오기)
+					if(clubAdminAddr != null) {
+						// 모임장 - 주소 O
+						
+						String[] adminAddrArr = clubAdminAddr.split(" ");
+						
+						if(location.isEmpty()) {
+							location = adminAddrArr[1];
+							log.info("모임장의 location(구) : "+location);
+							log.info("모임장O 주소가 있을 경우 - 장소유형, 위치 정보가 다 있음");
+							partnerPlaceList = rentalService.getPartnerPlaceList(type, location);
+//							log.info(partnerPlaceList+"");
+							
+						} else if(location.equals("0")) {
+							// 모임장의 주소가 있지만 위치를 전체로 선택한 경우
+							partnerPlaceList = rentalService.getTypePartnerPlaceList(type);
+//							log.info(partnerPlaceList+"");
+						}
+						
+					} else {
+						// 모임장 - 주소 X
+						location = "0";
+						log.info("모임장O 주소가 없을 경우");
+						partnerPlaceList = rentalService.getTypePartnerPlaceList(type);
+//						log.info(partnerPlaceList+"");
+					}
+					
+				} else {
+					// result 값이 0이면 모임장X => location 은 그대로 0
+					// 모임장 X 일반 회원
+					location = "0";
+					log.info("모임장X 일반회원/장소유형이 선택된 경우");
+					partnerPlaceList = rentalService.getTypePartnerPlaceList(type);
+//					log.info(partnerPlaceList+"");
+				}
+				
+				
+			} else {
+				// 비회원
+				// 장소유형이 선택된 경우 (location 값이 0)
+				location = "0";
+				log.info("비회원/장소유형이 선택된 경우");
+				partnerPlaceList = rentalService.getTypePartnerPlaceList(type);
+//				log.info(partnerPlaceList+"");
+			}
+			
+		} else if(!type.equals("0") && !location.equals("0")) {
+			// 유형과 위치 둘 다 선택했을 경우
+			log.info("유형과 위치 둘 다 선택했을 경우");
+			partnerPlaceList = rentalService.getPartnerPlaceList(type, location);
+//			log.info(partnerPlaceList+"");
+			
+		} else if(type.equals("0") && !location.equals("0")) {
+			// 장소유형을 전체로 바꿀 경우(위치는 선택)
+			log.info("장소유형을 전체로 바꿀 경우(위치는 선택)");
+			partnerPlaceList = rentalService.getCityPartnerPlaceList(location);
+//			log.info(partnerPlaceList+"");
+			
+		} else if(type.equals("0") && location.equals("0")) {
+			// 둘 다 전체
+			log.info("둘 다 전체");
+			partnerPlaceList = rentalService.getAllPartnerPlaceList();
+//			log.info(partnerPlaceList+"");
+			
+		}
+		
+		
+		// 리스트에서 제휴시설주소는 (시 구)까지만 보이게
 		for(PartnerPlacesVo vo :partnerPlaceList) {
 			String[] addressArr = vo.getPartner_place_address().split(" ");
+			// 부산광역시, 부산 이렇게 두가지가 존재하는데 부산 00구로 출력되도록
 			String address = addressArr[0].substring(0, 2) + " " + addressArr[1];
-//			log.info(address + " / 시 이름 길이 : "+addressArr[0].length());
 			vo.setPartner_place_address(address);
 		}
 //		log.info("주소 자른 결과 : "+partnerPlaceList);
 		model.addAttribute("partnerPlaceList", partnerPlaceList);
+		
+		// select박스 - (구)리스트
+		model.addAttribute("guList", rentalService.getBusanGuList());
+		
+		model.addAttribute("type", type);
+		model.addAttribute("location", location);
+		
+		return "/rental/partnerPlaceList";
+		
 	}
+	
 	
 	// http://localhost:8088/rental/partnerPlaces/{partner_place_no}
 	// http://localhost:8088/rental/partnerPlaces/1
 	// 대관상세
 	@RequestMapping(value = "/partnerPlaces/{partner_place_no}", method = RequestMethod.GET)
-	public String partnerPlaceContentGet(@PathVariable("partner_place_no") int partner_place_no, Model model) {
+	public String partnerPlaceContentGet(@PathVariable("partner_place_no") int partner_place_no, Model model, HttpSession session) {
 		log.info(" partnerPlaceContentGet() 호출 ");
 		
+		// 세션에 저장된 member_no가 모임장이 아니면 결제하기 버튼 막기
+		// 모임장인지 체크(result > 0 : 모임장)
+		int result = 0;
+		
+		if(session.getAttribute("member") != null) {
+			MembersVo member = (MembersVo) session.getAttribute("member");
+			int member_no = member.getMember_no();
+			result = clubService.checkClubAdmin(member_no);
+		}
+		
 		model.addAttribute("partnerPlace", rentalService.getPartnerPlaceContent(partner_place_no));
+		model.addAttribute("checkClubAdmin", result);
 		
 		return "/rental/partnerPlaceContent";
 	}

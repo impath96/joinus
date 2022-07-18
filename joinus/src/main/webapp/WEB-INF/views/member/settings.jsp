@@ -103,24 +103,23 @@
 									</span>
 								</label>
 							</div>
-							${savedFileName }
-							<div style="width:100%;">
+							<div style="width:100%;" class="mt-3">
 								<label for="name" class="input-label">
 									<span>닉네임</span>
-									<input id="name" type="text" class="input" name="member_name"
+									<input id="name" type="text" class="input form-control" name="member_name"
 											value="${member.member_name }" placeholder="변경할 닉네임을 입력해주세요">
+								</label>
+							</div>
+							<div class="col-12 mb-3">
+								<label for="location_name" class="input-label">
+									<span>지역</span>
+									<input type="text" class="input form-control" id="location" name="location_name"
+										placeholder="주소를 입력해주세요" value="${sessionScope.member.member_location }" onclick="searchLocation()" >
 								</label>
 							</div>
 							<input type="submit" class="btn btn-primary fs-3" style="width:100%;" value="저장하기"/>
 						</form>
 						<div class="p-4 my-4 border border-dark">
-							<div class="col-12">
-								<div class="form-floating">
-									<input type="text" class="form-control py-2" id="location" name="location_name"
-										placeholder="주소를 입력해주세요" value="${sessionScope.member.member_location }" onclick="searchLocation()" >
-								</div>
-							</div>
-							<br>
 							<div class="col-12">
 								<div class="form-floating">
 									<select name = "interest" id="interest" class="form-select form-select-lg py-2 mb-3" aria-label="interest">
@@ -129,7 +128,7 @@
 											<option value="${interest.interest_no }" <c:if test="${interest.interest_no == memberInterest.interest_no }">selected</c:if>>${interest.interest_name }</option>
 			  							</c:forEach>
 									</select>
-								<button type="submit" class="btn btn-primary fs-3 mb-4" style="width:100%;">저장하기</button>
+								<button type="button" class="e-interest-save" class="btn btn-primary fs-3 mb-4" style="width:100%;">저장하기</button>
 								</div>
 							</div>
 						</div>

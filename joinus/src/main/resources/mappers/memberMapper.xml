@@ -70,6 +70,11 @@
 		set member_name=#{member_name}
 		where member_no=#{member_no}
 	</update>
+	<update id="updateLocation">
+		update members
+		set member_location=#{member_location}
+		where member_no=#{member_no}
+	</update>
 	
 	<update id="updatePassword">
 		update members

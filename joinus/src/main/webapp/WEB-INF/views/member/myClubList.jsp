@@ -21,7 +21,7 @@
 						<div class="service-icon">
 							<!-- 클럽관심사 아이콘  -->
 							<img
-								src="${PageContext.requeset.contextPath }/resources/upload/interests/${myClub.interest_icon }"
+								src="${PageContext.requeset.contextPath }/resources/upload/inte  rests/${myClub.interest_icon }"
 								class="w-75 py-auto">
 						</div>
 						<h4 class="mb-3 py-2">${myClub.club_name }</h4>
