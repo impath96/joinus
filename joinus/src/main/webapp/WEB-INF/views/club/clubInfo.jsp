@@ -355,8 +355,8 @@
 			     		   <!-- 모임가입시 참석하기 버튼 출력 -->
 			       		  <c:if test="${clubmember ne '0'}">
 				       	 
-			         		${m.club_meeting_no }
-			         		${mm.club_meeting_no }
+			         		<%-- ${m.club_meeting_no }
+			         		${mm.club_meeting_no } --%>
 								<!-- 내가 참석신청을 한 정모list에 해당 정모no이 있는지로 비교 -->
                     			<c:if test="${m.club_meeting_no eq mm.club_meeting_no}">
 	                    			<button id="outMeeting" class="btn btn-primary" value="${m.club_meeting_no}">참석취소하기</button>
