@@ -271,14 +271,15 @@
                 	   <c:if test="${!empty clubvo.club_image }">
 							<img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${clubvo.club_image}" id="club_image">
 						</c:if>
+						
 							<h4 class="detailInfoCon"> &#128172; </h4>
          	               <h4 id="club_content" style="white-space: pre-wrap;">${clubvo.club_content }</h4>
-         	               <h4 class="detailInfoCon">  </h4>
+							
+							
 				
-				
 					
 					
-					
+					<div>
 			<!--  모임멤버면 별점, 별점 후 평균값 / 멤버가 아니면 가입하기 버튼 /  --> 
 
 				<!-- 회원인 경우만 출력 -->
@@ -286,7 +287,7 @@
 						
 					<!-- 모임X 벤 당한 회원은 가입버튼X 벤당한거 아직안함-->
 					<c:if test="${ graded eq '0' &&  clubmember eq '0' }">
-						<br><button class="btn btn-primary rounded-pill py-3 px-5 mt-3" id="joinClub">가입하기</button>
+						<div class="btn btn-primary rounded-pill py-3 px-5 mt-3" id="joinClub">가입하기</div>
 					</c:if>
 					
 					
@@ -315,7 +316,7 @@
 				</c:if>
                 
                 
-                
+                </div>
                 </div>
                 
                 

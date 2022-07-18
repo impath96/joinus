@@ -46,11 +46,6 @@
 
 	/* 모임 상세페이지 */
 
-		/* .datail_vertical {
-			margin-top: 70px;
-			width: 1296px;
-			text-align: center;
-		} */
 		#detail_nav {
 			align-content: center;
 		}
@@ -128,6 +123,7 @@
 		
 		#joinClub {
 			width: 300px;
+			font-size: 1.2em;
 		} 
 		
 		.joinClub {
@@ -163,31 +159,6 @@
    			 border-radius: 50% !important;
 		}
 		
-	
-		
-		/* .clubInfoMeeting {
-			display: inline-block;
-			width: 300px; height: 180px;
-		}
-		.clubInfoMeetingSize {
-			width: 330px; 
-		}
-		.meetingIconSize {
-			width: 50px; height: 20px;
-		}
-		.meetingDues { 
-		background-image: url("../resource/img/meeting2");
-		}				
-		.meetingLo { 
-		background-image: url("../resource/img/meeting3");
-		}				
-		.meetingCapa { 
-		background-image: url("../resource/img/meeting1");
-		}		
-		.meetingDetail {
-			 font-size: medium;
-		}		
- */
 
 	/* 모임 등록페이지  */
 

@@ -14,7 +14,6 @@ import com.joinus.domain.ClubsVo;
 import com.joinus.domain.MembersVo;
 import com.joinus.service.MainService;
 
-import jdk.internal.org.jline.utils.Log;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -40,8 +39,17 @@ public class HomeController {
 		
 		if(member != null) {
 			
-			List<ClubsVo> vo4 = service.getMyClubs(member.getMember_location());
-			model.addAttribute("my", vo4);
+			// 시+구 잘라내기
+			String[] array = member.getMember_location().split("\\s");
+					    
+			for(int i=0;i<array.length;i++) {
+				String address = array[0].substring(0, 5) + " " + array[1];
+				
+				log.info("address :", address);
+				List<ClubsVo> vo4 = service.getMyClubs(address);
+				model.addAttribute("my", vo4);
+			}
+			
 		}
 		
 		session.setAttribute("member", member);
