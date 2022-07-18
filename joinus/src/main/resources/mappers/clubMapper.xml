@@ -181,6 +181,44 @@
 	]]>
 </select>
 
+
+<select id="ClubListDetail" resultMap="ClubListMap">
+<![CDATA[ select ci.club_no, c.club_name, c.club_content, c.club_image, ci.interest_no, ci.interest_detail_no, i.interest_icon, avg(cg.club_grade_rate) avg_gr
+    from clubs c
+	join club_interests ci
+        on(c.club_no = ci.club_no)
+    join interests i
+		on(ci.interest_no = i.interest_no)
+	join club_grades cg
+		on(c.club_no = cg.club_no)
+	where ci.interest_detail_no = #{interest_detail_no}
+        group by club_no
+	order by avg_gr desc
+	limit #{cri.pageStart},#{cri.perPageNum}
+	]]>
+</select>
+
+<select id="ClubListMonth" resultMap="ClubListMap">
+
+<![CDATA[select cg.club_no, avg(cg.club_grade_rate) avg_cg, c.club_name, c.club_content, c.club_image
+	FROM club_grades cg
+	join clubs c
+		on(cg.club_no = c.club_no)
+	WHERE MONTH(grade_date) = MONTH(CURRENT_DATE())-1
+	AND YEAR(grade_date) = YEAR(CURRENT_DATE())
+	group by club_no
+	order by avg_cg desc
+	limit 3
+	]]>
+</select>
+
+
+<select id="InterestDetail" resultType="InterestDetailsVo">
+	select interest_detail_name, interest_detail_no from interest_details
+	where interest_no = #{interest_no}
+
+</select>
+
 <select id="CountClub" resultType="int" parameterType="Integer">
 	select count(club_no) from club_interests
 	<where>
@@ -188,6 +226,12 @@
 		AND interest_no = #{value}
 	</if>
 	</where>
+</select>
+
+<select id="CountClubDetail" resultType="int" parameterType="Integer">
+	select count(club_no) from club_interests
+	where interest_detail_no = #{interest_detail_no}
+
 </select>
 
 

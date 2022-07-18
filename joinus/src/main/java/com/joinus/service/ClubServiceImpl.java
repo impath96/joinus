@@ -55,6 +55,13 @@ public class ClubServiceImpl implements ClubService{
 	public Integer totalCnt() {
 		return dao.getTotalCnt();
 	}
+	
+
+	@Override
+	public int totalCntDetail(Integer interest_detail_no) {
+		
+		return dao.getDetailCnt(interest_detail_no);
+	}
 
 	//클럽 리스트(관심사별) 조회
 	@Override
@@ -66,6 +73,34 @@ public class ClubServiceImpl implements ClubService{
 		
 		log.info(result+"");
 		
+		return result;
+	}
+	
+	
+	@Override
+	public List<ClubTotalBean> clubListDetail(Integer interest_detail_no, Criteria cri) {
+		log.info("clubList(interest_detail_no) 호출");
+		
+		List<ClubTotalBean> result = dao.clubListDetail(interest_detail_no, cri);
+		
+		log.info(result+"");
+		
+		return result;
+	}
+	
+
+	@Override
+	public List<ClubTotalBean> clubListMonth() {
+		
+		List<ClubTotalBean> result = dao.clubListMonth();
+		
+		return result;
+	}
+
+	//관심사 디테일 조회
+	@Override
+	public List<InterestDetailsVo> getInterestDetail(Integer interest_no) {
+		List<InterestDetailsVo> result = dao.interestDetail(interest_no);
 		return result;
 	}
 
@@ -160,11 +195,17 @@ public class ClubServiceImpl implements ClubService{
 		
 		
 	}
-	
+	//정모 장소
 	@Override
 	public String getMeetingAddr(int club_meeting_no) {
 		
 		return dao.getMeetingAddr(club_meeting_no);
+	}
+	
+	//정모 멤버
+	@Override
+	public List<MeetingTotalBean> getMeetingMember(Integer club_meeting_no, Integer club_no) {
+		return dao.getMeetingMember(club_meeting_no, club_no);
 	}
 	
 	
@@ -181,6 +222,8 @@ public class ClubServiceImpl implements ClubService{
 
 	//========================= 김민호 =======================
 	
+
+
 	@Override
 	public List<ClubsVo> getClubListByMemberNo(int member_no) {
 		return dao.ClubListByMemberNo(member_no);
