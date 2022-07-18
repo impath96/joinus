@@ -32,7 +32,7 @@ public class HomeController {
 		
 		MembersVo member = (MembersVo)session.getAttribute("member");
 		if(member != null) {
-			member.setMember_location("부산진구");
+			
 			List<ClubsVo> vo4 = service.getMyClubs(member.getMember_location());
 			model.addAttribute("my", vo4);
 		}

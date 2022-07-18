@@ -3,84 +3,54 @@
 
 	/* 메인페이지  */
 
-	.maincSize { width: 1500px; }
-	.mainImg {
-		width: 336px; height: 180px;
-		margin-bottom: 10px;
-	}
-	.Main4 {
-		width: 300px; height: 160px;
-		display: inline-block;
-		box-shadow: 0 0 45px rgb(0 0 0 / 8%);
-		margin-right: 20px;
-	}
-	.margin0 {
-		margin: 0px;
-	}		
-	.mainSize {
-		 width: 300px; height: 150px;
-	 	background-color:transparent;
-	}
 	
-	.mainGr {
-		color: #32C36C;
-	}
-	.textGnW {
-		padding: 6px;
-		text-align: center;
-	 	font-style: italic;
-		color: white;
-		background-color: #32C36C;
-		border-radius: 10px;
-		vertical-align: middle;
-		width: 50%;
-	}
-			
-	.MainListTitle {
-		font-size: large;
-		text-align: left;
-		font-weight: 600;
-		margin-top: 100px;
-		margin-bottom: 0px;
-		padding: 0px;
-	}
-	.MainBtn {
-		width: 200px;
-		box-shadow: 0 0 45px rgb(0 0 0 / 8%);
-		margin-bottom: 70px;
-	}
-	.mainJoinus {
-		width: 450px; height: 170px;
-	}
-	.mainP {
-		color: var(--dark);
-	    font-size: 25px;
-	    font-weight: 500;
-	    margin: 0px;
-	}
 	.MainSubTitle {
-		font-size: small;
+		font-size: x-large;
+		font-weight: 500;
 		margin-bottom: 30px;
 		vertical-align: top;
+		
 	}
-	.mainTopTitle {
-		font-size: x-large;
-		font-weight: 600;
-		margin: 0px;
+	.MainTextTitle {
+	
+		margin-top: 8px;
+		margin-bottom: 5px;
+		text-align: center;
+		vertical-align: middle;
+		font-weight: 900;
+		border-bottom: #6c757da8 dotted 1px;
+		padding: 15px;
+		
 	}
-	.mainTopSubTitle {
-		font-style: italic;
-		font-size: medium;
-		margin: 0px;
+	.MainTextSub {
+		text-align: center;
+		vertical-align: middle;
+		font-size: large;
+		font-weight: 400;
 	}
+	.Grrrr {
+		background-color: #F6F7F8;
+	}
+	.mainImg {
+		cursor: pointer;
+	}
+	.marginB {
+		margin-bottom: 50px;
+	}
+	.mainGroup {
+		margin-bottom: 150px;
+	 }
+	
+	
+	
 
 	/* 모임 상세페이지 */
 
-.datail_vertical {
+		/* .datail_vertical {
 			margin-top: 70px;
 			width: 1296px;
 			text-align: center;
-		}
+		} */
 		#detail_nav {
 			align-content: center;
 		}
@@ -123,15 +93,29 @@
 		    font-size: 16px;
 		    resize: none;
 		}
-				
+		.text-bold {
+			font-size: large;
+			font-weight: 500;
+		}				
+						
 		#club_image {
 			width: 800px;
 			height: auto;
-			margin-top: 30px; margin-bottom: 30px;
-		}		
-		#imgDiv {
+			margin-top: 30px;
 			text-align: center;
+		}		
+		.justify {
+			justify-content: center;
 		}
+		.detailInfoCon {
+			width: 800px;
+			font-weight: 700;
+			font-size: large;
+			padding: 10px;
+			text-align: center;
+			border-bottom: 2px dotted #D3D3D3;
+		}
+		
 		#Dip {
 			width: 30px; height: 30px;
 			cursor: pointer;
@@ -141,28 +125,39 @@
 			cursor: pointer;
 		} 
 		
-		#detailcss {
-			width: 1296px;
-			margin-top: 50px;  
-		}
-		#datailbtn {
-			width: 1296px;
-			margin-top: 50px; margin-bottom: 50px; 
-		}
+		#joinClub {
+			width: 300px;
+		} 
 		#club_name {
+			margin-top: 20px; margin-bottom: 50px;
 			font-size: 5em;
 		}
 		#club_content {
-			color: #32C36C;
-			margin-top: 20px;
+			width: 800px;
+			padding: 100px;
 			font-weight: 500;
+			background-color: #F6F7F8;
 		}
 		#club_capa {
-			text-align: right;
-			font-style: italic;
+			text-align: center;
 			font-size: medium;
+			color: #32C36C;
+			font-weight: lighter;
+			margin: 0px;
 		}
-		.clubInfoMeeting {
+		
+		.gradeAvgSize { 
+			width: 80px; height: 80px;
+			text-align: center;
+			vertical-align: middle;
+			font-size: 2em;
+			color: white;
+			background-color: #32C36C;
+   			 border-color: #32C36C;
+   			 border-radius: 50% !important;
+		}
+		
+		/* .clubInfoMeeting {
 			display: inline-block;
 			width: 300px; height: 180px;
 		}
@@ -184,7 +179,7 @@
 		.meetingDetail {
 			 font-size: medium;
 		}		
-
+ */
 
 	/* 모임 등록페이지  */
 

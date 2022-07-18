@@ -167,7 +167,7 @@ public class RentalController {
 			}
 			
 			log.info("rentalplace 저장시작");
-			//session 멤버정보처럼 클럽도 계속 넘겨서 받아와야함.. 일단 임의로 작성
+			//session 멤버정보처럼 클럽도 계속 넘겨서 받아와야함.. 일단 임의로 작성 -> null로 넣고 정모등록할 때 쓰는건..?
 			rentalplacevo.setClub_no(46);
 			rentalplacevo.setMember_no(mvo.getMember_no());
 			rentalplacevo.setRental_places_no(partner_place_no);

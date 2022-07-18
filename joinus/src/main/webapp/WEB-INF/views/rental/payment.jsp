@@ -42,7 +42,7 @@
     				        dataType: 'json', //서버에서 보내줄 데이터 타입
     				        success: function(paymentvo){
     				        	 alert('데이터 저장 모두 완료!'); 
-    				        	 $('#add').append('결제완료');
+    				        	 $('#add').append('결제가 완료되었습니다');
     				        	 $('#add2').append('5초 후 대관 예약 페이지로 이동합니다');
     				        	 setTimeout(function(){
     				        		 location.href="${PageContext.request.contextPath }/"
@@ -60,7 +60,6 @@
 		});
 	});
         
-		// 결제 후 페이지 리로드, 결제가 완료된다면 결제 완료 페이지로 출력
 	
 }
 
@@ -72,10 +71,9 @@
             <div class="row justify-content-center">
                 <div class="col-lg-6">
                 
-                    	<h4 id="add"></h4>
-                    	<h5 id="add2"></h5>
+                    	<h2 id="add"> </h2>
+                    	<h5 id="add2" class="MainSubTitle"> </h5>
                     	
-                    <a class="btn btn-primary rounded-pill py-3 px-5" href="">Go Back To Home</a>
                 </div>
             </div>
         </div>
