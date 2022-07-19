@@ -383,6 +383,15 @@
 		where club_member_role = 'admin'
 		limit #{pageStart}, ${perPageNum}
 	</select>
+	<select id="clubList" resultType="ClubsVo">
+		select * from clubs
+		<where>
+			<foreach item="club_no" index="index" collection="list"
+        		open="club_no in (" separator="," close=")">
+          		#{club_no}
+    		</foreach>
+		</where>
+	</select>
 
 <!-- ================================= -->
 	<select id="getBoardContent" resultMap="boardContentMap">

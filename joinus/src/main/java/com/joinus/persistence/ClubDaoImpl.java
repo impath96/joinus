@@ -618,6 +618,12 @@ public class ClubDaoImpl implements ClubDao{
 				meetingMlist.put("member_no", num2);
 				return sqlSession.selectList(NAMESPACE2+".getMeetingMember", meetingMlist);
 			}
+
+			@Override
+			public List<ClubsVo> recentViewClubList(List<Integer> recentViewClub) {
+				
+				return sqlSession.selectList(NAMESPACE+".clubList", recentViewClub);
+			}
 			
 
 
