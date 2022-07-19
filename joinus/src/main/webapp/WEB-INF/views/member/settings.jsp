@@ -132,7 +132,7 @@
 								</div>
 							</div>
 						</div>
-						<c:if test="${sessionScope.member.member_signup_type == 'common' }">
+						<c:if test="${sessionScope.member.member_signup_type == 'joinus' }">
 						<form class="mt-4 p-4 my-4 border border-dark password-edit" method="post">
 							<div class="row g-3 form-floating">
 								<div class="col-12 col-sm-12">

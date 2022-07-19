@@ -3,6 +3,10 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -10,13 +14,17 @@ import java.util.UUID;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -871,7 +879,42 @@ public class ClubController {
 		// http://localhost:8088/club/	
 		// http://localhost:8088/club/5
 		@RequestMapping(value = "/{club_no}", method = RequestMethod.GET)
-		public String info(Model model,HttpSession session, @PathVariable("club_no") int club_no) {
+		public String info(Model model,HttpSession session, @PathVariable("club_no") int club_no,
+							@CookieValue(value="recentViewClub", required = false) Cookie clubCookie,
+							HttpServletResponse response) throws UnsupportedEncodingException {
+			
+				// 쿠키가 존재하면 해당 쿠키에 있는 값 출력
+				log.info("club : {}", clubCookie);
+				// 쿠키가 존재하지 않으면 쿠키 생성
+				if(clubCookie == null) {
+					Cookie cookie = new Cookie("recentViewClub", String.valueOf(club_no));
+					cookie.setMaxAge(60*60*24*30);
+					cookie.setPath("/");
+					response.addCookie(cookie);
+				} else {
+					log.info("cookie value : {}", clubCookie.getValue());
+					// 만약 쿠키가 존재한다면 값을 추가 (이때 동일한 값이 있을 경우 추가 X)
+					String cookieValue = clubCookie.getValue();
+					
+					String[] cookieValues = cookieValue.split("&");
+					
+					boolean hasValue = false;
+					for(String value : cookieValues) {
+						if(value.equals(String.valueOf(club_no))) {
+							hasValue = true;
+						}
+					}
+					
+					if(!hasValue) {
+						cookieValue += "&"+String.valueOf(club_no);
+						clubCookie.setValue(cookieValue);
+					}
+					
+					log.info("데이터 추가 적용된 쿠키 : {}", clubCookie.getValue());
+					clubCookie.setPath("/");
+					clubCookie.setMaxAge(60*60*24*30);
+					response.addCookie(clubCookie);
+				}
 			
 				//모임정보
 				ClubsVo clubvo = service.getClubInfo(club_no);

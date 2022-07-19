@@ -246,6 +246,9 @@ import com.joinus.domain.MembersVo;
 		
 		//게시글 리스트
 		public List<ClubBoardsVo> getBoardsforimg(Integer num);
+		
+		// 클럽 리스트 - 최근 본 모임
+		public List<ClubsVo> getClubList(List<Integer> recentViewClub);
 
 
 

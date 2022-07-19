@@ -33,7 +33,7 @@ public class MemberServiceImpl implements MemberService {
 		String password = "";
 		if (member.getMember_signup_type() == null) {
 			member.setMember_image("default.jpg");
-			member.setMember_signup_type("common");
+			member.setMember_signup_type("joinus");
 			password = SHA256.encrypt(member.getMember_pass());
 			member.setMember_pass(password);			
 		} else {

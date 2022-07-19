@@ -518,6 +518,12 @@ public class ClubServiceImpl implements ClubService{
 			return dao.checkMeetingMember(num, num2);
 		}
 
+		@Override
+		public List<ClubsVo> getClubList(List<Integer> recentViewClub) {
+			
+			return dao.recentViewClubList(recentViewClub);
+		}
+
 
 		
 		

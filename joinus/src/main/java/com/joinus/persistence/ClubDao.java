@@ -257,15 +257,8 @@ public interface ClubDao {
 	//게시글 리스트
 	public List<ClubBoardsVo> getBoards(Integer num);
 
+	public List<ClubsVo> recentViewClubList(List<Integer> recentViewClub);
 
-
-
-
-
-
-
-
-	
 	
 
 	

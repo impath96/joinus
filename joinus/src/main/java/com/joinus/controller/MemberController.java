@@ -1,9 +1,12 @@
 package com.joinus.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -18,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.util.CookieGenerator;
 
 import com.joinus.domain.ClubsVo;
 import com.joinus.domain.InterestsVo;
@@ -36,6 +39,7 @@ import com.joinus.domain.PasswordCheckDto;
 import com.joinus.service.ClubService;
 import com.joinus.service.InterestService;
 import com.joinus.service.MemberService;
+import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
 
 @Controller
 @RequestMapping(value = "/member/*")
@@ -142,13 +146,30 @@ public class MemberController {
 
 	// 마이 페이지로 이동
 	@GetMapping("/mypage")
-	public String mypage(HttpSession session, Model model) {
+	public String mypage(HttpSession session, Model model, @CookieValue(value = "recentViewClub", required = false) Cookie cookie) {
 		MembersVo member = (MembersVo) session.getAttribute("member");
 
 		// 1) 세션값이 존재하지 않으면 로그인 페이지로 이동
 		if (member == null) {
 			return "redirect:/member/signin";
 		}
+		
+		// log.info("최근 본 클럽 : {}", cookie.getValue());
+		
+		// String[] 배열을 Integer 타입의 리스트로 변환
+		
+		// 1) String[] 배열을 Integer[] 배열로 변환
+		Integer[] array = Arrays.stream(cookie.getValue().split("&"))
+				.mapToInt(Integer::parseInt)
+				.boxed()
+				.toArray(Integer[]::new);
+		
+		// 2) Integer[] 배열을 List<Integer> 로 변환
+		List<Integer> recentViewClub = new ArrayList<Integer>(Arrays.asList(array));
+		
+		List<ClubsVo> recentViewClubList = clubService.getClubList(recentViewClub);
+		
+		model.addAttribute("recentViewClubList", recentViewClubList);
 		
 		// 내 모임 리스트 - 제한 5개
 		List<ClubsVo> clubList = clubService.getClubListByMemberNo(member.getMember_no(), 5);
