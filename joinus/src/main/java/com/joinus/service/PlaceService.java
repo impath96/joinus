@@ -1,10 +1,11 @@
 package com.joinus.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.json.simple.JSONArray;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface PlaceService {
+	
+	public JSONArray placeList();
 	
 }
