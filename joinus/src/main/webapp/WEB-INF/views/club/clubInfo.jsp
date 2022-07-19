@@ -375,16 +375,18 @@
 							<c:set var="doneLoop" value="false"/>	
 							<c:forEach var="mm" items="${meetingMbrs}">
 							
-									${m.club_meeting_no } 
-									${mm.club_meeting_no } 
 									
 								<c:if test="${not doneLoop}">	
 								<!-- 내가 참석신청을 한 정모list에 해당 정모no이 있는지로 비교 -->
                     			<c:if test="${m.club_meeting_no eq mm.club_meeting_no}">
+									${m.club_meeting_no } 
+									${mm.club_meeting_no } 
 	                    			<button id="outMeeting" class="btn btn-primary" value="${m.club_meeting_no}">참석취소하기</button>
 					                 <c:set var="doneLoop" value="true"/>
                     			</c:if>
 			         			<c:if test="${m.club_meeting_no ne mm.club_meeting_no }">
+									${m.club_meeting_no } 
+									${mm.club_meeting_no } 
 		                    		<button id="JoinMeeting" class="btn btn-primary" value="${m.club_meeting_no}">참석하기</button>
 					                 <c:set var="doneLoop" value="true"/>
                     			</c:if>
