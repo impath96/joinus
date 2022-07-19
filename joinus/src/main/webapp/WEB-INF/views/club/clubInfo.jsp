@@ -247,8 +247,14 @@
     			<!-- About Start  모임 설명 -->
     			<div class="row g-4 text-center justify">
                     
-                        <h4 class="text-primary" >${interDetail }</h4>
-                       <p id="club_capa"><i class="fa fa-check-circle text-primary me-3" ></i>정원:${clubvo.club_capacity } 명</p>
+                    
+                    
+                       <c:if test="${!empty clubvo.club_image }">
+							<img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${clubvo.club_image}" id="club_image" class="shadow-lg">
+						</c:if>
+                    
+              
+                     
                         <h1 class="mb-4" id="club_name">${clubvo.club_name }
 						
 						
@@ -265,21 +271,35 @@
 		                       </c:forEach>
 		                     </c:if>
                         </h1>
-					
-                        <hr>
-                        
-                	   <c:if test="${!empty clubvo.club_image }">
-							<img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${clubvo.club_image}" id="club_image">
-						</c:if>
-						
-							<h4 class="detailInfoCon"> &#128172; </h4>
+                     
+    		
+    		
+    		<!--  <div class="container-fluid bg-light overflow-hidden px-lg-0 shadow-sm" style="margin: 6rem 0;"> -->
+               
+               
+               
+                <div class="row g-0 mx-lg-0 shadow-sm d-flex" style="height: 300px;">
+                 	      
+                 	      
+                 	      <div class="clubDetailBox" >
+							<h4 class="greenColor shadow-sm" > 모임 소개 </h4>
          	               <h4 id="club_content" style="white-space: pre-wrap;">${clubvo.club_content }</h4>
-							
-							
+							</div>
+						
 				
 					
 					
-					<div>
+					<div class="clubDetailBox" >
+					<h4 class="greenColor shadow-sm" > 모임 정보 </h4>
+						
+                      <p id="club_content" ><i class="fa fa-check-circle text-primary " ></i> 정원 - ${clubvo.club_capacity } 명<br> 
+                     <i class="fa fa-check-circle text-primary" ></i> 관심사 - ${interDetail } </p><br>
+					 </div>
+					 
+				</div>
+			
+			<div class="clubDetailBox" >
+			
 			<!--  모임멤버면 별점, 별점 후 평균값 / 멤버가 아니면 가입하기 버튼 /  --> 
 
 				<!-- 회원인 경우만 출력 -->
@@ -314,20 +334,24 @@
 							<p>(참여자수 : ${gradeAvgCnt[0].cnt}명 ) </p><br>
 					</c:if>
 				</c:if>
-                
-                
                 </div>
-                </div>
+                
+           	
+             </div>
+            </div>
+          </div>
+                
                 
                 
                 
                 
                 
 
- 				<!-- 정모 -->
- 				
- 				
-                  <div class="text-center mx-auto mb-5 marginTOP ">
+ 	<!-- 정모 -->
+ 	 <div class="container-xxl py-5 ">
+        <div class="container"> 			
+
+                 <div class="text-center mx-auto mb-5 marginTOP ">
                 <h6 class="text-primary">${clubvo.club_name } </h6>
                 <h1 class="mb-4">정모</h1>
            
@@ -338,42 +362,69 @@
 	                </c:if>
            			 </div><hr><br><br>
            		
-           		
-           <c:if test="${!empty meetings}" >
- 			<div class="row g-4 text-center justify" >
- 			
- 			
+       <c:if test="${!empty meetings}" >
+         <div class="row g-4 text-center justify">
+         
 			   <c:forEach var="m" items="${meetings}">
-	             
-	           			 	 				
-						 <c:set var="doneLoop" value="false"/><!-- break 기능 -->
-	    	    <c:forEach var="mm" items="${meetingMbrs}">
-	                    		<c:if test="${not doneLoop}">
-	             
-	                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s" >
-			        
-			     		   <!-- 모임가입시 참석하기 버튼 출력 -->
-			       		  <c:if test="${clubmember ne '0'}">
-				       	 
-			         		<%-- ${m.club_meeting_no }
-			         		${mm.club_meeting_no } --%>
+ 			
+ 					 <div class="col-md-6 col-lg-4 wow fadeInUp d-flex flex-column " data-wow-delay="0.1s" >
+				     		   
+			       		  <c:if test="${clubmember ne '0' and !empty member_no}"><!-- 모임가입시 참석하기 버튼 출력 -->
+							
+							
+							<c:set var="doneLoop" value="false"/>	
+							<c:forEach var="mm" items="${meetingMbrs}">
+							
+									${m.club_meeting_no } 
+									${mm.club_meeting_no } 
+									
+								<c:if test="${not doneLoop}">	
 								<!-- 내가 참석신청을 한 정모list에 해당 정모no이 있는지로 비교 -->
                     			<c:if test="${m.club_meeting_no eq mm.club_meeting_no}">
 	                    			<button id="outMeeting" class="btn btn-primary" value="${m.club_meeting_no}">참석취소하기</button>
-					                  <c:set var="doneLoop" value="true"/>
+					                 <c:set var="doneLoop" value="true"/>
                     			</c:if>
-                    		 
-						 
-			         			<c:if test="${m.club_meeting_no ne mm.club_meeting_no}">
+			         			<c:if test="${m.club_meeting_no ne mm.club_meeting_no }">
 		                    		<button id="JoinMeeting" class="btn btn-primary" value="${m.club_meeting_no}">참석하기</button>
-					                  <c:set var="doneLoop" value="true"/>
+					                 <c:set var="doneLoop" value="true"/>
                     			</c:if>
-                    		
-                    		</c:if>
-                    	
-                    			
-                    	
-			       	  <%-- 	<c:choose>
+                    			</c:if>
+                  	  		</c:forEach>
+                  	  		
+                  	  		
+                  	  			<!-- 내 정모list가 없다면 참석하기 버튼 띄우기  -->
+                    			<c:if test="${meetingMbrsNull eq '0'}">
+		                    		<button id="JoinMeeting" class="btn btn-primary" value="${m.club_meeting_no}">참석하기</button>
+	                    		</c:if>
+	                    		
+	                    </c:if><!-- 모임가입시 참석하기 버튼 출력 -->
+                			 	
+                	 
+ 			
+                  	 <div class="rounded shadow clubDetailBox"  >
+	                    <h3 class="greenColor shadow-sm">${m.club_meeting_title }</h3>
+	                   <p class="MainTextSub"><b> &#128176; 회비 </b>${m.club_meeting_dues }</p>
+	                   <p class="MainTextSub"><b> &#128205; 장소 </b>${m.club_meeting_location }</p>
+	                   <p class="MainTextSub"><b> &#128694; 인원 </b>${m.club_meeting_capacity }명</p>
+         		   	
+                	</div>
+	             
+	                </div>
+                	 
+                 </c:forEach>
+            </div>	
+        </c:if>
+                    
+                
+                
+                   <%--  <c:set var="doneLoop" value="false"/> --%><!-- break 기능 -->
+	    	  <%--   <c:forEach var="mm" items="${meetingMbrs}"> --%>
+	          <%-- <c:if test="${not doneLoop}"> --%>
+	             
+	             <%-- ${m.club_meeting_no }
+			         		${mm.club_meeting_no } --%>
+			 
+			    <%-- 	<c:choose>
 							  	<c:when test="${m.club_meeting_no ne mm.club_meeting_no}">
 		                    		<button id="JoinMeeting" class="btn btn-primary" value="${m.club_meeting_no}">참석하기</button>
 					                  <c:set var="doneLoop" value="true"/>
@@ -382,33 +433,11 @@
 	                    			<button id="outMeeting" class="btn btn-primary" value="${m.club_meeting_no}">참석취소하기</button>
 					                  <c:set var="doneLoop" value="true"/>
 	                    		</c:otherwise>
-			       	  	</c:choose> --%>
-	                	 
-                 
-                  	  
-                  	  			<!-- 내 정모list가 없다면 참석하기 버튼 띄우기  -->
-                    			<c:if test="${meetingMbrsNull eq '0'}">
-		                    		<button id="JoinMeeting" class="btn btn-primary" value="${m.club_meeting_no}">참석하기</button>
-	                    		</c:if>
-	                    		
-                 
-                    
-                    
-                  	<div class="service-item rounded overflow-hidden Grrrr">
-                    <h3 class="mb-3 MainTextTitle">${m.club_meeting_title }</h3>
-                   <p class="MainTextSub"><b>회비 </b>${m.club_meeting_dues }</p>
-                 	<p class="MainTextSub"><b>장소 </b>${m.club_meeting_location }</p>
-                   <p class="MainTextSub"><b>인원 </b>${m.club_meeting_capacity }명</p>
-                </div>
-              
-              
+			       	  	</c:choose> --%>   
                 
-                </div>
-                   </c:if>	
-            	    </c:forEach>
-                    </c:forEach>
-                    </div>
-                </c:if>
+                   <%-- </c:if>	 --%>
+                  <%--   </c:forEach> --%>
+            	   
           
                 
                 
@@ -418,7 +447,7 @@
                	 <div class="col-md-6 col-lg-3 wow fadeIn clubInfoMeetingSize" data-wow-delay="0.1s" >
                	  <div class="align-items-center mb-4" >
                	  
-               	  	<h4 class="mainGr"> 생성된 정모가 없습니다 </h4>
+               	  	<h4 class="mainGroup"> 생성된 정모가 없습니다 </h4>
                	  
                  </div>
                 </div>
@@ -432,13 +461,13 @@
           
            
 
-	<div class="container-xxl py-5">
-	    <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s">
+	<div class="container-xxl py-5 marginTOP">
+	    <div class="text-center mx-auto mb-5 wow fadeInUp " data-wow-delay="0.1s">
 		    <h6 class="text-primary">주 활동 지역</h6>
 		    	<h1 class="mb-4">자주 만나는 위치</h1>
-				<div>
+				<div><hr>
 
-				<div id="map" style="width:80%;height:500px;" class="m-auto"></div>
+				<div id="map" style="width:80%;height:500px;" class="m-auto marginTOP"></div>
 				
 			</div> 
 		
@@ -473,12 +502,10 @@
             
             
              <c:if test="${empty boards}" >
-          	   <div class="row g-4 text-center justify">
                	 <div class="col-md-6 col-lg-3 wow fadeIn clubInfoMeetingSize" data-wow-delay="0.1s" >
                	  <div class="align-items-center mb-4" >
-               	  	<h4 class="mainGr"> 등록된 모임사진이 없습니다 </h4>
+               	  	<h4 class="mainGroup"> 등록된 모임사진이 없습니다 </h4>
                  </div>
-                </div>
                 </div>
              </c:if>
             

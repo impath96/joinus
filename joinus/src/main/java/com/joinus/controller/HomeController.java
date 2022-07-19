@@ -45,9 +45,9 @@ public class HomeController {
 			for(int i=0;i<array.length;i++) {
 				String address = array[0].substring(0, 5) + " " + array[1];
 				
-				log.info("address :", address);
 				List<ClubsVo> vo4 = service.getMyClubs(address);
 				model.addAttribute("my", vo4);
+				log.info("address :", address);
 			}
 			
 		}
