@@ -333,7 +333,7 @@
            
 	                <!-- 정모만들기 모임장만 보일 수 있도록  -->
 	                <c:if test="${clubmemberRole == 'admin'}">
-	                <a class="small fw-medium" href="${pageContext.request.contextPath}/club/${clubvo.club_no}/meeting/new'">모임장 정모만들기<i class="fa fa-arrow-right ms-2"></i></a>
+	                <a class="small fw-medium" href="${pageContext.request.contextPath}/club/${clubvo.club_no}/meeting/new">모임장 정모만들기<i class="fa fa-arrow-right ms-2"></i></a>
 	                </c:if>
            			 </div><hr><br><br>
            		

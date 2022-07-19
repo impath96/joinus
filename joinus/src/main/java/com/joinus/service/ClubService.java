@@ -96,7 +96,12 @@ import com.joinus.domain.MembersVo;
 		
 		//정모 멤버
 		public List<MeetingTotalBean> getMeetingMember(Integer club_meeting_no, Integer club_no);
-
+		
+		//정모 상태
+		public String getMeetingStatus(Integer club_meeting_no);
+		
+		//정모상태 변경
+		public String updateMeetingStatus(Integer club_meeting_no);
 		
 
 
@@ -246,6 +251,10 @@ import com.joinus.domain.MembersVo;
 		
 		//게시글 리스트
 		public List<ClubBoardsVo> getBoardsforimg(Integer num);
+
+
+
+
 
 
 

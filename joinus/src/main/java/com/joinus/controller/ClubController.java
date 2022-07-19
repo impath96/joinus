@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -278,7 +279,8 @@ public class ClubController {
 		
 		@RequestMapping(value="/{club_no}/meeting/{club_meeting_no}", method = RequestMethod.GET)
 		public String meetingModifyGET(Model model, HttpSession session,
-				@PathVariable("club_no") Integer club_no, @PathVariable("club_meeting_no") Integer club_meeting_no ) {
+				@PathVariable("club_no") Integer club_no,
+				@PathVariable("club_meeting_no") Integer club_meeting_no) {
 			
 			log.info("meetingModifyGET() 호출");
 			
@@ -298,14 +300,17 @@ public class ClubController {
 			
 			List<ClubMeetingsVo> meetingList = service.getMeeting(club_meeting_no);
 			List<MeetingTotalBean> meetingMember = service.getMeetingMember(club_meeting_no, club_no);
-			log.info(meetingMember+"");
+			String meetingStatus = service.getMeetingStatus(club_meeting_no);
+
+			//log.info(meetingMember+"");
 			
 			List<ClubsVo> clubInfo = service.clubInfo(club_no);
-			log.info(clubInfo+"");
+			//log.info(clubInfo+"");
 			model.addAttribute("clubInfo", clubInfo);
 			model.addAttribute("meetingList", meetingList);
 			model.addAttribute("meetingMember", meetingMember);
 			model.addAttribute("result", result);
+			model.addAttribute("meetingStatus", meetingStatus);
 			return "/club/meeting/meetingContent";
 			
 		}
@@ -386,7 +391,19 @@ public class ClubController {
 			
 			return "redirect:/club/{club_no}";
 		}
-	
+		
+		@RequestMapping(value="/club/{club_no}/meeting/{club_meeting_no}", method = RequestMethod.POST)
+		public String clubListCloseRest(RedirectAttributes rttr,
+				@PathVariable("club_no") Integer club_no,
+				@PathVariable("club_meeting_no") Integer club_meeting_no){
+			
+			service.updateMeetingStatus(club_meeting_no);
+			String meetingStatus = service.getMeetingStatus(club_meeting_no);
+			rttr.addFlashAttribute("check", "UPStatus");
+			
+			return "redirect:/club/{club_no}/meeting/{club_meeting_no}";
+		}
+			
 	
 	//================================================================================================
 	

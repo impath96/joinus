@@ -206,6 +206,10 @@ $(function(){
 				$('#club_content3').append(data[2].clubsVo.club_content);
 				$('#club_name3').append(data[2].clubsVo.club_name); 
 				
+				console.log(data[0].clubsVo.club_image);
+				console.log(data[1].clubsVo.club_image);
+				console.log(data[2].clubsVo.club_image);
+				
 			}	
 			
 		//	$(data).each(function(idx,item){

@@ -93,7 +93,7 @@
             
             <div class="col-12">
               <label for="address" class="form-label">⏰ 시간</label>
-              <input type="text" class="form-control" id="club_meeting_time" value="" required="">
+              <input type="time" class="form-control" id="club_meeting_time" value="" required="">
               <div class="invalid-feedback">
                 Please enter your shipping address.
               </div>
@@ -112,11 +112,11 @@
             <div class="col-12">
               <label for="address" class="form-label">🏩 장소</label>
               	<div class="input-group py-2">
-              		<input type="text" class="form-control" id="club_meeting_location" >
+              		<input type="text" class="form-control" id="club_meeting_location" name="club_meeting_location">
              		<button type="button" class="btn btn-secondary" id ="search">검색하기</button>
             	</div>
             	<!-- 주소 -->
-            	<input type="text" class="form-control py-2" id="club_meeting_address">
+            	<input type="text" class="form-control py-2" id="club_meeting_address" name="club_meeting_address">
 				<!-- 지도 -->
 				<div class="map_wrap py-2">
 					<div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
@@ -132,8 +132,6 @@
 			</div>	
             </div>
        
-  
-
       
             <div class="col-12">
               <label for="address2" class="form-label">참가비 <span class="text-muted">(선택)</span></label>
@@ -144,26 +142,17 @@
 
           <hr class="my-4">
 
-          <h4 class="mb-3">Payment</h4>
-
-          <div class="my-3">
-            <div class="form-check">
-              <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked="" required="">
-              <label class="form-check-label" for="credit">Credit card</label>
-            </div>
-          </div>
+          <h4 class="mb-3">추가 공지사항</h4>
 
           <div class="row gy-3">
             <div class="col-md-6">
-              <label for="cc-name" class="form-label">계좌번호</label>
-              <input type="text" class="form-control" id="cc-name" placeholder="" required="">
-              <small class="text-muted">계좌번호는 모임 회원에게만 노출됩니다.</small>
+              <input type="text" class="form-control" id="club_meeting_content" placeholder="" required="">
               <div class="invalid-feedback">
                 Name on card is required
               </div>
             </div>
-
           </div>
+          
           <hr class="my-4">
           <button class="w-100 btn btn-primary btn-lg" type="submit">일정 생성하기</button>
         </form>
@@ -188,6 +177,8 @@ $(function(){
 
 	// 지도를 생성합니다    
 	var map = new kakao.maps.Map(mapContainer, mapOption); 
+	
+
 
 	// 장소 검색 객체를 생성합니다
 	var ps = new kakao.maps.services.Places();  
@@ -265,6 +256,7 @@ $(function(){
 	            kakao.maps.event.addListener(marker, 'mouseover', function() {
 	                displayInfowindow(marker, title);
 	            });
+	            
 
 	            kakao.maps.event.addListener(marker, 'mouseout', function() {
 	                infowindow.close();
@@ -277,6 +269,17 @@ $(function(){
 	            itemEl.onmouseout =  function () {
 	                infowindow.close();
 	            };
+	            
+	            itemEl.onclick =  function () {
+	               // alert('클릭');
+	              // console.log(places[$(this).length]);
+	               //console.log($(this).text());
+	               console.log($(this).text().split('   ')[2]);
+					club_meeting_address = $(this).text().split('   ')[2];
+					//alert(club_meeting_address);
+					$('#club_meeting_address').attr('value',club_meeting_address);
+	            };
+	             
 	        })(marker, places[i].place_name);
 
 	        fragment.appendChild(itemEl);
@@ -290,6 +293,7 @@ $(function(){
 	    map.setBounds(bounds);
 	    
 		}
+	
 
 		// 검색결과 항목을 Element로 반환하는 함수입니다
 		function getListItem(index, places) {
@@ -383,6 +387,7 @@ $(function(){
 		    infowindow.setContent(content);
 		    infowindow.open(map, marker);
 		}
+		
 	
 		 // 검색결과 목록의 자식 Element를 제거하는 함수입니다
 		function removeAllChildNods(el) {   
@@ -390,6 +395,8 @@ $(function(){
 		        el.removeChild (el.lastChild);
 		    }
 		}
+		 
+
 	
 	$("input[name^='rental']").on('click', function(e){
 		
@@ -433,8 +440,18 @@ $(function(){
 		// 키워드로 장소를 검색합니다
 		searchPlaces();
 
+	});
+	
+	$("span[class^='jibun gray']").on('click',function(e){
+		alert('버튼 클릭');
+		//var club_meeting_address = $(this).attr('id');
+		//$("input[id^='club_meeting_address']").attr('value');
+		// 키워드로 장소를 검색합니다
+
 
 	});
+	
+	
 	
 	
 });//jquery
