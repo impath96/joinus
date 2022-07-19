@@ -34,7 +34,6 @@
 		
 		$(':button').attr('class','btn btn-primary');
 		
-		
 		$('#subBtn').click(function(){
 			//alert('결제버튼클릭');
 			
@@ -47,6 +46,11 @@
 				return false;
 			}
 			if($('#memberCnt').val() == ''){
+				$('#memberCnt').focus();
+				return false;
+			}
+			if($('#memberCnt').val() > 20){
+				alert('최대 20명까지 가능합니다.');
 				$('#memberCnt').focus();
 				return false;
 			}
@@ -115,7 +119,7 @@
 					
 					
 					<div>
-					예약인원 <input type="number" class="form-control" id="memberCnt" name="memberCnt" required>
+					예약인원 <input type="number" class="form-control" id="memberCnt" name="memberCnt" max="20" required>
 					</div>
 					
 					<script type="text/javascript">

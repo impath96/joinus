@@ -26,6 +26,9 @@ public interface RentalService {
 	
 	// 장소 유형 별 제휴시설리스트
 	public List<PartnerPlacesVo> getTypePartnerPlaceList(String partner_place_type);
+	
+	// 예약 일자/시간 정보 리스트
+	public List<RentalPlacesVo> getRentalPlaceDate(int partner_place_no);
 
 	// 결제
 	public Integer pay(PaymentsVo vo);

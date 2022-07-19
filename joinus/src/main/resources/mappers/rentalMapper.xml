@@ -40,6 +40,13 @@
 		select * from partner_places
 		where partner_place_type = #{partner_place_type}
 	</select>
+	
+	<!-- 예약 일자/시간 정보 리스트 -->
+	<select id="getRentalPlaceDate" resultType="RentalPlacesVo">
+		select rental_date, rental_time_no
+		from rental_places
+		where partner_place_no = #{partner_place_no}
+	</select>
 
 
 	<!-- 결제 -->

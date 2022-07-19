@@ -61,6 +61,11 @@ public class RentalDaoImpl implements RentalDao {
 	}
 	
 	@Override
+	public List<RentalPlacesVo> getRentalPlaceDate(int partner_place_no) {
+		return sqlSession.selectList(NAMESPACE+".getRentalPlaceDate", partner_place_no);
+	}
+
+	@Override
 	public Integer pay(PaymentsVo vo) {
 		return sqlSession.insert(NAMESPACE+".pay", vo);
 	}

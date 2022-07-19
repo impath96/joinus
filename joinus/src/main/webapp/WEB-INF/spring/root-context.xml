@@ -15,9 +15,9 @@
 		<property name="driverClassName"
 			value="com.mysql.cj.jdbc.Driver"></property>
 		<property name="url"
-			value="jdbc:mysql://itwillbs6.cafe24.com:3306/itwillbs6"></property>
-		<property name="username" value="itwillbs6"></property>
-		<property name="password" value="itwillbs8030909"></property>
+			value="jdbc:mysql://localhost:3306/joinusdb"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="1234"></property>
 	</bean>
 
 	<!-- sqlSessionFactory 객체(DB 연결, SQL 처리) 생성 -->

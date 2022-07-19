@@ -27,6 +27,9 @@ public interface RentalDao {
 	// 장소유형별 제휴시설리스트
 	public List<PartnerPlacesVo> getTypePartnerPlaceList(String partner_place_type);
 	
+	// 예약 일자/시간 정보 리스트
+	public List<RentalPlacesVo> getRentalPlaceDate(int partner_place_no);
+	
 	//결제
 	public Integer pay(PaymentsVo vo);
 	//결제 후 예약리스트 저장

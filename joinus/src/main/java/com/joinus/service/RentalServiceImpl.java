@@ -53,6 +53,11 @@ public class RentalServiceImpl implements RentalService {
 	}
 	
 	@Override
+	public List<RentalPlacesVo> getRentalPlaceDate(int partner_place_no) {
+		return dao.getRentalPlaceDate(partner_place_no);
+	}
+
+	@Override
 	public Integer pay(PaymentsVo vo) {
 		return dao.pay(vo);
 	}

@@ -38,7 +38,6 @@
     				        type :'POST',
     				        data :{'partner_place_price':${payment.partner_place_price},
     				        	'payment_price':${payment_price},
-    				        	'rental_date':${rental_date},
     				        	'rental_time_no':${rental_time_no}},
     				        dataType: 'json', //서버에서 보내줄 데이터 타입
     				        success: function(paymentvo){
