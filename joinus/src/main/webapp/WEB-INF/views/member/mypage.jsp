@@ -14,7 +14,7 @@
 			</div>
 			<div class="row g-4">
 				<div class="col-md-12 col-lg-6 wow  fadeInUp" data-wow-delay="0.1s">
-					<div class="service-item position-relative rounded overflow-hidden p-3">
+					<div class="service-item position-relative rounded overflow-hidden p-3 shadow">
 						<div style="height:230px;">
 							<div class="service-content d-flex flex-column">
 								<h4 class="mb-2">${sessionScope.member.member_name }님 프로필</h4>
@@ -27,7 +27,7 @@
 					</div>
 				</div>
 				<div class="col-md-12 col-lg-6 wow  fadeInUp" data-wow-delay="0.1s">
-					<div class="service-item position-relative rounded overflow-hidden px-3 py-2">
+					<div class="service-item position-relative rounded overflow-hidden px-3 py-2 shadow">
 						<div style="height:250px;">
 							<div class="service-content d-flex flex-column">
 								<h4 class="mb-2">내 모임</h4>
@@ -46,7 +46,7 @@
 					</div>
 				</div>
 				<div class="col-md-12 col-lg-6 wow  fadeInUp" data-wow-delay="0.1s">
-					<div class="service-item position-relative rounded overflow-hidden px-3 py-2">
+					<div class="service-item position-relative rounded overflow-hidden px-3 py-2 shadow">
 						<div style="height:250px;">
 							<div class="service-content d-flex flex-column">
 								<h4 class="mb-2">최근 본 모임</h4>
@@ -79,7 +79,7 @@
 					</div>
 				</div>
 				<div class="col-md-12 col-lg-6 wow  fadeInUp" data-wow-delay="0.1s">
-					<div class="service-item position-relative rounded overflow-hidden px-3 py-2">
+					<div class="service-item position-relative rounded overflow-hidden px-3 py-2 shadow">
 						<div style="height:250px;">
 							<div class="service-content d-flex flex-column">
 								<h4 class="mb-2">내가 만든 모임</h4>
@@ -98,7 +98,7 @@
 					</div>
 				</div>
 				<div class="col-md-12 col-lg-6 wow  fadeInUp" data-wow-delay="0.1s">
-					<div class="service-item position-relative rounded overflow-hidden px-3 py-2">
+					<div class="service-item position-relative rounded overflow-hidden px-3 py-2 shadow">
 						<div style="height:250px;">
 							<div class="service-content d-flex flex-column">
 								<h4 class="mb-2">참석 예정 정모</h4>
