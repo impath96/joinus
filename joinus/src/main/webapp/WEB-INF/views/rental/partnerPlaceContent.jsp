@@ -42,16 +42,16 @@
 				$('#rental_date').focus();
 				return false;
 			}
-			if($('#rental_time').val() == ''){
-				$('#rental_time').focus();
+			if($('#rental_time_no').val() == ''){
+				$('#rental_time_no').focus();
 				return false;
 			}
 			if($('#memberCnt').val() == ''){
 				$('#memberCnt').focus();
 				return false;
 			}
- 			//alert("hidden price value : "+$('#totalPrice').val());
-			
+//  			alert("hidden price value : "+$('#payment_price').val());
+ 			
  			// 모임장만 결제가 가능
  			if(${checkClubAdmin == 0}){
  				alert('모임장만 결제가 가능합니다.');
@@ -126,7 +126,7 @@
 							totalPrice = memberCnt * ${partnerPlace.partner_place_price} * 2
 // 							alert("totalPrice : "+ totalPrice);
 							document.getElementById("seePrice").innerHTML = totalPrice.toLocaleString();	// 보여줄 땐 천단위마다 콤마
-							$('#totalPrice').val(totalPrice);
+							$('#payment_price').val(totalPrice);
 							
 						});
 					</script>
@@ -141,7 +141,7 @@
 					<!-- 시간 -->
 					<div style="margin-bottom: 2em;">
 						시간 선택
-						<select class="form-select" id="rental_time" name="rental_time">
+						<select class="form-select" id="rental_time_no" name="rental_time_no">
 							<option value="">시간을 선택해주세요.</option>
 							<option value="1">10:00~12:00</option>
 							<option value="2">12:00~14:00</option>
@@ -156,7 +156,7 @@
 					<div>
 						총 결제금액<br>
 						<span id="seePrice"></span>
-						<input type="hidden" id="totalPrice" name="totalPrice">
+						<input type="hidden" id="payment_price" name="payment_price">
 					</div>
 					
 					<div class="payBtn">

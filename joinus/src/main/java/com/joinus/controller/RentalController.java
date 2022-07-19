@@ -215,18 +215,22 @@ public class RentalController {
 
 	@RequestMapping(value = "/partnerPlaces/{partner_place_no}", method = RequestMethod.POST)
 	public String partnerPlaceContentPost(PartnerPlacesVo partnerplacevo ,PaymentsVo paymentvo, 
-			RentalPlacesVo rentalplacevo,Model model, @RequestParam("rental_time") int rentaltime,
-			HttpSession session,@RequestParam("totalPrice") int totalprice) {
+			RentalPlacesVo rentalplacevo,Model model, @RequestParam("rental_time_no") int rentaltimeno,
+			HttpSession session,@RequestParam("payment_price") int payment_price,
+			@RequestParam("rental_date") Date rental_date) {
 		log.info(" partnerPlaceContentPost() 호출");
+//		log.info("@@@@@rental_date : "+rental_date);	// 2022-07-20
 		
 		String ppname = partnerplacevo.getPartner_place_name();
 		model.addAttribute("ppname", ppname);
-		model.addAttribute("totalp", totalprice);
-		log.info("장소이름,결제금액: "+ppname+totalprice);
+		model.addAttribute("payment_price", payment_price);
+		log.info("장소이름,결제금액: "+ppname+payment_price);
 		
 		MembersVo vo = (MembersVo)session.getAttribute("member");
 		model.addAttribute("members", vo);
-		model.addAttribute("rental_time", rentaltime);
+		// 예약일자(rental_date; 시설을 이용할 일자) 저장
+		model.addAttribute("rental_date", rental_date);
+		model.addAttribute("rental_time_no", rentaltimeno);
 		model.addAttribute("payment", paymentvo);
 		log.info("결제정보: "+paymentvo);
 		log.info("@@@@제휴시설 정보 : "+partnerplacevo);
@@ -251,7 +255,8 @@ public class RentalController {
 		public PaymentsVo payment( Model model, 
 				@RequestParam("partner_place_price") int partner_place_price,
 				@RequestParam("payment_price") int payment_price,
-				@RequestParam("rental_time") int rental_time,
+				@RequestParam("rental_date") Date rental_date,
+				@RequestParam("rental_time_no") int rental_time_no,
 				@PathVariable("partner_place_no") int partner_place_no,
 				RentalPlacesVo rentalplacevo, PaymentsVo paymentvo,HttpSession session) {
 			log.info(" 결제 정보 저장시작 ");
@@ -260,7 +265,7 @@ public class RentalController {
 			log.info("받아온 vo정보 . paymentvo : "+paymentvo);
 			log.info("받아온 vo정보 . RentalPlacesVo : "+rentalplacevo);
 			
-
+				
 			// 주문번호 생성 (날짜-place_no)
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 			Calendar cal = Calendar.getInstance();
@@ -291,8 +296,9 @@ public class RentalController {
 			rentalplacevo.setMember_no(mvo.getMember_no());
 			rentalplacevo.setRental_places_no(partner_place_no);
 			rentalplacevo.setReservation_no(rsNum);
-			rentalplacevo.setRental_time_no(rental_time);
 			//rentalplacevo.setRental_date(paymentvo.getPayment_date()); 데이터 받아오는 것보다 바로 넣어버리는건??
+			rentalplacevo.setRental_date(rental_date);	// 시설이용일자
+			rentalplacevo.setRental_time_no(rental_time_no);	// 시설이용시간
 			rentalplacevo.setRental_status(1);
 			
 			rentalService.place(rentalplacevo);

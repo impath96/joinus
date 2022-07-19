@@ -20,7 +20,7 @@
 	    pay_method : 'card',
 	    merchant_uid : 'rs_' + new Date().getTime(),
 	    name : 'rental place',//결제창에서 보여질 이름
-	    amount : ${totalp},//실제 결제되는 가격
+	    amount : ${payment_price},//실제 결제되는 가격
 	}, function(rsp){
 		console.log(rsp);
 		
@@ -37,8 +37,9 @@
     						url : '${PageContext.request.contextPath }/rental/partnerPlaces/'+${payment.partner_place_no}+'/payment', 
     				        type :'POST',
     				        data :{'partner_place_price':${payment.partner_place_price},
-    				        	'payment_price':${totalp},
-    				        	'rental_time':${rental_time}},
+    				        	'payment_price':${payment_price},
+    				        	'rental_date':${rental_date},
+    				        	'rental_time_no':${rental_time_no}},
     				        dataType: 'json', //서버에서 보내줄 데이터 타입
     				        success: function(paymentvo){
     				        	 alert('데이터 저장 모두 완료!'); 
