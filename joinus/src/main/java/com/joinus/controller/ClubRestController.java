@@ -9,12 +9,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.joinus.domain.ClubTotalBean;
+import com.joinus.domain.Criteria;
+import com.joinus.domain.InterestDetailsVo;
 import com.joinus.domain.MeetingTotalBean;
+import com.joinus.domain.MembersVo;
+import com.joinus.domain.PageMaker;
 import com.joinus.service.ClubService;
 
 @RestController
@@ -100,4 +107,81 @@ public class ClubRestController {
 	
 	return entity;
 	}
+	
+	
+	@RequestMapping(value="/clubList/{interest_no}", method=RequestMethod.GET)
+	public ResponseEntity<List<InterestDetailsVo>> getInterestDetailREST(
+			@PathVariable("interest_no") Integer interest_no){
+		
+		log.info(interest_no+"");	
+		
+		List<InterestDetailsVo> interest_list = service.getInterestDetail(interest_no);
+		
+		ResponseEntity<List<InterestDetailsVo>> entity = null;
+		
+		try {
+			entity = new ResponseEntity<List<InterestDetailsVo>>(interest_list, HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		
+		log.info(entity+"");
+		
+	return entity;
+	}
+	
+	
+	@RequestMapping(value="/clubList/{interest_no}/{interest_detail_no}", method = RequestMethod.GET)
+	public ResponseEntity<List<ClubTotalBean>> clubListDetailRest(@PathVariable("interest_detail_no") Integer interest_detail_no,
+						@PathVariable("interest_no") int interest_no, Criteria cri, Model model,HttpSession session) {
+		
+		log.info("interest_detail_no : "+interest_detail_no);	
+		
+		if(session.getAttribute("member") != null) {
+			MembersVo member = (MembersVo) session.getAttribute("member");
+			log.info(member+"");
+			}
+		List<ClubTotalBean> clubDetailList = service.clubListDetail(interest_detail_no,cri);
+			model.addAttribute("clubDetailList", clubDetailList);
+			log.info("clubDetailList : "+clubDetailList);
+			PageMaker pageMaker = new PageMaker();
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(service.totalCntDetail(interest_detail_no));
+			model.addAttribute("interest_detail_no",interest_detail_no);
+			log.info(pageMaker+"");
+			model.addAttribute("pm", pageMaker);
+			
+
+			
+			ResponseEntity<List<ClubTotalBean>> entity = null;
+			
+			try {
+				entity = new ResponseEntity<List<ClubTotalBean>>(clubDetailList, HttpStatus.OK);
+			} catch (Exception e) {
+				entity = new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+			}
+		
+		return entity;
+		
+	}
+	@RequestMapping(value="/clubList/Month", method = RequestMethod.GET)
+	public ResponseEntity<List<ClubTotalBean>> clubListMonthRest() {
+		
+		List<ClubTotalBean> clubMonthList = service.clubListMonth();
+		log.info("clubDetailList : "+clubMonthList);
+		
+		ResponseEntity<List<ClubTotalBean>> entity = null;
+		
+		try {
+			entity = new ResponseEntity<List<ClubTotalBean>>(clubMonthList, HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+		
+	}
+	
+	
+	
 }

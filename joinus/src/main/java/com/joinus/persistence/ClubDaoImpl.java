@@ -61,6 +61,13 @@ public class ClubDaoImpl implements ClubDao{
 		return sqlSession.selectOne(NAMESPACE+".CountClub");
 	}
 	
+	//클럽 수(디테일)
+	@Override
+	public int getDetailCnt(Integer interest_detail_no) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NAMESPACE+".CountClubDetail");
+	}
+
 	//클럽 리스트(관심사별) 조회
 	@Override
 	public List<ClubTotalBean> clubList(int interest_no, Criteria cri) {
@@ -69,7 +76,7 @@ public class ClubDaoImpl implements ClubDao{
 		param.put("interest_no", interest_no);
 		param.put("cri", cri);
 		
-		//log.info(param+"");
+		log.info(param+"");
 		
 		List<ClubTotalBean> result = sqlSession.selectList(NAMESPACE+".ClubList", param);
 		
@@ -77,6 +84,37 @@ public class ClubDaoImpl implements ClubDao{
 		
 		return result;
 		
+	}
+	
+	//클럽 리스트(디테일)
+	@Override
+	public List<ClubTotalBean> clubListDetail(Integer interest_detail_no, Criteria cri) {
+		Map<String, Object> param= new HashMap<String, Object>();
+		param.put("interest_detail_no", interest_detail_no);
+		param.put("cri", cri);
+		
+		log.info(param+"");
+		
+		List<ClubTotalBean> result = sqlSession.selectList(NAMESPACE+".ClubListDetail", param);
+		
+		log.info(result+"");
+		
+		return result;
+	}
+	
+	
+
+	@Override
+	public List<ClubTotalBean> clubListMonth() {
+		List<ClubTotalBean> result = sqlSession.selectList(NAMESPACE+".ClubListMonth");
+		return result;
+	}
+
+	//관심사 디테일
+	@Override
+	public List<InterestDetailsVo> interestDetail(Integer interest_no) {
+		List<InterestDetailsVo> reslt = sqlSession.selectList(NAMESPACE+".InterestDetail", interest_no);
+		return reslt;
 	}
 
 	//전체 클럽 리스트 조회
@@ -220,7 +258,6 @@ public class ClubDaoImpl implements ClubDao{
 	}
 
 	//정모 삭제
-	
 	@Override
 	public void deleteMeeting(Integer club_meeting_no) {
 		
@@ -228,15 +265,28 @@ public class ClubDaoImpl implements ClubDao{
 
 	}
 	
+	//정모 주소
 	@Override
 	public String getMeetingAddr(int club_meeting_no) {
 		
 		return sqlSession.selectOne(NAMESPACE2+".SelectAddr", club_meeting_no);
 	}
-
+	
+	//정모 멤버
+	@Override
+	public List<MeetingTotalBean> getMeetingMember(Integer club_meeting_no, Integer club_no) {
+		
+		Map<String, Object> param= new HashMap<String, Object>();
+		param.put("club_meeting_no", club_meeting_no);
+		param.put("club_no", club_no);
+		
+		return sqlSession.selectList(NAMESPACE2+".GetMeetingMember", param);
+	}
 	
 	
 //=======================허수빈=============================================================
+
+
 
 	@Override
 	public void writeBoard(ClubBoardsVo vo) {
