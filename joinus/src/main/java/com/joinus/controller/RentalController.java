@@ -229,7 +229,7 @@ public class RentalController {
 		model.addAttribute("rental_time", rentaltime);
 		model.addAttribute("payment", paymentvo);
 		log.info("결제정보: "+paymentvo);
-		
+		log.info("@@@@제휴시설 정보 : "+partnerplacevo);
 		// 결제 후 예약정보저장
 		
 		return "/rental/payment";

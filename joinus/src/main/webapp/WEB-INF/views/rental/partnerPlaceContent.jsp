@@ -23,7 +23,7 @@
 			dayNamesShort : ['일','월','화','수','목','금','토'],
 			dayNamesMin : ['일','월','화','수','목','금','토'],
 			yearSuffix : '년',
-			minDate : 0
+			minDate : 1	// 오늘은 선택X 내일부터 일자선택가능
 	}
 	
 	$(function(){
