@@ -89,17 +89,19 @@
 		<div class="row g-4">
 			<c:forEach var = "vo" items="${clubList }">
                 <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
+                    <a class="small fw-medium" href="${PageContext.request.contextPath }/club/${vo.clubsVo.club_no}">
                     <div class="service-item rounded overflow-hidden">
                     <!-- 클럽 대표 이미지 -->
                         <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${vo.clubsVo.club_image}" class="w-100 py-auto">
                         <div class="position-relative p-4 pt-0">
+                    </a>
                             <div class="service-icon">
                             <!-- 클럽관심사 아이콘  -->
                                 <img src="${PageContext.requeset.contextPath }/resources/upload/interests/${vo.interestsVo.interest_icon }" class="w-100 py-auto">
                             </div>
                             <h4 class="mb-3 py-2">${vo.clubsVo.club_name }</h4>
-                            <p>${vo.clubsVo.club_content }</p>
                             <a class="small fw-medium" href="${PageContext.request.contextPath }/club/${vo.clubsVo.club_no}">클럽 상세 페이지<i class="fa fa-arrow-right ms-2"></i></a>
+                            <p>${vo.clubsVo.club_content }</p>
                         </div>
                     </div>
                 </div>
