@@ -53,7 +53,7 @@ $(document).ready(function(){
 				            <div class="row g-4">              
 							<c:forEach var = "my" items="${my }">
 				                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
-				                    <div class="service-item rounded overflow-hidden Grrrr">
+				                    <div class="service-item rounded overflow-hidden Grrrr shadow">
 				                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${my.club_image}" class="w-100 py-auto mainImg"
 				                        onclick="location.href='${PageContext.request.contextPath }/club/${my.club_no}'">
 				                    <!-- 클럽 대표 이미지 -->
@@ -92,14 +92,12 @@ $(document).ready(function(){
 						                    	onclick="location.href='${PageContext.request.contextPath }/club/${po.club_no}'">
 						                    </c:if>
 					                        <div class="position-relative p-4 pt-0">
-						                    <a class="small fw-medium textGnW" href="${PageContext.request.contextPath }/club/${po.club_no}">
-						                    <i class="fa fa-arrow-right ms-2"></i></a>
 					                            <h4 class="mb-3 py-2 MainTextTitle">${po.club_name }</h4>
 					                           
 					                            <p class="MainTextSub ">${po.club_content }</p>
 					                        </div>
-						                    <a class="small fw-medium textGnW" href="${PageContext.request.contextPath }/club/${po.club_no}">모임보러가기<i class="fa fa-arrow-right ms-2"></i></a>
-					                        
+<%-- 						                <a class="small fw-medium textGnW" href="${PageContext.request.contextPath }/club/${po.club_no}">모임보러가기<i class="fa fa-arrow-right ms-2"></i></a>
+ --%>					                        
 				                    </div>
 				                </div>
 				            </c:forEach>
@@ -116,7 +114,7 @@ $(document).ready(function(){
 				            <div class="row g-4">              
 							<c:forEach var = "nu" items="${Numerous }">
 				                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
-				                    <div class="service-item rounded overflow-hidden Grrrr">
+				                    <div class="service-item rounded overflow-hidden Grrrr shadow">
 				                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${nu.club_image}" class="w-100 py-auto mainImg"
 				                        onclick="location.href='${PageContext.request.contextPath }/club/${nu.club_no}'">
 				                    <!-- 클럽 대표 이미지 -->
@@ -146,7 +144,7 @@ $(document).ready(function(){
 					            <div class="row g-4">              
 								<c:forEach var = "la" items="${latest }">
 					                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
-					                    <div class="service-item rounded overflow-hidden Grrrr">
+					                    <div class="service-item rounded overflow-hidden Grrrr shadow">
 					                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${la.club_image}" class="w-100 py-auto mainImg"
 					                        onclick="location.href='${PageContext.request.contextPath }/club/${la.club_no}'">
 					                    <!-- 클럽 대표 이미지 -->
