@@ -60,7 +60,7 @@ public class ClubController {
 	//http://localhost:8088/club/clubList?interest_no=2
 	@RequestMapping(value="/clubList", method = RequestMethod.GET)
 	public String clubList(@ModelAttribute("interest_no") String interest_no,
-						Criteria cri, Model model,HttpSession session) {
+						Criteria cri, Model model,HttpSession session, RedirectAttributes rttr) {
 		log.info("interest_no : "+interest_no);	
 		if(session.getAttribute("member") != null) {
 			MembersVo member = (MembersVo) session.getAttribute("member");
@@ -74,15 +74,19 @@ public class ClubController {
 			pageMaker.setTotalCount(service.totalCnt());
 			log.info(pageMaker+"");
 			model.addAttribute("pm", pageMaker);
+			rttr.addFlashAttribute("check","ClubList");
 			log.info("clubList() 호출");
 			
 		}else{
+			
 			model.addAttribute("clubList", service.clubList(Integer.parseInt(interest_no),cri));
 			PageMaker pageMaker = new PageMaker();
 			pageMaker.setCri(cri);
 			pageMaker.setTotalCount(service.totalCnt(Integer.parseInt(interest_no)));
+			model.addAttribute("interest_no",Integer.parseInt(interest_no));
 			log.info(pageMaker+"");
 			model.addAttribute("pm", pageMaker);
+			rttr.addFlashAttribute("check","ClubList");
 			log.info("clubList(no) 호출");
 			
 		}
@@ -292,12 +296,14 @@ public class ClubController {
 			}
 			
 			List<ClubMeetingsVo> meetingList = service.getMeeting(club_meeting_no);
-			log.info(meetingList+"");
+			List<MeetingTotalBean> meetingMember = service.getMeetingMember(club_meeting_no, club_no);
+			log.info(meetingMember+"");
 			
 			List<ClubsVo> clubInfo = service.clubInfo(club_no);
 			log.info(clubInfo+"");
 			model.addAttribute("clubInfo", clubInfo);
 			model.addAttribute("meetingList", meetingList);
+			model.addAttribute("meetingMember", meetingMember);
 			model.addAttribute("result", result);
 			return "/club/meeting/meetingContent";
 			

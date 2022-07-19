@@ -84,7 +84,7 @@
             </div>
             
             <div class="col-12">
-              <label for="address" class="form-label">날짜</label>
+              <label for="address" class="form-label">🗓️ 날짜</label>
               <input type="date" class="form-control" id="club_meeting_date" value="" required="">
               <div class="invalid-feedback">
                 Please enter your shipping address.
@@ -92,7 +92,7 @@
             </div>
             
             <div class="col-12">
-              <label for="address" class="form-label">시간</label>
+              <label for="address" class="form-label">⏰ 시간</label>
               <input type="text" class="form-control" id="club_meeting_time" value="" required="">
               <div class="invalid-feedback">
                 Please enter your shipping address.
@@ -100,7 +100,7 @@
             </div>
             
             <div class="col-12">
-              <label for="address" class="form-label">정원</label>
+              <label for="address" class="form-label">🙋 정원</label>
               <input type="number" class="form-control" name="club_meeting_capacity" required="">
               <div class="invalid-feedback">
                 Please enter your shipping address.
@@ -110,7 +110,7 @@
 
             <div>
             <div class="col-12">
-              <label for="address" class="form-label">장소</label>
+              <label for="address" class="form-label">🏩 장소</label>
               	<div class="input-group py-2">
               		<input type="text" class="form-control" id="club_meeting_location" >
              		<button type="button" class="btn btn-secondary" id ="search">검색하기</button>

@@ -42,7 +42,12 @@
    		<c:forEach var="vo" items="${clubMemberList }" varStatus="status">
       		<div class="col d-flex align-items-start px-2 py-5">
 		      	<div style="height: 105; width: 105;">
-	        	<img src="${PageContext.requeset.contextPath }/resources/upload/members/${vo.membersVo.member_image}" class="h-100" name = image>
+		      	<c:if test="${!vo.membersVo.member_image.contains(':') }">
+	        	<img src="${PageContext.requeset.contextPath }/resources/upload/members/${vo.membersVo.member_image}" style="height: 105; width: 105;" name = image>
+	        	</c:if>
+	        	<c:if test="${vo.membersVo.member_image.contains(':') }">
+                    <img alt="" class="thumbnail_image" src="${vo.membersVo.member_image}" style="height: 105; width: 105;">
+                </c:if>
 	        	<script type="text/javascript">
 	        	</script>
 	        	</div>
