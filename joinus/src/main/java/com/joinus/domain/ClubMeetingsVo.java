@@ -1,6 +1,7 @@
 package com.joinus.domain;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.Data;
 
@@ -15,6 +16,6 @@ public class ClubMeetingsVo {
 	private String club_meeting_location; 
 	private int club_meeting_dues;
 	private String club_meeting_address;
-	private String club_meeting_time;
+	private Timestamp club_meeting_time;
 
 }

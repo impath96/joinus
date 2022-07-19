@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../../include/header.jsp"%>
+
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ce8d060125bcc89e0c25ee69f6b5c7b0&libraries=services"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
@@ -34,12 +36,12 @@
           <div class="row g-3">
             <div class="col-12">
               <label for="address" class="form-label">🗓️ 날짜</label>
-              <input type="date" class="form-control" id="club_meeting_date" value="${meetingList[0].club_meeting_date}" disabled="disabled">
+              <input type="datetime" class="form-control" id="club_meeting_date" value="${meetingList[0].club_meeting_date}" disabled="disabled">
             </div>
             
             <div class="col-12">
               <label for="address" class="form-label">⏰ 시간</label>
-              <input type="text" class="form-control" id="club_meeting_time" value="${meetingList[0].club_meeting_time}" disabled="disabled">
+              <input type="time" class="form-control" id="club_meeting_time" value="${meetingList[0].club_meeting_time}" disabled="disabled">
             </div>
             
             <div class="col-12">
@@ -51,6 +53,8 @@
               <label for="address" class="form-label">🏩 장소</label>
               	<div class="input-group">
               		<input type="text" class="form-control" id="club_meeting_location" value="${meetingList[0].club_meeting_location}" disabled="disabled">
+              		<br>
+              		<input type="text" class="form-control" id="club_meeting_address" value="${meetingList[0].club_meeting_address}" disabled="disabled">
             	</div>
             </div>
             
@@ -74,22 +78,18 @@
 
           <hr class="my-4">
 
-          <h4 class="mb-3">Payment</h4>
-
-          <div class="my-3">
-            <div class="form-check">
-              <label class="form-check-label" for="credit">Credit card</label>
-            </div>
-          </div>
+          <h4 class="mb-3">추가 공지사항</h4>
 
           <div class="row gy-3">
             <div class="col-md-6">
-              <label for="cc-name" class="form-label">계좌번호</label>
-              <input type="text" class="form-control" id="cc-name" placeholder="">
-              <small class="text-muted">계좌번호는 모임 회원에게만 보여요!</small>
+              <input type="text" class="form-control" id="club_meeting_content" placeholder="" required="">
+              <div class="invalid-feedback">
+                Name on card is required
+              </div>
             </div>
-
           </div>
+
+
      </form>
           <hr class="my-4">
 	
@@ -103,9 +103,20 @@
 			<button type="submit" class="btn btn-danger btn-flat" id ="delete">삭제하기</button>
 			</div>
 			
+			
+			<c:set var="meetingStatus" value="${meetingStatus }"/>
+			
+			<c:if test="${meetingStatus eq '모집중'}">
 			<div class="btn-group">
 			<button type="submit" class="btn btn-success btn-flat" id ="colse">마감하기</button>
 			</div>
+			</c:if>
+			
+			<c:if test="${meetingStatus eq '마감'}">
+			<div class="btn-group">
+			<button type="submit" class="btn btn-success btn-flat" id ="colse">오픈하기</button>
+			</div>
+			</c:if>
 			
 			</div>
 
@@ -185,9 +196,21 @@ $(function(){
 		formObj.submit();
 	});
 	
+	$('#reopen').click(function(){
+		formObj.attr("action", "/club/${clubInfo[0].club_no}/meeting/${meetingList[0].club_meeting_no}/reopen");
+		formObj.submit();
+	});
+	
 	
 	
 });//jquery
+
+
+var check ='${check}';
+if(check == "UPStatus"){
+	alert('정모가 마감되었습니다.');
+}
+
 
 
 
