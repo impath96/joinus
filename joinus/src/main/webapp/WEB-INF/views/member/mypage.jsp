@@ -18,8 +18,18 @@
 						<div style="height:230px;">
 							<div class="service-content d-flex flex-column">
 								<h4 class="mb-2">${sessionScope.member.member_name }님 프로필</h4>
-								<p>Stet stet justo dolor sed duo. Ut clita sea sit ipsum diam
-									lorem diam.</p>
+								<c:choose>
+									<c:when test="${sessionScope.member.member_updatedate eq sessionScope.member.member_regdate}">
+										<small>회원가입일 : ${sessionScope.member.member_regdate }</small>
+									</c:when>
+									<c:otherwise>
+										<small>회원정보수정일 : ${sessionScope.member.member_updatedate}</small>
+									</c:otherwise>
+								</c:choose>
+								
+								
+								<!-- <p>Stet stet justo dolor sed duo. Ut clita sea sit ipsum diam
+									lorem diam.</p> -->
 								<a class="small fw-medium bottom-right" href="/settings/member">프로필 수정하기<i
 									class="fa fa-arrow-right ms-2"></i></a>
 							</div>
@@ -34,7 +44,7 @@
 								<div class="box-content">
 									<c:forEach var="club" items="${clubList }">
 									<a href="${pageContext.request.contextPath }/club/${club.club_no}" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
-										<div class="club_name">${club.club_name }</div>
+										<div class="club_name"> &#183; ${club.club_name }</div>
 										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
 									</a>
 									</c:forEach>
@@ -86,7 +96,7 @@
 								<div class="box-content">
 									<c:forEach var="myClub" items="${myClubList }">
 									<a href="${pageContext.request.contextPath }/club/${myClub.club_no}" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
-										<div class="club_name">${myClub.club_name }</div>
+										<div class="club_name"> &#183; ${myClub.club_name }</div>
 										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
 									</a>
 									</c:forEach>

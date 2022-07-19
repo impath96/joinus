@@ -13,7 +13,7 @@
         <div class="container contact px-lg-0" style="width: 60%">
             <div class="row g-0 mx-lg-0">
             	<div class="p-lg-5 ps-lg-0" align="center" >
-                	<h6 class="text-primary">Grouping</h6>
+                	<h6 class="text-primary">JOINUS</h6>
                      <h1 class="mb-4">로그인</h1>
                      <form action="/member/signin" method="post">
                          <div class="col-12" >

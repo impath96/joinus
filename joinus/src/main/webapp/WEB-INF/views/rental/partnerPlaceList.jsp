@@ -35,7 +35,7 @@
 			<div class="row g-4">
 				<c:forEach var="partnerPlace" items="${partnerPlaceList }">
 	                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s" onclick=" location.href='/rental/partnerPlaces/${partnerPlace.partner_place_no}'; " style="cursor: pointer;">
-	                    <div class="service-item rounded overflow-hidden" style="height: auto;">
+	                    <div class="service-item rounded overflow-hidden shadow" style="height: auto;">
 	                    <!-- 클럽 대표 이미지 -->
 	                        <img src="${PageContext.requeset.contextPath }/resources/upload/partner_place/${partnerPlace.partner_place_image}" class="w-100 py-auto" style="height: 225px;">
 	                        <div class="position-relative p-4 pt-0">
