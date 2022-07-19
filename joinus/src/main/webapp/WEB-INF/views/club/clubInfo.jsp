@@ -249,7 +249,7 @@
 							<img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${clubvo.club_image}" id="club_image">
 						</c:if>
 							<h4 class="detailInfoCon"> &#128172; </h4>
-         	               <h4 id="club_content" style="white-space: pre-wrap;">${clubvo.club_content }</h4>
+         	               <h4 id="club_content" class="shadow" style="white-space: pre-wrap;">${clubvo.club_content }</h4>
          	               <h4 class="detailInfoCon">  </h4>
 					
 			<!--  모임멤버면 별점, 별점 후 평균값 / 멤버가 아니면 가입하기 버튼 /  --> 
@@ -334,9 +334,10 @@
                     
                   	<div class="service-item rounded overflow-hidden Grrrr">
                     <h3 class="mb-3 MainTextTitle">${m.club_meeting_title }</h3>
-                   <p class="MainTextSub"><b>회비 </b>${m.club_meeting_dues }</p>
-                 	<p class="MainTextSub"><b>장소 </b>${m.club_meeting_location }</p>
-                   <p class="MainTextSub"><b>인원 </b>${m.club_meeting_capacity }명</p>
+                    <p class="MainTextSub">&#128197; ${m.club_meeting_date }</p>
+                    <p class="MainTextSub">&#128205; ${m.club_meeting_location }</p>
+                    <p class="MainTextSub">&#128100; ${m.club_meeting_capacity }명</p>
+                    <p class="MainTextSub">&#128184; ${m.club_meeting_dues }&#8361;</p>
                 </div>
                 </div>
                     </c:forEach>
@@ -399,7 +400,7 @@
           	   <div class="row g-4 text-center justify">
                	 <div class="col-md-6 col-lg-3 wow fadeIn clubInfoMeetingSize" data-wow-delay="0.1s" >
                	  <div class="align-items-center mb-4" >
-               	  	<h4 class="mainGr"> 등록된 모임사진이 없습니다 </h4>
+               	  	<h4 class="mainGr"> 등록된 사진이 없습니다 </h4>
                  </div>
                 </div>
                 </div>
