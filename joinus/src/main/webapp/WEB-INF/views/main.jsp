@@ -47,7 +47,7 @@ $(document).ready(function(){
                      <c:if test="${!empty my }">
                      <div class="mainGroup">
             	  			<div class="wow fadeInUp marginB" data-wow-delay="0.1s">
-                         	<h2> &#127969; 우리 지역에 있는 TOP 9 </h2>
+                         	<h2> &#127969; 우리 지역에 있는 TOP 6 </h2>
                          	<p class="MainSubTitle">우리 지역의 다양한 모임들을 구경해보세요!</p><hr>
                           	</div>
 				            <div class="row g-4">              
