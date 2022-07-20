@@ -219,12 +219,18 @@ public class RentalController {
 
 	@RequestMapping(value = "/partnerPlaces/{partner_place_no}", method = RequestMethod.POST)
 	public String partnerPlaceContentPost(PartnerPlacesVo partnerplacevo ,PaymentsVo paymentvo, 
-			RentalPlacesVo rentalplacevo,Model model, @RequestParam("rental_time_no") int rentaltimeno,
-			HttpSession session,@RequestParam("payment_price") int payment_price) {
+			Model model, @RequestParam("rental_time_no") int rentaltimeno,
+			@RequestParam("rental_date") Date rental_date, HttpSession session,@RequestParam("payment_price") int payment_price) {
 		log.info(" partnerPlaceContentPost() 호출");
-//		log.info("@@@@@rental_date : "+rental_date);	// 2022-07-20
-		log.info("rentalplacevo 예약정보 : "+rentalplacevo);
+		log.info("@@@@@rental_date : "+rental_date);	// 2022-07-20
+//		log.info("rentalplacevo 예약정보 : "+rentalplacevo);
 //		log.info("rental_date : "+rental_date);
+		rentalService.insertPlaceBeforePay(rental_date, rentaltimeno);
+		// 가장 최근에 저장한 RentalPlacesVo 꺼내기
+		RentalPlacesVo rentalPlace = rentalService.getLatelyRentalPlace();
+		log.info("rentalPlace : "+rentalPlace);
+		rentalPlace.setClub_no(46);
+		log.info("rentalPlace 모임번호 set으로 지정 디비에서도 바뀔까? : "+rentalPlace);
 		
 		String ppname = partnerplacevo.getPartner_place_name();
 		model.addAttribute("ppname", ppname);
@@ -235,9 +241,9 @@ public class RentalController {
 		model.addAttribute("members", vo);
 		// 예약일자(rental_date; 시설을 이용할 일자) 저장
 //		model.addAttribute("rental_date", rental_date);
-		model.addAttribute("rental_time_no", rentaltimeno);
+//		model.addAttribute("rental_time_no", rentaltimeno);
 		model.addAttribute("payment", paymentvo);
-		model.addAttribute("rentalplacevo", rentalplacevo);
+//		model.addAttribute("rentalplacevo", rentalplacevo);
 		log.info("결제정보: "+paymentvo);
 		log.info("@@@@제휴시설 정보 : "+partnerplacevo);
 		// 결제 후 예약정보저장
@@ -261,7 +267,7 @@ public class RentalController {
 		public PaymentsVo payment( Model model, 
 				@RequestParam("partner_place_price") int partner_place_price,
 				@RequestParam("payment_price") int payment_price,
-				@RequestParam("rental_time_no") int rental_time_no,
+//				@RequestParam("rental_time_no") int rental_time_no,
 				@PathVariable("partner_place_no") int partner_place_no,
 				RentalPlacesVo rentalplacevo, PaymentsVo paymentvo,HttpSession session){
 //				@RequestBody RentalPlacesVo rentalplacevo, PaymentsVo paymentvo,HttpSession session){
@@ -304,8 +310,15 @@ public class RentalController {
 			rentalplacevo.setReservation_no(rsNum);
 			//rentalplacevo.setRental_date(paymentvo.getPayment_date()); 데이터 받아오는 것보다 바로 넣어버리는건??
 //			rentalplacevo.setRental_date(rental_date);	// 시설이용일자
-			rentalplacevo.setRental_time_no(rental_time_no);	// 시설이용시간
+//			rentalplacevo.setRental_time_no(rental_time_no);	// 시설이용시간
 			rentalplacevo.setRental_status(1);
+			
+			
+			// update로 rentalPlace 정보 저장
+			int rentalPlaceCnt = rentalService.getRentalPlaceCnt();
+			log.info("rentalPlaceCnt : "+rentalPlaceCnt);
+			
+			
 			
 			rentalService.place(rentalplacevo);
 			log.info("rentalPlace 저장완료 : "+rentalplacevo);

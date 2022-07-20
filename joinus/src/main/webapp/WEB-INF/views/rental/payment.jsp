@@ -37,8 +37,9 @@
     						url : '${PageContext.request.contextPath }/rental/partnerPlaces/'+${payment.partner_place_no}+'/payment', 
     				        type :'POST',
     				        data :{'partner_place_price':${payment.partner_place_price},
-    				        	'payment_price':${payment_price},
-    				        	'rental_time_no':${rental_time_no}},
+    				        	'payment_price':${payment_price}
+//     				        	'rental_time_no':${rental_time_no}
+    				        	},
     				        dataType: 'json', //서버에서 보내줄 데이터 타입
     				        success: function(paymentvo){
     				        	 alert('데이터 저장 모두 완료!'); 

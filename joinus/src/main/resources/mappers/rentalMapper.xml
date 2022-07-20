@@ -62,5 +62,22 @@
 		insert into rental_places(reservation_no,club_no,member_no,partner_place_no,payment_no,rental_time_no,rental_status)
 		values(#{reservation_no},#{club_no},#{member_no},#{partner_place_no},#{payment_no},#{rental_time_no},#{rental_status})
 	</insert>
+	
+	<!-- 결제전 예약정보 저장(일자, 시간) -->
+	<insert id="placeBeforePay">
+		insert into rental_places(rental_date, rental_time_no)
+		values(#{rental_date}, #{rental_time_no})
+	</insert>
+	
+	<!-- 가장 최근에 저장한 예약정보 가져오기 -->
+	<select id="getLatelyRentalPlace" resultType="RentalPlacesVo">
+		select * from rental_places
+		where rental_places_no = (select count(*) from rental_places)
+	</select>
+	
+	<!-- 예약정보 개수 -->
+	<select id="rentalPlaceCnt" resultType="java.lang.Integer">
+		select count(rental_places_no) from rental_places
+	</select>
 
 </mapper>  

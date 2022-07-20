@@ -1,5 +1,6 @@
 package com.joinus.persistence;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,6 +75,26 @@ public class RentalDaoImpl implements RentalDao {
 	public void place(RentalPlacesVo vo) {
 		sqlSession.insert(NAMESPACE+".place", vo);
 	}
+
+	@Override
+	public void insertPlaceBeforePay(Date rental_date, int rentaltimeno) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("rental_date", rental_date);
+		param.put("rental_time_no", rentaltimeno);
+		
+		sqlSession.insert(NAMESPACE+".placeBeforePay", param);
+	}
+
+	@Override
+	public RentalPlacesVo getLatelyRentalPlace() {
+		return sqlSession.selectOne(NAMESPACE+".getLatelyRentalPlace");
+	}
+
+	@Override
+	public int getRentalPlaceCnt() {
+		return sqlSession.selectOne(NAMESPACE+".rentalPlaceCnt");
+	}
+	
 	
 	
 	
