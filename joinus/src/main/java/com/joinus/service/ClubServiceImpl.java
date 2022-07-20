@@ -207,21 +207,29 @@ public class ClubServiceImpl implements ClubService{
 	public List<MeetingTotalBean> getMeetingMember(Integer club_meeting_no, Integer club_no) {
 		return dao.getMeetingMember(club_meeting_no, club_no);
 	}
-	
+	//정모 상태
 	@Override
 	public String getMeetingStatus(Integer club_meeting_no) {
 		
 		return dao.getMeetingStatus(club_meeting_no);
 	}
-	
+	//정모 상태 수정
 	@Override
 	public String updateMeetingStatus(Integer club_meeting_no) {
 		
 		return dao.updateMeetingStatus(club_meeting_no);
 	}
 	
+	@Override
+	public List<ClubMeetingsVo> getMeetingList(Integer club_no, String status) {
+		
+		return dao.getMeetingList(club_no, status);
+	}
+	
 	
 	//===================================================================
+
+
 
 
 

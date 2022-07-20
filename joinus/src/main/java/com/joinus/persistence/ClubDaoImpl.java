@@ -298,6 +298,16 @@ public class ClubDaoImpl implements ClubDao{
 		return sqlSession.selectOne(NAMESPACE2+".UpdateMeetingStatus",club_meeting_no);
 	}
 	
+	//정모 리스트
+	@Override
+	public List<ClubMeetingsVo> getMeetingList(Integer club_no, String status) {
+		
+		Map<String, Object> param= new HashMap<String, Object>();
+		param.put("status", status);
+		param.put("club_no", club_no);
+		
+		return sqlSession.selectList(NAMESPACE2+".GetMeetingList", param);
+	}
 	
 //=======================허수빈=============================================================
 
@@ -312,6 +322,7 @@ public class ClubDaoImpl implements ClubDao{
 		sqlSession.insert(NAMESPACE+".writeBoard", vo);
 		
 	}
+
 
 	@Override
 	public List<BoardTotalBean> getBoardListAll(Integer club_no, BoardCriteria cri) {

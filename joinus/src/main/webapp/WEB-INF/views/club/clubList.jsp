@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri ="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
  
 <%@ include file="../include/header.jsp"%>
-
 
 
 <body> 
@@ -13,56 +13,34 @@
 		<br>
 		<br>
 		<br>
-		
-    <div class="container-xxl py-5">
-        <div class="container py-5">
+	<!-- 이달의 모임 -->
+	   <div class="container-xxl py-5">
+        <div class="container">
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                 <h1 class="mb-4">이달의 모임</h1>
             </div>
-            <div class="owl-carousel testimonial-carousel wow fadeInUp py-5" data-wow-delay="0.1s">
-                 <div class="testimonial-item text-center">
-                    <div class="testimonial-img position-relative">
-                        <img class="img-fluid rounded-circle mx-auto mb-5" id="club_image1" src="">
-                        <div class="btn-square bg-primary rounded-circle">
-                            <i class="fa fa-quote-left text-white"></i>
-                        </div>
-                    </div>
-                    <div class="testimonial-text text-center rounded p-4">
-                        <p id="club_content1"></p>
-                        <h5 class="mb-1" id="club_name1"></h5>
-                    </div>
-                </div>
-                
+            <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
+                <c:forEach var ="month" items="${clubMonthList }">
                 <div class="testimonial-item text-center">
                     <div class="testimonial-img position-relative">
-                        <img class="img-fluid rounded-circle mx-auto mb-5" id="club_image2" src=""> 
+                        <img class="img-fluid rounded-circle mx-auto mb-5" src="${PageContext.request.contextPath}/resources/upload/clubs/${month.clubsVo.club_image }">
                         <div class="btn-square bg-primary rounded-circle">
                             <i class="fa fa-quote-left text-white"></i>
                         </div>
                     </div>
                     <div class="testimonial-text text-center rounded p-4">
-                    <p id="club_content2"></p>
-                        <h5 class="mb-1" id="club_name2"></h5>
+                        <p>${month.clubsVo.club_content }</p>
+                        <h5 class="mb-1">${month.clubsVo.club_name }</h5>
+                        <span class="fst-italic">Profession</span>
                     </div>
                 </div>
-                <div class="testimonial-item text-center">
-                    <div class="testimonial-img position-relative">
-                        <img class="img-fluid rounded-circle mx-auto mb-5" id="club_image3" src="">
-                        <div class="btn-square bg-primary rounded-circle">
-                            <i class="fa fa-quote-left text-white"></i>
-                        </div>
-                    </div>
-                    <div class="testimonial-text text-center rounded p-4">
-                    <p id="club_content3"></p>
-                        <h5 class="mb-1" id="club_name3"></h5>
-                    </div>
-                </div> 
-                
-
+                </c:forEach>
             </div>
         </div>
-    </div>
-    <!-- Testimonial End -->
+    </div>	
+	<!-- 이달의 모임 -->	
+		
+    
 	
 	<!-- 소개 -->
 		
@@ -136,21 +114,34 @@
   
 		<div class="row g-4">
 			<c:forEach var = "vo" items="${clubList }">
+			
                 <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="shadow service-item rounded overflow-hidden">
                     <!-- 클럽 대표 이미지 -->
-                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${vo.clubsVo.club_image}" class="w-100 py-auto">
+                    <a class="small fw-medium" href="${PageContext.request.contextPath }/club/${vo.clubsVo.club_no}">
+                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${vo.clubsVo.club_image}" class="w-100 py-auto"></a>
                         <div class="position-relative p-4 pt-0">
                             <div class="service-icon">
                             <!-- 클럽관심사 아이콘  -->
                                 <img src="${PageContext.requeset.contextPath }/resources/upload/interests/${vo.interestsVo.interest_icon }" class="w-100 py-auto">
                             </div>
-                            <h4 class="mt-3 py-2">${vo.clubsVo.club_name }</h4>
-                            <p>${vo.clubsVo.club_content }</p>
+                            <a class="small fw-medium" href="${PageContext.request.contextPath }/club/${vo.clubsVo.club_no}">
+                            <h4 class="mt-3 py-2">${vo.clubsVo.club_name }</h4> </a>
+                           	<c:set var = "club_content" value ="${vo.clubsVo.club_content }"></c:set>
+                           	<c:if test="${fn:length(club_content) > 50}">
+                           	<c:out value="${fn:substring(club_content,0,49)}"/>...
+                           	</c:if>
+                           	<c:if test="${fn:length(club_content) <=50}">
+                           	<c:out value="${club_content}"></c:out>
+                           	</c:if>
+							<br>
+							<br>
+							<br>
                             <a class="small fw-medium" href="${PageContext.request.contextPath }/club/${vo.clubsVo.club_no}">클럽 상세 페이지<i class="fa fa-arrow-right ms-2"></i></a>
                         </div>
                     </div>
                 </div>
+
             </c:forEach>
         </div>            
         </div>
@@ -196,7 +187,7 @@
         	
         	</ul> --%>
         </div>
-        
+        <!-- 페이징처리 -->
         
     </div>
     <!-- Projects End -->
@@ -209,7 +200,7 @@ $(function(){
 	var interest_detail_no = null;
 	//alert(interest_no);
 	
-		$.ajax({
+/* 		$.ajax({
 			url :'${PageContext.request.contextPath}/club/clubList/Month',
 			type : 'GET',
 			dataType : "json",
@@ -234,7 +225,7 @@ $(function(){
 				console.log(data[1].clubsVo.club_image);
 				console.log(data[2].clubsVo.club_image);
 				
-			}	
+			} */	
 			
 		//	$(data).each(function(idx,item){
 				
@@ -316,6 +307,14 @@ $.ajax({
 	
 	
 	
+});
+
+$('#multiple-carousel').owlCarousel({
+
+    items: 3,
+    loop:  $('.owl-carousel .items').length > 3,
+    rewind: true
+
 });
 
 

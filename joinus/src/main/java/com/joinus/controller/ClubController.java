@@ -42,6 +42,7 @@ import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubGradesVo;
 import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.ClubMembersVo;
+import com.joinus.domain.ClubTotalBean;
 import com.joinus.domain.ClubsVo;
 import com.joinus.domain.Criteria;
 import com.joinus.domain.InterestDetailsVo;
@@ -70,6 +71,10 @@ public class ClubController {
 	public String clubList(@ModelAttribute("interest_no") String interest_no,
 						Criteria cri, Model model,HttpSession session, RedirectAttributes rttr) {
 		log.info("interest_no : "+interest_no);	
+		
+		List<ClubTotalBean> clubMonthList = service.clubListMonth();
+		log.info("clubMonthList : "+clubMonthList);
+		
 		if(session.getAttribute("member") != null) {
 			MembersVo member = (MembersVo) session.getAttribute("member");
 			log.info(member+"");
@@ -83,6 +88,7 @@ public class ClubController {
 			log.info(pageMaker+"");
 			model.addAttribute("pm", pageMaker);
 			model.addAttribute("interest_no", 0);
+			model.addAttribute("clubMonthList", clubMonthList);
 			rttr.addFlashAttribute("check","ClubList");
 			log.info("clubList() 호출");
 			
@@ -93,6 +99,7 @@ public class ClubController {
 			pageMaker.setCri(cri);
 			pageMaker.setTotalCount(service.totalCnt(Integer.parseInt(interest_no)));
 			model.addAttribute("interest_no",Integer.parseInt(interest_no));
+			model.addAttribute("clubMonthList", clubMonthList);
 			log.info(pageMaker+"");
 			model.addAttribute("pm", pageMaker);
 			rttr.addFlashAttribute("check","ClubList");
@@ -409,6 +416,51 @@ public class ClubController {
 			rttr.addFlashAttribute("check", "UPStatus");
 			
 			return "redirect:/club/{club_no}/meeting/{club_meeting_no}";
+		}
+		
+		@RequestMapping(value="/{club_no}/meetingList", method = RequestMethod.GET)
+		public String meetingListGET(Model model, HttpSession session,
+				@PathVariable("club_no") Integer club_no) {
+			
+			log.info("meetingListGET() 호출");
+			
+			//비회원
+			int result = 0;
+			
+			if(session.getAttribute("member") != null) {
+				MembersVo member = (MembersVo) session.getAttribute("member");
+				log.info(member+"");
+				
+				int member_no =member.getMember_no();
+				result = service.checkClubRole(club_no, member_no);
+				//result = 3 : 클럽 미가입 회원
+				//result = 1 : 클럽 가입 회원
+				//result = 2 : 클럽장
+			}
+			log.info(club_no+"");
+			
+			String status = "모집중";
+			List<ClubMeetingsVo> meetingList_ing = service.getMeetingList(club_no ,status);
+			
+			status = "마감";
+			List<ClubMeetingsVo> meetingList_close = service.getMeetingList(club_no ,status);
+			
+			status = "완료";
+			List<ClubMeetingsVo> meetingList_end = service.getMeetingList(club_no ,status);
+
+			//log.info(meetingList_ing+"");
+			//log.info(meetingList_close+"");
+			//log.info(meetingList_end+"");
+			
+			log.info(result+"");
+			
+			model.addAttribute("meetingList_ing", meetingList_ing);
+			model.addAttribute("meetingList_close", meetingList_close);
+			model.addAttribute("meetingList_end", meetingList_end);
+			model.addAttribute("result", result);
+			model.addAttribute("club_no", club_no);
+			return "/club//meeting/meetingList";
+			
 		}
 			
 	

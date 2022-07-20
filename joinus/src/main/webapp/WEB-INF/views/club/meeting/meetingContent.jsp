@@ -38,11 +38,7 @@
               <label for="address" class="form-label">🗓️ 날짜</label>
               <input type="datetime" class="form-control" id="club_meeting_date" value="${meetingList[0].club_meeting_date}" disabled="disabled">
             </div>
-            
-            <div class="col-12">
-              <label for="address" class="form-label">⏰ 시간</label>
-              <input type="time" class="form-control" id="club_meeting_time" value="${meetingList[0].club_meeting_time}" disabled="disabled">
-            </div>
+         
             
             <div class="col-12">
               <label for="address" class="form-label">🙋 정원</label>
