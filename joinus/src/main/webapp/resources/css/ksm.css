@@ -139,12 +139,6 @@
 			padding: 50px;
 			font-weight: 500;
 		}
-		#club_capa {
-			color: #32C36C;
-			text-align: center;
-			font-size: medium;
-			font-weight: lighter;
-		}
 		.clubDetailBox {
 			padding: 30px;
 			text-align: center;
@@ -185,6 +179,7 @@
 		.sub3 {
 		font-size: 1.5em; font-weight: 300; margin-top: 30px; color: #343a40;
 		}
+		
 		h1>.mb-4 {
 			font-size: 3em;
 		}
@@ -192,21 +187,34 @@
 			display: none; 
 		}
 		
-		form {
-			width: 50%; 
+		.form_ {
+			width: 60%; 
+			margin-top: 100px;
 			margin-bottom: 200px;
 		}
 		
 		.GreenP {
 			color:#32C36C;font-size: 0.9em;
 		}
+		.GreenBox {
+			width:200px;
+			background-color:#32C36C;
+			color:white;
+			font-size: 1.2em;
+			font-weight: 800;
+			text-align: center;
+			border-radius: 8px 8px 2px 2px;
+			padding: 5px;
+			box-shadow: 0.25rem 0 0 rgb(0 0 0 / 8%);
+		}
 		.marginTOP {
 			margin-top: 150px;
 		}
 		
 		#NewTitle {
-			margin-top: 80px;
-			margin-bottom: 80px;
+			margin-bottom: 25px;
+			margin-left: 30px;
+			text-align: left;
 		}
 		
 		#centercontrol {
@@ -232,7 +240,6 @@
 			padding: 30px;
 			}
 		.interTable>li {
-			border-bottom: solid 2px #F6F7F8;
 			width: 260;
 			padding: 1em;
 			display: inline-block;
@@ -244,7 +251,6 @@
  		  	border-radius: 35px;
  		  	color:white;
 		}
-		
 		
 		.mNbSize {
 			padding: 100px;

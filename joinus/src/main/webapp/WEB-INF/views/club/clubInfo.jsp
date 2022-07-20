@@ -350,7 +350,6 @@
          
             </div>
           </div>
-         <!-- </div> -->
           </div>      
                 
                 
@@ -374,74 +373,74 @@
            			 </div><hr><br><br>
            		
      
+     
+     
      <!-- 정모 정보 출력 -->
-       <c:if test="${!empty meetings}" >
-         <div class="row g-4 text-center justify">
-      	   <c:set var="doneLoop" value="false"/>
-			   <c:forEach var="m" items="${meetings}" varStatus="status" >
-					
-                	 <div class="col-md-6 col-lg-4 wow fadeInUp d-flex flex-column " data-wow-delay="0.1s" >
+           <c:if test="${!empty meetings}" >
+ 			<div class="row g-4 text-center justify" >
  			
-                  	 <div class="rounded shadow clubDetailBox" >
-	                    <h3 class="greenColor shadow-sm">${m.club_meeting_title }</h3>
-	                   <p class="MainTextSub"><b> &#128694; 인원 </b>${m.club_meeting_capacity }명</p>
-	                   <p class="MainTextSub"><b> &#128176; 회비 </b>${m.club_meeting_dues }</p>
-	                   <p class="MainTextSub"><b> &#128198; 날짜 </b>${m.club_meeting_date }</p>
-	                   <p class="MainTextSub"><b> &#128205; 장소 </b>${m.club_meeting_location }</p>
-	                   
-	                    <c:if test="${clubmember ne '0' and !empty member_no}"><!-- 모임가입시 참석하기 버튼 출력 -->
-							<c:set var="doneLoop" value="false"/>	
-								<c:forEach var="mm" items="${meetingMbrs}" >
-			    			 		<c:if test="${not doneLoop}">	
-								
-								<!-- 내가 참석신청을 한 정모list에 해당 정모no이 있는지로 비교 -->
-                    			<c:choose>
-                    			
-                    			<c:when test="${m.club_meeting_no eq mm.club_meeting_no}">
-									${m.club_meeting_no } 
-									${mm.club_meeting_no } 
-	                    			<button id="outMeeting" class="btn btn-primary" value="${m.club_meeting_no}">참석취소하기</button>
-					                 <c:set var="doneLoop" value="true"/>
+			    <c:forEach var ="i" begin="0" end="2" step="1">
+			    
+	               <div class="col-md-6 col-lg-4 wow fadeInUp d-flex flex-column " data-wow-delay="0.1s" >
+			        	
+			        	<div class="rounded shadow clubDetailBox" >
+	                    <h3 class="greenColor shadow-sm">${meetings[i].club_meeting_title }</h3>
+	                   <p class="MainTextSub"><b> &#128694; 인원 </b>${meetings[i].club_meeting_capacity }명</p>
+	                   <p class="MainTextSub"><b> &#128176; 회비 </b>${meetings[i].club_meeting_dues }</p>
+	                   <p class="MainTextSub"><b> &#128198; 날짜 </b>${meetings[i].club_meeting_date }</p>
+	                   <p class="MainTextSub"><b> &#128205; 장소 </b>${meetings[i].club_meeting_location }</p>
+			        	
+			        	
+			        	
+			        <!-- 모임가입시 출력 -->
+			        <c:if test="${clubmember ne '0' and !empty member_no}">
+			        
+		       		 <c:choose>	
+							<c:when test="${empty meetingMbrs}">
+                					<button id="JoinMeeting" class="btn btn-primary" value="${meetings[i].club_meeting_no}">참석하기</button>
+               				</c:when>
+							<c:otherwise>
+						  	  <c:set var="tmp"  value="0"/>
+					    	    <c:forEach var="mm" items="${meetingMbrs}">
+	<%-- 				    	      <br>판단 : ${meetings[i].club_meeting_no eq mm.club_meeting_no}<br> --%>
+					    	      <c:set var="tmp" value="${tmp + ((meetings[i].club_meeting_no eq mm.club_meeting_no)? '1':'0')}" />
+		                  	 	</c:forEach>
+<%-- 	                  	 	${tmp } --%>
+	                    	
+                         		<c:choose>
+								<c:when test="${tmp >= 1}">
+	                    			 <button id="outMeeting" class="btn btn-primary" value="${meetings[i].club_meeting_no}">참석취소하기</button>
                     			</c:when>
-			         			<c:otherwise>
-									${m.club_meeting_no } 
-									${mm.club_meeting_no } 
-		                    		<button id="JoinMeeting" class="btn btn-primary" value="${m.club_meeting_no}">참석하기</button>
-					                 <c:set var="doneLoop" value="true"/>
-                    			</c:otherwise>
-                    			
-                    			</c:choose>
-                    			</c:if>
-                  	  		</c:forEach>
-                  	  		
-                  	  		
-                  	  			<!-- 내 정모list가 없다면 참석하기 버튼 띄우기  -->
-                    			<c:if test="${meetingMbrsNull eq '0'}">
-		                    		<button id="JoinMeeting" class="btn btn-primary" value="${m.club_meeting_no}">참석하기</button>
-	                    		</c:if>
-	                    		 </c:if><!-- 모임가입시 참석하기 버튼 출력 -->
-                			 </div>
-                		  </div>
-	                   
-                		  	<c:set var="doneLoop" value="false"/>	
-                	
-                 
-                 </c:forEach>
-            </div>	
-        </c:if>
-                    
-                <c:if test="${empty meetings}" >
-                 <div class="g-5" align="center" >
-               	 <div class="col-md-6 col-lg-3 wow fadeIn clubInfoMeetingSize" data-wow-delay="0.1s" >
-               	  <div class="align-items-center mb-4" >
-               	  
-               	  	<h4 class="mainGroup"> 생성된 정모가 없습니다 </h4>
-               	  
-                 </div>
-                </div>
-                </div>
+	                    		<c:when test="${tmp < 1}">
+	                    			  <button id="JoinMeeting" class="btn btn-primary" value="${meetings[i].club_meeting_no}">참석하기</button>
+	                    		</c:when>
+		                    	<c:otherwise>
+		                    	   ERR
+		                    	</c:otherwise>
+				       	 		</c:choose>
+		                    	
+                   			 </c:otherwise>	
+	                 </c:choose>
+	                 	
+                    </c:if>
+                 	
+               			 </div>
+               		 </div>
+                   </c:forEach>
+                     </div>
                 </c:if>
                 
+                <c:if test="${empty meetings}" >
+                 <div class="g-5" align="center" >
+               	 	<div class="col-md-6 col-lg-3 wow fadeIn clubInfoMeetingSize" data-wow-delay="0.1s" >
+               	 		 <div class="align-items-center mb-4" >
+               	  			<h4 class="mainGr"> 생성된 정모가 없습니다 </h4>
+                		 </div>
+             	    </div>
+                 </div>
+                </c:if>
+                
+               </div> 
                 
            
 
@@ -485,17 +484,18 @@
             
             
              <c:if test="${empty boards}" >
-               	 <div class="col-md-6 col-lg-3 wow fadeIn clubInfoMeetingSize" data-wow-delay="0.1s" >
-               	  <div class="align-items-center mb-4" >
+               	 <div class="g-5" align="center" >
+               	 	<div class="col-md-6 col-lg-3 wow fadeIn clubInfoMeetingSize" data-wow-delay="0.1s" >
+               	 		 <div class="align-items-center mb-4" >
                	  	<h4 class="mainGroup"> 등록된 모임사진이 없습니다 </h4>
-                 </div>
+                		 </div>
+                	 </div>
                 </div>
              </c:if>
             
             
             
     </div>
-  </div> 
     
     <!-- Team End -->
     

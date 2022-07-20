@@ -156,10 +156,8 @@ function select(item){
             
     <!-- Contact Start -->
                 
-        <div id="NewTitle" align="center">
-            <h6 class="text-primary">JoinUs</h6>
-            <h1 class="mb-4">소모임 등록하기</h1>
-            <p class="sub3">우리들만의 모임을 자유롭게 만들어보세요! </p>
+        <div id="NewTitle" >
+             <h6 class="GreenBox">모임등록하기</h6> 
         </div>
      
 
@@ -216,19 +214,18 @@ function select(item){
 		                 <p class="sub2"> 3. 모임의 정보를 작성해주세요 </p>
 		                 <br><hr>     
         
-                         <form action="" method="post" enctype="multipart/form-data">    
-                         <div class="text-center"  >
-	                  	   <div class="row g-4 text-center justify" style="width: 70%;">
-	               			  <div class="col-md-6"><br>
+                         <div class="text-center" align="center">
+                         <form action="" method="post" enctype="multipart/form-data" class="form_" >    
+	                  	   <div class="row g-4 text-center justify flex-column" >
+	               			 
+	               			  <div class="col-md-6">
                                     <div class="form-floating">
                                         <input type="text" class="form-control" name="member_location" readonly="readonly" value="${membervo.member_location}" id="location">
                                         <label for="name">지역</label>
                                     </div>
                                 </div>
                                 
-                               <!--  <div class="col-md-6">
-                                </div> -->
-                                <div class="col-md-6" align="left">
+                                <div class="col-md-6">
                                     <div class="form-floating">
                                         <input type="text" class="form-control" id="interest" name="interest_no" readonly="readonly">
                                         <label for="name">관심사</label>
@@ -278,8 +275,8 @@ function select(item){
                                     <button class="btn btn-primary rounded-pill py-3 px-5" type="submit" id="clubBtn">모임 개설하기</button>
                                 </div>
                              </div>
-                             </div>
                         </form>
+                             </div>
                         
                         
                                   </div>
