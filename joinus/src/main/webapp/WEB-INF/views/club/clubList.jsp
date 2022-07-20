@@ -154,9 +154,33 @@
             </c:forEach>
         </div>            
         </div>
-        <br>
-        <div class="d-flex justify-content-center py-3">
-        	<ul class="list-group list-group-horizontal">
+        <div class="d-flex justify-content-center py-3 mt-5">
+        	<nav aria-label="Page navigation" class="">
+        		<ul class="pagination justify-content-end mb-0 h-100">
+	                	<c:if test="${pm.prev }">
+		                	<li class="page-item">
+		                    	<a class="page-link p-0 d-inline-flex h-100 align-items-center" href="${PageContext.request.contextPath }/club/clubList?page=${pm.startPage-1}" aria-label="Previous">
+		                      		<span aria-hidden="true"><i class="fa-solid fa-angles-left px-3 py-3"></i></span>
+		                    	</a>
+		                  	</li>
+		                </c:if>
+		                <c:forEach var="idx" begin="${pm.startPage }" end="${pm.endPage }">			
+	                 		<li class="page-item <c:out value="${pm.cri.page == idx?'active':'' }"/>" 
+	                 				<c:out value="${pm.cri.page == idx?'aria-current = page':'' }"/>
+	                 				>
+	                 			<a class="page-link d-inline-block p-3" href="${PageContext.request.contextPath }/club/clubList?page=${idx}">${idx }</a>
+	                 		</li>
+						</c:forEach>
+						<c:if test="${pm.next && pm.endPage > 0 }">
+		                  	<li class="page-item">
+		                    	<a class="page-link p-0 d-inline-flex h-100 align-items-center" href="${PageContext.request.contextPath }/club/clubList?page=${pm.endPage+1}" aria-label="Next">
+		                      		<span aria-hidden="true"><i class="fa-solid fa-angles-right px-3 py-3"></i></span>
+		                    	</a>
+		                  	</li>
+						</c:if>
+	                </ul>
+        	</nav>
+        	<%-- <ul class="list-group list-group-horizontal">
         		<c:if test="${pm.prev }">
         			<li><a href="${PageContext.request.contextPath }/club/clubList?page=${pm.startPage-1}"><i class="fa-solid fa-angles-left px-3 py-3"></i></a></li>
         		</c:if>
@@ -170,7 +194,7 @@
         			<li> <a href ="${PageContext.request.contextPath }/club/clubList?page=${pm.endPage+1}"><i class="fa-solid fa-angles-right px-3 py-3"></i></a></li>
         		</c:if>
         	
-        	</ul>
+        	</ul> --%>
         </div>
         
         
