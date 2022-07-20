@@ -202,7 +202,9 @@ public interface ClubDao {
 	public MembersVo getMember(Integer num);
 	// 회원관심사
 	public InterestsVo interest(Integer num);
-		
+	// 벤당한 회원번호 가져오기
+	public List<Integer> getBanMember(Integer num);
+	
 	// 세부관심사리스트 가져오기
 	public List<InterestDetailsVo> getDetailName(Integer num);
 		

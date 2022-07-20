@@ -656,7 +656,7 @@
 	<select id="clubBtn" resultType="int">
 		select member_no
 		from club_grades where (member_no,club_no) =
-		 ( select member_no,club_no from club_members where club_no=#{club_no} and  member_no=#{member_no} and club_member_role='common')
+		 ( select member_no,club_no from club_members where club_no=#{club_no} and  member_no=#{member_no})
 	</select>
 	
 	<select id="dipCheck" resultType="int">
@@ -670,6 +670,11 @@
 	<select id="getBoardListfordetail" resultType="ClubBoardsVo">
 		select * from club_boards where club_no=#{club_no}
 	</select>
+	
+	<select id="getBanMembers" resultType="Integer">
+		select member_no from club_ban_members where club_no=#{club_no}
+	</select>
+	
 	
 	<!-- Delete  -->
 	

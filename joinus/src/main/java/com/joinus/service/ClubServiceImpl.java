@@ -517,6 +517,12 @@ public class ClubServiceImpl implements ClubService{
 		public List<MeetingMembersVo> checkMeetingMember(Integer num,Integer num2) {
 			return dao.checkMeetingMember(num, num2);
 		}
+		
+		// 벤당한 회원번호 리스트 가져오기
+		@Override
+		public List<Integer> getBanMember(Integer num) {
+			return dao.getBanMember(num);
+		}
 
 
 		

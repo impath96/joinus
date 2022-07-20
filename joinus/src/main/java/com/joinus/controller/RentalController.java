@@ -266,8 +266,8 @@ public class RentalController {
 			Calendar cal = Calendar.getInstance();
 			java.util.Date date = cal.getTime();
 		
-			String rsNum = sdf.format(date)+"-"+partner_place_no;
-			log.info("예약번호"+rsNum);
+			String rsNum = sdf.format(date)+"-"+partner_place_no+"-"+rental_time;
+			log.info("예약번호(날짜+장소번호+예약시간): "+rsNum);
 			
 			paymentvo.setReservation_no(rsNum);
 			MembersVo mvo = (MembersVo)session.getAttribute("member");
@@ -286,8 +286,6 @@ public class RentalController {
 			}
 			
 			log.info("rentalplace 저장시작");
-			//session 멤버정보처럼 클럽도 계속 넘겨서 받아와야함.. 일단 임의로 작성 -> null로 넣고 정모등록할 때 쓰는건..?
-			rentalplacevo.setClub_no(46);
 			rentalplacevo.setMember_no(mvo.getMember_no());
 			rentalplacevo.setRental_places_no(partner_place_no);
 			rentalplacevo.setReservation_no(rsNum);

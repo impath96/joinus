@@ -196,6 +196,8 @@ import com.joinus.domain.MembersVo;
 		public InterestsVo getMemberInterest(Integer num);
 		//회원이 선택한 관심사의 세부관심사리스트 가져오기
 		public List<InterestDetailsVo> getDetailName(Integer num);
+		// 벤당한 회원번호 가져오기
+		public List<Integer> getBanMember(Integer num);
 		
 		//회원이 입력한 클럽정보 저장
 		public void newClub(ClubsVo vo);

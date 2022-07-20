@@ -928,6 +928,14 @@ public class ClubController {
 					log.info("모임회원O = 회원번호 / 모임회원X = 0 :   "+result);
 					log.info("roleResult(admin/com): "+roleResult);
 					
+					
+					//벤당한 모임회원
+					List<Integer> ban = service.getBanMember(club_no);
+					if(ban.isEmpty()) {
+						ban.add(0);
+					} // ban 리스트가 null이면 0만 출력됨
+					model.addAttribute("ban", ban);
+					
 					//별점정보
 					List<ClubGradesVo> gradevo = service.getClubGrade(club_no);
 					model.addAttribute("clubGrade", gradevo);
@@ -956,7 +964,6 @@ public class ClubController {
 					
 					//정모리스트 
 					List<ClubMeetingsVo> meetings = service.getMeetings(club_no);
-					List<ClubMeetingsVo> meetings2 = service.getMeetings(club_no);
 					model.addAttribute("meetings", meetings);
 					log.info("정모리스트: "+meetings);  
 					
@@ -967,12 +974,11 @@ public class ClubController {
 						mtMbrs = meetingMbrs; 
 					}
 					model.addAttribute("meetingMbrs",mtMbrs);
-				
+					// null값 처리
 					int result3 = 100;
 					if(meetingMbrs.isEmpty()) { 
 						result3 = 0;	}
 					model.addAttribute("meetingMbrsNull",result3);
-					
 					
 					
 					log.info("정모멤버리스트: "+meetingMbrs); 

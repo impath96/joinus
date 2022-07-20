@@ -47,7 +47,6 @@ public class HomeController {
 				
 				List<ClubsVo> vo4 = service.getMyClubs(address);
 				model.addAttribute("my", vo4);
-				log.info("address :", address);
 			}
 			
 		}

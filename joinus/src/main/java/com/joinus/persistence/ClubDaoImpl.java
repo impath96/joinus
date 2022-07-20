@@ -669,6 +669,12 @@ public class ClubDaoImpl implements ClubDao{
 				return sqlSession.selectList(NAMESPACE2+".getMeetingMember", meetingMlist);
 			}
 			
+			// 벤당한 회원번호 리스트 가져오기
+			@Override
+			public List<Integer> getBanMember(Integer num) {
+				return sqlSession.selectList(NAMESPACE+(".getBanMembers"), num);
+			}
+			
 
 
 			

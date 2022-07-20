@@ -47,7 +47,7 @@ $(document).ready(function(){
                      <c:if test="${!empty my }">
                      <div class="mainGroup">
             	  			<div class="wow fadeInUp marginB" data-wow-delay="0.1s">
-                         	<h2> &#127969; 우리 지역에 있는 TOP 9 </h2>
+                         	<h2> &#127969; 우리 지역에 있는 TOP 6 </h2>
                          	<p class="MainSubTitle">우리 지역의 다양한 모임들을 구경해보세요!</p><hr>
                           	</div>
 				            <div class="row g-4">              
@@ -77,13 +77,13 @@ $(document).ready(function(){
                      <!-- 인기모임(찜) -->
             	  <div class="mainGroup">
             	  			<div class="wow fadeInUp marginB" data-wow-delay="0.1s">
-                         	<h2> &#128293; 지금 가장 인기있는 TOP 9 </h2>
+                         	<h2> &#128293; 지금 가장 인기있는 TOP 6 </h2>
                          	<p class="MainSubTitle">회원들이 가장 많이 찜한 모임을 구경해보세요!</p><hr>
                           	</div>
 				            <div class="row g-4">              
 							<c:forEach var = "po" items="${popular }">
 				                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
-				                    <div class="service-item rounded overflow-hidden Grrrr">
+				                    <div class="service-item rounded overflow-hidden Grrrr shadow">
 				                      
 				                       <c:if test="${!empty po.club_image}">
 				                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${po.club_image}" class="w-100 py-auto mainImg"
@@ -115,13 +115,13 @@ $(document).ready(function(){
 					<!-- 회원많은모임 -->
 				 <div class="mainGroup">
             	  			<div class="wow fadeInUp marginB" data-wow-delay="0.1s">
-                         	<h2> &#128588; 참여회원이 가장 많은 TOP 9 </h2>
+                         	<h2> &#128588; 참여회원이 가장 많은 TOP 6 </h2>
                          	<p class="MainSubTitle">가장 회원이 많은 모임을 구경해보세요!</p><hr>
                           	</div>
 				            <div class="row g-4">              
 							<c:forEach var = "nu" items="${Numerous }">
 				                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
-				                    <div class="service-item rounded overflow-hidden Grrrr">
+				                    <div class="service-item rounded overflow-hidden Grrrr shadow">
 				                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${nu.club_image}" class="w-100 py-auto mainImg"
 				                        onclick="location.href='${PageContext.request.contextPath }/club/${nu.club_no}'">
 				                    <!-- 클럽 대표 이미지 -->
@@ -145,13 +145,13 @@ $(document).ready(function(){
 					<!-- 최근에 생성된 모임  -->
 				 <div class="mainGroup">
 	            	  			<div class="wow fadeInUp marginB" data-wow-delay="0.1s">
-	                         	<h2>  &#10024; 가장 최근에 생긴 TOP 9 </h2>
+	                         	<h2>  &#10024; 가장 최근에 생긴 TOP 6 </h2>
 	                         	<p class="MainSubTitle">방금 생긴 따끈따끈한 모임을 구경해보세요!</p><hr>
 	                          	</div>
 					            <div class="row g-4">              
 								<c:forEach var = "la" items="${latest }">
 					                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
-					                    <div class="service-item rounded overflow-hidden Grrrr">
+					                    <div class="service-item rounded overflow-hidden Grrrr shadow">
 					                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${la.club_image}" class="w-100 py-auto mainImg"
 					                        onclick="location.href='${PageContext.request.contextPath }/club/${la.club_no}'">
 					                    <!-- 클럽 대표 이미지 -->

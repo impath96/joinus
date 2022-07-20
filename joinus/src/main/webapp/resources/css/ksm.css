@@ -149,7 +149,6 @@
 			padding: 30px;
 			text-align: center;
 			margin-top: 30px;
-			
 		}
 		
 		.greenColor { 
@@ -159,23 +158,32 @@
 			font-size: 1.5em;
 			font-weight: 600;
 			border-radius: 50px;
+			margin-bottom: 30px;
+		}
+		.fontGreen {
+			color: #32C36C;
+			font-weight: 600;
+			font-size: large;
 			margin-bottom: 10px;
 		}
-		
+		.marginForInfo {
+			margin-top: 60px;
+			margin-bottom: 10px;
+		}
+		.marginForInfo_join {
+			margin-top: 80px;
+		}
 
 	/* 모임 등록페이지  */
 
-	.container .contact .px-lg-0 {
-			height: 1000px;
-		}
 		.sub {
-		font-size: 0.8em;  color: #32C36C; font-weight: normal; font-style: italic;
+		font-size: 1.3em;  color: #32C36C; font-weight: 500; text-decoration: underline;
 		}
 		.sub2 {
-		font-size: 2em; font-weight: 500; margin-top: 20px; margin-bottom: 30px; color: #343a40;
+		font-size: 2.5em; font-weight: 600; margin-top: 20px; margin-bottom: 30px; color: #343a40;
 		}
 		.sub3 {
-		font-size: 1.3em; font-weight: bold;margin-top: 30px; color: #343a40;
+		font-size: 1.5em; font-weight: 300; margin-top: 30px; color: #343a40;
 		}
 		h1>.mb-4 {
 			font-size: 3em;
@@ -200,9 +208,6 @@
 			margin-top: 80px;
 			margin-bottom: 80px;
 		}
-		#NewContent {
-			margin-right: 300px;
-		}
 		
 		#centercontrol {
 			width: 100%;
@@ -224,10 +229,10 @@
 		}
 		
 		.interTable {
-			padding: 0;
+			padding: 30px;
 			}
 		.interTable>li {
-			border-bottom: solid 6px #F6F7F8;
+			border-bottom: solid 2px #F6F7F8;
 			width: 260;
 			padding: 1em;
 			display: inline-block;

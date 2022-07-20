@@ -181,7 +181,7 @@
 				});
 				
 			 // 정모참석 취소
-			$('#outMeeting').click(function(){
+			$("[id='outMeeting']").click(function(){
 				
 				
 			var meeting_no = $(this).prop('value');
@@ -247,20 +247,14 @@
     			<!-- About Start  모임 설명 -->
     			<div class="row g-4 text-center justify">
                     
-                    
-                    
                        <c:if test="${!empty clubvo.club_image }">
 							<img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${clubvo.club_image}" id="club_image" class="shadow-lg">
 						</c:if>
                     
-              
-                     
-                        <h1 class="mb-4" id="club_name">${clubvo.club_name }
-						
-						
+                        <h1 class="mb-4 my-sm-5" id="club_name">${clubvo.club_name }
 						
 							<!-- 찜기능 -->	
-							 <c:if test="${clubmember ne '0'}">	
+							 <c:if test="${!empty member_no}">	
 		                        <c:if test="${empty dipMember }">
 			                        <img src="../resources/img/heart.png" id="Dip">
 		                        </c:if>
@@ -271,76 +265,93 @@
 		                       </c:forEach>
 		                     </c:if>
                         </h1>
-                     
+    			 </div>
     		
-    		
-    		<!--  <div class="container-fluid bg-light overflow-hidden px-lg-0 shadow-sm" style="margin: 6rem 0;"> -->
                
                
-               
-                <div class="row g-0 mx-lg-0 shadow-sm d-flex" style="height: 300px;">
+                <div class="row g-0 mx-lg-0 shadow-sm" >
                  	      
-                 	      
-                 	      <div class="clubDetailBox" >
+                 	      <div class="clubDetailBox" style="width:424px;" >
 							<h4 class="greenColor shadow-sm" > 모임 소개 </h4>
          	               <h4 id="club_content" style="white-space: pre-wrap;">${clubvo.club_content }</h4>
-							</div>
-						
-				
+						 </div>
 					
-					
-					<div class="clubDetailBox" >
-					<h4 class="greenColor shadow-sm" > 모임 정보 </h4>
-						
-                      <p id="club_content" ><i class="fa fa-check-circle text-primary " ></i> 정원 - ${clubvo.club_capacity } 명<br> 
-                     <i class="fa fa-check-circle text-primary" ></i> 관심사 - ${interDetail } </p><br>
-					 </div>
+                 	      	<div class="clubDetailBox" style="width:424px;">
+							<h4 class="greenColor shadow-sm" > 모임 정보 </h4>
+		                      <p id="club_content" > &#128226; 정원) ${clubvo.club_capacity } 명<br> 
+		                     						 &#128226; 관심사) ${interDetail }<br>
+		                     						 &#128226; 활동지역) ${clubvo.club_location } </p><br>
+                 	      	</div>
 					 
-				</div>
+				
 			
-			<div class="clubDetailBox" >
+			
 			
 			<!--  모임멤버면 별점, 별점 후 평균값 / 멤버가 아니면 가입하기 버튼 /  --> 
+				
+			<c:if test="${!empty member_no}"><!-- 회원인 경우만 출력 -->
+			<div class="clubDetailBox" style="width:424px;">
+			
 
-				<!-- 회원인 경우만 출력 -->
-				<c:if test="${!empty member_no}">
-						
-					<!-- 모임X 벤 당한 회원은 가입버튼X 벤당한거 아직안함-->
-					<c:if test="${ graded eq '0' &&  clubmember eq '0' }">
-						<div class="btn btn-primary rounded-pill py-3 px-5 mt-3" id="joinClub">가입하기</div>
-					</c:if>
+				
+					<!-- 모임X 벤 당한 회원은 가입버튼X -->
+						<c:forEach var="ban" items="${ban }">
+							<c:if test="${ graded eq '0' &&  clubmember eq '0' && ban ne member_no}">
+								<div class="btn btn-primary rounded-pill py-3 px-5 marginForInfo_join" id="joinClub">가입하기</div>
+							</c:if>
+						</c:forEach>
+					
 					
 					
 					 <!-- 모임O / 별점X  -->
                 	<c:if test="${ graded eq '0' &&  clubmember eq member_no}">
-						<div id="grade" align="center">
-							<span class="text-bold">우리 모임의 별점을 선택해주세요</span>
-		             		<form class="mb-3" name="myform" id="myform" method="post">
-							<fieldset>
-							<input type="radio" name="reviewStar" value="5" id="rate1"><label for="rate1">★</label>
-							<input type="radio" name="reviewStar" value="4" id="rate2"><label for="rate2">★</label>
-							<input type="radio" name="reviewStar" value="3" id="rate3"><label for="rate3">★</label>
-							<input type="radio" name="reviewStar" value="2" id="rate4"><label for="rate4">★</label>
-							<input type="radio" name="reviewStar" value="1" id="rate5"><label for="rate5">★</label>
-							</fieldset>
+						<div id="grade" align="center" class="marginForInfo_join" style="width:300px;">
+							<span class="fontGreen">우리 모임의 별점을 선택해주세요</span>
+		             		<form class="mb-3" name="myform" id="myform" method="post" >
+								<fieldset>
+									<input type="radio" name="reviewStar" value="5" id="rate1"><label for="rate1">★</label>
+									<input type="radio" name="reviewStar" value="4" id="rate2"><label for="rate2">★</label>
+									<input type="radio" name="reviewStar" value="3" id="rate3"><label for="rate3">★</label>
+									<input type="radio" name="reviewStar" value="2" id="rate4"><label for="rate4">★</label>
+									<input type="radio" name="reviewStar" value="1" id="rate5"><label for="rate5">★</label>
+								</fieldset>
 							</form>
 						 </div>
 					</c:if>
 					
 					 <!-- 모임O / 별점O -->
               		<c:if test="${ graded ne '0' && clubmember ne '0'}">
-						<h4 class="">우리모임의 평균 별점은?</h4> 
-							<h3 class="" > &#127775; ${gradeAvgCnt[0].avg}점 &#127775; </h3>		   
-							<p>(참여자수 : ${gradeAvgCnt[0].cnt}명 ) </p><br>
+						<h4 class="marginForInfo fontGreen">우리모임의 평균 별점은?</h4> 
+							
+							<c:choose>
+								<c:when test="${gradeAvgCnt[0].avg eq '1'}">
+									<div class=""> &#11088; </div>
+								</c:when>
+								<c:when test="${gradeAvgCnt[0].avg eq '2'}">
+								<div class=""> &#11088; &#11088; </div>
+								</c:when>
+								<c:when test="${gradeAvgCnt[0].avg eq '3'}">
+									<div class=""> &#11088; &#11088; &#11088; </div>
+								</c:when>
+								<c:when test="${gradeAvgCnt[0].avg eq '4'}">
+									<div class=""> &#11088; &#11088; &#11088; &#11088; </div>
+								</c:when>
+								<c:when test="${gradeAvgCnt[0].avg eq '5'}">
+									<div class=""> &#11088; &#11088; &#11088; &#11088; &#11088; </div>
+								</c:when>
+								<c:otherwise>
+								</c:otherwise>
+							</c:choose>
+							<h4>${gradeAvgCnt[0].avg}점</h4>
+							<p>(참여자수 : ${gradeAvgCnt[0].cnt}명 )</p><br>
 					</c:if>
-				</c:if>
                 </div>
-                
-           	
-             </div>
+                </c:if>
+         
             </div>
           </div>
-                
+         <!-- </div> -->
+          </div>      
                 
                 
                 
@@ -362,34 +373,44 @@
 	                </c:if>
            			 </div><hr><br><br>
            		
+     
+     <!-- 정모 정보 출력 -->
        <c:if test="${!empty meetings}" >
          <div class="row g-4 text-center justify">
-         
-			   <c:forEach var="m" items="${meetings}">
+      	   <c:set var="doneLoop" value="false"/>
+			   <c:forEach var="m" items="${meetings}" varStatus="status" >
+					
+                	 <div class="col-md-6 col-lg-4 wow fadeInUp d-flex flex-column " data-wow-delay="0.1s" >
  			
- 					 <div class="col-md-6 col-lg-4 wow fadeInUp d-flex flex-column " data-wow-delay="0.1s" >
-				     		   
-			       		  <c:if test="${clubmember ne '0' and !empty member_no}"><!-- 모임가입시 참석하기 버튼 출력 -->
-							
-							
+                  	 <div class="rounded shadow clubDetailBox" >
+	                    <h3 class="greenColor shadow-sm">${m.club_meeting_title }</h3>
+	                   <p class="MainTextSub"><b> &#128694; 인원 </b>${m.club_meeting_capacity }명</p>
+	                   <p class="MainTextSub"><b> &#128176; 회비 </b>${m.club_meeting_dues }</p>
+	                   <p class="MainTextSub"><b> &#128198; 날짜 </b>${m.club_meeting_date }</p>
+	                   <p class="MainTextSub"><b> &#128205; 장소 </b>${m.club_meeting_location }</p>
+	                   
+	                    <c:if test="${clubmember ne '0' and !empty member_no}"><!-- 모임가입시 참석하기 버튼 출력 -->
 							<c:set var="doneLoop" value="false"/>	
-							<c:forEach var="mm" items="${meetingMbrs}">
-							
-									
-								<c:if test="${not doneLoop}">	
+								<c:forEach var="mm" items="${meetingMbrs}" >
+			    			 		<c:if test="${not doneLoop}">	
+								
 								<!-- 내가 참석신청을 한 정모list에 해당 정모no이 있는지로 비교 -->
-                    			<c:if test="${m.club_meeting_no eq mm.club_meeting_no}">
+                    			<c:choose>
+                    			
+                    			<c:when test="${m.club_meeting_no eq mm.club_meeting_no}">
 									${m.club_meeting_no } 
 									${mm.club_meeting_no } 
 	                    			<button id="outMeeting" class="btn btn-primary" value="${m.club_meeting_no}">참석취소하기</button>
 					                 <c:set var="doneLoop" value="true"/>
-                    			</c:if>
-			         			<c:if test="${m.club_meeting_no ne mm.club_meeting_no }">
+                    			</c:when>
+			         			<c:otherwise>
 									${m.club_meeting_no } 
 									${mm.club_meeting_no } 
 		                    		<button id="JoinMeeting" class="btn btn-primary" value="${m.club_meeting_no}">참석하기</button>
 					                 <c:set var="doneLoop" value="true"/>
-                    			</c:if>
+                    			</c:otherwise>
+                    			
+                    			</c:choose>
                     			</c:if>
                   	  		</c:forEach>
                   	  		
@@ -398,52 +419,17 @@
                     			<c:if test="${meetingMbrsNull eq '0'}">
 		                    		<button id="JoinMeeting" class="btn btn-primary" value="${m.club_meeting_no}">참석하기</button>
 	                    		</c:if>
-	                    		
-	                    </c:if><!-- 모임가입시 참석하기 버튼 출력 -->
-                			 	
-                	 
- 			
-                  	 <div class="rounded shadow clubDetailBox"  >
-	                    <h3 class="greenColor shadow-sm">${m.club_meeting_title }</h3>
-	                   <p class="MainTextSub"><b> &#128176; 회비 </b>${m.club_meeting_dues }</p>
-	                   <p class="MainTextSub"><b> &#128205; 장소 </b>${m.club_meeting_location }</p>
-	                   <p class="MainTextSub"><b> &#128694; 인원 </b>${m.club_meeting_capacity }명</p>
-         		   	
-                	</div>
-	             
-	                </div>
-                	 
+	                    		 </c:if><!-- 모임가입시 참석하기 버튼 출력 -->
+                			 </div>
+                		  </div>
+	                   
+                		  	<c:set var="doneLoop" value="false"/>	
+                	
+                 
                  </c:forEach>
             </div>	
         </c:if>
                     
-                
-                
-                   <%--  <c:set var="doneLoop" value="false"/> --%><!-- break 기능 -->
-	    	  <%--   <c:forEach var="mm" items="${meetingMbrs}"> --%>
-	          <%-- <c:if test="${not doneLoop}"> --%>
-	             
-	             <%-- ${m.club_meeting_no }
-			         		${mm.club_meeting_no } --%>
-			 
-			    <%-- 	<c:choose>
-							  	<c:when test="${m.club_meeting_no ne mm.club_meeting_no}">
-		                    		<button id="JoinMeeting" class="btn btn-primary" value="${m.club_meeting_no}">참석하기</button>
-					                  <c:set var="doneLoop" value="true"/>
-                    			</c:when>
-	                    		<c:otherwise>
-	                    			<button id="outMeeting" class="btn btn-primary" value="${m.club_meeting_no}">참석취소하기</button>
-					                  <c:set var="doneLoop" value="true"/>
-	                    		</c:otherwise>
-			       	  	</c:choose> --%>   
-                
-                   <%-- </c:if>	 --%>
-                  <%--   </c:forEach> --%>
-            	   
-          
-                
-                
-                
                 <c:if test="${empty meetings}" >
                  <div class="g-5" align="center" >
                	 <div class="col-md-6 col-lg-3 wow fadeIn clubInfoMeetingSize" data-wow-delay="0.1s" >
@@ -457,17 +443,13 @@
                 </c:if>
                 
                 
-                
-                
-                
-          
            
 
 	<div class="container-xxl py-5 marginTOP">
 	    <div class="text-center mx-auto mb-5 wow fadeInUp " data-wow-delay="0.1s">
 		    <h6 class="text-primary">주 활동 지역</h6>
 		    	<h1 class="mb-4">자주 만나는 위치</h1>
-				<div><hr>
+				<div><hr><br><br>
 
 				<div id="map" style="width:80%;height:500px;" class="m-auto marginTOP"></div>
 				
@@ -490,10 +472,9 @@
                 <c:forEach var="b" items="${boards }">
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="team-item rounded overflow-hidden">
-                        <div class="mainImg" >
                             <img src="${PageContext.requeset.contextPath }/resources/upload/boards/${b.club_board_image}" 
-                            onclick="location.href='${PageContext.requeset.contextPath }/club/${clubvo.club_no}/boards/${b.club_board_no}'">
-                        </div>
+                            onclick="location.href='${PageContext.requeset.contextPath }/club/${clubvo.club_no}/boards/${b.club_board_no}'" 
+                            class="mainImg">
                     </div>
                 </div>
                 </c:forEach>
