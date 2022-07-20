@@ -66,8 +66,10 @@
 
 
 <insert id="CreateMeeting">
-	insert into club_meetings(club_no, club_meeting_title, club_meeting_capacity, club_meeting_date, club_meeting_location, club_meeting_dues)
-	values(#{club_no},#{club_meeting_title},#{club_meeting_capacity},#{club_meeting_date},#{club_meeting_location},#{club_meeting_dues})
+	insert into club_meetings(club_no, club_meeting_title, club_meeting_capacity, club_meeting_date,
+	 club_meeting_location, club_meeting_dues,club_meeting_address)
+	values(#{club_no},#{club_meeting_title},#{club_meeting_capacity},#{club_meeting_date},
+	#{club_meeting_location},#{club_meeting_dues},#{club_meeting_address})
 </insert>
 
 <select id="GetRental" resultMap="RentalListMap">
@@ -96,6 +98,11 @@
 	where club_meeting_no = #{club_meeting_no}
 
 </delete>
+<delete id="DeleteMeetingMember">
+	delete from meeting_members
+	where club_meeting_no = #{club_meeting_no}
+
+</delete>
 
 <select id="GetMeeting_no" resultType="ClubMeetingsVo">
 	select * from club_meetings
@@ -110,6 +117,7 @@
 	 club_meeting_capacity = #{vo.club_meeting_capacity},
 	 club_meeting_date = #{vo.club_meeting_date},
 	 club_meeting_location = #{vo.club_meeting_location},
+	 club_meeting_address = #{vo.club_meeting_address},
 	 club_meeting_dues = #{vo.club_meeting_dues}
 	where club_meeting_no = #{vo.club_meeting_no}
 
@@ -146,5 +154,16 @@
 	where mm.club_meeting_no = #{club_meeting_no} and club_no = #{club_no}
 </select>
 
+<select id="GetMeetingStatus" resultType="string">
+ select club_meeting_status
+ from club_meetings
+ where club_meeting_no = #{club_meeting_no}
+</select>
+
+<update id="UpdateMeetingStatus">
+	update club_meetings
+	set club_meeting_status = '마감'
+	where club_meeting_no = #{club_meeting_no}
+</update>
 
 </mapper> 

@@ -90,7 +90,12 @@ public interface ClubDao {
 	
 	//정모 인원
 	public List<MeetingTotalBean> getMeetingMember(Integer club_meeting_no, Integer club_no);
-
+	
+	//정모상태
+	public String getMeetingStatus(Integer club_meeting_no);
+	
+	//정모상태 수정
+	public String updateMeetingStatus(Integer club_meeting_no);
 
 	
 	//=========================고은비=========================
@@ -258,6 +263,7 @@ public interface ClubDao {
 	public List<ClubBoardsVo> getBoards(Integer num);
 
 	public List<ClubsVo> recentViewClubList(List<Integer> recentViewClub);
+
 
 	
 

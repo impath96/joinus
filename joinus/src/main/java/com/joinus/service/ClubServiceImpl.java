@@ -208,9 +208,24 @@ public class ClubServiceImpl implements ClubService{
 		return dao.getMeetingMember(club_meeting_no, club_no);
 	}
 	
+	@Override
+	public String getMeetingStatus(Integer club_meeting_no) {
+		
+		return dao.getMeetingStatus(club_meeting_no);
+	}
+	
+	@Override
+	public String updateMeetingStatus(Integer club_meeting_no) {
+		
+		return dao.updateMeetingStatus(club_meeting_no);
+	}
 	
 	
 	//===================================================================
+
+
+
+
 
 
 

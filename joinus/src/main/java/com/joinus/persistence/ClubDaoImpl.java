@@ -261,7 +261,10 @@ public class ClubDaoImpl implements ClubDao{
 	@Override
 	public void deleteMeeting(Integer club_meeting_no) {
 		
-		sqlSession.delete(NAMESPACE+".DeleteMeeting", club_meeting_no);
+		sqlSession.delete(NAMESPACE2+".DeleteMeetingMember", club_meeting_no);
+		log.info("미팅멤버 삭제");
+		sqlSession.delete(NAMESPACE2+".DeleteMeeting", club_meeting_no);
+		log.info("미팅 삭제");
 
 	}
 	
@@ -283,8 +286,21 @@ public class ClubDaoImpl implements ClubDao{
 		return sqlSession.selectList(NAMESPACE2+".GetMeetingMember", param);
 	}
 	
+	@Override
+	public String getMeetingStatus(Integer club_meeting_no) {
+		
+		return sqlSession.selectOne(NAMESPACE2+".GetMeetingStatus",club_meeting_no);
+	}
+	
+	@Override
+	public String updateMeetingStatus(Integer club_meeting_no) {
+		
+		return sqlSession.selectOne(NAMESPACE2+".UpdateMeetingStatus",club_meeting_no);
+	}
+	
 	
 //=======================허수빈=============================================================
+
 
 
 
