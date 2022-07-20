@@ -5,33 +5,59 @@
     
 <%@ include file="../include/header.jsp"%>
 
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#guSelect').change(function(){
+			var gu = $(this).val();
+			location.href = "${pageContext.request.contextPath}/place/placeList?location="+location;
+		});
+	});
+</script>
 
 <div class="container-xxl py-5">
 	<div class="container">
 		<div class="row g-5">
-
 				
+<!-- 
+			<select class="form-select" id="typeSelect">
+				<option value="0">전체</option>
+				<option value="기타시설">기타시설</option>
+			</select> 
+-->
 
-				
-<%-- 			<div class="row g-4">
-				<c:forEach var="partnerPlace" items="${partnerPlaceList }">
-	                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s" onclick=" location.href='/rental/partnerPlaces/${partnerPlace.partner_place_no}'; " style="cursor: pointer;">
+			<select class="form-select" id="guSelect">
+					<option value="0">전체</option>
+					<c:forEach var="gu" items="${guList }">
+						<option value="${gu.location_gu_name }" 
+							<c:if test="${gu.location_gu_name == location }">
+								selected
+							</c:if>
+						><c:out value="${gu.location_gu_name }" /></option>
+					</c:forEach>
+			</select>
+			
+			<div class="row g-4">
+<%-- 				<c:if test="${placeList.isEmpty() }">
+					<div style="margin-left: 6px;">
+						<h2><span style="color: #198754;">${type }</span> <span style="color: #198754;">${location }</span> 에 해당하는 검색결과가 없습니다.</h2>
+					</div>
+				</c:if> --%>
+				<c:forEach var="place" items="${placeList }">
+	                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s" onclick=" location.href='/place/${place.place_no}'; " style="cursor: pointer;">
 	                    <div class="service-item rounded overflow-hidden" style="height: auto;">
-	                    <!-- 클럽 대표 이미지 -->
-	                        <img src="${PageContext.requeset.contextPath }/resources/upload/partner_place/${partnerPlace.partner_place_image}" class="w-100 py-auto" style="height: 225px;">
+	                        <img src="${PageContext.requeset.contextPath }/resources/upload/place/${place.place_image}" class="w-100 py-auto" style="height: 225px;">
 	                        <div class="position-relative p-4 pt-0">
-	                            <h4 class="mb-3 py-2">${partnerPlace.partner_place_name }</h4>
+	                            <h4 class="mb-3 py-2">${place.place_name }</h4>
 	                            <div>
-		                            <span>${partnerPlace.partner_place_address }</span>
-		                            <div style="float: right;"><fmt:setLocale value="ko_KR"/><fmt:formatNumber type="currency" value="${partnerPlace.partner_place_price }" /><small> 원/시간</small></div>
+		                            <span>${place.place_address }</span>
+		                            <%-- <div style="float: right;"><fmt:setLocale value="ko_KR"/><fmt:formatNumber type="currency" value="${place.place_price }" /><small> 원/시간</small></div> --%>
 	                            </div>
 	                        </div>
 	                    </div>
 	                </div>
 	            </c:forEach>
-        	</div>    --%>    
-			
-			
+        	</div>       
 			
 			
 			

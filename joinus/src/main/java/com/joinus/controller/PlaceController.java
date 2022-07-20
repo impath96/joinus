@@ -1,19 +1,21 @@
 package com.joinus.controller;
 
-import java.io.IOException;
+import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.joinus.domain.MembersVo;
+import com.joinus.domain.PlacesVo;
 import com.joinus.service.PlaceService;
 
 @Controller
@@ -23,61 +25,66 @@ public class PlaceController {
 	private static final Logger log = LoggerFactory.getLogger(PlaceController.class);
 	
 	@Inject
-	private PlaceService service;
-	
-	
-	@RequestMapping(value = "/placeList", method = RequestMethod.GET)
-	public void placeList() throws IOException {
-		log.info(" placeList() 호출! ");
-		
-//		String url = "https://sports.news.naver.com/kbaseball/index.nhn";
-		String url = "https://www.spacecloud.kr/search?q=부산";
-		log.info("url: "+url);
-		
-		Document doc = null;
-		
-		try {
-			doc = Jsoup.connect(url).get();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		log.info(doc.toString());
-		
-//		Elements element = doc.select("div.home_news");
-//		
-//		String title = element.select("h2").text();
-//		log.info("title: "+title);
-//		
-//		for(Element el : element.select("li")) {
-//			log.info(el.text()); 
-//		}
-		
-	}
+	private PlaceService placeService;
 	
 	
 //	@RequestMapping(value = "/placeList", method = RequestMethod.GET)
-//	public void placeList() throws IOException {
-//		log.info(" placeList() 호출! ");
+//	public void roomListGET(Model model) throws IOException {
+//		log.info(" placeListGET() 호출 ");
 //		
-//		String url = "https://sports.news.naver.com/kfootball/index.nhn";
-//		log.info("url: "+url);
-//		
-//		Document doc = Jsoup.connect(url).get();
-//		
-//		Elements element = doc.select("div.home_news");
-//		
-//		String title = element.select("h2").text();
-//		log.info("title: "+title);
-//		
-//		for(Element el : element.select("li")) {
-//			log.info(el.text()); 
-//		}
-//		
+//		//service에서 저장한 크롤링 정보들을 JSONArray형태로 저장
+//		JSONArray placeList = service.placeList();
+//
+//		model.addAttribute("placeList", placeList);
 //	}
-
 	
-
+	
+	
+	// 시설 목록(비제휴)
+	// http://localhost:8088/place/placeList
+	@RequestMapping(value = "/placeList", method = RequestMethod.GET)
+	public String placeListGET(Model model, HttpSession session, @ModelAttribute("location") String location) {
+		log.info(" placeListGET() 호출 ");
+		log.info("location(지역정보) : "+location);
+		
+		List<PlacesVo> placeList = null;
+		location = "0";
+		if(location.equals("0")) {
+			log.info(" 시설목록(비제휴) 전체 출력 ");
+			placeList = placeService.getPlaceList();
+		} else if (!location.equals("0")) {
+			placeList = placeService.getCityPlaceList(location);
+		}
+		
+		for(PlacesVo vo : placeList) {
+			String[] addressArr = vo.getPlace_address().split(" ");
+			String address = addressArr[0].substring(0, 2) + " " + addressArr[1];
+			vo.setPlace_address(address);
+		}
+		
+		model.addAttribute("placeList", placeList);
+		
+		// 부산(구) 목록
+		model.addAttribute("guList", placeService.getBusanGuList());
+		
+		model.addAttribute("location", location);
+		
+		return "/place/placeList";
+	}
+	
+	
+	
+	// http://localhost:8088/place/1
+	// 시설상세(비제휴)
+	@RequestMapping(value = "/{place_no}", method = RequestMethod.GET)
+	public String placeContentGet(@PathVariable("place_no") int place_no, Model model) {
+		log.info(" placeContentGet() 호출 ");
+		
+		model.addAttribute("place", placeService.getPlaceContent(place_no));
+		
+		return "/place/placeContent";
+	}
+	
 	  
 	   
 	
