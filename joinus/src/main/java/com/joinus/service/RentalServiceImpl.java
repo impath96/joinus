@@ -82,6 +82,12 @@ public class RentalServiceImpl implements RentalService {
 	public int getRentalPlaceCnt() {
 		return dao.getRentalPlaceCnt();
 	}
+
+	@Override
+	public void updateLatelyRentalPlace(String reservation_no, int club_no, int member_no, int partner_place_no,
+			int payment_no, int rental_places_no) {
+		dao.updateLatelyRentalPlace(reservation_no, club_no, member_no, partner_place_no, payment_no, rental_places_no);
+	}
 	
 	
 	

@@ -94,6 +94,20 @@ public class RentalDaoImpl implements RentalDao {
 	public int getRentalPlaceCnt() {
 		return sqlSession.selectOne(NAMESPACE+".rentalPlaceCnt");
 	}
+
+	@Override
+	public void updateLatelyRentalPlace(String reservation_no, int club_no, int member_no, int partner_place_no,
+			int payment_no, int rental_places_no) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("reservation_no", reservation_no);
+		param.put("club_no", club_no);
+		param.put("member_no", member_no);
+		param.put("partner_place_no", partner_place_no);
+		param.put("payment_no", payment_no);
+		param.put("rental_places_no", rental_places_no);
+		
+		sqlSession.update(NAMESPACE+".updateLatelyRentalPlace", param);
+	}
 	
 	
 	

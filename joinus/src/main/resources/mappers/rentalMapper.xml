@@ -79,5 +79,11 @@
 	<select id="rentalPlaceCnt" resultType="java.lang.Integer">
 		select count(rental_places_no) from rental_places
 	</select>
+	
+	<!-- 결제 후 예약정보 update -->
+	<update id="updateLatelyRentalPlace">
+		update rental_places set reservation_no = #{reservation_no}, club_no =  #{club_no}, member_no = #{member_no}, partner_place_no = #{partner_place_no}, payment_no = #{payment_no}
+		where rental_places_no = #{rental_places_no}	
+	</update>
 
 </mapper>  

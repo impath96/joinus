@@ -269,13 +269,14 @@ public class RentalController {
 				@RequestParam("payment_price") int payment_price,
 //				@RequestParam("rental_time_no") int rental_time_no,
 				@PathVariable("partner_place_no") int partner_place_no,
-				RentalPlacesVo rentalplacevo, PaymentsVo paymentvo,HttpSession session){
+//				RentalPlacesVo rentalplacevo,
+				PaymentsVo paymentvo,HttpSession session){
 //				@RequestBody RentalPlacesVo rentalplacevo, PaymentsVo paymentvo,HttpSession session){
 			log.info(" 결제 정보 저장시작 ");
 			log.info(" 결제 정보 저장 호출 " + paymentvo);
 			
 			log.info("받아온 vo정보 . paymentvo : "+paymentvo);
-			log.info("받아온 vo정보 . RentalPlacesVo : "+rentalplacevo);
+//			log.info("받아온 vo정보 . RentalPlacesVo : "+rentalplacevo);
 
 				
 			// 주문번호 생성 (날짜-place_no)
@@ -294,7 +295,7 @@ public class RentalController {
 			paymentvo.setPayment_status(1);
 			
 			Integer pay = rentalService.pay(paymentvo);
-			rentalplacevo.setPayment_no(paymentvo.getPayment_no());
+//			rentalplacevo.setPayment_no(paymentvo.getPayment_no());
 			
 			if(pay == 1) {
 				log.info("결제 정보 저장 성공");
@@ -303,26 +304,34 @@ public class RentalController {
 			}
 			
 			log.info("rentalplace 저장시작");
-			//session 멤버정보처럼 클럽도 계속 넘겨서 받아와야함.. 일단 임의로 작성 -> null로 넣고 정모등록할 때 쓰는건..?
-			rentalplacevo.setClub_no(46);
-			rentalplacevo.setMember_no(mvo.getMember_no());
-			rentalplacevo.setRental_places_no(partner_place_no);
-			rentalplacevo.setReservation_no(rsNum);
-			//rentalplacevo.setRental_date(paymentvo.getPayment_date()); 데이터 받아오는 것보다 바로 넣어버리는건??
-//			rentalplacevo.setRental_date(rental_date);	// 시설이용일자
-//			rentalplacevo.setRental_time_no(rental_time_no);	// 시설이용시간
-			rentalplacevo.setRental_status(1);
+//			//session 멤버정보처럼 클럽도 계속 넘겨서 받아와야함.. 일단 임의로 작성 -> null로 넣고 정모등록할 때 쓰는건..?
+//			rentalplacevo.setClub_no(46);
+//			rentalplacevo.setMember_no(mvo.getMember_no());
+//			rentalplacevo.setRental_places_no(partner_place_no);
+//			rentalplacevo.setReservation_no(rsNum);
+//			//rentalplacevo.setRental_date(paymentvo.getPayment_date()); 데이터 받아오는 것보다 바로 넣어버리는건??
+////			rentalplacevo.setRental_date(rental_date);	// 시설이용일자
+////			rentalplacevo.setRental_time_no(rental_time_no);	// 시설이용시간
+//			rentalplacevo.setRental_status(1);
 			
 			
 			// update로 rentalPlace 정보 저장
 			int rentalPlaceCnt = rentalService.getRentalPlaceCnt();
 			log.info("rentalPlaceCnt : "+rentalPlaceCnt);
+			// 가장 최근에 저장한 RentalPlacesVo 꺼내기
+			RentalPlacesVo LatelyrentalPlace = rentalService.getLatelyRentalPlace();
+			log.info("LatelyrentalPlace : "+LatelyrentalPlace);
+			// rentalPlace 정보 저장
+			String reservation_no = rsNum;
+			int club_no = 46;	// club_no 정모생성시 예약정보불러올 때 club_no 안쓰면 컬럼지우기
+			int member_no = mvo.getMember_no();
+			int payment_no = paymentvo.getPayment_no();
+			int rental_places_no = rentalPlaceCnt;
+			rentalService.updateLatelyRentalPlace(reservation_no, club_no, member_no, partner_place_no, payment_no, rental_places_no);
+			log.info("rentalPlace 저장완료");
 			
-			
-			
-			rentalService.place(rentalplacevo);
-			log.info("rentalPlace 저장완료 : "+rentalplacevo);
-			
+//			rentalService.place(rentalplacevo);
+//			log.info("rentalPlace 저장완료 : "+rentalplacevo);
 			
 			return paymentvo;
 			

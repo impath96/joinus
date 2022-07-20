@@ -45,4 +45,7 @@ public interface RentalDao {
 	// 예약정보 개수
 	public int getRentalPlaceCnt();
 	
+	// 결제 후 예약정보 업데이트
+	public void updateLatelyRentalPlace(String reservation_no, int club_no, int member_no, int partner_place_no, int payment_no, int rental_places_no);
+	
 }
