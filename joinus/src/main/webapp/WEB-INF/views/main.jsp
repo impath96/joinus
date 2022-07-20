@@ -4,6 +4,24 @@
     
 <%@ include file="include/header.jsp"%>
 <link href="${PageContext.request.contextPath }/resources/css/ksm.css" rel="stylesheet">
+<style>
+	a.overlay {
+		display : block;
+		position : absolute;
+		
+		left : 0;
+		right : 0;
+		top : 0;
+		bottom : 0;
+		z-index : 2;
+	}
+	
+	a.overlay:hover {
+		background-color : black;
+		cursor : cursor;
+		opacity : 0.1;
+	}
+</style>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script type="text/javascript">
 
@@ -53,7 +71,7 @@ $(document).ready(function(){
 				            <div class="row g-4">              
 							<c:forEach var = "my" items="${my }">
 				                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
-				                    <div class="service-item rounded overflow-hidden Grrrr">
+				                    <div class="service-item rounded overflow-hidden Grrrr shadow">
 				                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${my.club_image}" class="w-100 py-auto mainImg"
 				                        onclick="location.href='${PageContext.request.contextPath }/club/${my.club_no}'">
 				                    <!-- 클럽 대표 이미지 -->
@@ -83,7 +101,10 @@ $(document).ready(function(){
 				            <div class="row g-4">              
 							<c:forEach var = "po" items="${popular }">
 				                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
-				                    <div class="service-item rounded overflow-hidden Grrrr">
+				                <div class="position-relative">
+				                	<a href="${PageContext.request.contextPath }/club/${po.club_no}" class="rounded overlay">
+							        </a>
+				                    <div class="service-item rounded overflow-hidden Grrrr shadow">
 				                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${po.club_image}" class="w-100 py-auto mainImg"
 				                        onclick="location.href='${PageContext.request.contextPath }/club/${po.club_no}'">
 				                    <!-- 클럽 대표 이미지 -->
@@ -97,6 +118,7 @@ $(document).ready(function(){
 					                            <p class="MainTextSub ">${po.club_content }</p>
 					                        </div>
 				                    </div>
+				                </div>
 				                </div>
 				            </c:forEach>
 				                </div>
@@ -112,19 +134,23 @@ $(document).ready(function(){
 				            <div class="row g-4">              
 							<c:forEach var = "nu" items="${Numerous }">
 				                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
-				                    <div class="service-item rounded overflow-hidden Grrrr">
-				                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${nu.club_image}" class="w-100 py-auto mainImg"
-				                        onclick="location.href='${PageContext.request.contextPath }/club/${nu.club_no}'">
-				                    <!-- 클럽 대표 이미지 -->
-						                    <c:if test="${empty nu.club_image}">
-						                    	<img src="../resources/img/joinus.jpg" class="w-100 py-auto"
-						                    	onclick="location.href='${PageContext.request.contextPath }/club/${nu.club_no}'">
-						                    </c:if>
-					                        <div class="position-relative p-4 pt-0">
-					                            <h4 class="mb-3 py-2 MainTextTitle">${nu.club_name }</h4>
-					                           
-					                            <p class="MainTextSub ">${nu.club_content }</p>
-					                        </div>
+				                	<div class="position-relative">
+					                	<a href="${PageContext.request.contextPath }/club/${nu.club_no}" class="rounded overlay">
+							            </a>
+					                    <div class="service-item rounded overflow-hidden Grrrr shadow">
+					                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${nu.club_image}" class="w-100 py-auto mainImg"
+					                        onclick="location.href='${PageContext.request.contextPath }/club/${nu.club_no}'">
+					                    <!-- 클럽 대표 이미지 -->
+							                    <c:if test="${empty nu.club_image}">
+							                    	<img src="../resources/img/joinus.jpg" class="w-100 py-auto"
+							                    	onclick="location.href='${PageContext.request.contextPath }/club/${nu.club_no}'">
+							                    </c:if>
+						                        <div class="position-relative p-4 pt-0">
+						                            <h4 class="mb-3 py-2 MainTextTitle">${nu.club_name }</h4>
+						                           
+						                            <p class="MainTextSub ">${nu.club_content }</p>
+						                        </div>
+					                    </div>
 				                    </div>
 				                </div>
 				            </c:forEach>
@@ -142,20 +168,24 @@ $(document).ready(function(){
 					            <div class="row g-4">              
 								<c:forEach var = "la" items="${latest }">
 					                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
-					                    <div class="service-item rounded overflow-hidden Grrrr">
-					                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${la.club_image}" class="w-100 py-auto mainImg"
-					                        onclick="location.href='${PageContext.request.contextPath }/club/${la.club_no}'">
-					                    <!-- 클럽 대표 이미지 -->
-							                    <c:if test="${empty la.club_image}">
-							                    	<img src="../resources/img/joinus.jpg" class="w-100 py-auto"
-							                    	onclick="location.href='${PageContext.request.contextPath }/club/${la.club_no}'">
-							                    </c:if>
-						                        <div class="position-relative p-4 pt-0">
-						                            <h4 class="mb-3 py-2 MainTextTitle">${la.club_name }</h4>
-						                           
-						                            <p class="MainTextSub ">${la.club_content }</p>
-						                        </div>
-					                    </div>
+					                	<div class="position-relative">
+						                	<a href="${PageContext.request.contextPath }/club/${la.club_no}" class="rounded overlay">
+						                	</a>
+						                    <div class="service-item rounded overflow-hidden Grrrr shadow">
+						                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${la.club_image}" class="w-100 py-auto mainImg"
+						                        onclick="location.href='${PageContext.request.contextPath }/club/${la.club_no}'">
+						                    <!-- 클럽 대표 이미지 -->
+								                    <c:if test="${empty la.club_image}">
+								                    	<img src="../resources/img/joinus.jpg" class="w-100 py-auto"
+								                    	onclick="location.href='${PageContext.request.contextPath }/club/${la.club_no}'">
+								                    </c:if>
+							                        <div class="position-relative p-4 pt-0">
+							                            <h4 class="mb-3 py-2 MainTextTitle">${la.club_name }</h4>
+							                           
+							                            <p class="MainTextSub ">${la.club_content }</p>
+							                        </div>
+						                    </div>
+						                  </div>
 					                </div>
 					            </c:forEach>
 					                </div>
