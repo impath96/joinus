@@ -13,56 +13,34 @@
 		<br>
 		<br>
 		<br>
-		
-    <div class="container-xxl py-5">
-        <div class="container py-5">
+	<!-- 이달의 모임 -->
+	   <div class="container-xxl py-5">
+        <div class="container">
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                 <h1 class="mb-4">이달의 모임</h1>
             </div>
-            <div class="owl-carousel testimonial-carousel wow fadeInUp py-5" data-wow-delay="0.1s" id="multiple-carousel">
-                 <div class="testimonial-item text-center">
-                    <div class="testimonial-img position-relative">
-                        <img class="img-fluid rounded-circle mx-auto mb-5" id="club_image1" src="">
-                        <div class="btn-square bg-primary rounded-circle">
-                            <i class="fa fa-quote-left text-white"></i>
-                        </div>
-                    </div>
-                    <div class="testimonial-text text-center rounded p-4">
-                        <p id="club_content1"></p>
-                        <h5 class="mb-1" id="club_name1"></h5>
-                    </div>
-                </div>
-                
+            <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
+                <c:forEach var ="month" items="${clubMonthList }">
                 <div class="testimonial-item text-center">
                     <div class="testimonial-img position-relative">
-                        <img class="img-fluid rounded-circle mx-auto mb-5" id="club_image2" src=""> 
+                        <img class="img-fluid rounded-circle mx-auto mb-5" src="${PageContext.request.contextPath}/resources/upload/clubs/${month.clubsVo.club_image }">
                         <div class="btn-square bg-primary rounded-circle">
                             <i class="fa fa-quote-left text-white"></i>
                         </div>
                     </div>
                     <div class="testimonial-text text-center rounded p-4">
-                    <p id="club_content2"></p>
-                        <h5 class="mb-1" id="club_name2"></h5>
+                        <p>${month.clubsVo.club_content }</p>
+                        <h5 class="mb-1">${month.clubsVo.club_name }</h5>
+                        <span class="fst-italic">Profession</span>
                     </div>
                 </div>
-                <div class="testimonial-item text-center">
-                    <div class="testimonial-img position-relative">
-                        <img class="img-fluid rounded-circle mx-auto mb-5" id="club_image3" src="">
-                        <div class="btn-square bg-primary rounded-circle">
-                            <i class="fa fa-quote-left text-white"></i>
-                        </div>
-                    </div>
-                    <div class="testimonial-text text-center rounded p-4">
-                    <p id="club_content3"></p>
-                        <h5 class="mb-1" id="club_name3"></h5>
-                    </div>
-                </div> 
-                
-
+                </c:forEach>
             </div>
         </div>
-    </div>
-    <!-- Testimonial End -->
+    </div>	
+	<!-- 이달의 모임 -->	
+		
+    
 	
 	<!-- 소개 -->
 		
@@ -168,6 +146,7 @@
         </div>            
         </div>
         <br>
+        <!-- 페이징처리 -->
         <div class="d-flex justify-content-center py-3">
         	<ul class="list-group list-group-horizontal">
         		<c:if test="${pm.prev }">
@@ -185,7 +164,7 @@
         	
         	</ul>
         </div>
-        
+        <!-- 페이징처리 -->
         
     </div>
     <!-- Projects End -->
@@ -198,7 +177,7 @@ $(function(){
 	var interest_detail_no = null;
 	//alert(interest_no);
 	
-		$.ajax({
+/* 		$.ajax({
 			url :'${PageContext.request.contextPath}/club/clubList/Month',
 			type : 'GET',
 			dataType : "json",
@@ -223,7 +202,7 @@ $(function(){
 				console.log(data[1].clubsVo.club_image);
 				console.log(data[2].clubsVo.club_image);
 				
-			}	
+			} */	
 			
 		//	$(data).each(function(idx,item){
 				
