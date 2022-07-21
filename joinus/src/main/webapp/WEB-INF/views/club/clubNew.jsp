@@ -4,6 +4,9 @@
 <link href="${PageContext.request.contextPath }/resources/css/ksm.css" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -57,15 +60,8 @@ $(document).ready(function(){
 				$('.detail').slideDown(); //숨겨진 detail 출력
 				$('html,body').animate({ scrollTop: $('#newDetail').offset().top }, 200); //포커스이동
 				
-				
-				
-				
 				}
-		 		
-			
-			
 		});
-			
 	}); 
 	
 	// 모임이름 중복체크
@@ -106,20 +102,11 @@ $(document).ready(function(){
 	
 	//유효성체크
 	$('#clubBtn').click(function(){
-		 // 모임이름, 소개, 정원을 필수값으로
-		 
-		 
-		 var reg =/[^0-9]/g;
-		 //정원은 숫자만 가능하도록
+		 // 모임이름, 정원을 필수값으로
 		 
 		 if($('#clubName').val() == ""){
 			 alert('모임의 이름을 입력해주세요');
 			 $('#clubName').focus();
-			 return false;
-		 }
-		 if($('#clubContent').val() == ""){
-			 alert('모임의 소개글을 입력해주세요');
-			 $('#clubContent').focus();
 			 return false;
 		 }
 		 if($('#clubcapacity').val() == ""){
@@ -129,9 +116,28 @@ $(document).ready(function(){
 		 }
 		 
 		 
-		
 	});
 	
+	
+	$('#clubcapacity').keyup(function(){
+		if($('#clubcapacity').val() > 51){
+			 $("#retry2").text("모임 인원은 최대 50명입니다.");
+			 $("#retry2").css("color","red");
+			 $('#clubBtn').attr("disabled",true);
+			 $('#club_capacity').focus();
+		}
+		if($('#clubcapacity').val() < 2){
+			 $("#retry2").text("모임 인원은 최소 3명입니다.");
+			 $("#retry2").css("color","red");
+			 $('#clubBtn').attr("disabled",true);
+			 $('#club_capacity').focus();
+		}
+		if($('#clubcapacity').val() > 2 || $('#clubcapacity').val() < 51 ){
+			 $('#clubBtn').attr("disabled",false);
+		     $("#retry").text("");
+		}
+	});
+	 
 	
 });
 
@@ -161,7 +167,7 @@ function select(item){
         </div>
      
 
-		<div class="row g-4 text-center justify py-5 shadow-sm" style="background-color: #F6F7F8; border-radius: 50px;">
+		<div class="row g-4 text-center justify py-5 shadow" style="background-color: #F6F7F8; border-radius: 50px;">
              
            <!--  <div class="col-lg-6 contact-text py-5 wow fadeIn" data-wow-delay="0.5s" id="centercontrol"> -->
 	             
@@ -176,7 +182,7 @@ function select(item){
                   			</ul>
                   </div>
                   <div id="select2" >
-                  			<ul class="interTable">
+                  			<ul class="interTable shadow">
                   			<li id="inter1">요리/제조</li>
                   			<li id="inter2">봉사활동</li>
                   			<li id="inter3">운동/스포츠</li>
@@ -194,7 +200,7 @@ function select(item){
                </div>     	 	
                   	 	
 		           <div class="detail marginTOP" >
-          		    <div class="row g-4 text-center justify py-5 shadow-sm" style="background-color: #F6F7F8; border-radius: 50px;"> 
+          		    <div class="row g-4 text-center justify py-5 shadow" style="background-color: #F6F7F8; border-radius: 50px;"> 
 		                   	 	
 			                 <p class="sub2"> 2. 세부관심사를 선택해주세요 </p><br>   
 			                 <hr>
@@ -209,36 +215,35 @@ function select(item){
                   <div class="detail2 marginTOP" >
                				<br><br>
                        
-          		   <div class="g-4 py-5 shadow-sm text-center" style="background-color: #F6F7F8; border-radius: 50px;">
-                         <input type="hidden" value="${membervo.member_no}" name="member_no" >                      
+          		   <div class="g-4 py-5 shadow text-center" style="background-color: #F6F7F8; border-radius: 50px;">
 		                 <p class="sub2"> 3. 모임의 정보를 작성해주세요 </p>
 		                 <br><hr>     
-        
-                         <div class="text-center" align="center">
+	                  	   <div class="row g-4 text-center justify" >
                          <form action="" method="post" enctype="multipart/form-data" class="form_" >    
-	                  	   <div class="row g-4 text-center justify flex-column" >
+                         <input type="hidden" value="${membervo.member_no}" name="member_no" >                      
+        
 	               			 
-	               			  <div class="col-md-6">
+	               			  <div class="col-md-6 mb-sm-4">
                                     <div class="form-floating">
                                         <input type="text" class="form-control" name="member_location" readonly="readonly" value="${membervo.member_location}" id="location">
                                         <label for="name">지역</label>
                                     </div>
                                 </div>
                                 
-                                <div class="col-md-6">
+                                <div class="col-md-6 mb-sm-4">
                                     <div class="form-floating">
                                         <input type="text" class="form-control" id="interest" name="interest_no" readonly="readonly">
                                         <label for="name">관심사</label>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 mb-sm-4">
                                     <div class="form-floating" >
                                         <input type="text" class="form-control" id="interest_detail" name="interest_detail_name" readonly="readonly">
                                         <label for="name">세부관심사</label>
                                     </div>
                                 </div>
                                 
-                                  <div class="col-12">
+                                  <div class="col-md-6">
                                     <div class="form-floating">
                                         <input type="text" class="form-control" id="clubName" name="club_name" >
                                         <label for="subject">모임이름</label>
@@ -246,17 +251,18 @@ function select(item){
                                     <p id="retry" class="GreenP"></p>
                                 </div>
                                 <div class="col-12">
-                                    <div class="form-floating">
+                                    <div class="form-floating mb-sm-4">
                                         <textarea class="form-control" name="club_content" id="clubContent" style="height: 100px;"></textarea>
-                                        <label for="message">모임의 소개글을 입력하세요</label>
+                                       <!--  <label for="message">모임의 소개글을 입력하세요</label> -->
                                     </div>
                                 </div>
-                                <div class="col-md-6" align="left">
+                                <div class="col-md-6" >
                                     <div class="form-floating"  align="left">
-                                        <input type="text" class="form-control" name="club_capacity" id="clubcapacity"
+                                        <input type="number" class="form-control" name="club_capacity" id="clubcapacity" min="3" max="50"
                                         onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
                                         <label for="name">정원</label>
                                     </div>
+                                    <p id="retry2" class="GreenP"></p>
                                 </div>
                               
                            
@@ -272,17 +278,13 @@ function select(item){
                                     </div> 
                                     <hr> 
                                  <div class="col-12">
-                                    <button class="btn btn-primary rounded-pill py-3 px-5" type="submit" id="clubBtn">모임 개설하기</button>
+                                    <button class="btn btn-primary rounded-pill py-3 px-5" type="submit" id="clubBtn" >모임만들기</button>
                                 </div>
-                             </div>
                         </form>
                              </div>
+                             </div>
+                             </div>
                         
-                        
-                                  </div>
-                              </div> 
-                              
-                              
         </div>
    </div>
      
@@ -290,6 +292,13 @@ function select(item){
     
     </body>
 	
-
+<script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
+<script>
+	ClassicEditor
+		.create(document.querySelector('#clubContent'))
+		.catch(error=>{
+			console.error(error);
+	});
+</script>
     
 <%@ include file="../include/footer.jsp"%>

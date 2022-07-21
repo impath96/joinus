@@ -278,9 +278,28 @@
 					
                  	      	<div class="clubDetailBox" style="width:424px;">
 							<h4 class="greenColor shadow-sm" > 모임 정보 </h4>
-		                      <p id="club_content" > &#128226; 정원) ${clubvo.club_capacity } 명<br> 
-		                     						 &#128226; 관심사) ${interDetail }<br>
-		                     						 &#128226; 활동지역) ${clubvo.club_location } </p><br>
+		                     	<div align="center">
+		                     	
+		                     	<table class="clubInfoTable text-center">
+		                     		<tr>
+		                     			<td class="borderRight"> &#128694; 정원</td>
+		                     			<td>${clubvo.club_capacity } 명</td>
+		                     		</tr>
+		                     		<tr>
+		                     			<td class="borderRight"> &#128111; 현재 모임원</td>
+		                     			<td>${clubvo.club_capacity } 명</td>
+		                     		</tr>
+		                     		<tr>
+		                     			<td class="borderRight"> &#128150; 관심사</td>
+		                     			<td>${interDetail }</td>
+		                     		</tr>
+		                     		<tr>
+		                     			<td class="borderRight"> &#128681; 활동지역</td>
+		                     			<td>${clubvo.club_location }</td>
+		                     		</tr>
+		                     	
+		                     	</table>
+		                 	    </div>
                  	      	</div>
 					 
 				
