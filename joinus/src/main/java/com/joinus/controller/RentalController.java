@@ -215,8 +215,19 @@ public class RentalController {
 		return "/rental/partnerPlaceContent";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/partnerPlaces/{partner_place_no}/dateCheck", method = RequestMethod.GET)
+	public List<Integer> rentalDateGet(@PathVariable("partner_place_no") Integer partner_place_no, 
+			@RequestParam("rental_date") Date rental_date){
+		log.info(" rentalDateGet() 호출 ");
+		log.info("partnoer_place_no : "+partner_place_no);
+		log.info("rental_date : "+rental_date);
+		log.info("rental_date 데이터타입 : "+rental_date.getClass().getName());
+		
+		return null;
+	}
 	
-
+	
 	@RequestMapping(value = "/partnerPlaces/{partner_place_no}", method = RequestMethod.POST)
 	public String partnerPlaceContentPost(PartnerPlacesVo partnerplacevo ,PaymentsVo paymentvo, 
 			Model model, @RequestParam("rental_time_no") int rentaltimeno,

@@ -10,6 +10,8 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script type="text/javascript">
+	var partner_place_no = ${partner_place_no};
+	alert("partner_place_no : "+partner_place_no);
 
 	// 캘린더
 	var config = {
@@ -67,14 +69,30 @@
 		});
 		
 		// 시간 선택 시 예약된 정보 비교 및 막기
+		// 시간 선택 시 말고 걍 일자 등록하고 나서 바로 갔다왔음 좋겠음
+		// => 일자값이 공백이 아니면,,  안되네.. 걍 시간 선택 시 ㄱㄱ
 		$('#rental_time_no').click(function(){
 // 			alert('시간선택');
 			$("select option[value*='1']").prop('disabled', true);
 			$("select option[value*='3']").prop('disabled', true);
+// 			var rental_date = $('#rental_date').val();
+// 			alert("rental_date : "+rental_date);
+			
+			$.ajax({
+				url : '${PageContext.request.contextPath }/rental/partnerPlaces/'+${partner_place_no}+'/dateCheck',
+				type : 'GET',
+				data : {'rental_date':$('#rental_date').val()},
+				success : function(){
+// 					alert('갔다옴');
+					$("select option[value*='2']").prop('disabled', true);
+				}
+			});
+			
+			
 		});
 		
 		
-	});
+	});	// jQuery
 
 
 </script>
