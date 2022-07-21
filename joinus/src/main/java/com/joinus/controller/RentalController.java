@@ -208,8 +208,8 @@ public class RentalController {
 		
 		model.addAttribute("partnerPlace", rentalService.getPartnerPlaceContent(partner_place_no));
 		model.addAttribute("checkClubAdmin", result);
-//		List<RentalPlacesVo> rentalPlaceDate = rentalService.getRentalPlaceDate(partner_place_no);
-//		log.info("rentalPlaceDate : "+rentalPlaceDate);
+		List<RentalPlacesVo> rentalPlaceDate = rentalService.getRentalPlaceDate(partner_place_no);
+		log.info("rentalPlaceDate : "+rentalPlaceDate);
 		model.addAttribute("rentalPlaceDate", rentalService.getRentalPlaceDate(partner_place_no));
 		
 		return "/rental/partnerPlaceContent";
@@ -226,11 +226,6 @@ public class RentalController {
 //		log.info("rentalplacevo 예약정보 : "+rentalplacevo);
 //		log.info("rental_date : "+rental_date);
 		rentalService.insertPlaceBeforePay(rental_date, rentaltimeno);
-		// 가장 최근에 저장한 RentalPlacesVo 꺼내기
-		RentalPlacesVo rentalPlace = rentalService.getLatelyRentalPlace();
-		log.info("rentalPlace : "+rentalPlace);
-		rentalPlace.setClub_no(46);
-		log.info("rentalPlace 모임번호 set으로 지정 디비에서도 바뀔까? : "+rentalPlace);
 		
 		String ppname = partnerplacevo.getPartner_place_name();
 		model.addAttribute("ppname", ppname);
@@ -323,11 +318,11 @@ public class RentalController {
 			log.info("LatelyrentalPlace : "+LatelyrentalPlace);
 			// rentalPlace 정보 저장
 			String reservation_no = rsNum;
-			int club_no = 46;	// club_no 정모생성시 예약정보불러올 때 club_no 안쓰면 컬럼지우기
+//			int club_no = 46;	// club_no 정모생성시 예약정보불러올 때 club_no 안쓰면 컬럼지우기
 			int member_no = mvo.getMember_no();
 			int payment_no = paymentvo.getPayment_no();
 			int rental_places_no = rentalPlaceCnt;
-			rentalService.updateLatelyRentalPlace(reservation_no, club_no, member_no, partner_place_no, payment_no, rental_places_no);
+			rentalService.updateLatelyRentalPlace(reservation_no, member_no, partner_place_no, payment_no, rental_places_no);
 			log.info("rentalPlace 저장완료");
 			
 //			rentalService.place(rentalplacevo);

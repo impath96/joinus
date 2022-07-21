@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
 <%@ include file="../include/header.jsp"%>
@@ -65,11 +66,22 @@
 			
 		});
 		
+		// 시간 선택 시 예약된 정보 비교 및 막기
+		$('#rental_time_no').click(function(){
+// 			alert('시간선택');
+			$("select option[value*='1']").prop('disabled', true);
+			$("select option[value*='3']").prop('disabled', true);
+		});
+		
+		
 	});
 
 
 </script>
 
+<c:forEach var="rental" items="${rentalPlaceDate }">
+	${rental.rental_date } / ${rental.rental_time_no }<br>
+</c:forEach>
 <div class="container-xxl py-5">
 	<div class="container" style="color: black;">
 		<div class="row g-5">
@@ -119,7 +131,7 @@
 					
 					
 					<div>
-					예약인원 <input type="number" class="form-control" id="memberCnt" name="memberCnt" max="20" required>
+					예약인원 <input type="number" class="form-control" id="memberCnt" name="memberCnt" max="20" required style="color: black;">
 					</div>
 					
 					<script type="text/javascript">
@@ -139,13 +151,13 @@
 					<!-- 일자 -->
 					<div style="margin-bottom: 2em;">
 						날짜 선택 (아래의 버튼을 클릭해주세요)
-						<input class="form-control" id="rental_date" name="rental_date" autocomplete="off" readonly style="background-color: white;">
+						<input class="form-control" id="rental_date" name="rental_date" autocomplete="off" readonly style="background-color: white; color: black;">
 					</div>
 					
 					<!-- 시간 -->
 					<div style="margin-bottom: 2em;">
 						시간 선택
-						<select class="form-select" id="rental_time_no" name="rental_time_no">
+						<select class="form-select" id="rental_time_no" name="rental_time_no" style="color: black;">
 							<option value="">시간을 선택해주세요.</option>
 							<option value="1">10:00~12:00</option>
 							<option value="2">12:00~14:00</option>
