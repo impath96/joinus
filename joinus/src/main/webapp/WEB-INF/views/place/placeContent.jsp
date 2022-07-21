@@ -14,7 +14,6 @@
 		$(':button').attr('class','btn btn-primary');
 	});
 
-
 </script>
 
 <div class="container-xxl py-5">
@@ -70,20 +69,6 @@
 					예약인원 <input type="number" class="form-control" id="memberCnt" name="memberCnt" required>
 					</div>
 					
-					<script type="text/javascript">
-						var memberCnt = 0;
-						var totalPrice = 0;
-						$('#memberCnt').blur(function(){
-							memberCnt = $('#memberCnt').val();
-							totalPrice = memberCnt * ${partnerPlace.partner_place_price} * 2
-// 							alert("totalPrice : "+ totalPrice);
-							document.getElementById("seePrice").innerHTML = totalPrice.toLocaleString();	// 보여줄 땐 천단위마다 콤마
-							$('#totalPrice').val(totalPrice);
-							
-						});
-					</script>
-					
-					
 					일자
 					<div style="margin-bottom: 2em;">
 						날짜 선택 (아래의 버튼을 클릭해주세요)
@@ -115,56 +100,11 @@
 						<input type="submit" class="btn btn-primary rounded-pill py-3 px-5" id="subBtn" value="결제하기">
 					</div>
 				
+-->
 				</form>
 			</div>
-			전달할 정보
--->
-			
 		</div>
 	</div>
 </div>
 
-<!-- 
-<script>
-	var partnerPlaceAddr = document.getElementById("partnerPlaceAddr").innerText;
-	var partnerPlaceName =  document.getElementById("partnerPlaceName").innerText;
-	
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-	mapOption = {
-	    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-	    level: 3 // 지도의 확대 레벨
-	};  
-	
-	//지도를 생성합니다    
-	var map = new kakao.maps.Map(mapContainer, mapOption);
-	
-	// 주소-좌표 변환 객체를 생성합니다
-	var geocoder = new kakao.maps.services.Geocoder();
-	
-	// 주소로 좌표를 검색합니다
-	geocoder.addressSearch(partnerPlaceAddr, function(result, status) {
-
-	    // 정상적으로 검색이 완료됐으면 
-	     if (status === kakao.maps.services.Status.OK) {
-
-	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-	        // 결과값으로 받은 위치를 마커로 표시합니다
-	        var marker = new kakao.maps.Marker({
-	            map: map,
-	            position: coords
-	        });
-
-	        // 인포윈도우로 장소에 대한 설명을 표시합니다
-	        var infowindow = new kakao.maps.InfoWindow({
-	            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+partnerPlaceName+'</div>'
-	        });
-	        infowindow.open(map, marker);
-
-	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-	        map.setCenter(coords);
-	    } 
-	});    
-</script>
- -->    
 <%@ include file="../include/footer.jsp"%>
