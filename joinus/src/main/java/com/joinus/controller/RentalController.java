@@ -218,13 +218,16 @@ public class RentalController {
 	@ResponseBody
 	@RequestMapping(value = "/partnerPlaces/{partner_place_no}/dateCheck", method = RequestMethod.GET)
 	public List<Integer> rentalDateGet(@PathVariable("partner_place_no") Integer partner_place_no, 
-			@RequestParam("rental_date") Date rental_date){
+			@RequestParam("rental_date") Date rental_date, Model model){
 		log.info(" rentalDateGet() 호출 ");
 		log.info("partnoer_place_no : "+partner_place_no);
 		log.info("rental_date : "+rental_date);
 		log.info("rental_date 데이터타입 : "+rental_date.getClass().getName());
+		List<Integer> rentalTimeList = rentalService.getRentalTime(rental_date, partner_place_no);
+		log.info(rental_date+"에 해당하는 예약시간리스트 : "+rentalTimeList);
+		model.addAttribute("rentalTimeList", rentalTimeList);
 		
-		return null;
+		return rentalTimeList;
 	}
 	
 	

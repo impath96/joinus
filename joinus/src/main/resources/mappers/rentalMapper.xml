@@ -47,6 +47,12 @@
 		from rental_places
 		where partner_place_no = #{partner_place_no}
 	</select>
+	
+	<!-- 예약 시간 리스트 -->
+	<select id="getRentalTime" resultType="java.lang.Integer">
+		select rental_time_no from rental_places
+		where rental_date = #{rental_date} and partner_place_no = #{partner_place_no}
+	</select>
 
 
 	<!-- 결제 -->

@@ -31,6 +31,9 @@ public interface RentalDao {
 	// 예약 일자/시간 정보 리스트
 	public List<RentalPlacesVo> getRentalPlaceDate(int partner_place_no);
 	
+	// 예약 시간 리스트
+	public List<Integer> getRentalTime(Date rental_date, Integer partner_place_no);
+	
 	//결제
 	public Integer pay(PaymentsVo vo);
 	//결제 후 예약리스트 저장

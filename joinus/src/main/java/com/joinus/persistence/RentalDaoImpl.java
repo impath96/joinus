@@ -65,6 +65,15 @@ public class RentalDaoImpl implements RentalDao {
 	public List<RentalPlacesVo> getRentalPlaceDate(int partner_place_no) {
 		return sqlSession.selectList(NAMESPACE+".getRentalPlaceDate", partner_place_no);
 	}
+	
+	@Override
+	public List<Integer> getRentalTime(Date rental_date, Integer partner_place_no) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("rental_date", rental_date);
+		param.put("partner_place_no", partner_place_no);
+		
+		return sqlSession.selectList(NAMESPACE+".getRentalTime", param);
+	}
 
 	@Override
 	public Integer pay(PaymentsVo vo) {

@@ -73,23 +73,53 @@
 		// => 일자값이 공백이 아니면,,  안되네.. 걍 시간 선택 시 ㄱㄱ
 		$('#rental_time_no').click(function(){
 // 			alert('시간선택');
-			$("select option[value*='1']").prop('disabled', true);
+// 			$("select option[value*='1']").prop('disabled', true);
 			$("select option[value*='3']").prop('disabled', true);
 // 			var rental_date = $('#rental_date').val();
 // 			alert("rental_date : "+rental_date);
+
+			var timeList = [];
+// 			console.log(timeList);
 			
 			$.ajax({
 				url : '${PageContext.request.contextPath }/rental/partnerPlaces/'+${partner_place_no}+'/dateCheck',
 				type : 'GET',
+				async : false,	// 전역변수에 데이터 저장
 				data : {'rental_date':$('#rental_date').val()},
-				success : function(){
+				success : function(data){
 // 					alert('갔다옴');
-					$("select option[value*='2']").prop('disabled', true);
+// 					$("select option[value*='2']").prop('disabled', true);
+// 					console.log(data);
+					timeList = data;
 				}
 			});
 			
+			console.log("해당 일자의 예약 시간대 Arr : "+timeList);
 			
-		});
+// 			for(var i=0; i<timeList.length; i++){
+// 				console.log(timeList[i]);
+// 			}
+			
+			$('#timeList').text(timeList);
+			
+			// select option 값 들고와서 ajax 리스트 데이터와 비교
+			// select option value를 배열로 저장
+			var select = document.getElementById("rental_time_no");
+			var optionVal = [];
+			
+			for(var i=1; i<select.length; i++){
+				// 0부터 시작하면 value = ""이 포함되므로 value값이 있는 1부터 시작
+				console.log(select.options[i].value);
+				optionVal.push(select.options[i].value);
+			}
+			
+			console.log("optionValueArr : "+optionVal);
+			
+			console.log(timeList);
+			console.log(optionVal);
+			
+			
+		});	// 시간 선택 시 예약시간 막기
 		
 		
 	});	// jQuery
@@ -100,6 +130,8 @@
 <c:forEach var="rental" items="${rentalPlaceDate }">
 	${rental.rental_date } / ${rental.rental_time_no }<br>
 </c:forEach>
+<div id="timeList">
+</div>
 <div class="container-xxl py-5">
 	<div class="container" style="color: black;">
 		<div class="row g-5">
@@ -177,7 +209,11 @@
 						시간 선택
 						<select class="form-select" id="rental_time_no" name="rental_time_no" style="color: black;">
 							<option value="">시간을 선택해주세요.</option>
-							<option value="1">10:00~12:00</option>
+							<option value="1"
+								<c:if test="${test =='1' }">
+									disabled
+								</c:if>
+							>10:00~12:00</option>
 							<option value="2">12:00~14:00</option>
 							<option value="3">14:00~16:00</option>
 							<option value="4">16:00~18:00</option>
