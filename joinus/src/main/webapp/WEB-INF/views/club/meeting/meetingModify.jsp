@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../../include/header.jsp"%>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ce8d060125bcc89e0c25ee69f6b5c7b0&libraries=services"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"> </script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="${PageContext.request.contextPath }/resources/css/jquery.datetimepicker.css">
+<script src="${PageContext.request.contextPath }/resources/js/jquery.datetimepicker.full.min.js"></script>
 
 <style>
 .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
@@ -73,12 +77,12 @@
     <!-- 예약 정보 -->  
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">일정 수정하기</h4>
-        <form class="needs-validation" action ="" method="post">
+        <form class="needs-validation" action ="${PageContext.request.contextPath}/club/${clubInfo[0].club_no}/meeting/${meetingList[0].club_meeting_no}/modify" method="post">
           <div class="row g-3">
           
             <div class="col-12">
               <label for="firstName" class="form-label">제목</label>
-              <input type="text" class="form-control" name="club_meeting_title" value="${meetingList[0].club_meeting_title}">
+              <input type="text" class="form-control" name="club_meeting_title" value="${meetingList[0].club_meeting_title}"  required="">
               <div class="invalid-feedback">
                 Valid first name is required. 
               </div>
@@ -86,15 +90,7 @@
             
             <div class="col-12">
               <label for="address" class="form-label">🗓️ 날짜</label>
-              <input type="date" class="form-control" id="club_meeting_date" value="${meetingList[0].club_meeting_date}">
-              <div class="invalid-feedback">
-                Please enter your shipping address.
-              </div>
-            </div>
-            
-             <div class="col-12">
-              <label for="address" class="form-label">⏰ 시간</label>
-              <input type="text" class="form-control" id="club_meeting_time" value="${meetingList[0].club_meeting_time}" >
+              <input type="text" class="form-control" id="datetimepicker" name="club_meeting_date" value='${meetingList[0].club_meeting_date}'  required="">
               <div class="invalid-feedback">
                 Please enter your shipping address.
               </div>
@@ -102,7 +98,7 @@
             
             <div class="col-12">
               <label for="address" class="form-label">🙋 정원</label>
-              <input type="number" class="form-control" name="club_meeting_capacity" value="${meetingList[0].club_meeting_capacity}">
+              <input type="number" class="form-control" name="club_meeting_capacity" value="${meetingList[0].club_meeting_capacity}"  required="">
               <div class="invalid-feedback">
                 Please enter your shipping address.
               </div>
@@ -113,11 +109,11 @@
             <div class="col-12">
               <label for="address" class="form-label">🏩 장소</label>
               	<div class="input-group py-2">
-              		<input type="text" class="form-control" id="club_meeting_location" >
+              		<input type="text" class="form-control" id="club_meeting_location" name="club_meeting_location" value="${meetingList[0].club_meeting_location}" >
              		<button type="button" class="btn btn-secondary" id ="search">검색하기</button>
             	</div>
             	<!-- 주소 -->
-            	<input type="text" class="form-control py-2" id="club_meeting_address"  value="${meetingList[0].club_meeting_address}">
+            	<input type="text" class="form-control py-2" id="club_meeting_address" name="club_meeting_address"  value="${meetingList[0].club_meeting_address}">
 				<!-- 지도 -->
 				<div class="map_wrap py-2">
 					<div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
@@ -134,8 +130,8 @@
             </div>
             
             <div class="col-12">
-              <label for="address2" class="form-label">참가비 <span class="text-muted">(선택)</span></label>
-              <input type="number" class="form-control" name="club_meeting_dues" value="${meetingList[0].club_meeting_dues}">
+              <label for="address2" class="form-label">참가비 <span class="text-muted"></span></label>
+              <input type="number" class="form-control" name="club_meeting_dues" value="${meetingList[0].club_meeting_dues}"  required="">
             </div>
 
           </div>
@@ -146,7 +142,7 @@
 
 			<div class="row gy-3">
 	            <div class="col-md-6">
-	              <input type="text" class="form-control" id="club_meeting_content" placeholder="" required="">
+	              <input type="text" class="form-control" id="club_meeting_content" name="club_meeting_content" value="${meetingList[0].club_meeting_content}" placeholder="" required="">
 	              <div class="invalid-feedback">
 	                Name on card is required
 	              </div>
@@ -157,9 +153,7 @@
 			<div class="margin">
 			
 			<div class="btn-group">
-			<button type="submit" class="btn btn-secondary btn-flat"
-				onclick ="location.href='${PageContext.request.contextPath}/club/${clubInfo[0].club_no}/meeting/${meetingList[0].club_meeting_no}/modify';"
-				>수정하기</button>
+			<button type="submit" class="btn btn-secondary btn-flat">수정하기</button>
 			</div>
 			
 			</div>
@@ -441,13 +435,25 @@ var location = $('input#club_meeting_location').val();
 
 		// 키워드로 장소를 검색합니다
 		searchPlaces();
-
-
 	});
 	
-	
-	
 });//jquery
+
+
+</script>
+
+<script>
+$(function(){
+    	
+  jQuery('#datetimepicker').datetimepicker({
+		format:'Y-m-d H:i',
+	 	lang:'ko',
+		minDate: 0,
+		step : 30 
+	  });
+  });
+  
+	jQuery.datetimepicker.setLocale('kr');
 
 
 </script>

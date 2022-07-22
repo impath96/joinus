@@ -7,8 +7,15 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
@@ -21,6 +28,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,7 +67,7 @@ import com.joinus.service.ClubService;
 @RequestMapping("/club/*")
 public class ClubController {
 	
-	@Inject
+	@Autowired
 	private ClubService service;
 	
 	private static final Logger log = LoggerFactory.getLogger(ClubController.class);
@@ -256,7 +264,7 @@ public class ClubController {
 		public String meetingWritegPOST(Model model,
 				@PathVariable("club_no") Integer club_no, HttpSession session) {
 			
-			log.info("meetingWritePOST() 호출");
+			log.info("meetingWriteGET() 호출");
 			
 			MembersVo member = (MembersVo) session.getAttribute("member");
 			log.info(member+"");
@@ -279,14 +287,31 @@ public class ClubController {
 		@RequestMapping(value="/{club_no}/meeting/new", method = RequestMethod.POST)
 		public String clubMeetingGET(Model model, ClubMeetingsVo vo, RedirectAttributes rttr,
 				@PathVariable("club_no") Integer club_no, HttpSession session) {
-			log.info("clubMeeting new() 호출");
+			log.info("meetingWritePOST() 호출");
 			
-			//log.info(vo+"");
+			log.info(vo+"");
 			
+			//비회원
+			int result = 0;
+			
+			if(session.getAttribute("member") != null) {
+				MembersVo member = (MembersVo) session.getAttribute("member");
+				log.info(member+"");
+				
+				int member_no =member.getMember_no();
+				result = service.checkClubRole(club_no, member_no);
+				//result = 3 : 클럽 미가입 회원
+				//result = 1 : 클럽 가입 회원
+				//result = 2 : 클럽장
+			}
+			
+	
 			service.createMeeting(vo);
+			model.addAttribute("result", result);
+			log.info(result+"");
 			rttr.addFlashAttribute("check","MeetingNew");
 			
-			return "redirect:/club/{club_no}/clubMembers";
+			return "redirect:/club/{club_no}";
 		}
 		
 		//http://localhost:8088/club/1/meeting/1
@@ -316,7 +341,7 @@ public class ClubController {
 			List<MeetingTotalBean> meetingMember = service.getMeetingMember(club_meeting_no, club_no);
 			String meetingStatus = service.getMeetingStatus(club_meeting_no);
 
-			//log.info(meetingMember+"");
+			log.info(meetingList+"");
 			
 			List<ClubsVo> clubInfo = service.clubInfo(club_no);
 			//log.info(clubInfo+"");
@@ -337,10 +362,20 @@ public class ClubController {
 			
 			log.info("meetingModifyGET() 호출");
 			
-			MembersVo member = (MembersVo) session.getAttribute("member");
-			log.info(member+"");
+			//비회원
+			int result = 0;
+			int member_no = 0;
 			
-			int member_no =member.getMember_no();
+			if(session.getAttribute("member") != null) {
+				MembersVo member = (MembersVo) session.getAttribute("member");
+				log.info(member+"");
+				
+				member_no =member.getMember_no();
+				result = service.checkClubRole(club_no, member_no);
+				//result = 3 : 클럽 미가입 회원
+				//result = 1 : 클럽 가입 회원
+				//result = 2 : 클럽장
+			}
 			
 			List<MeetingTotalBean> rentalList = (List<MeetingTotalBean>)service.getRental(member_no);
 			log.info(rentalList+"");
@@ -353,6 +388,7 @@ public class ClubController {
 			model.addAttribute("clubInfo", clubInfo);
 			model.addAttribute("meetingList", meetingList);
 			model.addAttribute("rentalList", rentalList);
+			model.addAttribute("result", result);
 			
 			return "/club/meeting/meetingModify";
 			
@@ -363,17 +399,31 @@ public class ClubController {
 		public String meetingModifyPOST(Model model, @PathVariable("club_no") Integer club_no,
 				@PathVariable("club_meeting_no") Integer club_meeting_no, ClubMeetingsVo vo, HttpSession session) {
 			
-			log.info("meetingModifyGET() 호출");
+			log.info("meetingModifyPOST() 호출");
 			
-			Integer result = service.updateMeeting(club_meeting_no, vo);
+			//비회원
+			int result = 0;
+			
+			if(session.getAttribute("member") != null) {
+				MembersVo member = (MembersVo) session.getAttribute("member");
+				log.info(member+"");
+				
+				int member_no =member.getMember_no();
+				result = service.checkClubRole(club_no, member_no);
+				//result = 3 : 클럽 미가입 회원
+				//result = 1 : 클럽 가입 회원
+				//result = 2 : 클럽장
+			}
+			
+			
+			service.updateMeeting(club_meeting_no, vo);
 			//log.info(meetingList+"");
 			
 			List<ClubsVo> clubInfo = service.clubInfo(club_no);
 			log.info(clubInfo+"");
 			model.addAttribute("clubInfo", clubInfo);
-			//model.addAttribute("meetingList", meetingList);
 			
-			return "/club/meeting/meetingContent";
+			return "redirect:/club/{club_no}/meeting/{club_meeting_no}";
 			
 		}
 		
@@ -406,14 +456,28 @@ public class ClubController {
 			return "redirect:/club/{club_no}";
 		}
 		
-		@RequestMapping(value="/club/{club_no}/meeting/{club_meeting_no}", method = RequestMethod.POST)
-		public String clubListCloseRest(RedirectAttributes rttr,
+		@RequestMapping(value="/{club_no}/meeting/{club_meeting_no}/close", method = RequestMethod.GET)
+		public String clubMeetingClose(RedirectAttributes rttr,
 				@PathVariable("club_no") Integer club_no,
-				@PathVariable("club_meeting_no") Integer club_meeting_no){
-			
-			service.updateMeetingStatus(club_meeting_no);
+				@PathVariable("club_meeting_no") Integer club_meeting_no, Model model){
+			String club_meeting_status = "마감";
+			service.updateMeetingStatus(club_meeting_no,club_meeting_status);
 			String meetingStatus = service.getMeetingStatus(club_meeting_no);
-			rttr.addFlashAttribute("check", "UPStatus");
+			model.addAttribute("meetingStatus", meetingStatus);
+			rttr.addFlashAttribute("check", "Close");
+			
+			return "redirect:/club/{club_no}/meeting/{club_meeting_no}";
+		}
+		
+		@RequestMapping(value="/{club_no}/meeting/{club_meeting_no}/reopen", method = RequestMethod.GET)
+		public String clubMeetingReopen(RedirectAttributes rttr,
+				@PathVariable("club_no") Integer club_no,
+				@PathVariable("club_meeting_no") Integer club_meeting_no, Model model){
+			String club_meeting_status = "모집중";
+			service.updateMeetingStatus(club_meeting_no, club_meeting_status);
+			String meetingStatus = service.getMeetingStatus(club_meeting_no);
+			model.addAttribute("meetingStatus", meetingStatus);
+			rttr.addFlashAttribute("check", "Reopen");
 			
 			return "redirect:/club/{club_no}/meeting/{club_meeting_no}";
 		}

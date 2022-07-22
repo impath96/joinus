@@ -20,7 +20,7 @@
 	            ${meetingList.club_meeting_title }</a></h4>
 	          </div>
 	          <div class="card-body">
-	            <h4 class="card-title pricing-card-title">${meetingList.club_meeting_date }<small class="text-muted fw-light"></small></h4>
+	            <h6 class="card-title pricing-card-title">${meetingList.club_meeting_date }</h6>
 	            <ul class="list-unstyled mt-3 mb-4">
 	              <li>${meetingList.club_meeting_location }</li>
 	              <li>${meetingList.club_meeting_content }</li>
@@ -44,7 +44,7 @@
 	            ${meetingList.club_meeting_title }</a></h4>
 	          </div>
 	          <div class="card-body">
-	            <h4 class="card-title pricing-card-title">${meetingList.club_meeting_date }<small class="text-muted fw-light"></small></h4>
+	            <h6 class="card-title pricing-card-title">${meetingList.club_meeting_date }</h6>
 	            <ul class="list-unstyled mt-3 mb-4">
 	              <li>${meetingList.club_meeting_location }</li>
 	              <li>${meetingList.club_meeting_content }</li>
@@ -67,7 +67,7 @@
 	            ${meetingList.club_meeting_title }</a></h4>
 	          </div>
 	          <div class="card-body">
-	            <h4 class="card-title pricing-card-title">${meetingList.club_meeting_date }<small class="text-muted fw-light"></small></h4>
+	            <h6 class="card-title pricing-card-title">${meetingList.club_meeting_date }</h6>
 	            <ul class="list-unstyled mt-3 mb-4">
 	              <li>${meetingList.club_meeting_location }</li>
 	              <li>${meetingList.club_meeting_content }</li>

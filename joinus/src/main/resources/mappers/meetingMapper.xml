@@ -67,9 +67,9 @@
 
 <insert id="CreateMeeting">
 	insert into club_meetings(club_no, club_meeting_title, club_meeting_capacity, club_meeting_date,
-	 club_meeting_location, club_meeting_dues,club_meeting_address)
+	 club_meeting_location, club_meeting_dues,club_meeting_address, club_meeting_content)
 	values(#{club_no},#{club_meeting_title},#{club_meeting_capacity},#{club_meeting_date},
-	#{club_meeting_location},#{club_meeting_dues},#{club_meeting_address})
+	#{club_meeting_location},#{club_meeting_dues},#{club_meeting_address}, #{club_meeting_content})
 </insert>
 
 <select id="GetRental" resultMap="RentalListMap">
@@ -105,7 +105,10 @@
 </delete>
 
 <select id="GetMeeting_no" resultType="ClubMeetingsVo">
-	select * from club_meetings
+	select club_meeting_title, club_meeting_location, club_meeting_status, club_meeting_capacity, club_meeting_content,
+	club_meeting_dues, club_meeting_no, club_meeting_address,
+	date_format(club_meeting_date, '%Y-%m-%d %H:%i') as club_meeting_date
+	from club_meetings
 	where club_meeting_no = #{club_meeting_no}
 </select>
 	
@@ -119,6 +122,7 @@
 	 club_meeting_location = #{vo.club_meeting_location},
 	 club_meeting_address = #{vo.club_meeting_address},
 	 club_meeting_dues = #{vo.club_meeting_dues}
+	 club_meeting_content = #{vo.club_meeting_content}
 	where club_meeting_no = #{vo.club_meeting_no}
 
 </update>
@@ -162,7 +166,7 @@
 
 <update id="UpdateMeetingStatus">
 	update club_meetings
-	set club_meeting_status = '마감'
+	set club_meeting_status = #{club_meeting_status}
 	where club_meeting_no = #{club_meeting_no}
 </update>
 
