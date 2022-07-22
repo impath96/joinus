@@ -128,8 +128,8 @@ $(document).ready(function(){
 				            <div class="row g-4">              
 							<c:forEach var = "po" items="${popular }">
 				                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
+				                    
 				                    <div class="service-item rounded overflow-hidden Grrrr shadow">
-				                      
 				                       <c:if test="${!empty po.club_image}">
 				                         <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${po.club_image}" class="w-100 py-auto mainImg"
 				                         onclick="location.href='${PageContext.request.contextPath }/club/${po.club_no}'">
@@ -142,16 +142,14 @@ $(document).ready(function(){
 					                            <h4 class="mb-3 py-2 MainTextTitle">${po.club_name }</h4>
 					                            <p class="MainTextSub ">${po.club_content }</p>
 				                        </div>
-					                         
-					                         
-					                          
 				                    </div>
-				                </div>
+				                    
 				                </div>
 				            </c:forEach>
-				                </div>
-                   </div>
+				              </div>
+				        </div>
                     
+			
 			
 					<!-- 회원많은모임 -->
 				 <div class="mainGroup">
@@ -208,7 +206,7 @@ $(document).ready(function(){
 					                    </div>
 					                </div>
 					            </c:forEach>
-					                </div>
+					        </div>
 	                   </div>
 
 
