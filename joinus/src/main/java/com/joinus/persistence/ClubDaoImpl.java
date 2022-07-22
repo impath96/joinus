@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.joinus.domain.BoardCommentsVo;
@@ -32,7 +33,7 @@ import com.joinus.domain.MembersVo;
 @Repository
 public class ClubDaoImpl implements ClubDao{
 	
-	@Inject
+	@Autowired
 	private SqlSession sqlSession;
 	
 	static final String NAMESPACE ="com.joinus.mapper.ClubMapper";
@@ -293,9 +294,13 @@ public class ClubDaoImpl implements ClubDao{
 	}
 	
 	@Override
-	public String updateMeetingStatus(Integer club_meeting_no) {
+	public String updateMeetingStatus(Integer club_meeting_no, String club_meeting_status) {
 		
-		return sqlSession.selectOne(NAMESPACE2+".UpdateMeetingStatus",club_meeting_no);
+		Map<String, Object> param= new HashMap<String, Object>();
+		param.put("club_meeting_no", club_meeting_no);
+		param.put("club_meeting_status", club_meeting_status);
+		
+		return sqlSession.selectOne(NAMESPACE2+".UpdateMeetingStatus",param);
 	}
 	
 	//정모 리스트

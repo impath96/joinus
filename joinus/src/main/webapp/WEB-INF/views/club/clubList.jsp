@@ -21,7 +21,7 @@
             </div>
             <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
                 <c:forEach var ="month" items="${clubMonthList }">
-                <div class="testimonial-item text-center">
+                <div class="testimonial-item text-center"  onclick="location.href='${PageContext.request.contextPath }/club/${month.clubsVo.club_no}'">
                     <div class="testimonial-img position-relative">
                         <img class="img-fluid rounded-circle mx-auto mb-5" src="${PageContext.request.contextPath}/resources/upload/clubs/${month.clubsVo.club_image }">
                         <div class="btn-square bg-primary rounded-circle">
@@ -116,7 +116,7 @@
 			<c:forEach var = "vo" items="${clubList }">
 			
                 <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="shadow service-item rounded overflow-hidden">
+                    <div class="shadow service-item rounded overflow-hidden" onclick="location.href='${PageContext.request.contextPath }/club/${vo.clubsVo.club_no}'">
                     <!-- 클럽 대표 이미지 -->
                     <a class="small fw-medium" href="${PageContext.request.contextPath }/club/${vo.clubsVo.club_no}">
                         <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${vo.clubsVo.club_image}" class="w-100 py-auto"></a>
@@ -200,53 +200,6 @@ $(function(){
 	var interest_detail_no = null;
 	//alert(interest_no);
 	
-/* 		$.ajax({
-			url :'${PageContext.request.contextPath}/club/clubList/Month',
-			type : 'GET',
-			dataType : "json",
-			contentType : "application/json",
-			success : function(data){
-			//console.log(data);
-			//console.log(data[0].clubsVo.club_image);
-			
-				$('#club_image1').attr('src',"${PageContext.request.contextPath}/resources/upload/clubs/"+data[0].clubsVo.club_image);
-				$('#club_content1').append(data[0].clubsVo.club_content);
-				$('#club_name1').append(data[0].clubsVo.club_name); 
-				
-				$('#club_image2').attr('src',"${PageContext.request.contextPath}/resources/upload/clubs/"+data[1].clubsVo.club_image);
-				$('#club_content2').append(data[1].clubsVo.club_content);
-				$('#club_name2').append(data[1].clubsVo.club_name); 
-				
-				$('#club_image3').attr('src',"${PageContext.request.contextPath}/resources/upload/clubs/"+data[2].clubsVo.club_image);
-				$('#club_content3').append(data[2].clubsVo.club_content);
-				$('#club_name3').append(data[2].clubsVo.club_name); 
-				
-				console.log(data[0].clubsVo.club_image);
-				console.log(data[1].clubsVo.club_image);
-				console.log(data[2].clubsVo.club_image);
-				
-			} */	
-			
-		//	$(data).each(function(idx,item){
-				
-				/* var tag = "<div class='testimonial-item text-center'>"
-					tag += "<div class='testimonial-img position-relative'>"
-					tag += "<img style='width: 200;' class='img-fluid rounded-circle mx-auto mb-5' src='${PageContext.request.contextPath}/resources/upload/clubs/"+item.clubsVo.club_image+"'>"
-					tag += "<div class='btn-square bg-primary rounded-circle'>"
-					tag += "<i class='fa fa-quote-left text-white'></i>"
-					tag += "</div>"
-					tag += "</div>"
-					tag += "<div class='testimonial-text text-center rounded p-4'>"
-					tag += "<p>"+item.clubsVo.club_content+"</p>"
-					tag += "<h5 class='mb-1'>"+item.clubsVo.club_name+"</h5>"
-					tag += "</div>"
-					tag += "</div>"
-				
-				$('#month').append(tag); */
-
-		//	});//each
-				
-		});//ajax
 	
 $.ajax({
 		
@@ -287,9 +240,9 @@ $.ajax({
 			$(data).each(function(idx,item){ 
 				var	tag = "<div class='col-lg-2 container text-center'>"
 				 	tag += "<a href='${PageContext.request.contextPath}/club/"+item.clubsVo.club_no+"'>"
-					tag += "<img style='width: 150; height: 150;' class='img-fluid rounded-circle mx-auto mb-2' src='${PageContext.request.contextPath}/resources/upload/clubs/"+item.clubsVo.club_image+"'>"
+					tag += "<img style='width: 110; height: 110;' class='img-fluid rounded-circle' src='${PageContext.request.contextPath}/resources/upload/clubs/"+item.clubsVo.club_image+"'>"
 					tag += "<div class='testimonial-text text-center rounded p-4'>"
-					tag += "<h7 class='mb-1'>"+item.clubsVo.club_name+"</h7>"
+					tag += "<h7 class='mb-1' style='color : #1A2A36;'>"+item.clubsVo.club_name+"</h7>"
 					tag += "</div>"
 					tag += "</a>"
 					tag += "</div>"

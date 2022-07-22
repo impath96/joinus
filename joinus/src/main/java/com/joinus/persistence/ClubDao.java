@@ -95,7 +95,7 @@ public interface ClubDao {
 	public String getMeetingStatus(Integer club_meeting_no);
 	
 	//정모상태 수정
-	public String updateMeetingStatus(Integer club_meeting_no);
+	public String updateMeetingStatus(Integer club_meeting_no, String club_meeting_status);
 	
 	//정모 리스트
 	public List<ClubMeetingsVo> getMeetingList(Integer club_no, String status);
