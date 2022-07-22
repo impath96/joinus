@@ -21,7 +21,7 @@
             </div>
             <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
                 <c:forEach var ="month" items="${clubMonthList }">
-                <div class="testimonial-item text-center">
+                <div class="testimonial-item text-center"  onclick="location.href='${PageContext.request.contextPath }/club/${month.clubsVo.club_no}'">
                     <div class="testimonial-img position-relative">
                         <img class="img-fluid rounded-circle mx-auto mb-5" src="${PageContext.request.contextPath}/resources/upload/clubs/${month.clubsVo.club_image }">
                         <div class="btn-square bg-primary rounded-circle">
@@ -116,7 +116,7 @@
 			<c:forEach var = "vo" items="${clubList }">
 			
                 <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="shadow service-item rounded overflow-hidden">
+                    <div class="shadow service-item rounded overflow-hidden" onclick="location.href='${PageContext.request.contextPath }/club/${vo.clubsVo.club_no}'">
                     <!-- 클럽 대표 이미지 -->
                     <a class="small fw-medium" href="${PageContext.request.contextPath }/club/${vo.clubsVo.club_no}">
                         <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${vo.clubsVo.club_image}" class="w-100 py-auto"></a>
@@ -240,9 +240,9 @@ $.ajax({
 			$(data).each(function(idx,item){ 
 				var	tag = "<div class='col-lg-2 container text-center'>"
 				 	tag += "<a href='${PageContext.request.contextPath}/club/"+item.clubsVo.club_no+"'>"
-					tag += "<img style='width: 150; height: 150;' class='img-fluid rounded-circle mx-auto mb-2' src='${PageContext.request.contextPath}/resources/upload/clubs/"+item.clubsVo.club_image+"'>"
+					tag += "<img style='width: 110; height: 110;' class='img-fluid rounded-circle' src='${PageContext.request.contextPath}/resources/upload/clubs/"+item.clubsVo.club_image+"'>"
 					tag += "<div class='testimonial-text text-center rounded p-4'>"
-					tag += "<h7 class='mb-1'>"+item.clubsVo.club_name+"</h7>"
+					tag += "<h7 class='mb-1' style='color : #1A2A36;'>"+item.clubsVo.club_name+"</h7>"
 					tag += "</div>"
 					tag += "</a>"
 					tag += "</div>"
