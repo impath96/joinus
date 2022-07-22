@@ -467,6 +467,13 @@ public class ClubServiceImpl implements ClubService{
 		public ClubMembersVo getClubMemberNo(Integer num, Integer num2) {
 			return dao.getClubMemberNo(num,num2);
 		}
+		
+		// 모임 회원수 가져오기
+		@Override
+		public Integer clubMemberCount(Integer num) {
+			return dao.clubMemberCount(num);
+		}
+		
 		// 모임 별점 참여자 가져오기
 		@Override
 		public Integer getGradeinfo(Integer num, Integer num2) {
@@ -517,7 +524,12 @@ public class ClubServiceImpl implements ClubService{
 		public List<MeetingMembersVo> checkMeetingMember(Integer num,Integer num2) {
 			return dao.checkMeetingMember(num, num2);
 		}
-		
+		// 정모 참석 인원수
+		@Override
+		public List<Map<String, Integer>> getMeetingMemberCnt(Integer num) {
+			return dao.MeetingMemberCnt(num);
+		}
+
 		// 벤당한 회원번호 리스트 가져오기
 		@Override
 		public List<Integer> getBanMember(Integer num) {

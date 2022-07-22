@@ -51,9 +51,9 @@ $(document).ready(function(){
 				
 				for(i=0;i<data.length;i++){
 						if(i == 3 || i == 7){ //한줄에 4개씩
-				$('.newForm').append("<li onclick='select(this);'' id='newDetail' class='shadow'>"+data[i].interest_detail_name+"</li><br>");
+				$('.newForm').append("<li onclick='select(this);'' id='newDetail' class='Inters_Detail'>"+data[i].interest_detail_name+"</li><br>");
 						}else{
-				$('.newForm').append("<li onclick='select(this);'' id='newDetail' class='shadow'>"+data[i].interest_detail_name+"</li>");
+				$('.newForm').append("<li onclick='select(this);'' id='newDetail' class='Inters_Detail'>"+data[i].interest_detail_name+"</li>");
 						}
 				}
 				
@@ -132,9 +132,10 @@ $(document).ready(function(){
 			 $('#clubBtn').attr("disabled",true);
 			 $('#club_capacity').focus();
 		}
-		if($('#clubcapacity').val() > 2 || $('#clubcapacity').val() < 51 ){
+		if($('#clubcapacity').val() > 2 && $('#clubcapacity').val() < 50 ){
+		     $("#retry2").text(" 등록가능한 인원수입니다. ");
+		     $("#retry2").css("color","#32C36C");
 			 $('#clubBtn').attr("disabled",false);
-		     $("#retry").text("");
 		}
 	});
 	 
@@ -163,14 +164,10 @@ function select(item){
     <!-- Contact Start -->
                 
         <div id="NewTitle" >
-             <h6 class="GreenBox">모임등록하기</h6> 
+             <h6 class="GreenBox" onclick="window.location.href=window.location.href">모임등록하기</h6> 
         </div>
-     
-
 		<div class="row g-4 text-center justify py-5 shadow" style="background-color: #F6F7F8; border-radius: 50px;">
              
-           <!--  <div class="col-lg-6 contact-text py-5 wow fadeIn" data-wow-delay="0.5s" id="centercontrol"> -->
-	             
                   <p class="sub2"> 1. 관심사를 선택해주세요 </p><br>   
                    	 	<hr>
             	  <div id="hideInter">
@@ -178,28 +175,30 @@ function select(item){
                   </div>
                   <div id="select" >
                   			<ul class="interTable ">
-                  			<li id="inter" class="shadow">${interest.interest_name }</li>
+                  			<li id="inter" class=" Inters_Detail">${interest.interest_name }</li>
                   			</ul>
                   </div>
                   <div id="select2" >
-                  			<ul class="interTable shadow">
-                  			<li id="inter1">요리/제조</li>
-                  			<li id="inter2">봉사활동</li>
-                  			<li id="inter3">운동/스포츠</li>
-                  			<li id="inter4">게임/오락</li> <br>
-                  			<li id="inter5">음악/악기</li>
-                  			<li id="inter6">아웃도어/여행</li>
-                  			<li id="inter7">외국/언어</li>
-                  			<li id="inter8">문화/공연/축제</li>
+                  			<ul class="interTable ">
+                  			<li id="inter1" class="Inters_Detail ">요리/제조</li>
+                  			<li id="inter2" class="Inters_Detail ">봉사활동</li>
+                  			<li id="inter3" class="Inters_Detail ">운동/스포츠</li>
+                  			<li id="inter4" class="Inters_Detail ">게임/오락</li>
+                  			<li id="inter5" class="Inters_Detail ">음악/악기</li>
+                  			<li id="inter6" class="Inters_Detail ">아웃도어/여행</li>
+                  			<li id="inter7" class="Inters_Detail ">외국/언어</li>
+                  			<li id="inter8" class="Inters_Detail ">문화/공연/축제</li>
                   			</ul>
                   </div>
                  
-                 
-                  <p class="sub" id="inters"> 다른 관심사로 모임을 만들고 싶으신가요?</p>   
+                  <p class="sub" id="inters">  &#128161; 다른 관심사로 모임을 만들고 싶으신가요?</p>   
                   
                </div>     	 	
                   	 	
 		           <div class="detail marginTOP" >
+		              <div id="NewTitle" >
+		        	     <h6 class="GreenBox" onclick="window.location.href=window.location.href">모임등록하기</h6> 
+		     			 </div>   
           		    <div class="row g-4 text-center justify py-5 shadow" style="background-color: #F6F7F8; border-radius: 50px;"> 
 		                   	 	
 			                 <p class="sub2"> 2. 세부관심사를 선택해주세요 </p><br>   
@@ -214,8 +213,10 @@ function select(item){
 		     
                   <div class="detail2 marginTOP" >
                				<br><br>
-                       
-          		   <div class="g-4 py-5 shadow text-center" style="background-color: #F6F7F8; border-radius: 50px;">
+                 <div id="NewTitle" >
+        	     <h6 class="GreenBox" onclick="window.location.href=window.location.href">모임등록하기</h6> 
+     			 </div>        
+          		  <div class="row g-4 text-center justify py-5 shadow" style="background-color: #F6F7F8; border-radius: 50px;">
 		                 <p class="sub2"> 3. 모임의 정보를 작성해주세요 </p>
 		                 <br><hr>     
 	                  	   <div class="row g-4 text-center justify" >

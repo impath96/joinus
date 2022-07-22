@@ -30,24 +30,29 @@ public class HomeController {
 		model.addAttribute("popular", vo1);
 		List<ClubsVo> vo2 = service.getMostRecentClub();
 		model.addAttribute("latest", vo2);
+		log.info("신규모임리스트 : ", vo2);
 		List<ClubsVo> vo3 = service.getMostNumerousClub();
 		model.addAttribute("Numerous", vo3);
 		
 		MembersVo member = (MembersVo)session.getAttribute("member");
 		log.info("member : {}", member);
 		
-		
 		if(member != null) {
 			
-			// 시+구 잘라내기
+			//로그인시 내 지역으로 모임 출력
+			
 			String[] array = member.getMember_location().split("\\s");
-					    
+			// 시+구 잘라내기		    
 			for(int i=0;i<array.length;i++) {
 				String address = array[0].substring(0, 5) + " " + array[1];
 				
 				List<ClubsVo> vo4 = service.getMyClubs(address);
 				model.addAttribute("my", vo4);
 			}
+			
+			//로그인시 내 관심사로 모임 출력
+			List<ClubsVo> vo5 = service.getMyInterestClub(member.getMember_no());
+			model.addAttribute("Interests", vo5);
 			
 		}
 		

@@ -280,22 +280,22 @@
 							<h4 class="greenColor shadow-sm" > 모임 정보 </h4>
 		                     	<div align="center">
 		                     	
-		                     	<table class="clubInfoTable text-center">
+		                     	<table class="clubInfoTable ">
 		                     		<tr>
-		                     			<td class="borderRight"> &#128694; 정원</td>
-		                     			<td>${clubvo.club_capacity } 명</td>
+		                     			<td class="borderRight text-sm-end px-sm-4"> 정원</td>
+		                     			<td class="text-sm-start ps-4">${clubvo.club_capacity } 명</td>
 		                     		</tr>
 		                     		<tr>
-		                     			<td class="borderRight"> &#128111; 현재 모임원</td>
-		                     			<td>${clubvo.club_capacity } 명</td>
+		                     			<td class="borderRight text-sm-end px-sm-4"> 현재 모임원</td>
+		                     			<td class="text-sm-start ps-4">${clubMembercnt } 명</td>
 		                     		</tr>
 		                     		<tr>
-		                     			<td class="borderRight"> &#128150; 관심사</td>
-		                     			<td>${interDetail }</td>
+		                     			<td class="borderRight text-sm-end px-sm-4"> 관심사</td>
+		                     			<td class="text-sm-start ps-4">${interDetail }</td>
 		                     		</tr>
 		                     		<tr>
-		                     			<td class="borderRight"> &#128681; 활동지역</td>
-		                     			<td>${clubvo.club_location }</td>
+		                     			<td class="borderRight text-sm-end px-sm-4"> 활동지역</td>
+		                     			<td class="text-sm-start ps-4">${clubvo.club_location }</td>
 		                     		</tr>
 		                     	
 		                     	</table>
@@ -367,6 +367,7 @@
                 </div>
                 </c:if>
          
+         
             </div>
           </div>
           </div>      
@@ -394,60 +395,75 @@
      
      
      
-     <!-- 정모 정보 출력 -->
+   		  <!-- 정모 정보 출력 -->
            <c:if test="${!empty meetings}" >
  			<div class="row g-4 text-center justify" >
  			
-			    <c:forEach var ="i" begin="0" end="2" step="1">
+ 				<!-- 정모 갯수만큼 반복 -->
+			    <c:forEach var ="i" begin="0" end="${meetingSize-1}" step="1">
 			    
 	               <div class="col-md-6 col-lg-4 wow fadeInUp d-flex flex-column " data-wow-delay="0.1s" >
+				       
+				       <div class="rounded shadow clubDetailBox" >
+					
+		                   <h3 class="greenColor shadow-sm">${meetings[i].club_meeting_title }</h3>
+		                   <p class="MainTextSub"><b> &#128694; 인원 </b>${meetings[i].club_meeting_capacity }명</p>
+		                   <p class="MainTextSub"><b> &#128176; 회비 </b>${meetings[i].club_meeting_dues }</p>
+		                   <p class="MainTextSub"><b> &#128198; 날짜 </b>${meetings[i].club_meeting_date }</p>
+		                   <p class="MainTextSub"><b> &#128205; 장소 </b>${meetings[i].club_meeting_location }</p>
+			      
 			        	
-			        	<div class="rounded shadow clubDetailBox" >
-	                    <h3 class="greenColor shadow-sm">${meetings[i].club_meeting_title }</h3>
-	                   <p class="MainTextSub"><b> &#128694; 인원 </b>${meetings[i].club_meeting_capacity }명</p>
-	                   <p class="MainTextSub"><b> &#128176; 회비 </b>${meetings[i].club_meeting_dues }</p>
-	                   <p class="MainTextSub"><b> &#128198; 날짜 </b>${meetings[i].club_meeting_date }</p>
-	                   <p class="MainTextSub"><b> &#128205; 장소 </b>${meetings[i].club_meeting_location }</p>
-			        	
-			        	
-			        	
-			        <!-- 모임가입시 출력 -->
+			        <!-- 모임가입시에만 참석여부 버튼 출력 -->
 			        <c:if test="${clubmember ne '0' and !empty member_no}">
-			        
+			        		
+			        	<!-- 정모 인원이 다 차면 두 값을 비교하여 참석마감출력 -->
+			        	<c:set var="meetingFull" value="${meetingCnt[i].cntNo}" />
+			        	<c:set var="meetingCapa" value="${meetings[i].club_meeting_capacity}" />
+			        	
 		       		 <c:choose>	
 							<c:when test="${empty meetingMbrs}">
-                					<button id="JoinMeeting" class="btn btn-primary" value="${meetings[i].club_meeting_no}">참석하기</button>
+									<c:if test="${meetingCapa eq meetingFull}">
+			        					<div style="color: red; padding: 6px; font-size: 1.2em;">참석마감</div>
+			        				</c:if>
+			        				<c:if test="${meetingCapa ne meetingFull}">
+			        				<button id="JoinMeeting" class="btn btn-primary" value="${meetings[i].club_meeting_no}">참석하기</button>
+			        				</c:if>
                				</c:when>
 							<c:otherwise>
 						  	  <c:set var="tmp"  value="0"/>
 					    	    <c:forEach var="mm" items="${meetingMbrs}">
-	<%-- 				    	      <br>판단 : ${meetings[i].club_meeting_no eq mm.club_meeting_no}<br> --%>
 					    	      <c:set var="tmp" value="${tmp + ((meetings[i].club_meeting_no eq mm.club_meeting_no)? '1':'0')}" />
 		                  	 	</c:forEach>
-<%-- 	                  	 	${tmp } --%>
 	                    	
                          		<c:choose>
 								<c:when test="${tmp >= 1}">
 	                    			 <button id="outMeeting" class="btn btn-primary" value="${meetings[i].club_meeting_no}">참석취소하기</button>
                     			</c:when>
 	                    		<c:when test="${tmp < 1}">
+	                    			<c:if test="${meetingCapa eq meetingFull}">
+			        					<button id="JoinMeeting" class="btn btn-primary">참석마감</button>
+			        				</c:if>
+			        				<c:if test="${meetingCapa ne meetingFull}">
 	                    			  <button id="JoinMeeting" class="btn btn-primary" value="${meetings[i].club_meeting_no}">참석하기</button>
+	                    			</c:if>
 	                    		</c:when>
 		                    	<c:otherwise>
 		                    	   ERR
 		                    	</c:otherwise>
 				       	 		</c:choose>
-		                    	
                    			 </c:otherwise>	
 	                 </c:choose>
 	                 	
+	                 	
                     </c:if>
+                 	
                  	
                			 </div>
                		 </div>
                    </c:forEach>
                      </div>
                 </c:if>
+                
                 
                 <c:if test="${empty meetings}" >
                  <div class="g-5" align="center" >
@@ -469,7 +485,7 @@
 		    	<h1 class="mb-4">자주 만나는 위치</h1>
 				<div><hr><br><br>
 
-				<div id="map" style="width:80%;height:500px;" class="m-auto marginTOP"></div>
+				<div id="map" style="width:80%;height:500px; border-radius: 40px;" class="m-auto marginTOP"></div>
 				
 			</div> 
 		
@@ -492,7 +508,7 @@
                     <div class="team-item rounded overflow-hidden">
                             <img src="${PageContext.requeset.contextPath }/resources/upload/boards/${b.club_board_image}" 
                             onclick="location.href='${PageContext.requeset.contextPath }/club/${clubvo.club_no}/boards/${b.club_board_no}'" 
-                            class="mainImg">
+                            id="club_board_image">
                     </div>
                 </div>
                 </c:forEach>

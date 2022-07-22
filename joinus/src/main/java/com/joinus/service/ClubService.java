@@ -228,7 +228,10 @@ import com.joinus.domain.MembersVo;
 		public List<ClubMembersVo> getClubMembers(Integer num);	
 		//모임 회원 정보 가져오기(특정)
 		public ClubMembersVo getClubMemberNo(Integer num, Integer num2);
-	
+		// 모임 회원수 가져오기
+		public Integer clubMemberCount(Integer num);
+		
+		
 		// 모임 찜하기
 		public void clubDip(Integer num,Integer num2);
 		// 모임 찜 여부 확인
@@ -244,6 +247,8 @@ import com.joinus.domain.MembersVo;
 		public void outMeeting(MeetingMembersVo vo);
 		// 정모 참석여부확인
 		public List<MeetingMembersVo> checkMeetingMember(Integer num,Integer num2);
+		// 정모 참석 인원수
+		public List<Map<String, Integer>> getMeetingMemberCnt(Integer num);
 		
 		
 		//게시글 리스트

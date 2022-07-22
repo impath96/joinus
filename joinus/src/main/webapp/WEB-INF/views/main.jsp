@@ -34,7 +34,6 @@ $(document).ready(function(){
             </div><br><br>
           
           
-          
      <div class="row g-4">
                  
                  
@@ -54,17 +53,47 @@ $(document).ready(function(){
 							<c:forEach var = "my" items="${my }">
 				                <div class="col-md-6 col-lg-4 wow fadeInUp " data-wow-delay="0.1s">
 				                    <div class="service-item rounded overflow-hidden Grrrr shadow">
-				                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${my.club_image}" class="w-100 py-auto mainImg"
-				                        onclick="location.href='${PageContext.request.contextPath }/club/${my.club_no}'">
-				                    <!-- 클럽 대표 이미지 -->
-						                    <c:if test="${empty my.club_image}">
-						                    	<img src="../resources/img/joinus.jpg" class="w-100 py-auto"
-						                    	onclick="location.href='${PageContext.request.contextPath }/club/${my.club_no}'">
-						                    </c:if>
-					                        <div class="position-relative p-4 pt-0">
+				                         <c:if test="${!empty my.club_image}">
+					                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${my.club_image}" class="w-100 py-auto mainImg"
+					                        onclick="location.href='${PageContext.request.contextPath }/club/${my.club_no}'">
+				                       	 </c:if>
+						                 <c:if test="${empty my.club_image}">
+						                   	<img src="../resources/img/joinus.png" class="w-100 py-auto"
+						                   	onclick="location.href='${PageContext.request.contextPath }/club/${my.club_no}'">
+						                 </c:if>
+					                        <div class="position-relative p-4 pt-0" style="height: 190px;">
 					                            <h4 class="mb-3 py-2 MainTextTitle">${my.club_name }</h4>
-					                           
 					                            <p class="MainTextSub ">${my.club_content }</p>
+					                        </div>
+				                    </div>
+				                </div>
+				            </c:forEach>
+				                </div>
+                   </div>
+                     </c:if>
+                     
+                    <!-- 관심사맞춤 -->
+                     <c:if test="${!empty Interests }">
+                     <div class="mainGroup">
+            	  			<div class="wow fadeInUp marginB" data-wow-delay="0.1s">
+                         	<h2> &#128270; 내 관심사 TOP 6 </h2>
+                         	<p class="MainSubTitle"> 나와 비슷한 관심사를 가진 모임들을 구경해보세요!</p><hr>
+                          	</div>
+				            <div class="row g-4">              
+							<c:forEach var = "in" items="${Interests }">
+				                <div class="col-md-6 col-lg-4 wow fadeInUp " data-wow-delay="0.1s">
+				                    <div class="service-item rounded overflow-hidden Grrrr shadow">
+				                  	  <c:if test="${!empty in.club_image}">
+				                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${in.club_image}" class="w-100 py-auto mainImg"
+				                        onclick="location.href='${PageContext.request.contextPath }/club/${in.club_no}'">
+				                      </c:if>
+						              <c:if test="${empty in.club_image}">
+						                <img src="../resources/img/joinus.png" class="w-100 py-auto mainImg"
+						                onclick="location.href='${PageContext.request.contextPath }/club/${in.club_no}'">
+						              </c:if>
+					                          <div class="position-relative p-4 pt-0" style="height: 190px;">
+					                            <h4 class="mb-3 py-2 MainTextTitle">${in.club_name }</h4>
+					                            <p class="MainTextSub ">${in.club_content }</p>
 					                        </div>
 				                    </div>
 				                </div>
@@ -86,22 +115,17 @@ $(document).ready(function(){
 				                    <div class="service-item rounded overflow-hidden Grrrr shadow">
 				                      
 				                       <c:if test="${!empty po.club_image}">
-				                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${po.club_image}" class="w-100 py-auto mainImg"
-				                        onclick="location.href='${PageContext.request.contextPath }/club/${po.club_no}'">
-				                        <div class="position-relative p-4 pt-0">
+				                         <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${po.club_image}" class="w-100 py-auto mainImg"
+				                         onclick="location.href='${PageContext.request.contextPath }/club/${po.club_no}'">
+ 				                       </c:if>
+					                   <c:if test="${empty po.club_image}">
+						                 <img src="../resources/img/joinus.png" class="w-100 py-auto mainImg"
+						                 onclick="location.href='${PageContext.request.contextPath }/club/${po.club_no}'">
+  			                           </c:if>
+					                   <div class="position-relative p-4 pt-0" style="height: 190px;">
 					                            <h4 class="mb-3 py-2 MainTextTitle">${po.club_name }</h4>
 					                            <p class="MainTextSub ">${po.club_content }</p>
-					                        </div>
-					                      </c:if>
-				                    <!-- 클럽 대표 이미지 -->
-						                    <c:if test="${empty po.club_image}">
-						                    	<img src="location.href='${PageContext.request.contextPath }/club/${po.club_no}" class="w-100 py-auto"
-						                    	onclick="location.href='${PageContext.request.contextPath }/club/${po.club_no}'">
-					                        <div class="position-relative p-4 pt-0">
-					                            <h4 class="mb-3 py-2 MainTextTitle">${po.club_name }</h4>
-					                            <p class="MainTextSub ">${po.club_content }</p>
-					                        </div>
-					                         </c:if>
+				                        </div>
 					                         
 					                         
 					                          
@@ -122,16 +146,16 @@ $(document).ready(function(){
 							<c:forEach var = "nu" items="${Numerous }">
 				                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
 				                    <div class="service-item rounded overflow-hidden Grrrr shadow">
+				                       <c:if test="${!empty nu.club_image}"> 
 				                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${nu.club_image}" class="w-100 py-auto mainImg"
 				                        onclick="location.href='${PageContext.request.contextPath }/club/${nu.club_no}'">
-				                    <!-- 클럽 대표 이미지 -->
+				                   	   </c:if>
 						                    <c:if test="${empty nu.club_image}">
-						                    	<img src="../resources/img/joinus.jpg" class="w-100 py-auto"
+						                    	<img src="../resources/img/joinus.png" class="w-100 py-auto mainImg"
 						                    	onclick="location.href='${PageContext.request.contextPath }/club/${nu.club_no}'">
 						                    </c:if>
-					                        <div class="position-relative p-4 pt-0">
+					                         <div class="position-relative p-4 pt-0" style="height: 190px;">
 					                            <h4 class="mb-3 py-2 MainTextTitle">${nu.club_name }</h4>
-					                           
 					                            <p class="MainTextSub ">${nu.club_content }</p>
 					                        </div>
 				                    </div>
@@ -152,16 +176,16 @@ $(document).ready(function(){
 								<c:forEach var = "la" items="${latest }">
 					                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
 					                    <div class="service-item rounded overflow-hidden Grrrr shadow">
+					                        <c:if test="${!empty la.club_image}"> 
 					                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${la.club_image}" class="w-100 py-auto mainImg"
 					                        onclick="location.href='${PageContext.request.contextPath }/club/${la.club_no}'">
-					                    <!-- 클럽 대표 이미지 -->
+					                        </c:if>
 							                    <c:if test="${empty la.club_image}">
-							                    	<img src="../resources/img/joinus.jpg" class="w-100 py-auto"
+							                    	<img src="../resources/img/joinus.png" class="w-100 py-auto"
 							                    	onclick="location.href='${PageContext.request.contextPath }/club/${la.club_no}'">
 							                    </c:if>
-						                        <div class="position-relative p-4 pt-0">
+						                          <div class="position-relative p-4 pt-0" style="height: 190px;">
 						                            <h4 class="mb-3 py-2 MainTextTitle">${la.club_name }</h4>
-						                           
 						                            <p class="MainTextSub ">${la.club_content }</p>
 						                        </div>
 					                    </div>

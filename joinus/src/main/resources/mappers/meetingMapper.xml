@@ -129,6 +129,10 @@
 	<select id="getMeetingMember" resultType="MeetingMembersVo">
 		select * from meeting_members where club_no=#{club_no} and member_no=#{member_no}
 	</select>
+	<!-- 정모 참석 인원 -->
+	<select id="getMeetingMemberCnt" parameterType="Integer" resultType="HashMap">
+		select distinct club_meeting_no as meetingNo, count(member_no) as cntNo from meeting_members where club_no=#{club_no} group by club_meeting_no
+	</select>
 	
 	
 	
