@@ -4,6 +4,24 @@
     
 <%@ include file="include/header.jsp"%>
 <link href="${PageContext.request.contextPath }/resources/css/ksm.css" rel="stylesheet">
+<style>
+	a.overlay {
+		display : block;
+		position : absolute;
+		
+		left : 0;
+		right : 0;
+		top : 0;
+		bottom : 0;
+		z-index : 2;
+	}
+	
+	a.overlay:hover {
+		background-color : black;
+		cursor : cursor;
+		opacity : 0.1;
+	}
+</style>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script type="text/javascript">
 
@@ -13,9 +31,7 @@ $(document).ready(function(){
 
 
 </script>
-<script type="text/javascript">
 
-</script>
 
 <body>
     
@@ -130,6 +146,7 @@ $(document).ready(function(){
 					                         
 					                          
 				                    </div>
+				                </div>
 				                </div>
 				            </c:forEach>
 				                </div>

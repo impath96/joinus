@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -30,7 +31,7 @@ public class ClubRestController {
 
 	private static final Logger log = LoggerFactory.getLogger(ClubRestController.class);
 	
-	@Inject
+	@Autowired
 	private ClubService service;
 	
 	@RequestMapping(value="/{club_no}/rentalList", method=RequestMethod.GET)
@@ -164,24 +165,5 @@ public class ClubRestController {
 		return entity;
 		
 	}
-	@RequestMapping(value="/clubList/Month", method = RequestMethod.GET)
-	public ResponseEntity<List<ClubTotalBean>> clubListMonthRest() {
-		
-		List<ClubTotalBean> clubMonthList = service.clubListMonth();
-		log.info("clubDetailList : "+clubMonthList);
-		
-		ResponseEntity<List<ClubTotalBean>> entity = null;
-		
-		try {
-			entity = new ResponseEntity<List<ClubTotalBean>>(clubMonthList, HttpStatus.OK);
-		} catch (Exception e) {
-			entity = new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-		
-		return entity;
-		
-	}
-	
-	
 	
 }

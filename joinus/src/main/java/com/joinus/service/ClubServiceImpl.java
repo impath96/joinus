@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.joinus.domain.BoardCommentsVo;
@@ -33,7 +34,7 @@ public class ClubServiceImpl implements ClubService{
 	
 	private static final Logger log = LoggerFactory.getLogger(ClubServiceImpl.class);
 	
-	@Inject
+	@Autowired
 	private ClubDao dao;
 	
 	//클럽 멤버 조회
@@ -207,10 +208,33 @@ public class ClubServiceImpl implements ClubService{
 	public List<MeetingTotalBean> getMeetingMember(Integer club_meeting_no, Integer club_no) {
 		return dao.getMeetingMember(club_meeting_no, club_no);
 	}
+	//정모 상태
+	@Override
+	public String getMeetingStatus(Integer club_meeting_no) {
+		
+		return dao.getMeetingStatus(club_meeting_no);
+	}
+	//정모 상태 수정
+	@Override
+	public String updateMeetingStatus(Integer club_meeting_no, String club_meeting_status) {
+		
+		return dao.updateMeetingStatus(club_meeting_no, club_meeting_status);
+	}
 	
+	@Override
+	public List<ClubMeetingsVo> getMeetingList(Integer club_no, String status) {
+		
+		return dao.getMeetingList(club_no, status);
+	}
 	
 	
 	//===================================================================
+
+
+
+
+
+
 
 
 
@@ -534,6 +558,12 @@ public class ClubServiceImpl implements ClubService{
 		@Override
 		public List<Integer> getBanMember(Integer num) {
 			return dao.getBanMember(num);
+		}
+
+		@Override
+		public List<ClubsVo> getClubList(List<Integer> recentViewClub) {
+			
+			return dao.recentViewClubList(recentViewClub);
 		}
 
 

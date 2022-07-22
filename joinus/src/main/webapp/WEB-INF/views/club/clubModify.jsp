@@ -5,7 +5,12 @@
 <%@ include file="../include/club_header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<style>
+  .ck-editor__editable { height: 400px; }
+</style>
+
 <body> 
+
 
 <!-- 클럽 정보 -->
 <div class="container px-4 py-5">
@@ -41,5 +46,7 @@
 		.catch(error=>{
 			console.error(error);
 		});
+	
 </script>
+
 <%@ include file="../include/footer.jsp"%>

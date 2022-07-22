@@ -18,8 +18,6 @@
 						<div style="height:230px;">
 							<div class="service-content d-flex flex-column">
 								<h4 class="mb-2">${sessionScope.member.member_name }님 프로필</h4>
-								<p>Stet stet justo dolor sed duo. Ut clita sea sit ipsum diam
-									lorem diam.</p>
 								<a class="small fw-medium bottom-right" href="/settings/member">프로필 수정하기<i
 									class="fa fa-arrow-right ms-2"></i></a>
 							</div>
@@ -35,7 +33,6 @@
 									<c:forEach var="club" items="${clubList }">
 									<a href="${pageContext.request.contextPath }/club/${club.club_no}" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
 										<div class="club_name">${club.club_name }</div>
-										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
 									</a>
 									</c:forEach>
 								</div>
@@ -51,26 +48,11 @@
 							<div class="service-content d-flex flex-column">
 								<h4 class="mb-2">최근 본 모임</h4>
 								<div class="box-content">
-									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
-										<div class="club_name">안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요</div>
-										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
-									</a>
-									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
-										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
-									</a>
-									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
-										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
-									</a>
-									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
-										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
-									</a>
-									<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
-										<div>aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
-									</a>
+									<c:forEach var="recentViewClub" items="${recentViewClubList }">
+										<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
+											<div class="club_name">${recentViewClub.club_name }</div>
+										</a>
+									</c:forEach>
 								</div>
 								<a class="small fw-medium bottom-right" href="">내 모임 전체보기<i
 									class="fa fa-arrow-right ms-2"></i></a>
@@ -87,7 +69,6 @@
 									<c:forEach var="myClub" items="${myClubList }">
 									<a href="${pageContext.request.contextPath }/club/${myClub.club_no}" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
 										<div class="club_name">${myClub.club_name }</div>
-										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
 									</a>
 									</c:forEach>
 								</div>

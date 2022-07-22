@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.joinus.domain.BoardCommentsVo;
@@ -32,7 +33,7 @@ import com.joinus.domain.MembersVo;
 @Repository
 public class ClubDaoImpl implements ClubDao{
 	
-	@Inject
+	@Autowired
 	private SqlSession sqlSession;
 	
 	static final String NAMESPACE ="com.joinus.mapper.ClubMapper";
@@ -261,7 +262,10 @@ public class ClubDaoImpl implements ClubDao{
 	@Override
 	public void deleteMeeting(Integer club_meeting_no) {
 		
-		sqlSession.delete(NAMESPACE+".DeleteMeeting", club_meeting_no);
+		sqlSession.delete(NAMESPACE2+".DeleteMeetingMember", club_meeting_no);
+		log.info("미팅멤버 삭제");
+		sqlSession.delete(NAMESPACE2+".DeleteMeeting", club_meeting_no);
+		log.info("미팅 삭제");
 
 	}
 	
@@ -283,8 +287,35 @@ public class ClubDaoImpl implements ClubDao{
 		return sqlSession.selectList(NAMESPACE2+".GetMeetingMember", param);
 	}
 	
+	@Override
+	public String getMeetingStatus(Integer club_meeting_no) {
+		
+		return sqlSession.selectOne(NAMESPACE2+".GetMeetingStatus",club_meeting_no);
+	}
+	
+	@Override
+	public String updateMeetingStatus(Integer club_meeting_no, String club_meeting_status) {
+		
+		Map<String, Object> param= new HashMap<String, Object>();
+		param.put("club_meeting_no", club_meeting_no);
+		param.put("club_meeting_status", club_meeting_status);
+		
+		return sqlSession.selectOne(NAMESPACE2+".UpdateMeetingStatus",param);
+	}
+	
+	//정모 리스트
+	@Override
+	public List<ClubMeetingsVo> getMeetingList(Integer club_no, String status) {
+		
+		Map<String, Object> param= new HashMap<String, Object>();
+		param.put("status", status);
+		param.put("club_no", club_no);
+		
+		return sqlSession.selectList(NAMESPACE2+".GetMeetingList", param);
+	}
 	
 //=======================허수빈=============================================================
+
 
 
 
@@ -296,6 +327,7 @@ public class ClubDaoImpl implements ClubDao{
 		sqlSession.insert(NAMESPACE+".writeBoard", vo);
 		
 	}
+
 
 	@Override
 	public List<BoardTotalBean> getBoardListAll(Integer club_no, BoardCriteria cri) {
@@ -685,6 +717,11 @@ public class ClubDaoImpl implements ClubDao{
 			@Override
 			public List<Integer> getBanMember(Integer num) {
 				return sqlSession.selectList(NAMESPACE+(".getBanMembers"), num);
+			}
+			@Override
+			public List<ClubsVo> recentViewClubList(List<Integer> recentViewClub) {
+				
+				return sqlSession.selectList(NAMESPACE+".clubList", recentViewClub);
 			}
 			
 

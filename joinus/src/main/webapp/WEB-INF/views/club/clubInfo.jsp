@@ -220,30 +220,12 @@
 				        return false;
 				    } 
 				}			 
-
 				});
-				
-				
-				
-				
-				
-		
 			});
 </script>
-
-
-
-
 <body>
-    
-    
  <div class="container-xxl py-5 ">
         <div class="container"> 
-    		
-	
-	
-	
-	
     			<!-- About Start  모임 설명 -->
     			<div class="row g-4 text-center justify">
                     
@@ -321,7 +303,6 @@
 						</c:forEach>
 					
 					
-					
 					 <!-- 모임O / 별점X  -->
                 	<c:if test="${ graded eq '0' &&  clubmember eq member_no}">
 						<div id="grade" align="center" class="marginForInfo_join" style="width:300px;">
@@ -385,10 +366,9 @@
                 <h6 class="text-primary">${clubvo.club_name } </h6>
                 <h1 class="mb-4">정모</h1>
            
-           
 	                <!-- 정모만들기 모임장만 보일 수 있도록  -->
 	                <c:if test="${clubmemberRole == 'admin'}">
-	                <a class="small fw-medium" href="${pageContext.request.contextPath}/club/${clubvo.club_no}/meeting/new'">모임장 정모만들기<i class="fa fa-arrow-right ms-2"></i></a>
+	                <a class="small fw-medium" href="${pageContext.request.contextPath}/club/${clubvo.club_no}/meeting/new">모임장 정모만들기<i class="fa fa-arrow-right ms-2"></i></a>
 	                </c:if>
            			 </div><hr><br><br>
            		
@@ -512,12 +492,8 @@
                     </div>
                 </div>
                 </c:forEach>
-                
             </div>
             </c:if>
-            
-            
-            
              <c:if test="${empty boards}" >
                	 <div class="g-5" align="center" >
                	 	<div class="col-md-6 col-lg-3 wow fadeIn clubInfoMeetingSize" data-wow-delay="0.1s" >
@@ -527,9 +503,6 @@
                 	 </div>
                 </div>
              </c:if>
-            
-            
-            
     </div>
     
     <!-- Team End -->
