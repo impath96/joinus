@@ -250,106 +250,117 @@
     			 </div>
     		
                
+               <!--  모임멤버면 별점, 별점 후 평균값 / 멤버가 아니면 가입하기 버튼 /  --> 
+				
+			<c:if test="${!empty member_no}"><!-- 회원인 경우만 출력 -->
+			<!-- <div class="clubDetailBox" > -->
+			
+						<c:forEach var="ban" items="${ban }">
+							<c:if test="${ graded eq '0' &&  clubmember eq '0' && ban ne member_no}">
+								<!-- <div class="btn btn-primary rounded-pill py-3 px-5 marginForInfo_join" id="joinClub">가입하기</div> -->
+								<div class="clubInfo_tag" >
+									<div class="clubInfo_Box marginForInfo_join" id="joinClub">모임가입하기</div>
+								</div>
+							</c:if>
+						</c:forEach>
+				
+					<!-- 모임X 벤 당한 회원은 가입버튼X -->
+						
+					
+					
+					 <!-- 모임O / 별점X  -->
+                	<c:if test="${ graded eq '0' &&  clubmember eq member_no}">
+					<div class="clubInfo_tag" >                	
+						<div id="grade" align="center" class="marginForInfo_join clubInfo_Box" style="width:350px;">
+		             		<form class="mb-0" name="myform" id="myform" method="post" >
+								<fieldset>
+									<h6 class="fontGreen">우리 모임의 별점을 선택해주세요</h6>
+									<input type="radio" name="reviewStar" value="5" id="rate1"><label for="rate1">&#11088;</label>
+									<input type="radio" name="reviewStar" value="4" id="rate2"><label for="rate2">&#11088;</label>
+									<input type="radio" name="reviewStar" value="3" id="rate3"><label for="rate3">&#11088;</label>
+									<input type="radio" name="reviewStar" value="2" id="rate4"><label for="rate4">&#11088;</label>
+									<input type="radio" name="reviewStar" value="1" id="rate5"><label for="rate5">&#11088;</label>
+								</fieldset>
+							</form>
+						 </div>
+					</div>
+					</c:if>
+					
+					 <!-- 모임O / 별점O -->
+              		<c:if test="${ graded ne '0' && clubmember ne '0'}">
+              		<div class="clubInfo_tag" >   
+						<h6 class="marginForInfo fontGreen clubInfo_Box " style="width:350px;">
+							우리모임 평균별점은? <br> (참여자수 : ${gradeAvgCnt[0].cnt}명)
+							
+							<c:choose>
+								<c:when test="${gradeAvgCnt[0].avg eq '1'}">
+									<div class="p-2 fs-4"> &#11088; </div>
+								</c:when>
+								<c:when test="${gradeAvgCnt[0].avg eq '2'}">
+								<div class="p-2 fs-4"> &#11088; &#11088; </div>
+								</c:when>
+								<c:when test="${gradeAvgCnt[0].avg eq '3'}">
+									<div class="p-2 fs-4"> &#11088; &#11088; &#11088; </div>
+								</c:when>
+								<c:when test="${gradeAvgCnt[0].avg eq '4'}">
+									<div class="p-2 fs-4"> &#11088; &#11088; &#11088; &#11088; </div>
+								</c:when>
+								<c:when test="${gradeAvgCnt[0].avg eq '5'}">
+									<div class="p-2 fs-4"> &#11088; &#11088; &#11088; &#11088; &#11088; </div>
+								</c:when>
+								<c:otherwise>
+								</c:otherwise>
+							</c:choose>
+							</h6> 
+					</div>
+					</c:if>
+					
+					
+                </c:if>
+         
+               
+               
                
                 <div class="row g-0 mx-lg-0 shadow-sm" >
                  	      
-                 	      <div class="clubDetailBox" style="width:424px;" >
-							<h4 class="greenColor shadow-sm" > 모임 소개 </h4>
-         	               <h4 id="club_content" style="white-space: pre-wrap;">${clubvo.club_content }</h4>
-						 </div>
-					
-                 	      	<div class="clubDetailBox" style="width:424px;">
+                 	      	<div class="clubDetailBox" style="width:636px;">
 							<h4 class="greenColor shadow-sm" > 모임 정보 </h4>
-		                     	<div align="center">
 		                     	
-		                     	<table class="clubInfoTable ">
+		                     	<div class="clubInfo_a" align="center">
+		                     	
+		                     	<table class="clubInfoTable">
 		                     		<tr>
-		                     			<td class="borderRight text-sm-end px-sm-4"> 정원</td>
-		                     			<td class="text-sm-start ps-4">${clubvo.club_capacity } 명</td>
+		                     			<td class="borderRight text-sm-start px-sm-4 fs-5"> &#128173; 정원</td>
+		                     			<td class="text-sm-start ps-4 fs-5"> ${clubvo.club_capacity } 명</td>
 		                     		</tr>
 		                     		<tr>
-		                     			<td class="borderRight text-sm-end px-sm-4"> 현재 모임원</td>
-		                     			<td class="text-sm-start ps-4">${clubMembercnt } 명</td>
+		                     			<td class="borderRight text-sm-start px-sm-4 fs-5"> &#128173; 모임 가입자수</td>
+		                     			<td class="text-sm-start ps-4 fs-5"> ${clubMembercnt } 명</td>
 		                     		</tr>
 		                     		<tr>
-		                     			<td class="borderRight text-sm-end px-sm-4"> 관심사</td>
-		                     			<td class="text-sm-start ps-4">${interDetail }</td>
+		                     			<td class="borderRight text-sm-start px-sm-4 fs-5"> &#128173; 관심사</td>
+		                     			<td class="text-sm-start ps-4 fs-5"> ${interDetail }</td>
 		                     		</tr>
 		                     		<tr>
-		                     			<td class="borderRight text-sm-end px-sm-4"> 활동지역</td>
-		                     			<td class="text-sm-start ps-4">${clubvo.club_location }</td>
+		                     			<td class="borderRight text-sm-start px-sm-4 fs-5"> &#128173; 활동지역</td>
+		                     			<td class="text-sm-start ps-4 fs-5"> ${clubvo.club_location }</td>
 		                     		</tr>
 		                     	
 		                     	</table>
 		                 	    </div>
                  	      	</div>
-					 
-				
-			
-			
-			
-			<!--  모임멤버면 별점, 별점 후 평균값 / 멤버가 아니면 가입하기 버튼 /  --> 
-				
-			<c:if test="${!empty member_no}"><!-- 회원인 경우만 출력 -->
-			<div class="clubDetailBox" style="width:424px;">
-			
-
-				
-					<!-- 모임X 벤 당한 회원은 가입버튼X -->
-						<c:forEach var="ban" items="${ban }">
-							<c:if test="${ graded eq '0' &&  clubmember eq '0' && ban ne member_no}">
-								<div class="btn btn-primary rounded-pill py-3 px-5 marginForInfo_join" id="joinClub">가입하기</div>
-							</c:if>
-						</c:forEach>
-					
-					
-					 <!-- 모임O / 별점X  -->
-                	<c:if test="${ graded eq '0' &&  clubmember eq member_no}">
-						<div id="grade" align="center" class="marginForInfo_join" style="width:300px;">
-							<span class="fontGreen">우리 모임의 별점을 선택해주세요</span>
-		             		<form class="mb-3" name="myform" id="myform" method="post" >
-								<fieldset>
-									<input type="radio" name="reviewStar" value="5" id="rate1"><label for="rate1">★</label>
-									<input type="radio" name="reviewStar" value="4" id="rate2"><label for="rate2">★</label>
-									<input type="radio" name="reviewStar" value="3" id="rate3"><label for="rate3">★</label>
-									<input type="radio" name="reviewStar" value="2" id="rate4"><label for="rate4">★</label>
-									<input type="radio" name="reviewStar" value="1" id="rate5"><label for="rate5">★</label>
-								</fieldset>
-							</form>
+                 	      	
+                 	      	<div class="clubDetailBox" style="width:636px;" >
+							<h4 class="greenColor shadow-sm" > 모임 소개 </h4>
+								<div class="clubInfo_a" align="center">
+         	               <h4 id="club_content" style="white-space: pre-wrap;">${clubvo.club_content }</h4>
+         	               		</div>
 						 </div>
-					</c:if>
-					
-					 <!-- 모임O / 별점O -->
-              		<c:if test="${ graded ne '0' && clubmember ne '0'}">
-						<h4 class="marginForInfo fontGreen">우리모임의 평균 별점은?</h4> 
-							
-							<c:choose>
-								<c:when test="${gradeAvgCnt[0].avg eq '1'}">
-									<div class=""> &#11088; </div>
-								</c:when>
-								<c:when test="${gradeAvgCnt[0].avg eq '2'}">
-								<div class=""> &#11088; &#11088; </div>
-								</c:when>
-								<c:when test="${gradeAvgCnt[0].avg eq '3'}">
-									<div class=""> &#11088; &#11088; &#11088; </div>
-								</c:when>
-								<c:when test="${gradeAvgCnt[0].avg eq '4'}">
-									<div class=""> &#11088; &#11088; &#11088; &#11088; </div>
-								</c:when>
-								<c:when test="${gradeAvgCnt[0].avg eq '5'}">
-									<div class=""> &#11088; &#11088; &#11088; &#11088; &#11088; </div>
-								</c:when>
-								<c:otherwise>
-								</c:otherwise>
-							</c:choose>
-							<h4>${gradeAvgCnt[0].avg}점</h4>
-							<p>(참여자수 : ${gradeAvgCnt[0].cnt}명 )</p><br>
-					</c:if>
-                </div>
-                </c:if>
+					 
+				</div>
+			
          
-         
-            </div>
+            
           </div>
           </div>      
                 
