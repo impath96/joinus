@@ -158,19 +158,20 @@ public class MemberController {
 		
 		// String[] 배열을 Integer 타입의 리스트로 변환
 		
-		// 1) String[] 배열을 Integer[] 배열로 변환
-		Integer[] array = Arrays.stream(cookie.getValue().split("&"))
-				.mapToInt(Integer::parseInt)
-				.boxed()
-				.toArray(Integer[]::new);
-		
-		// 2) Integer[] 배열을 List<Integer> 로 변환
-		List<Integer> recentViewClub = new ArrayList<Integer>(Arrays.asList(array));
-		
-		List<ClubsVo> recentViewClubList = clubService.getClubList(recentViewClub);
-		
-		model.addAttribute("recentViewClubList", recentViewClubList);
-		
+		if(cookie != null) {
+			// 1) String[] 배열을 Integer[] 배열로 변환
+			Integer[] array = Arrays.stream(cookie.getValue().split("&"))
+					.mapToInt(Integer::parseInt)
+					.boxed()
+					.toArray(Integer[]::new);
+			
+			// 2) Integer[] 배열을 List<Integer> 로 변환
+			List<Integer> recentViewClub = new ArrayList<Integer>(Arrays.asList(array));
+			
+			List<ClubsVo> recentViewClubList = clubService.getClubList(recentViewClub);
+			
+			model.addAttribute("recentViewClubList", recentViewClubList);
+		}
 		// 내 모임 리스트 - 제한 5개
 		List<ClubsVo> clubList = clubService.getClubListByMemberNo(member.getMember_no(), 5);
 		log.info("clubList : {}", clubList);

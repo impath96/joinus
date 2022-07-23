@@ -135,7 +135,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     <!-- Spinner End -->
 
     <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
+    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0 pb-2" style="box-shadow:0 0.125rem 0.25rem rgb(0 0 0 / 8%);">
       <a
         href="${PageContext.request.contextPath }/"
         class="navbar-brand d-flex align-items-center border-end px-4 px-lg-5"

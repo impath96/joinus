@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri ="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
  
 <%@ include file="../include/header.jsp"%>
-
 
 
 <body> 
@@ -13,56 +13,34 @@
 		<br>
 		<br>
 		<br>
-		
-    <div class="container-xxl py-5">
-        <div class="container py-5">
+	<!-- 이달의 모임 -->
+	   <div class="container-xxl py-5">
+        <div class="container">
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                 <h1 class="mb-4">이달의 모임</h1>
             </div>
-            <div class="owl-carousel testimonial-carousel wow fadeInUp py-5" data-wow-delay="0.1s">
-                 <div class="testimonial-item text-center">
+            <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
+                <c:forEach var ="month" items="${clubMonthList }">
+                <div class="testimonial-item text-center"  onclick="location.href='${PageContext.request.contextPath }/club/${month.clubsVo.club_no}'">
                     <div class="testimonial-img position-relative">
-                        <img class="img-fluid rounded-circle mx-auto mb-5" id="club_image1" src="">
+                        <img class="img-fluid rounded-circle mx-auto mb-5" src="${PageContext.request.contextPath}/resources/upload/clubs/${month.clubsVo.club_image }">
                         <div class="btn-square bg-primary rounded-circle">
                             <i class="fa fa-quote-left text-white"></i>
                         </div>
                     </div>
                     <div class="testimonial-text text-center rounded p-4">
-                        <p id="club_content1"></p>
-                        <h5 class="mb-1" id="club_name1"></h5>
+                        <p>${month.clubsVo.club_content }</p>
+                        <h5 class="mb-1">${month.clubsVo.club_name }</h5>
+                        <span class="fst-italic">Profession</span>
                     </div>
                 </div>
-                
-                <div class="testimonial-item text-center">
-                    <div class="testimonial-img position-relative">
-                        <img class="img-fluid rounded-circle mx-auto mb-5" id="club_image2" src=""> 
-                        <div class="btn-square bg-primary rounded-circle">
-                            <i class="fa fa-quote-left text-white"></i>
-                        </div>
-                    </div>
-                    <div class="testimonial-text text-center rounded p-4">
-                    <p id="club_content2"></p>
-                        <h5 class="mb-1" id="club_name2"></h5>
-                    </div>
-                </div>
-                <div class="testimonial-item text-center">
-                    <div class="testimonial-img position-relative">
-                        <img class="img-fluid rounded-circle mx-auto mb-5" id="club_image3" src="">
-                        <div class="btn-square bg-primary rounded-circle">
-                            <i class="fa fa-quote-left text-white"></i>
-                        </div>
-                    </div>
-                    <div class="testimonial-text text-center rounded p-4">
-                    <p id="club_content3"></p>
-                        <h5 class="mb-1" id="club_name3"></h5>
-                    </div>
-                </div> 
-                
-
+                </c:forEach>
             </div>
         </div>
-    </div>
-    <!-- Testimonial End -->
+    </div>	
+	<!-- 이달의 모임 -->	
+		
+    
 	
 	<!-- 소개 -->
 		
@@ -118,7 +96,7 @@
                 </div>
 					
 				<c:set var="interest_no" value="${interest_no }" />
-				<c:if test="${not empty interest_no}">
+				<c:if test="${interest_no > 0}">
                 	<div class="rounded-2 py-3 mb-4" style="background-color: #EFEFEF;">
                 	<h5 class="px-3 m-3"> ✔️ 좀 더 상세한 결과를 원하세요?  </h5>
                 		<div id="detail" class="mb-5">
@@ -136,27 +114,64 @@
   
 		<div class="row g-4">
 			<c:forEach var = "vo" items="${clubList }">
+			
                 <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="shadow service-item rounded overflow-hidden">
+                    <div class="shadow service-item rounded overflow-hidden" onclick="location.href='${PageContext.request.contextPath }/club/${vo.clubsVo.club_no}'">
                     <!-- 클럽 대표 이미지 -->
-                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${vo.clubsVo.club_image}" class="w-100 py-auto">
+                    <a class="small fw-medium" href="${PageContext.request.contextPath }/club/${vo.clubsVo.club_no}">
+                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${vo.clubsVo.club_image}" class="w-100 py-auto"></a>
                         <div class="position-relative p-4 pt-0">
                             <div class="service-icon">
                             <!-- 클럽관심사 아이콘  -->
                                 <img src="${PageContext.requeset.contextPath }/resources/upload/interests/${vo.interestsVo.interest_icon }" class="w-100 py-auto">
                             </div>
-                            <h4 class="mt-3 py-2">${vo.clubsVo.club_name }</h4>
-                            <p>${vo.clubsVo.club_content }</p>
+                            <a class="small fw-medium" href="${PageContext.request.contextPath }/club/${vo.clubsVo.club_no}">
+                            <h4 class="mt-3 py-2">${vo.clubsVo.club_name }</h4> </a>
+                           	<c:set var = "club_content" value ="${vo.clubsVo.club_content }"></c:set>
+                           	<c:if test="${fn:length(club_content) > 50}">
+                           	<c:out value="${fn:substring(club_content,0,49)}"/>...
+                           	</c:if>
+                           	<c:if test="${fn:length(club_content) <=50}">
+                           	<c:out value="${club_content}"></c:out>
+                           	</c:if>
+							<br>
+							<br>
+							<br>
                             <a class="small fw-medium" href="${PageContext.request.contextPath }/club/${vo.clubsVo.club_no}">클럽 상세 페이지<i class="fa fa-arrow-right ms-2"></i></a>
                         </div>
                     </div>
                 </div>
+
             </c:forEach>
         </div>            
         </div>
-        <br>
-        <div class="d-flex justify-content-center py-3">
-        	<ul class="list-group list-group-horizontal">
+        <div class="d-flex justify-content-center py-3 mt-5">
+        	<nav aria-label="Page navigation" class="">
+        		<ul class="pagination justify-content-end mb-0 h-100">
+	                	<c:if test="${pm.prev }">
+		                	<li class="page-item">
+		                    	<a class="page-link p-0 d-inline-flex h-100 align-items-center" href="${PageContext.request.contextPath }/club/clubList?page=${pm.startPage-1}" aria-label="Previous">
+		                      		<span aria-hidden="true"><i class="fa-solid fa-angles-left px-3 py-3"></i></span>
+		                    	</a>
+		                  	</li>
+		                </c:if>
+		                <c:forEach var="idx" begin="${pm.startPage }" end="${pm.endPage }">			
+	                 		<li class="page-item <c:out value="${pm.cri.page == idx?'active':'' }"/>" 
+	                 				<c:out value="${pm.cri.page == idx?'aria-current = page':'' }"/>
+	                 				>
+	                 			<a class="page-link d-inline-block p-3" href="${PageContext.request.contextPath }/club/clubList?page=${idx}">${idx }</a>
+	                 		</li>
+						</c:forEach>
+						<c:if test="${pm.next && pm.endPage > 0 }">
+		                  	<li class="page-item">
+		                    	<a class="page-link p-0 d-inline-flex h-100 align-items-center" href="${PageContext.request.contextPath }/club/clubList?page=${pm.endPage+1}" aria-label="Next">
+		                      		<span aria-hidden="true"><i class="fa-solid fa-angles-right px-3 py-3"></i></span>
+		                    	</a>
+		                  	</li>
+						</c:if>
+	                </ul>
+        	</nav>
+        	<%-- <ul class="list-group list-group-horizontal">
         		<c:if test="${pm.prev }">
         			<li><a href="${PageContext.request.contextPath }/club/clubList?page=${pm.startPage-1}"><i class="fa-solid fa-angles-left px-3 py-3"></i></a></li>
         		</c:if>
@@ -170,9 +185,9 @@
         			<li> <a href ="${PageContext.request.contextPath }/club/clubList?page=${pm.endPage+1}"><i class="fa-solid fa-angles-right px-3 py-3"></i></a></li>
         		</c:if>
         	
-        	</ul>
+        	</ul> --%>
         </div>
-        
+        <!-- 페이징처리 -->
         
     </div>
     <!-- Projects End -->
@@ -180,9 +195,11 @@
 <script type="text/javascript">
 $(function(){
 	
+
 	var interest_no = ${interest_no};
 	var interest_detail_no = null;
 	//alert(interest_no);
+	
 	
 $.ajax({
 		
@@ -223,9 +240,9 @@ $.ajax({
 			$(data).each(function(idx,item){ 
 				var	tag = "<div class='col-lg-2 container text-center'>"
 				 	tag += "<a href='${PageContext.request.contextPath}/club/"+item.clubsVo.club_no+"'>"
-					tag += "<img style='width: 150; height: 150;' class='img-fluid rounded-circle mx-auto mb-2' src='${PageContext.request.contextPath}/resources/upload/clubs/"+item.clubsVo.club_image+"'>"
+					tag += "<img style='width: 110; height: 110;' class='img-fluid rounded-circle' src='${PageContext.request.contextPath}/resources/upload/clubs/"+item.clubsVo.club_image+"'>"
 					tag += "<div class='testimonial-text text-center rounded p-4'>"
-					tag += "<h7 class='mb-1'>"+item.clubsVo.club_name+"</h7>"
+					tag += "<h7 class='mb-1' style='color : #1A2A36;'>"+item.clubsVo.club_name+"</h7>"
 					tag += "</div>"
 					tag += "</a>"
 					tag += "</div>"
@@ -237,54 +254,20 @@ $.ajax({
 	});//디테일 버튼 클릭	
 	
 	
-	$.ajax({
-			url :'${PageContext.request.contextPath}/club/clubList/Month',
-			type : 'GET',
-			dataType : "json",
-			contentType : "application/json",
-			success : function(data){
-			//console.log(data);
-			//console.log(data[0].clubsVo.club_image);
-			
-				$('#club_image1').attr('src',"${PageContext.request.contextPath}/resources/upload/clubs/"+data[0].clubsVo.club_image);
-				$('#club_content1').append(data[0].clubsVo.club_content);
-				$('#club_name1').append(data[0].clubsVo.club_name); 
-				
-				$('#club_image2').attr('src',"${PageContext.request.contextPath}/resources/upload/clubs/"+data[1].clubsVo.club_image);
-				$('#club_content2').append(data[1].clubsVo.club_content);
-				$('#club_name2').append(data[1].clubsVo.club_name); 
-				
-				$('#club_image3').attr('src',"${PageContext.request.contextPath}/resources/upload/clubs/"+data[2].clubsVo.club_image);
-				$('#club_content3').append(data[2].clubsVo.club_content);
-				$('#club_name3').append(data[2].clubsVo.club_name); 
-				
-			}	
-			
-		//	$(data).each(function(idx,item){
-				
-				/* var tag = "<div class='testimonial-item text-center'>"
-					tag += "<div class='testimonial-img position-relative'>"
-					tag += "<img style='width: 200;' class='img-fluid rounded-circle mx-auto mb-5' src='${PageContext.request.contextPath}/resources/upload/clubs/"+item.clubsVo.club_image+"'>"
-					tag += "<div class='btn-square bg-primary rounded-circle'>"
-					tag += "<i class='fa fa-quote-left text-white'></i>"
-					tag += "</div>"
-					tag += "</div>"
-					tag += "<div class='testimonial-text text-center rounded p-4'>"
-					tag += "<p>"+item.clubsVo.club_content+"</p>"
-					tag += "<h5 class='mb-1'>"+item.clubsVo.club_name+"</h5>"
-					tag += "</div>"
-					tag += "</div>"
-				
-				$('#month').append(tag); */
 
-		//	});//each
-				
-		});//ajax
 	
 	
 	
 	
 	
+});
+
+$('#multiple-carousel').owlCarousel({
+
+    items: 3,
+    loop:  $('.owl-carousel .items').length > 3,
+    rewind: true
+
 });
 
 
