@@ -10,8 +10,6 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script type="text/javascript">
-	var partner_place_no = ${partner_place_no};
-	alert("partner_place_no : "+partner_place_no);
 
 	// 캘린더
 	var config = {
@@ -38,7 +36,6 @@
 		$(':button').attr('class','btn btn-primary');
 		
 		$('#subBtn').click(function(){
-			//alert('결제버튼클릭');
 			
 			if($('#rental_date').val() == ''){
 				$('#rental_date').focus();
@@ -57,7 +54,6 @@
 				$('#memberCnt').focus();
 				return false;
 			}
-//  			alert("hidden price value : "+$('#payment_price').val());
  			
  			// 모임장만 결제가 가능
  			if(${checkClubAdmin == 0}){
@@ -65,21 +61,14 @@
  				return false;
  			}
 			
-			
 		});
 		
 		// 시간 선택 시 예약된 정보 비교 및 막기
-		// 시간 선택 시 말고 걍 일자 등록하고 나서 바로 갔다왔음 좋겠음
-		// => 일자값이 공백이 아니면,,  안되네.. 걍 시간 선택 시 ㄱㄱ
 		$('#rental_time_no').click(function(){
-// 			alert('시간선택');
-// 			$("select option[value*='1']").prop('disabled', true);
-			$("select option[value*='3']").prop('disabled', true);
-// 			var rental_date = $('#rental_date').val();
-// 			alert("rental_date : "+rental_date);
+			// 처음은 disalbed 속성 다 풀기 (전에 disabled 속성이 선택되었을 경우 해제)
+			$('select option').removeAttr('disabled');
 
 			var timeList = [];
-// 			console.log(timeList);
 			
 			$.ajax({
 				url : '${PageContext.request.contextPath }/rental/partnerPlaces/'+${partner_place_no}+'/dateCheck',
@@ -87,51 +76,25 @@
 				async : false,	// 전역변수에 데이터 저장
 				data : {'rental_date':$('#rental_date').val()},
 				success : function(data){
-// 					alert('갔다옴');
-// 					$("select option[value*='2']").prop('disabled', true);
-// 					console.log(data);
 					timeList = data;
 				}
 			});
+			console.log("해당 일자의 예약 시간대 : "+timeList);
 			
-			console.log("해당 일자의 예약 시간대 Arr : "+timeList);
-			
-// 			for(var i=0; i<timeList.length; i++){
-// 				console.log(timeList[i]);
-// 			}
-			
-			$('#timeList').text(timeList);
-			
-			// select option 값 들고와서 ajax 리스트 데이터와 비교
-			// select option value를 배열로 저장
-			var select = document.getElementById("rental_time_no");
-			var optionVal = [];
-			
-			for(var i=1; i<select.length; i++){
-				// 0부터 시작하면 value = ""이 포함되므로 value값이 있는 1부터 시작
-				console.log(select.options[i].value);
-				optionVal.push(select.options[i].value);
+			for(var i = 0; i < timeList.length; i++){
+				var timeNo = timeList[i];
+				$("select option[value*='"+timeNo+"']").prop('disabled', true);
 			}
 			
-			console.log("optionValueArr : "+optionVal);
 			
-			console.log(timeList);
-			console.log(optionVal);
-			
-			
-		});	// 시간 선택 시 예약시간 막기
+		});
 		
 		
 	});	// jQuery
-
-
+	
+	
 </script>
 
-<c:forEach var="rental" items="${rentalPlaceDate }">
-	${rental.rental_date } / ${rental.rental_time_no }<br>
-</c:forEach>
-<div id="timeList">
-</div>
 <div class="container-xxl py-5">
 	<div class="container" style="color: black;">
 		<div class="row g-5">

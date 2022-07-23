@@ -64,11 +64,6 @@
 		</selectKey>
 	</insert>
 
-	<insert id="place">
-		insert into rental_places(reservation_no,club_no,member_no,partner_place_no,payment_no,rental_time_no,rental_status)
-		values(#{reservation_no},#{club_no},#{member_no},#{partner_place_no},#{payment_no},#{rental_time_no},#{rental_status})
-	</insert>
-	
 	<!-- 결제전 예약정보 저장(일자, 시간) -->
 	<insert id="placeBeforePay">
 		insert into rental_places(rental_date, rental_time_no)

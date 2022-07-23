@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -218,14 +220,11 @@ public class RentalController {
 	@ResponseBody
 	@RequestMapping(value = "/partnerPlaces/{partner_place_no}/dateCheck", method = RequestMethod.GET)
 	public List<Integer> rentalDateGet(@PathVariable("partner_place_no") Integer partner_place_no, 
-			@RequestParam("rental_date") Date rental_date, Model model){
+			@RequestParam("rental_date") Date rental_date){
 		log.info(" rentalDateGet() 호출 ");
-		log.info("partnoer_place_no : "+partner_place_no);
-		log.info("rental_date : "+rental_date);
-		log.info("rental_date 데이터타입 : "+rental_date.getClass().getName());
+		
 		List<Integer> rentalTimeList = rentalService.getRentalTime(rental_date, partner_place_no);
 		log.info(rental_date+"에 해당하는 예약시간리스트 : "+rentalTimeList);
-		model.addAttribute("rentalTimeList", rentalTimeList);
 		
 		return rentalTimeList;
 	}
@@ -236,9 +235,7 @@ public class RentalController {
 			Model model, @RequestParam("rental_time_no") int rentaltimeno,
 			@RequestParam("rental_date") Date rental_date, HttpSession session,@RequestParam("payment_price") int payment_price) {
 		log.info(" partnerPlaceContentPost() 호출");
-		log.info("@@@@@rental_date : "+rental_date);	// 2022-07-20
-//		log.info("rentalplacevo 예약정보 : "+rentalplacevo);
-//		log.info("rental_date : "+rental_date);
+
 		rentalService.insertPlaceBeforePay(rental_date, rentaltimeno);
 		
 		String ppname = partnerplacevo.getPartner_place_name();
@@ -248,105 +245,78 @@ public class RentalController {
 		
 		MembersVo vo = (MembersVo)session.getAttribute("member");
 		model.addAttribute("members", vo);
-		// 예약일자(rental_date; 시설을 이용할 일자) 저장
-//		model.addAttribute("rental_date", rental_date);
-//		model.addAttribute("rental_time_no", rentaltimeno);
 		model.addAttribute("payment", paymentvo);
-//		model.addAttribute("rentalplacevo", rentalplacevo);
 		log.info("결제정보: "+paymentvo);
-		log.info("@@@@제휴시설 정보 : "+partnerplacevo);
-		// 결제 후 예약정보저장
 		
+		// 결제 후 예약정보저장
 		return "/rental/payment";
 		
 	}
 		
-		@ResponseBody
-		@RequestMapping(value="/verifyIamport/{imp_uid}")
-		public IamportResponse<Payment> paymentByImpUid(
-				Model model, Locale locale, HttpSession session
-				, @PathVariable("imp_uid") String imp_uid ) throws IamportResponseException, IOException{	
-				log.info("아임포트 결제 호출");
-				return api.paymentByImpUid(imp_uid);
-				
-		}
-		
-		@ResponseBody
-		@RequestMapping(value ="/partnerPlaces/{partner_place_no}/payment",method=RequestMethod.POST)
-		public PaymentsVo payment( Model model, 
-				@RequestParam("partner_place_price") int partner_place_price,
-				@RequestParam("payment_price") int payment_price,
-//				@RequestParam("rental_time_no") int rental_time_no,
-				@PathVariable("partner_place_no") int partner_place_no,
-//				RentalPlacesVo rentalplacevo,
-				PaymentsVo paymentvo,HttpSession session){
-//				@RequestBody RentalPlacesVo rentalplacevo, PaymentsVo paymentvo,HttpSession session){
-			log.info(" 결제 정보 저장시작 ");
-			log.info(" 결제 정보 저장 호출 " + paymentvo);
+	@ResponseBody
+	@RequestMapping(value="/verifyIamport/{imp_uid}")
+	public IamportResponse<Payment> paymentByImpUid(
+			Model model, Locale locale, HttpSession session
+			, @PathVariable("imp_uid") String imp_uid ) throws IamportResponseException, IOException{	
+			log.info("아임포트 결제 호출");
+			return api.paymentByImpUid(imp_uid);
 			
-			log.info("받아온 vo정보 . paymentvo : "+paymentvo);
-//			log.info("받아온 vo정보 . RentalPlacesVo : "+rentalplacevo);
+	}
+		
+	@ResponseBody
+	@RequestMapping(value ="/partnerPlaces/{partner_place_no}/payment",method=RequestMethod.POST)
+	public PaymentsVo payment( Model model, 
+			@RequestParam("partner_place_price") int partner_place_price,
+			@RequestParam("payment_price") int payment_price,
+			@PathVariable("partner_place_no") int partner_place_no,
+			PaymentsVo paymentvo,HttpSession session){
+		log.info(" 결제 정보 저장시작 ");
+		log.info(" 결제 정보 저장 호출 " + paymentvo);
+		
+		log.info("받아온 vo정보 . paymentvo : "+paymentvo);
 
-				
-			// 주문번호 생성 (날짜-place_no)
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-			Calendar cal = Calendar.getInstance();
-			java.util.Date date = cal.getTime();
+			
+		// 주문번호 생성 (날짜-place_no)
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		Calendar cal = Calendar.getInstance();
+		java.util.Date date = cal.getTime();
+	
+		String rsNum = sdf.format(date)+"-"+partner_place_no;
+		log.info("예약번호"+rsNum);
 		
-			String rsNum = sdf.format(date)+"-"+partner_place_no;
-			log.info("예약번호"+rsNum);
-			
-			paymentvo.setReservation_no(rsNum);
-			MembersVo mvo = (MembersVo)session.getAttribute("member");
-			paymentvo.setMember_no(mvo.getMember_no());
-			paymentvo.setPartner_place_no(partner_place_no);
-			paymentvo.setPartner_place_price(partner_place_price);
-			paymentvo.setPayment_status(1);
-			
-			Integer pay = rentalService.pay(paymentvo);
-//			rentalplacevo.setPayment_no(paymentvo.getPayment_no());
-			
-			if(pay == 1) {
-				log.info("결제 정보 저장 성공");
-			}else {
-				log.info("결제 정보 저장 실패..");
-			}
-			
-			log.info("rentalplace 저장시작");
-//			//session 멤버정보처럼 클럽도 계속 넘겨서 받아와야함.. 일단 임의로 작성 -> null로 넣고 정모등록할 때 쓰는건..?
-//			rentalplacevo.setClub_no(46);
-//			rentalplacevo.setMember_no(mvo.getMember_no());
-//			rentalplacevo.setRental_places_no(partner_place_no);
-//			rentalplacevo.setReservation_no(rsNum);
-//			//rentalplacevo.setRental_date(paymentvo.getPayment_date()); 데이터 받아오는 것보다 바로 넣어버리는건??
-////			rentalplacevo.setRental_date(rental_date);	// 시설이용일자
-////			rentalplacevo.setRental_time_no(rental_time_no);	// 시설이용시간
-//			rentalplacevo.setRental_status(1);
-			
-			
-			// update로 rentalPlace 정보 저장
-			int rentalPlaceCnt = rentalService.getRentalPlaceCnt();
-			log.info("rentalPlaceCnt : "+rentalPlaceCnt);
-			// 가장 최근에 저장한 RentalPlacesVo 꺼내기
-			RentalPlacesVo LatelyrentalPlace = rentalService.getLatelyRentalPlace();
-			log.info("LatelyrentalPlace : "+LatelyrentalPlace);
-			// rentalPlace 정보 저장
-			String reservation_no = rsNum;
-//			int club_no = 46;	// club_no 정모생성시 예약정보불러올 때 club_no 안쓰면 컬럼지우기
-			int member_no = mvo.getMember_no();
-			int payment_no = paymentvo.getPayment_no();
-			int rental_places_no = rentalPlaceCnt;
-			rentalService.updateLatelyRentalPlace(reservation_no, member_no, partner_place_no, payment_no, rental_places_no);
-			log.info("rentalPlace 저장완료");
-			
-//			rentalService.place(rentalplacevo);
-//			log.info("rentalPlace 저장완료 : "+rentalplacevo);
-			
-			return paymentvo;
-			
-			//form으로 받은 정보들로 결제 후 결제완료 페이지 출력
-			
+		paymentvo.setReservation_no(rsNum);
+		MembersVo mvo = (MembersVo)session.getAttribute("member");
+		paymentvo.setMember_no(mvo.getMember_no());
+		paymentvo.setPartner_place_no(partner_place_no);
+		paymentvo.setPartner_place_price(partner_place_price);
+		paymentvo.setPayment_status(1);
+		
+		Integer pay = rentalService.pay(paymentvo);
+		
+		if(pay == 1) {
+			log.info("결제 정보 저장 성공");
+		}else {
+			log.info("결제 정보 저장 실패..");
 		}
+		
+		// update로 rentalPlace 정보 저장
+		log.info("rentalplace 저장시작");
+		// 가장 최근에 저장한 RentalPlacesVo 꺼내기
+		RentalPlacesVo LatelyrentalPlace = rentalService.getLatelyRentalPlace();
+		log.info("LatelyrentalPlace : "+LatelyrentalPlace);
+		// rentalPlace 정보 저장
+		String reservation_no = rsNum;
+		int member_no = mvo.getMember_no();
+		int payment_no = paymentvo.getPayment_no();
+		int rental_places_no = rentalService.getRentalPlaceCnt();
+		rentalService.updateLatelyRentalPlace(reservation_no, member_no, partner_place_no, payment_no, rental_places_no);
+		log.info("rentalPlace 저장완료");
+		
+		return paymentvo;
+		
+		//form으로 받은 정보들로 결제 후 결제완료 페이지 출력
+		
+	}
 		
 		
 		

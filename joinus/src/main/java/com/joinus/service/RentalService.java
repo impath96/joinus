@@ -36,8 +36,6 @@ public interface RentalService {
 
 	// 결제
 	public Integer pay(PaymentsVo vo);
-	//결제 후 예약리스트 저장
-	public void place(RentalPlacesVo vo);
 	
 	// 결제 전 예약정보 저장(일자, 시간)
 	public void insertPlaceBeforePay(Date rental_date, int rentaltimeno);

@@ -81,11 +81,6 @@ public class RentalDaoImpl implements RentalDao {
 	}
 
 	@Override
-	public void place(RentalPlacesVo vo) {
-		sqlSession.insert(NAMESPACE+".place", vo);
-	}
-
-	@Override
 	public void insertPlaceBeforePay(Date rental_date, int rentaltimeno) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("rental_date", rental_date);

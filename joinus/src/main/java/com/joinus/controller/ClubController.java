@@ -397,11 +397,8 @@ public class ClubController {
 	
 	//================================================================================================
 	
-	// 파라미터를 전달하고 싶을 때는 보내주는 주소와 받는 주소 모두 다 modelAttribute를 사용해야 함
-	// ?뒤에 숫자는 모임고유번호(일단 임의로 주소줄에서 받아오기)
-	// http://localhost:8088/club/{club_no}/boards/new
 	// http://localhost:8088/club/46/boards/new
-	// 게시판글쓰기 (해당 모임에 가입한 멤버가 아니면 글쓰기 X=> 가입하라고 알림창 띄우기 / 로그인안했으면(세션값이 없으면) 로그인페이지로 )
+	// 게시판글쓰기
 	@RequestMapping(value = "/{club_no}/boards/new", method = RequestMethod.GET)
 	public String boardWriteGet(@PathVariable("club_no") Integer club_no, HttpSession session) {
 		log.info(" boardWriteGet() 호출 ");

@@ -69,11 +69,6 @@ public class RentalServiceImpl implements RentalService {
 	}
 
 	@Override
-	public void place(RentalPlacesVo vo) {
-		dao.place(vo);
-	}
-
-	@Override
 	public void insertPlaceBeforePay(Date rental_date, int rentaltimeno) {
 		dao.insertPlaceBeforePay(rental_date, rentaltimeno);
 	}
