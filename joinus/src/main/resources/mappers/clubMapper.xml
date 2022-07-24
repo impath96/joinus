@@ -264,12 +264,13 @@
 	
 </select>
 
-<insert id="VanMemberInsert" parameterType="java.util.List">
+<insert id="VanMemberInsert" parameterType="list">
 
-	<foreach collection="list" item="item" separator=",">
+	<foreach collection="list" item="item" separator=","  >
 	insert into club_ban_members (club_no,member_no,club_member_regdate) values
-	(#{item.club_no}, #{item.member_no}, #{item.club_member_regdate})
+	("${item.club_no}", "${item.member_no}", "${item.club_member_regdate}")
 	</foreach>
+	
 </insert>
 
 <delete id="ClubMemberBan">

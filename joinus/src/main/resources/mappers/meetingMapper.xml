@@ -84,7 +84,7 @@
 
 <select id="GetRentalREST" resultMap="RentalListMap">
 	
-	select rp.rental_places_no, rp.club_no, rp.member_no, rp.partner_place_no, rp.rental_date, pp.partner_place_name, pp.partner_place_address
+	select rp.rental_places_no, rp.member_no, rp.partner_place_no, rp.rental_date, pp.partner_place_name, pp.partner_place_address
 	from rental_places rp
 	join partner_places pp
 		on(rp.partner_place_no = pp.partner_place_no)
