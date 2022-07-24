@@ -171,12 +171,14 @@ public class ClubDaoImpl implements ClubDao{
 		param.put("club_no", club_no);
 		param.put("member_no", member_no);
 		
+		log.info(param+"");
+		
 		List<ClubMembersVo> vanMember = new ArrayList<ClubMembersVo>();
 		vanMember=sqlSession.selectList(NAMESPACE+".ClubBan",param);
 		log.info("vanMember : " + vanMember);
 		sqlSession.insert(NAMESPACE+".VanMemberInsert",vanMember);
 		log.info("회원정보 이동 완료");
-		sqlSession.delete(NAMESPACE+".ClubMemberBan",member_no);
+		sqlSession.delete(NAMESPACE+".ClubMemberBan",param);
 		log.info("강퇴완료");
 		
 	}

@@ -260,7 +260,7 @@
 <select id="ClubBan" resultType="ClubMembersVo">
 	select club_no, member_no, club_member_regdate
 	from club_members
-	where member_no = #{member_no}
+	where member_no = #{member_no} and club_no=#{club_no}
 	
 </select>
 
@@ -609,8 +609,7 @@
 	</insert>
 	
 	<insert id="clubGrade">
-		insert into club_grades(club_no,member_no,club_grade_rate)
-		values(#{club_no},#{member_no},#{club_grade_rate})
+		insert i c4k5yuk7777777777777777777777777777777777 grade_rate})
 	</insert>
 	
 	<insert id="clubDip">
