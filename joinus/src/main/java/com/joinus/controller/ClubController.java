@@ -7,8 +7,15 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
@@ -21,8 +28,10 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -42,6 +51,7 @@ import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubGradesVo;
 import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.ClubMembersVo;
+import com.joinus.domain.ClubTotalBean;
 import com.joinus.domain.ClubsVo;
 import com.joinus.domain.Criteria;
 import com.joinus.domain.InterestDetailsVo;
@@ -58,7 +68,7 @@ import com.joinus.service.ClubService;
 @RequestMapping("/club/*")
 public class ClubController {
 	
-	@Inject
+	@Autowired
 	private ClubService service;
 	
 	private static final Logger log = LoggerFactory.getLogger(ClubController.class);
@@ -70,6 +80,10 @@ public class ClubController {
 	public String clubList(@ModelAttribute("interest_no") String interest_no,
 						Criteria cri, Model model,HttpSession session, RedirectAttributes rttr) {
 		log.info("interest_no : "+interest_no);	
+		
+		List<ClubTotalBean> clubMonthList = service.clubListMonth();
+		log.info("clubMonthList : "+clubMonthList);
+		
 		if(session.getAttribute("member") != null) {
 			MembersVo member = (MembersVo) session.getAttribute("member");
 			log.info(member+"");
@@ -82,6 +96,8 @@ public class ClubController {
 			pageMaker.setTotalCount(service.totalCnt());
 			log.info(pageMaker+"");
 			model.addAttribute("pm", pageMaker);
+			model.addAttribute("interest_no", 0);
+			model.addAttribute("clubMonthList", clubMonthList);
 			rttr.addFlashAttribute("check","ClubList");
 			log.info("clubList() 호출");
 			
@@ -92,6 +108,7 @@ public class ClubController {
 			pageMaker.setCri(cri);
 			pageMaker.setTotalCount(service.totalCnt(Integer.parseInt(interest_no)));
 			model.addAttribute("interest_no",Integer.parseInt(interest_no));
+			model.addAttribute("clubMonthList", clubMonthList);
 			log.info(pageMaker+"");
 			model.addAttribute("pm", pageMaker);
 			rttr.addFlashAttribute("check","ClubList");
@@ -248,7 +265,7 @@ public class ClubController {
 		public String meetingWritegPOST(Model model,
 				@PathVariable("club_no") Integer club_no, HttpSession session) {
 			
-			log.info("meetingWritePOST() 호출");
+			log.info("meetingWriteGET() 호출");
 			
 			MembersVo member = (MembersVo) session.getAttribute("member");
 			log.info(member+"");
@@ -271,21 +288,39 @@ public class ClubController {
 		@RequestMapping(value="/{club_no}/meeting/new", method = RequestMethod.POST)
 		public String clubMeetingGET(Model model, ClubMeetingsVo vo, RedirectAttributes rttr,
 				@PathVariable("club_no") Integer club_no, HttpSession session) {
-			log.info("clubMeeting new() 호출");
+			log.info("meetingWritePOST() 호출");
 			
-			//log.info(vo+"");
+			log.info(vo+"");
 			
+			//비회원
+			int result = 0;
+			
+			if(session.getAttribute("member") != null) {
+				MembersVo member = (MembersVo) session.getAttribute("member");
+				log.info(member+"");
+				
+				int member_no =member.getMember_no();
+				result = service.checkClubRole(club_no, member_no);
+				//result = 3 : 클럽 미가입 회원
+				//result = 1 : 클럽 가입 회원
+				//result = 2 : 클럽장
+			}
+			
+	
 			service.createMeeting(vo);
+			model.addAttribute("result", result);
+			log.info(result+"");
 			rttr.addFlashAttribute("check","MeetingNew");
 			
-			return "redirect:/club/{club_no}/clubMembers";
+			return "redirect:/club/{club_no}";
 		}
 		
 		//http://localhost:8088/club/1/meeting/1
 		
 		@RequestMapping(value="/{club_no}/meeting/{club_meeting_no}", method = RequestMethod.GET)
 		public String meetingModifyGET(Model model, HttpSession session,
-				@PathVariable("club_no") Integer club_no, @PathVariable("club_meeting_no") Integer club_meeting_no ) {
+				@PathVariable("club_no") Integer club_no,
+				@PathVariable("club_meeting_no") Integer club_meeting_no) {
 			
 			log.info("meetingModifyGET() 호출");
 			
@@ -305,14 +340,17 @@ public class ClubController {
 			
 			List<ClubMeetingsVo> meetingList = service.getMeeting(club_meeting_no);
 			List<MeetingTotalBean> meetingMember = service.getMeetingMember(club_meeting_no, club_no);
-			log.info(meetingMember+"");
+			String meetingStatus = service.getMeetingStatus(club_meeting_no);
+
+			log.info(meetingList+"");
 			
 			List<ClubsVo> clubInfo = service.clubInfo(club_no);
-			log.info(clubInfo+"");
+			//log.info(clubInfo+"");
 			model.addAttribute("clubInfo", clubInfo);
 			model.addAttribute("meetingList", meetingList);
 			model.addAttribute("meetingMember", meetingMember);
 			model.addAttribute("result", result);
+			model.addAttribute("meetingStatus", meetingStatus);
 			return "/club/meeting/meetingContent";
 			
 		}
@@ -325,10 +363,20 @@ public class ClubController {
 			
 			log.info("meetingModifyGET() 호출");
 			
-			MembersVo member = (MembersVo) session.getAttribute("member");
-			log.info(member+"");
+			//비회원
+			int result = 0;
+			int member_no = 0;
 			
-			int member_no =member.getMember_no();
+			if(session.getAttribute("member") != null) {
+				MembersVo member = (MembersVo) session.getAttribute("member");
+				log.info(member+"");
+				
+				member_no =member.getMember_no();
+				result = service.checkClubRole(club_no, member_no);
+				//result = 3 : 클럽 미가입 회원
+				//result = 1 : 클럽 가입 회원
+				//result = 2 : 클럽장
+			}
 			
 			List<MeetingTotalBean> rentalList = (List<MeetingTotalBean>)service.getRental(member_no);
 			log.info(rentalList+"");
@@ -341,6 +389,7 @@ public class ClubController {
 			model.addAttribute("clubInfo", clubInfo);
 			model.addAttribute("meetingList", meetingList);
 			model.addAttribute("rentalList", rentalList);
+			model.addAttribute("result", result);
 			
 			return "/club/meeting/meetingModify";
 			
@@ -351,17 +400,31 @@ public class ClubController {
 		public String meetingModifyPOST(Model model, @PathVariable("club_no") Integer club_no,
 				@PathVariable("club_meeting_no") Integer club_meeting_no, ClubMeetingsVo vo, HttpSession session) {
 			
-			log.info("meetingModifyGET() 호출");
+			log.info("meetingModifyPOST() 호출");
 			
-			Integer result = service.updateMeeting(club_meeting_no, vo);
+			//비회원
+			int result = 0;
+			
+			if(session.getAttribute("member") != null) {
+				MembersVo member = (MembersVo) session.getAttribute("member");
+				log.info(member+"");
+				
+				int member_no =member.getMember_no();
+				result = service.checkClubRole(club_no, member_no);
+				//result = 3 : 클럽 미가입 회원
+				//result = 1 : 클럽 가입 회원
+				//result = 2 : 클럽장
+			}
+			
+			
+			service.updateMeeting(club_meeting_no, vo);
 			//log.info(meetingList+"");
 			
 			List<ClubsVo> clubInfo = service.clubInfo(club_no);
 			log.info(clubInfo+"");
 			model.addAttribute("clubInfo", clubInfo);
-			//model.addAttribute("meetingList", meetingList);
 			
-			return "/club/meeting/meetingContent";
+			return "redirect:/club/{club_no}/meeting/{club_meeting_no}";
 			
 		}
 		
@@ -393,15 +456,83 @@ public class ClubController {
 			
 			return "redirect:/club/{club_no}";
 		}
-	
+		
+		@RequestMapping(value="/{club_no}/meeting/{club_meeting_no}/close", method = RequestMethod.GET)
+		public String clubMeetingClose(RedirectAttributes rttr,
+				@PathVariable("club_no") Integer club_no,
+				@PathVariable("club_meeting_no") Integer club_meeting_no, Model model){
+			String club_meeting_status = "마감";
+			service.updateMeetingStatus(club_meeting_no,club_meeting_status);
+			String meetingStatus = service.getMeetingStatus(club_meeting_no);
+			model.addAttribute("meetingStatus", meetingStatus);
+			rttr.addFlashAttribute("check", "Close");
+			
+			return "redirect:/club/{club_no}/meeting/{club_meeting_no}";
+		}
+		
+		@RequestMapping(value="/{club_no}/meeting/{club_meeting_no}/reopen", method = RequestMethod.GET)
+		public String clubMeetingReopen(RedirectAttributes rttr,
+				@PathVariable("club_no") Integer club_no,
+				@PathVariable("club_meeting_no") Integer club_meeting_no, Model model){
+			String club_meeting_status = "모집중";
+			service.updateMeetingStatus(club_meeting_no, club_meeting_status);
+			String meetingStatus = service.getMeetingStatus(club_meeting_no);
+			model.addAttribute("meetingStatus", meetingStatus);
+			rttr.addFlashAttribute("check", "Reopen");
+			
+			return "redirect:/club/{club_no}/meeting/{club_meeting_no}";
+		}
+		
+		@RequestMapping(value="/{club_no}/meetingList", method = RequestMethod.GET)
+		public String meetingListGET(Model model, HttpSession session,
+				@PathVariable("club_no") Integer club_no) {
+			
+			log.info("meetingListGET() 호출");
+			
+			//비회원
+			int result = 0;
+			
+			if(session.getAttribute("member") != null) {
+				MembersVo member = (MembersVo) session.getAttribute("member");
+				log.info(member+"");
+				
+				int member_no =member.getMember_no();
+				result = service.checkClubRole(club_no, member_no);
+				//result = 3 : 클럽 미가입 회원
+				//result = 1 : 클럽 가입 회원
+				//result = 2 : 클럽장
+			}
+			log.info(club_no+"");
+			
+			String status = "모집중";
+			List<ClubMeetingsVo> meetingList_ing = service.getMeetingList(club_no ,status);
+			
+			status = "마감";
+			List<ClubMeetingsVo> meetingList_close = service.getMeetingList(club_no ,status);
+			
+			status = "완료";
+			List<ClubMeetingsVo> meetingList_end = service.getMeetingList(club_no ,status);
+
+			//log.info(meetingList_ing+"");
+			//log.info(meetingList_close+"");
+			//log.info(meetingList_end+"");
+			
+			log.info(result+"");
+			
+			model.addAttribute("meetingList_ing", meetingList_ing);
+			model.addAttribute("meetingList_close", meetingList_close);
+			model.addAttribute("meetingList_end", meetingList_end);
+			model.addAttribute("result", result);
+			model.addAttribute("club_no", club_no);
+			return "/club//meeting/meetingList";
+			
+		}
+			
 	
 	//================================================================================================
 	
-	// 파라미터를 전달하고 싶을 때는 보내주는 주소와 받는 주소 모두 다 modelAttribute를 사용해야 함
-	// ?뒤에 숫자는 모임고유번호(일단 임의로 주소줄에서 받아오기)
-	// http://localhost:8088/club/{club_no}/boards/new
 	// http://localhost:8088/club/46/boards/new
-	// 게시판글쓰기 (해당 모임에 가입한 멤버가 아니면 글쓰기 X=> 가입하라고 알림창 띄우기 / 로그인안했으면(세션값이 없으면) 로그인페이지로 )
+	// 게시판글쓰기
 	@RequestMapping(value = "/{club_no}/boards/new", method = RequestMethod.GET)
 	public String boardWriteGet(@PathVariable("club_no") Integer club_no, HttpSession session) {
 		log.info(" boardWriteGet() 호출 ");
@@ -769,11 +900,6 @@ public class ClubController {
 				return "redirect:/member/signin";
 			}
 			
-//			//세션(임의)
-//			session.setAttribute("member_no", 7); 
-//			int member_no =	(int)session.getAttribute("member_no"); 
-//			//회원정보출력(merge후 생략)
-//			MembersVo membervo = service.getMember(member_no);
 			if(member != null) {
 			
 			Integer no = member.getMember_no();
@@ -852,6 +978,11 @@ public class ClubController {
 				
 				}
 					
+				if(file.isEmpty()) {
+					clubsvo.setClub_image("joinus.png");
+				}
+				
+				
 				MembersVo member = (MembersVo)session.getAttribute("member");
 				
 				  //관심사번호 가져오기 
@@ -869,8 +1000,6 @@ public class ClubController {
 				  members.setClub_member_role("admin"); //모임 첫생성은 관리자
 				  service.join(members);
 				  
-				  model.addAttribute("member_no", member.getMember_no());
-				 
 				  return "redirect:/club/{club_no}";
 		}
 	
@@ -931,11 +1060,22 @@ public class ClubController {
 					List<ClubMeetingsVo> meetings = service.getMeetings(club_no);
 					model.addAttribute("meetings", meetings);
 					log.info("정모리스트: "+meetings);
+					int meetingSize = meetings.size();
+					model.addAttribute("meetingSize", meetingSize);
+					log.info("정모갯수: "+meetingSize);
 					
 					//게시글(사진빼오기)
 					List<ClubBoardsVo> boards = service.getBoardImageList(club_no);
 					model.addAttribute("boards", boards);
 					log.info("게시글사진: "+boards);
+					
+					//모임관심사 정보로 관심사 가져오기
+					String interDetail = service.getClubInterestDName(club_no);
+					model.addAttribute("interDetail", interDetail);   
+					log.info("모임 상세관심사"+interDetail);
+					
+					// 모임 회원수 가져오기
+					model.addAttribute("clubMembercnt",service.clubMemberCount(club_no));
 					
 					
 				}
@@ -967,6 +1107,17 @@ public class ClubController {
 					log.info("모임회원O = 회원번호 / 모임회원X = 0 :   "+result);
 					log.info("roleResult(admin/com): "+roleResult);
 					
+					
+					//벤당한 모임회원
+					List<Integer> ban = service.getBanMember(club_no);
+					if(ban.isEmpty()) {
+						ban.add(0);
+					} // ban 리스트가 null이면 0만 출력됨
+					model.addAttribute("ban", ban);
+					
+					// 모임 회원수 가져오기
+					model.addAttribute("clubMembercnt",service.clubMemberCount(club_no));
+					
 					//별점정보
 					List<ClubGradesVo> gradevo = service.getClubGrade(club_no);
 					model.addAttribute("clubGrade", gradevo);
@@ -996,20 +1147,29 @@ public class ClubController {
 					//정모리스트 
 					List<ClubMeetingsVo> meetings = service.getMeetings(club_no);
 					model.addAttribute("meetings", meetings);
-					log.info("정모리스트: "+meetings);  
+					log.info("정모리스트: "+meetings);
+					int meetingSize = meetings.size();
+					model.addAttribute("meetingSize", meetingSize);
+					log.info("정모갯수: "+meetingSize);
 					
 					//내 회원번호로 해당 클럽 정모멤버리스트 조회하기
 					List<MeetingMembersVo> meetingMbrs = service.checkMeetingMember(club_no,member.getMember_no());
 					List<MeetingMembersVo> mtMbrs = new ArrayList<MeetingMembersVo>();
 					if(meetingMbrs != null) { 
-						mtMbrs = meetingMbrs; }
+						mtMbrs = meetingMbrs; 
+					}
 					model.addAttribute("meetingMbrs",mtMbrs);
+					// null값 처리
 					int result3 = 100;
 					if(meetingMbrs.isEmpty()) { 
 						result3 = 0;	}
 					model.addAttribute("meetingMbrsNull",result3);
 					log.info("정모멤버리스트: "+meetingMbrs); 
 					log.info("정모멤버리스트: "+result3); 
+					
+					//정모 참석인원수
+					model.addAttribute("meetingCnt", service.getMeetingMemberCnt(club_no));		
+					
 					
 					//게시글(사진빼오기)
 					List<ClubBoardsVo> boards = service.getBoardImageList(club_no);

@@ -9,28 +9,11 @@
 <script>
 	
 	$(document).ready(function(){
-// 		alert($('#typeSelect').val());
-// 		alert($('#guSelect').val());
 		
-		
-		// 셀렉트 옵션값들고가서 조건건 쿼리문 들고오기
-		// 장소유형 선택(장소 셀렉트 옵션값들고가기)
 		$('#typeSelect').change(function(){
-			//alert($(this).vla());
 			var type = $(this).val();
 			var gu = $('#guSelect').val();
 			location.href="${pageContext.request.contextPath}/rental/partnerPlaceList?type="+type+"&location="+gu;
-// 			$.ajax({
-// 				type : "get",
-// 				url : "${pageContext.request.contextPath}/rental/partnerPlaceList?type="+type+"&location="+gu,
-// 				success : function(data){
-// 					alert('성공');
-// 					location.reload();
-// 				},
-// 				error : function(){
-// 					alert('시스템 문제발생');
-// 				}
-// 			});
 		});
 		
 		$('#guSelect').change(function(){
@@ -42,32 +25,6 @@
 		
 	});
 	
-// 	$(document).ready(function(){
-// 		//alert('제이쿼리');
-// 		$('#guSelect').change(function(){
-// 			//alert('선택변경');
-// 			//alert($(this).val());	// 선택한 옵션값
-// 			var partner_place_address = $(this).val();
-// 			$.ajax({
-// 				type : 'GET',
-// 				url : '${PageContext.request.contextPath}/rental/location/'+partner_place_address,
-// 				contentType : "application/json",
-// 				data : {
-// 					location_gu : $(this).val()
-// 				},
-// 				success : function(data){
-// 					alert('갔다옴');
-// 					console.log(data);
-// 				},
-// 				error: function error(){
-// 					 alert('시스템 문제발생');
-// 				}
-// 			}); // ajax
-			
-// 		});
-// 	});
-	
-
 </script>
 
 

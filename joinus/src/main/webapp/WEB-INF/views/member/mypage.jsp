@@ -44,8 +44,7 @@
 								<div class="box-content">
 									<c:forEach var="club" items="${clubList }">
 									<a href="${pageContext.request.contextPath }/club/${club.club_no}" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
-										<div class="club_name"> &#183; ${club.club_name }</div>
-										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+										<div class="club_name">${club.club_name }</div>
 									</a>
 									</c:forEach>
 								</div>
@@ -64,7 +63,6 @@
 									<c:forEach var="recentViewClub" items="${recentViewClubList }">
 										<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
 											<div class="club_name">${recentViewClub.club_name }</div>
-											<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
 										</a>
 									</c:forEach>
 								</div>
@@ -82,8 +80,7 @@
 								<div class="box-content">
 									<c:forEach var="myClub" items="${myClubList }">
 									<a href="${pageContext.request.contextPath }/club/${myClub.club_no}" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
-										<div class="club_name"> &#183; ${myClub.club_name }</div>
-										<time class="finished_time" datetime="Mon Jul 04 2022 16:12:23 GMT+0900 (GMT+09:00)">20시간 전</time>
+										<div class="club_name">${myClub.club_name }</div>
 									</a>
 									</c:forEach>
 								</div>

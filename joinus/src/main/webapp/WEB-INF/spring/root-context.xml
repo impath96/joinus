@@ -1,4 +1,4 @@
-<beans xmlns="http://www.springframework.org/schema/beans"
+   <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
@@ -32,7 +32,7 @@
 		<property name="mapperLocations"
 			value="classpath:mappers/**/*Mapper.xml" />
 	</bean>
-
+	
 	<bean id="sqlSession"
 		class="org.mybatis.spring.SqlSessionTemplate"
 		destroy-method="clearCache">
@@ -41,7 +41,7 @@
 	</bean>
 
 	<!-- navermail설정 -->
-	<bean id="mailSender"
+	 <bean id="mailSender"
 		class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="${mail.host}" /> <!-- 메이서버 호스트 -->
 		<property name="port" value="${mail.port}" /> <!-- 메이서버 포트번호 -->
