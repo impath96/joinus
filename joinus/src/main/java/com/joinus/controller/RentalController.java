@@ -246,6 +246,7 @@ public class RentalController {
 		MembersVo vo = (MembersVo)session.getAttribute("member");
 		model.addAttribute("members", vo);
 		model.addAttribute("payment", paymentvo);
+		model.addAttribute("rental_time_no", rentaltimeno);
 		log.info("결제정보: "+paymentvo);
 		
 		// 결제 후 예약정보저장
@@ -268,6 +269,7 @@ public class RentalController {
 	public PaymentsVo payment( Model model, 
 			@RequestParam("partner_place_price") int partner_place_price,
 			@RequestParam("payment_price") int payment_price,
+			@RequestParam("rental_time_no") int rental_time_no,
 			@PathVariable("partner_place_no") int partner_place_no,
 			PaymentsVo paymentvo,HttpSession session){
 		log.info(" 결제 정보 저장시작 ");
@@ -281,8 +283,8 @@ public class RentalController {
 		Calendar cal = Calendar.getInstance();
 		java.util.Date date = cal.getTime();
 	
-		String rsNum = sdf.format(date)+"-"+partner_place_no;
-		log.info("예약번호"+rsNum);
+		String rsNum = sdf.format(date)+"-"+partner_place_no+"-"+rental_time_no;
+		log.info("예약번호(날짜+장소번호+예약시간): "+rsNum);
 		
 		paymentvo.setReservation_no(rsNum);
 		MembersVo mvo = (MembersVo)session.getAttribute("member");

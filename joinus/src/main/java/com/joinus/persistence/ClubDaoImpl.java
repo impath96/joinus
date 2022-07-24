@@ -620,6 +620,12 @@ public class ClubDaoImpl implements ClubDao{
 				return sqlSession.selectOne(NAMESPACE+".getClubMemberNo", nummm);
 			}
 			
+			// 모임 회원수 가져오기
+			@Override
+			public Integer clubMemberCount(Integer num) {
+				return sqlSession.selectOne(NAMESPACE+".getClubMemberCNT", num);
+			}
+
 			//별점주기
 			@Override
 			public void clubGrade(ClubGradesVo vo) {
@@ -700,7 +706,18 @@ public class ClubDaoImpl implements ClubDao{
 				meetingMlist.put("member_no", num2);
 				return sqlSession.selectList(NAMESPACE2+".getMeetingMember", meetingMlist);
 			}
+			// 정모 참석 인원수
+			@Override
+			public List<Map<String, Integer>> MeetingMemberCnt(Integer num) {
+				List<Map<String, Integer>> list = sqlSession.selectList(NAMESPACE2+".getMeetingMemberCnt",num);
+				return list;
+			}
 
+			// 벤당한 회원번호 리스트 가져오기
+			@Override
+			public List<Integer> getBanMember(Integer num) {
+				return sqlSession.selectList(NAMESPACE+(".getBanMembers"), num);
+			}
 			@Override
 			public List<ClubsVo> recentViewClubList(List<Integer> recentViewClub) {
 				

@@ -657,28 +657,38 @@
 		select * from club_grades where club_no=#{club_no}
 	</select>
 	
-	<select id="getGradeOption" parameterType="int" resultType="HashMap">
+	<select id="getGradeOption" parameterType="Integer" resultType="HashMap">
 		select round(avg(club_grade_rate)) avg, count(club_grade_no) cnt
 		from club_grades where club_no=#{club_no}
 	</select>
 	
-	<select id="clubBtn" resultType="int">
+	<select id="clubBtn" resultType="Integer">
 		select member_no
 		from club_grades where (member_no,club_no) =
-		 ( select member_no,club_no from club_members where club_no=#{club_no} and  member_no=#{member_no} and club_member_role='common')
+		 ( select member_no,club_no from club_members where club_no=#{club_no} and  member_no=#{member_no})
 	</select>
 	
-	<select id="dipCheck" resultType="int">
+	<select id="dipCheck" resultType="Integer">
 		select member_no from member_dips where club_no=#{club_no}
 	</select>
 	
 	<select id="getMeetingList" resultType="ClubMeetingsVo">
-		select * from club_meetings where club_no=#{club_no} order by club_meeting_date desc limit 4
+		select * from club_meetings where club_no=#{club_no} order by club_meeting_date desc limit 3
 	</select>
 	
 	<select id="getBoardListfordetail" resultType="ClubBoardsVo">
 		select * from club_boards where club_no=#{club_no}
 	</select>
+	
+	<select id="getBanMembers" resultType="Integer">
+		select member_no from club_ban_members where club_no=#{club_no}
+	</select>
+	
+	
+	<select id="getClubMemberCNT" resultType="Integer">
+		select count(club_no) from club_members where club_no=#{club_no}
+	</select>
+	
 	
 	<!-- Delete  -->
 	
