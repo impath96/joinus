@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -902,11 +903,6 @@ public class ClubController {
 				return "redirect:/member/signin";
 			}
 			
-//			//세션(임의)
-//			session.setAttribute("member_no", 7); 
-//			int member_no =	(int)session.getAttribute("member_no"); 
-//			//회원정보출력(merge후 생략)
-//			MembersVo membervo = service.getMember(member_no);
 			if(member != null) {
 			
 			Integer no = member.getMember_no();
@@ -985,6 +981,11 @@ public class ClubController {
 				
 				}
 					
+				if(file.isEmpty()) {
+					clubsvo.setClub_image("joinus.png");
+				}
+				
+				
 				MembersVo member = (MembersVo)session.getAttribute("member");
 				
 				  //관심사번호 가져오기 
@@ -1002,8 +1003,6 @@ public class ClubController {
 				  members.setClub_member_role("admin"); //모임 첫생성은 관리자
 				  service.join(members);
 				  
-				  model.addAttribute("member_no", member.getMember_no());
-				 
 				  return "redirect:/club/{club_no}";
 		}
 	
@@ -1064,11 +1063,22 @@ public class ClubController {
 					List<ClubMeetingsVo> meetings = service.getMeetings(club_no);
 					model.addAttribute("meetings", meetings);
 					log.info("정모리스트: "+meetings);
+					int meetingSize = meetings.size();
+					model.addAttribute("meetingSize", meetingSize);
+					log.info("정모갯수: "+meetingSize);
 					
 					//게시글(사진빼오기)
 					List<ClubBoardsVo> boards = service.getBoardImageList(club_no);
 					model.addAttribute("boards", boards);
 					log.info("게시글사진: "+boards);
+					
+					//모임관심사 정보로 관심사 가져오기
+					String interDetail = service.getClubInterestDName(club_no);
+					model.addAttribute("interDetail", interDetail);   
+					log.info("모임 상세관심사"+interDetail);
+					
+					// 모임 회원수 가져오기
+					model.addAttribute("clubMembercnt",service.clubMemberCount(club_no));
 					
 					
 				}
@@ -1100,6 +1110,17 @@ public class ClubController {
 					log.info("모임회원O = 회원번호 / 모임회원X = 0 :   "+result);
 					log.info("roleResult(admin/com): "+roleResult);
 					
+					
+					//벤당한 모임회원
+					List<Integer> ban = service.getBanMember(club_no);
+					if(ban.isEmpty()) {
+						ban.add(0);
+					} // ban 리스트가 null이면 0만 출력됨
+					model.addAttribute("ban", ban);
+					
+					// 모임 회원수 가져오기
+					model.addAttribute("clubMembercnt",service.clubMemberCount(club_no));
+					
 					//별점정보
 					List<ClubGradesVo> gradevo = service.getClubGrade(club_no);
 					model.addAttribute("clubGrade", gradevo);
@@ -1129,20 +1150,29 @@ public class ClubController {
 					//정모리스트 
 					List<ClubMeetingsVo> meetings = service.getMeetings(club_no);
 					model.addAttribute("meetings", meetings);
-					log.info("정모리스트: "+meetings);  
+					log.info("정모리스트: "+meetings);
+					int meetingSize = meetings.size();
+					model.addAttribute("meetingSize", meetingSize);
+					log.info("정모갯수: "+meetingSize);
 					
 					//내 회원번호로 해당 클럽 정모멤버리스트 조회하기
 					List<MeetingMembersVo> meetingMbrs = service.checkMeetingMember(club_no,member.getMember_no());
 					List<MeetingMembersVo> mtMbrs = new ArrayList<MeetingMembersVo>();
 					if(meetingMbrs != null) { 
-						mtMbrs = meetingMbrs; }
+						mtMbrs = meetingMbrs; 
+					}
 					model.addAttribute("meetingMbrs",mtMbrs);
+					// null값 처리
 					int result3 = 100;
 					if(meetingMbrs.isEmpty()) { 
 						result3 = 0;	}
 					model.addAttribute("meetingMbrsNull",result3);
 					log.info("정모멤버리스트: "+meetingMbrs); 
 					log.info("정모멤버리스트: "+result3); 
+					
+					//정모 참석인원수
+					model.addAttribute("meetingCnt", service.getMeetingMemberCnt(club_no));		
+					
 					
 					//게시글(사진빼오기)
 					List<ClubBoardsVo> boards = service.getBoardImageList(club_no);

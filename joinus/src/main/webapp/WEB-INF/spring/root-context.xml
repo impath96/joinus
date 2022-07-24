@@ -32,7 +32,7 @@
 		<property name="mapperLocations"
 			value="classpath:mappers/**/*Mapper.xml" />
 	</bean>
-
+	
 	<bean id="sqlSession"
 		class="org.mybatis.spring.SqlSessionTemplate"
 		destroy-method="clearCache">
@@ -41,13 +41,13 @@
 	</bean>
 
 	<!-- navermail설정 -->
-	<bean id="mailSender"
+	 <bean id="mailSender"
 		class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="${mail.host}" /> <!-- 메이서버 호스트 -->
 		<property name="port" value="${mail.port}" /> <!-- 메이서버 포트번호 -->
 		<property name="username" value="${mail.username}" /> <!-- 자신의 이메일 아이디 -->
-		<property name="password" value="${mail.password}" /> <!-- 자신의 비밀번호 -->
-		<!-- 보안연결 SSL과 관련된 설정 -->
+		<property name="password" value="${mail.password}" /> <!-- 자신의 비밀번호
+		보안연결 SSL과 관련된 설정 -->
 		<property name="javaMailProperties">
 			<props>
 				<prop key="mail.smtp.auth">true</prop>
