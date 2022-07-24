@@ -89,7 +89,7 @@
 	                            <div class="service-icon">
 	                                <img src="${PageContext.requeset.contextPath }/resources/img/기타시설.png" class="w-100 py-auto">
 	                            </div>
-	                            <h4 class="mb-3" style="margin-top: 1em;">기타시설</h4>
+	                            <h4 class="mb-3" style="margin-top: 1em;">비제휴시설</h4>
 	                        </div>
                         </a>
                     </div>

@@ -10,7 +10,7 @@
 	$(document).ready(function(){
 		$('#guSelect').change(function(){
 			var gu = $(this).val();
-			location.href = "${pageContext.request.contextPath}/place/placeList?location="+location;
+			location.href = "${pageContext.request.contextPath}/place/placeList?location="+gu;
 		});
 	});
 </script>
@@ -19,13 +19,6 @@
 	<div class="container">
 		<div class="row g-5">
 				
-<!-- 
-			<select class="form-select" id="typeSelect">
-				<option value="0">전체</option>
-				<option value="기타시설">기타시설</option>
-			</select> 
--->
-
 			<select class="form-select" id="guSelect">
 					<option value="0">전체</option>
 					<c:forEach var="gu" items="${guList }">
@@ -33,16 +26,11 @@
 							<c:if test="${gu.location_gu_name == location }">
 								selected
 							</c:if>
-						><c:out value="${gu.location_gu_name }" /></option>
+						><c:out value="${gu.location_gu_name }"/></option>
 					</c:forEach>
 			</select>
 			
 			<div class="row g-4">
-<%-- 				<c:if test="${placeList.isEmpty() }">
-					<div style="margin-left: 6px;">
-						<h2><span style="color: #198754;">${type }</span> <span style="color: #198754;">${location }</span> 에 해당하는 검색결과가 없습니다.</h2>
-					</div>
-				</c:if> --%>
 				<c:forEach var="place" items="${placeList }">
 	                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s" onclick=" location.href='/place/${place.place_no}'; " style="cursor: pointer;">
 	                    <div class="service-item rounded overflow-hidden" style="height: auto;">
@@ -51,7 +39,7 @@
 	                            <h4 class="mb-3 py-2">${place.place_name }</h4>
 	                            <div>
 		                            <span>${place.place_address }</span>
-		                            <%-- <div style="float: right;"><fmt:setLocale value="ko_KR"/><fmt:formatNumber type="currency" value="${place.place_price }" /><small> 원/시간</small></div> --%>
+		                            <div style="float: right;"><fmt:setLocale value="ko_KR"/><fmt:formatNumber type="currency" value="${place.place_price }" /><small> 원/시간</small></div>
 	                            </div>
 	                        </div>
 	                    </div>
@@ -59,13 +47,8 @@
 	            </c:forEach>
         	</div>       
 			
-			
-			
 		</div>
 	</div>
 </div>
-    
-    
-    
     
 <%@ include file="../include/footer.jsp"%>

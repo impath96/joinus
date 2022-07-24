@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.joinus.domain.MembersVo;
 import com.joinus.domain.PlacesVo;
 import com.joinus.service.PlaceService;
 
@@ -27,33 +26,32 @@ public class PlaceController {
 	@Inject
 	private PlaceService placeService;
 	
-	
-//	@RequestMapping(value = "/placeList", method = RequestMethod.GET)
-//	public void roomListGET(Model model) throws IOException {
+//	@RequestMapping(value = "/placeBlogListCrawl", method = RequestMethod.GET)
+//	public void placeBlogListGET(Model model) throws IOException {
 //		log.info(" placeListGET() 호출 ");
 //		
 //		//service에서 저장한 크롤링 정보들을 JSONArray형태로 저장
-//		JSONArray placeList = service.placeList();
+//		JSONArray blogList = service.blogList();
 //
-//		model.addAttribute("placeList", placeList);
+//		model.addAttribute("blogList", blogList);
 //	}
-	
 	
 	
 	// 시설 목록(비제휴)
 	// http://localhost:8088/place/placeList
 	@RequestMapping(value = "/placeList", method = RequestMethod.GET)
-	public String placeListGET(Model model, HttpSession session, @ModelAttribute("location") String location) {
+	public String placeListGET(Model model, @ModelAttribute("location") String location) {
 		log.info(" placeListGET() 호출 ");
-		log.info("location(지역정보) : "+location);
 		
 		List<PlacesVo> placeList = null;
 		location = "0";
+		log.info(" location(지역정보) : "+location);
 		if(location.equals("0")) {
-			log.info(" 시설목록(비제휴) 전체 출력 ");
+			log.info(" [location == 0] => 시설목록(비제휴) 전체 출력 ");
 			placeList = placeService.getPlaceList();
 		} else if (!location.equals("0")) {
 			placeList = placeService.getCityPlaceList(location);
+			log.info("placeList : "+placeList);
 		}
 		
 		for(PlacesVo vo : placeList) {
@@ -63,10 +61,8 @@ public class PlaceController {
 		}
 		
 		model.addAttribute("placeList", placeList);
-		
 		// 부산(구) 목록
 		model.addAttribute("guList", placeService.getBusanGuList());
-		
 		model.addAttribute("location", location);
 		
 		return "/place/placeList";

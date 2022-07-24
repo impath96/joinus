@@ -12,6 +12,7 @@ public class PlacesVo {
 	private String place_content;
 	private String place_address;
 	private String place_tel;
+	private String place_price;
 	
 	
 }

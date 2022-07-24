@@ -44,15 +44,15 @@ public class PlaceServiceImpl implements PlaceService{
 	}
 
 	
-	
+/////////////////////////////////////크롤링//////////////////////////////
 //	@Override
-//	public JSONArray placeList() {
+//	public JSONArray blogList() {
 //		
 //		log.info("service : 숙소목록불러오기");
 //
 ////		int pagenum = 1;
 ////		String url = "https://shareit.kr/search/venue?area=&date=&eventType=&venueType=&minPrice=0&maxPrice=-1&minPeople=0&maxPeople=-1&equip=&amenity=&approve=true&realtime=true&order=recent&page="+pagenum+"&keyword=%EB%B6%80%EC%82%B0";
-//		String url = "https://shareit.kr/search/venue?area=59&date=&eventType=&venueType=&minPrice=0&maxPrice=-1&minPeople=0&maxPeople=-1&equip=&amenity=&approve=true&realtime=true&order=recent&page=1&keyword=";
+//		String url = "https://blog.naver.com/spacecloud";
 //
 //		Document doc = null;
 //
@@ -88,9 +88,8 @@ public class PlaceServiceImpl implements PlaceService{
 //		
 //		return placeList;
 //	}
+/////////////////////////////////////크롤링//////////////////////////////
 
-
-	
 	
 
 }
