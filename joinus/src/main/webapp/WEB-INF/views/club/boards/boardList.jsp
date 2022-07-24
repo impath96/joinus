@@ -73,19 +73,25 @@
 				</c:if>
 					<h5 class="mb-3" style="display: inline-block;">${board.clubBoardsVo.club_board_title }</h5><br>
 					<p class="clubBoardList_content">${board.clubBoardsVo.club_board_content }</p>
-					<div style="margin-bottom: 1em;">
-						<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${board.membersVo.member_image }">
-						<span class="clubBoardList_writer">${board.membersVo.member_name }</span>
-						
-						<c:if test="${board.clubBoardsVo.club_board_updatedate == null }">
-							<span><fmt:formatDate value="${board.clubBoardsVo.club_board_date }" pattern="yy.MM.dd HH:mm"/> </span>
-						</c:if>
-						<c:if test="${board.clubBoardsVo.club_board_updatedate != null }">
-							<span><fmt:formatDate value="${board.clubBoardsVo.club_board_updatedate }" pattern="yy.MM.dd HH:mm"/></span>
-						</c:if>
+					<div style="margin-bottom: 1em; display: table;">
+						<div style="display: inline-block; vertical-align: middle;">
+							<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${board.membersVo.member_image }">
+						</div>
+						<span style="display: table-cell;">
+							<span class="clubBoardList_writer">${board.membersVo.member_name }</span>
+							
+							<c:if test="${board.clubBoardsVo.club_board_updatedate == null }">
+								<span><fmt:formatDate value="${board.clubBoardsVo.club_board_date }" pattern="yy.MM.dd HH:mm"/> </span>
+							</c:if>
+							<c:if test="${board.clubBoardsVo.club_board_updatedate != null }">
+								<span><fmt:formatDate value="${board.clubBoardsVo.club_board_updatedate }" pattern="yy.MM.dd HH:mm"/></span>
+							</c:if>
+						</span>
 					</div>
-					<i class="bi bi-heart"></i> <span class="clubBoardList_likeCnt">${board.clubBoardsVo.club_board_likecnt }</span>
-					<i class="fa fa-comments fa-fw"></i> <span class=clubBoardList_commentCnt>${board.clubBoardsVo.club_board_commentcnt }</span>
+					<div>
+						<i class="bi bi-heart"></i> <span class="clubBoardList_likeCnt">${board.clubBoardsVo.club_board_likecnt }</span>
+						<i class="fa fa-comments fa-fw"></i> <span class=clubBoardList_commentCnt>${board.clubBoardsVo.club_board_commentcnt }</span>
+					</div>
 				</div>
 				<hr style="margin-top: 1em;">
 			</c:forEach>

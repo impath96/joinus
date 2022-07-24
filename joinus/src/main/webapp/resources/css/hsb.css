@@ -43,12 +43,13 @@
 
 .clubBoardList_writer {
 	margin-top: 0.5em;
-	margin-right: 1em;
+	margin-right: 0.3em;
 }
 
 .boardContent_writeImage {
 	width: 50px;
 	border-radius: 100%;
+	margin-right: 1em;
 }
 
 .likeMemberBtn {
@@ -61,7 +62,9 @@
 	font-size: inherit;
 	line-height: 40px;
 	white-space: pre-line;
-	padding-right: 3em;
+/* 	padding-right: 3em; */
+	margin-top: 3em;
+	margin-bottom: 3em;
 }
 
 .ContentImage {

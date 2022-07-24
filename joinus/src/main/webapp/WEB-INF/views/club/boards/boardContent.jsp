@@ -11,11 +11,6 @@
 
 	$(document).ready(function(){
 		
-		// 글을 상세보기 할 때 그 때의 세션값 확인(나중에 지우기)
-// 		var sessionMember = ${sessionScope.member.member_no};
-// 		alert("접속한 member_no : "+sessionMember);
-// 		alert("글 작성자 member_no : "+${vo.membersVo.member_no});
-		
 		// 폼태그 정보
 		var formObj = $('form[role="form"]');
 		console.log(formObj);
@@ -64,8 +59,6 @@
 		$('.btn').click(function(){
 			var id_check = $(this).attr('id');
 			var board_comment_no = id_check.substring(12);
-// 			alert(id_check);
-// 			alert(board_comment_no);
 			
 			$('.comment'+board_comment_no).hide();
 			$('#commentUpForm'+board_comment_no).show();
@@ -107,8 +100,6 @@
 // 			alert(id_check);
 			if(id_check.substring(0, 13) == 'commentDelBtn'){
 				var board_comment_no = id_check.substring(13);
-// 				alert('삭제버튼');
-// 				alert(board_comment_no);
 
 				if(confirm('댓글을 삭제하시겠습니까?')){
 					$.ajax({
@@ -128,18 +119,14 @@
 		
 		// 좋아요
 		$('#like').click(function(){{
-// 			alert('좋아요클릭');
 			var like_check = ${checkLike};
-// 			alert("좋아요 확인 : "+like_check);
 			
 			if(like_check == 1){
-// 				alert('좋아요 누른 회원');
 				// 좋아요 취소
 				$.ajax({
 					type : "post",
 					url : "${pageContext.request.contextPath}/club/${club_no}/boards/${club_board_no}/likeDown",
 					success : function(){
-// 						alert('좋아요 취소');
 						location.reload();
 					},
 					erorr : function error(){
@@ -148,7 +135,6 @@
 				});
 			} else {
 				// 좋아요 안누른 회원
-// 				alert('좋아요 안누른 회원');
 				// 좋아요
 				$.ajax({
 					type : "post",
@@ -189,16 +175,15 @@
 	<div class="container contact px-lg-0" style="width: 60%">
 		<div class="row g-0 mx-lg-0">
 			<!-- 			<div class="col-lg-6 contact-text py-5 wow fadeIn" data-wow-delay="0.5s"> -->
-			<div class="p-lg-5" align="center" >
+			<div align="center" >
 				<h6 class="text-primary" style="margin-bottom: 2em;">${vo.clubsVo.club_name } ${vo.boardTypesVo.board_type_name }</h6>
-<%-- 				<h1 class="clubWrite_mb-4">${vo.clubBoardsVo.club_board_title }</h1> --%>
 				<h1>${vo.clubBoardsVo.club_board_title }</h1>
 				<br>
 					<div class="row g-3">
 						<div class="col-md-12">
-							<div class="form-floating" style="float: left">
+							<div class="form-floating" style="float: left; display: table;">
 								<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${vo.membersVo.member_image }">
-								<span style="color: black; margin-left: 5px;">${vo.membersVo.member_name }</span>
+								<span style="color: black; margin-left: 5px; display: table-cell; vertical-align: middle;">${vo.membersVo.member_name }</span>
 							</div>
 							<div style="float: right;">
 								<c:if test="${vo.clubBoardsVo.club_board_updatedate == null }">
@@ -211,7 +196,7 @@
 						</div> 
 						<div class="col-12">
 							<div class="form-floating" style="color: black;">
-								<pre class="boardContent" style="margin-top: 2em;">${vo.clubBoardsVo.club_board_content }</pre>
+								<pre class="boardContent">${vo.clubBoardsVo.club_board_content }</pre>
 							</div>
 							<c:if test="${vo.clubBoardsVo.club_board_image != null}">
 								<img src="${PageContext.request.contextPath }/resources/upload/boards/${vo.clubBoardsVo.club_board_image }" class="ContentImage">
