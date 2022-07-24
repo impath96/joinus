@@ -1,5 +1,6 @@
 package com.joinus.persistence;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,14 +62,56 @@ public class RentalDaoImpl implements RentalDao {
 	}
 	
 	@Override
+	public List<RentalPlacesVo> getRentalPlaceDate(int partner_place_no) {
+		return sqlSession.selectList(NAMESPACE+".getRentalPlaceDate", partner_place_no);
+	}
+	
+	@Override
+	public List<Integer> getRentalTime(Date rental_date, Integer partner_place_no) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("rental_date", rental_date);
+		param.put("partner_place_no", partner_place_no);
+		
+		return sqlSession.selectList(NAMESPACE+".getRentalTime", param);
+	}
+
+	@Override
 	public Integer pay(PaymentsVo vo) {
 		return sqlSession.insert(NAMESPACE+".pay", vo);
 	}
 
 	@Override
-	public void place(RentalPlacesVo vo) {
-		sqlSession.insert(NAMESPACE+".place", vo);
+	public void insertPlaceBeforePay(Date rental_date, int rentaltimeno) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("rental_date", rental_date);
+		param.put("rental_time_no", rentaltimeno);
+		
+		sqlSession.insert(NAMESPACE+".placeBeforePay", param);
 	}
+
+	@Override
+	public RentalPlacesVo getLatelyRentalPlace() {
+		return sqlSession.selectOne(NAMESPACE+".getLatelyRentalPlace");
+	}
+
+	@Override
+	public int getRentalPlaceCnt() {
+		return sqlSession.selectOne(NAMESPACE+".rentalPlaceCnt");
+	}
+
+	@Override
+	public void updateLatelyRentalPlace(String reservation_no, int member_no, int partner_place_no,
+			int payment_no, int rental_places_no) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("reservation_no", reservation_no);
+		param.put("member_no", member_no);
+		param.put("partner_place_no", partner_place_no);
+		param.put("payment_no", payment_no);
+		param.put("rental_places_no", rental_places_no);
+		
+		sqlSession.update(NAMESPACE+".updateLatelyRentalPlace", param);
+	}
+	
 	
 	
 	

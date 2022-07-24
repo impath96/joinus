@@ -19,7 +19,7 @@
 <!-- 조인할 테이블 1-2 -->
 <resultMap type="RentalPlacesVo" id="rentalPlacesMap">
    <id property="rental_places_no" column="rental_places_no"/>
-   <id property="club_no" column="club_no"/>
+   <id property="reservation_no" column="reservation_no"/>
    <id property="member_no" column="member_no"/>
    <id property="partner_place_no" column="partner_place_no"/>
    <id property="payment_no" column="payment_no"/>
@@ -74,7 +74,7 @@
 
 <select id="GetRental" resultMap="RentalListMap">
 	
-	select rp.rental_places_no, rp.club_no, rp.member_no, rp.partner_place_no, rp.rental_date, pp.partner_place_name, pp.partner_place_address
+	select rp.rental_places_no, rp.member_no, rp.partner_place_no, rp.rental_date, pp.partner_place_name, pp.partner_place_address
 	from rental_places rp
 	join partner_places pp
 		on(rp.partner_place_no = pp.partner_place_no)
