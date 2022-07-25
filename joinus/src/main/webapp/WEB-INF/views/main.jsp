@@ -69,7 +69,8 @@
 						                   	<img src="../resources/img/joinus.png" class="w-100 py-auto"
 						                   	onclick="location.href='${PageContext.request.contextPath }/club/${my.club_no}'">
 						                 </c:if>
-					                        <div class="position-relative p-4 pt-0" style="height: 190px;">
+					                        <div class="position-relative p-4 pt-0" style="height: 190px;" 
+					                        onclick="location.href='${PageContext.request.contextPath }/club/${my.club_no}';">
 					                            <h4 class="mb-3 py-2 MainTextTitle">${my.club_name }</h4>
 					                            <p class="MainTextSub ">${my.club_content }</p>
 					                        </div>
@@ -99,7 +100,8 @@
 						                <img src="../resources/img/joinus.png" class="w-100 py-auto mainImg"
 						                onclick="location.href='${PageContext.request.contextPath }/club/${in.club_no}'">
 						              </c:if>
-					                          <div class="position-relative p-4 pt-0" style="height: 190px;">
+					                          <div class="position-relative p-4 pt-0" style="height: 190px;"
+					                          onclick="location.href='${PageContext.request.contextPath }/club/${in.club_no}';">
 					                            <h4 class="mb-3 py-2 MainTextTitle">${in.club_name }</h4>
 					                            <p class="MainTextSub ">${in.club_content }</p>
 					                        </div>
@@ -130,7 +132,8 @@
 						                 <img src="../resources/img/joinus.png" class="w-100 py-auto mainImg"
 						                 onclick="location.href='${PageContext.request.contextPath }/club/${po.club_no}'">
   			                           </c:if>
-					                   <div class="position-relative p-4 pt-0" style="height: 190px;">
+					                   <div class="position-relative p-4 pt-0" style="height: 190px;"
+					                   onclick="location.href='${PageContext.request.contextPath }/club/${po.club_no}';">
 					                            <h4 class="mb-3 py-2 MainTextTitle">${po.club_name }</h4>
 					                            <p class="MainTextSub ">${po.club_content }</p>
 				                        </div>
@@ -161,7 +164,8 @@
 						                    	<img src="../resources/img/joinus.png" class="w-100 py-auto mainImg"
 						                    	onclick="location.href='${PageContext.request.contextPath }/club/${nu.club_no}'">
 						                    </c:if>
-					                         <div class="position-relative p-4 pt-0" style="height: 190px;">
+					                         <div class="position-relative p-4 pt-0" style="height: 190px;"
+					                         onclick="location.href='${PageContext.request.contextPath }/club/${nu.club_no}';">
 					                            <h4 class="mb-3 py-2 MainTextTitle">${nu.club_name }</h4>
 					                            <p class="MainTextSub ">${nu.club_content }</p>
 					                        </div>
@@ -170,7 +174,6 @@
 				            </c:forEach>
 				                </div>
                    </div>
-				
 				
 				
 					<!-- 최근에 생성된 모임  -->
@@ -191,7 +194,8 @@
 							                    	<img src="../resources/img/joinus.png" class="w-100 py-auto"
 							                    	onclick="location.href='${PageContext.request.contextPath }/club/${la.club_no}'">
 							                    </c:if>
-						                          <div class="position-relative p-4 pt-0" style="height: 190px;">
+						                          <div class="position-relative p-4 pt-0" style="height: 190px;"
+						                          onclick="location.href='${PageContext.request.contextPath }/club/${la.club_no}';">
 						                            <h4 class="mb-3 py-2 MainTextTitle">${la.club_name }</h4>
 						                            <p class="MainTextSub ">${la.club_content }</p>
 						                        </div>
@@ -200,14 +204,9 @@
 					            </c:forEach>
 					        </div>
 	                   </div>
-
-
-
 		</div>
 		</div>
         </div>
     </body>
 	
-
-    
 <%@ include file="include/footer.jsp"%>

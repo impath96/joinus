@@ -82,6 +82,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     <style type="text/css">
       .service-item {
         height: 100%;
+        cursor: pointer;
       }
       .service-icon {
         margin: 24px 24px 0 0;
