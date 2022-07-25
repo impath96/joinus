@@ -94,8 +94,8 @@ public class RentalController {
 			if(session.getAttribute("member") != null) {
 				// 회원
 				MembersVo member = (MembersVo) session.getAttribute("member");
-				int member_no = member.getMember_no();
-				int result = clubService.checkClubAdmin(member_no);
+				Integer member_no = member.getMember_no();
+				Integer result = clubService.checkClubAdmin(member_no);
 				
 				// result 값이 0보다 크면 모임장
 				if(result > 0) {
@@ -195,7 +195,7 @@ public class RentalController {
 	// http://localhost:8088/rental/partnerPlaces/1
 	// 대관상세
 	@RequestMapping(value = "/partnerPlaces/{partner_place_no}", method = RequestMethod.GET)
-	public String partnerPlaceContentGet(@PathVariable("partner_place_no") int partner_place_no, Model model, HttpSession session) {
+	public String partnerPlaceContentGet(@PathVariable("partner_place_no") Integer partner_place_no, Model model, HttpSession session) {
 		log.info(" partnerPlaceContentGet() 호출 ");
 		
 		// 세션에 저장된 member_no가 모임장이 아니면 결제하기 버튼 막기
@@ -204,7 +204,7 @@ public class RentalController {
 		
 		if(session.getAttribute("member") != null) {
 			MembersVo member = (MembersVo) session.getAttribute("member");
-			int member_no = member.getMember_no();
+			Integer member_no = member.getMember_no();
 			result = clubService.checkClubAdmin(member_no);
 		}
 		
@@ -232,8 +232,8 @@ public class RentalController {
 	
 	@RequestMapping(value = "/partnerPlaces/{partner_place_no}", method = RequestMethod.POST)
 	public String partnerPlaceContentPost(PartnerPlacesVo partnerplacevo ,PaymentsVo paymentvo, 
-			Model model, @RequestParam("rental_time_no") int rentaltimeno,
-			@RequestParam("rental_date") Date rental_date, HttpSession session,@RequestParam("payment_price") int payment_price) {
+			Model model, @RequestParam("rental_time_no") Integer rentaltimeno,
+			@RequestParam("rental_date") Date rental_date, HttpSession session,@RequestParam("payment_price") Integer payment_price) {
 		log.info(" partnerPlaceContentPost() 호출");
 
 		rentalService.insertPlaceBeforePay(rental_date, rentaltimeno);
@@ -267,10 +267,10 @@ public class RentalController {
 	@ResponseBody
 	@RequestMapping(value ="/partnerPlaces/{partner_place_no}/payment",method=RequestMethod.POST)
 	public PaymentsVo payment( Model model, 
-			@RequestParam("partner_place_price") int partner_place_price,
-			@RequestParam("payment_price") int payment_price,
-			@RequestParam("rental_time_no") int rental_time_no,
-			@PathVariable("partner_place_no") int partner_place_no,
+			@RequestParam("partner_place_price") Integer partner_place_price,
+			@RequestParam("payment_price") Integer payment_price,
+			@RequestParam("rental_time_no") Integer rental_time_no,
+			@PathVariable("partner_place_no") Integer partner_place_no,
 			PaymentsVo paymentvo,HttpSession session){
 		log.info(" 결제 정보 저장시작 ");
 		log.info(" 결제 정보 저장 호출 " + paymentvo);
@@ -308,9 +308,9 @@ public class RentalController {
 		log.info("LatelyrentalPlace : "+LatelyrentalPlace);
 		// rentalPlace 정보 저장
 		String reservation_no = rsNum;
-		int member_no = mvo.getMember_no();
-		int payment_no = paymentvo.getPayment_no();
-		int rental_places_no = rentalService.getRentalPlaceCnt();
+		Integer member_no = mvo.getMember_no();
+		Integer payment_no = paymentvo.getPayment_no();
+		Integer rental_places_no = rentalService.getRentalPlaceCnt();
 		rentalService.updateLatelyRentalPlace(reservation_no, member_no, partner_place_no, payment_no, rental_places_no);
 		log.info("rentalPlace 저장완료");
 		

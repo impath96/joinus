@@ -24,7 +24,7 @@ public class RentalServiceImpl implements RentalService {
 	private RentalDao dao;
 
 	@Override
-	public PartnerPlacesVo getPartnerPlaceContent(int partner_place_no) {
+	public PartnerPlacesVo getPartnerPlaceContent(Integer partner_place_no) {
 		return dao.getPartnerPlaceContent(partner_place_no);
 	}
 
@@ -54,7 +54,7 @@ public class RentalServiceImpl implements RentalService {
 	}
 	
 	@Override
-	public List<RentalPlacesVo> getRentalPlaceDate(int partner_place_no) {
+	public List<RentalPlacesVo> getRentalPlaceDate(Integer partner_place_no) {
 		return dao.getRentalPlaceDate(partner_place_no);
 	}
 	
@@ -69,7 +69,7 @@ public class RentalServiceImpl implements RentalService {
 	}
 
 	@Override
-	public void insertPlaceBeforePay(Date rental_date, int rentaltimeno) {
+	public void insertPlaceBeforePay(Date rental_date, Integer rentaltimeno) {
 		dao.insertPlaceBeforePay(rental_date, rentaltimeno);
 	}
 
@@ -84,8 +84,8 @@ public class RentalServiceImpl implements RentalService {
 	}
 
 	@Override
-	public void updateLatelyRentalPlace(String reservation_no, int member_no, int partner_place_no,
-			int payment_no, int rental_places_no) {
+	public void updateLatelyRentalPlace(String reservation_no, Integer member_no, Integer partner_place_no,
+			Integer payment_no, Integer rental_places_no) {
 		dao.updateLatelyRentalPlace(reservation_no, member_no, partner_place_no, payment_no, rental_places_no);
 	}
 	

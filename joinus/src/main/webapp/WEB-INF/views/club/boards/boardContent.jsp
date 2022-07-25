@@ -10,6 +10,7 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
+// 		alert("page : "+${page});
 		
 		// 폼태그 정보
 		var formObj = $('form[role="form"]');
