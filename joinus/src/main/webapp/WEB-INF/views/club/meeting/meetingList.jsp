@@ -92,6 +92,29 @@ if(result == 3){
 		alert('로그인 후 사용할 수 있습니다.' );
 		location.href = "/member/signin";
 	}
+	
+$(function(){
+	if(result ==2){
+	//alert('ajax!');
+	$.ajax({
+		url : '${PageContext.request.contextPath}/club/${club_no}/meeting/end',
+		type : 'GET',
+		contentType : "application/json",
+		success : function(data){
+			//alert('갔다옴');
+			//console.log(data);
+			console.log(data.length);
+			
+			if(data != null){
+			alert("기한이 지난 정모가 있습니다! 상세페이지에서 완료로 상태를 바꿔 주세요!");
+			}
+		
+		}
+		
+	});//ajax	
+	}//if
+})	//jquery
+	
 
 </script>
 <!-- 모임회원리스트 -->
