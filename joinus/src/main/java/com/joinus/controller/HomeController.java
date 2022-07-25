@@ -3,9 +3,9 @@ package com.joinus.controller;
 import java.util.List;
 import java.util.Locale;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class HomeController {
 	
-	@Inject
+
+	@Autowired
 	private MainService service;
 	
 	@GetMapping(value = "/")
@@ -42,9 +43,9 @@ public class HomeController {
 			//로그인시 내 지역으로 모임 출력
 			
 			String[] array = member.getMember_location().split("\\s");
-			// 시+구 잘라내기		    
+			// 구 뽑아내기		    
 			for(int i=0;i<array.length;i++) {
-				String address = array[0].substring(0, 5) + " " + array[1];
+				String address = array[1];
 				
 				List<ClubsVo> vo4 = service.getMyClubs(address);
 				model.addAttribute("my", vo4);
