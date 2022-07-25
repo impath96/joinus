@@ -235,9 +235,9 @@
 							
 							<div id="likeMemberList" style="display: none;">
 								<c:forEach var="member" items="${likeList }">
-									<div style="margin: 1em;">
+									<div style="margin: 1em; display: table;">
 										<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${member.membersVo.member_image }">
-										${member.membersVo.member_name }
+										<span style="display: table-cell; vertical-align: middle;">${member.membersVo.member_name }</span>
 									</div>
 								</c:forEach>
 							</div>
@@ -248,7 +248,7 @@
 					
 					<div class="comments_form" style="margin: 30px 0;">
 						<div>
-							<textarea class="form-control" name="board_comment_content" id="board_comment_content"
+							<textarea class="form-control" style="color: black;" name="board_comment_content" id="board_comment_content"
 								rows="3" placeholder="댓글을 입력해주세요." required></textarea>
 								<div style="text-align: right;">
 									<button type="button" class="btn btn-primary py-2 mt-2 me-2" id="commentBtn">등록</button>
@@ -263,17 +263,19 @@
 							<article class="comment${comment.boardCommentsVo.board_comment_no }">
 							
 								<div class="col-md-12">
-									<div class="form-floating" style="text-align: left;">
+									<div class="form-floating" style="text-align: left; display: table; margin-inline-end:auto;">
 										<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${comment.membersVo.member_image }">
-										<span style="color: black; margin-left: 5px;">${comment.membersVo.member_name }</span>
-										<small style="margin-left: 1em;">
-											<c:if test="${comment.boardCommentsVo.board_comment_updatedate == null }">
-												<span><fmt:formatDate value="${comment.boardCommentsVo.board_comment_date }" pattern="yy.MM.dd HH:mm"/> </span>
-											</c:if>
-											<c:if test="${comment.boardCommentsVo.board_comment_updatedate != null }">
-												<span><fmt:formatDate value="${comment.boardCommentsVo.board_comment_updatedate }" pattern="yy.MM.dd HH:mm"/> </span>
-											</c:if>
-										</small>
+										<div style="display: table-cell; vertical-align: middle;">
+											<span>${comment.membersVo.member_name }</span>
+											<small style="margin-left: 1em;">
+												<c:if test="${comment.boardCommentsVo.board_comment_updatedate == null }">
+													<span><fmt:formatDate value="${comment.boardCommentsVo.board_comment_date }" pattern="yy.MM.dd HH:mm"/> </span>
+												</c:if>
+												<c:if test="${comment.boardCommentsVo.board_comment_updatedate != null }">
+													<span><fmt:formatDate value="${comment.boardCommentsVo.board_comment_updatedate }" pattern="yy.MM.dd HH:mm"/> </span>
+												</c:if>
+											</small>
+										</div>
 									</div>
 									<div class="form-group pull-right" style="float: right;">
 										<c:if test="${sessionScope.member.member_no == comment.membersVo.member_no }">
@@ -282,7 +284,7 @@
 										</c:if>
 									</div>
 									<div id="comment_content">
-										${comment.boardCommentsVo.board_comment_content }
+										<pre class="commentContent">${comment.boardCommentsVo.board_comment_content }</pre>
 									</div>
 								</div> 
 							
@@ -290,7 +292,7 @@
 							
 							<!-- 댓글수정폼 -->
 							<div id="commentUpForm${comment.boardCommentsVo.board_comment_no }" style="display: none;">
-								<textarea class="form-control" name="commentUp${comment.boardCommentsVo.board_comment_no }"
+								<textarea class="form-control" style="color: black;" name="commentUp${comment.boardCommentsVo.board_comment_no }"
 									id="commentUp${comment.boardCommentsVo.board_comment_no }" rows="3" required>${comment.boardCommentsVo.board_comment_content }</textarea>
 								<div>
 									<input type="button" id="commentUpCompleteBtn${comment.boardCommentsVo.board_comment_no }" class="button btn btn-secondary btn-default float-right py-2 my-4" value="수정">
