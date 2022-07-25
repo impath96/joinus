@@ -134,15 +134,37 @@
 <update id="UpdateMeeting">
 	update club_meetings
 	set
-	 club_no = #{vo.club_no},
+	 
+	 <if test="#{vo.club_meeting_title} != null">
 	 club_meeting_title = #{vo.club_meeting_title},
+	 </if>
+	 
+	 <if test="#{vo.club_meeting_capacity} != null">
 	 club_meeting_capacity = #{vo.club_meeting_capacity},
+	 </if>
+	 
+	 <if test="#{vo.club_meeting_date} != null">
 	 club_meeting_date = #{vo.club_meeting_date},
+	 </if>
+	 
+	 <if test="#{vo.club_meeting_location} != null">
 	 club_meeting_location = #{vo.club_meeting_location},
+	 </if>
+	 
+	 <if test="#{vo.club_meeting_address} != null">
 	 club_meeting_address = #{vo.club_meeting_address},
-	 club_meeting_dues = #{vo.club_meeting_dues}
+	 </if>
+	 
+	 <if test="#{vo.club_meeting_dues} != null">
+	 club_meeting_dues = #{vo.club_meeting_dues},
+	 </if>
+	 
+	 <if test="#{vo.club_meeting_content} != null">
 	 club_meeting_content = #{vo.club_meeting_content}
-	where club_meeting_no = #{vo.club_meeting_no}
+	 </if>
+	 
+	where club_meeting_no = #{club_meeting_no}
+
 
 </update>
 
