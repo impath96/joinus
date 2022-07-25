@@ -31,7 +31,6 @@
                     <div class="testimonial-text text-center rounded p-4">
                         <p>${month.clubsVo.club_content }</p>
                         <h5 class="mb-1">${month.clubsVo.club_name }</h5>
-                        <span class="fst-italic">Profession</span>
                     </div>
                 </div>
                 </c:forEach>
