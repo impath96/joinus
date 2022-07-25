@@ -46,9 +46,9 @@ import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
 public class MemberController {
 
 	@Autowired
-	MemberService memberService;
+	private MemberService memberService;
 	@Autowired
-	InterestService interestService;
+	private InterestService interestService;
 	@Autowired
 	private JavaMailSender mailSender;
 	@Autowired
@@ -62,13 +62,14 @@ public class MemberController {
 
 		log.info("회원가입 페이지 이동  @@@@@@@@@@@@@@@@@@");
 
-		// signup 페이지에서 form 라이브러리 사용하기 위한 MembersVo 객체
 		model.addAttribute("member", new MembersVo());
+		
 		return "/member/signup";
 	}
 
-	// 시, 구, 동만 저장하도록 파싱작업 수행
+	// 다른 곳에서 동일한 기능 사용 -> 추후 Util 클래스로 분리
 	private String parseLocation(String location_name) {
+		
 		String[] part = location_name.split(" ");
 		String savedLocation = part[0];
 		for (int i = 1; i < 3; i++) {
@@ -77,7 +78,6 @@ public class MemberController {
 		return savedLocation;
 	}
 
-	// 회원가입 처리
 	// 전달 받아야 하는 데이터 : 이메일, 이름, 전화번호, 소셜로그인 타입, 주소, 사진URL, 비밀번호
 	@PostMapping(value = "/signup")
 	public String signupPost(HttpSession session, @ModelAttribute("member") @Valid MembersVo member,
@@ -111,18 +111,20 @@ public class MemberController {
 
 	}
 
-	// 이메일 인증
+	// 이메일 인증 - 따로 분리?
 	@ResponseBody
-	@RequestMapping(value = "/emailAuth", method = RequestMethod.POST)
+	@PostMapping(value = "/emailAuth")
 	public String emailAuth(String email) {
+		
+		// 1) 6자리 랜덤값 새성
 		Random random = new Random();
 		int checkNum = random.nextInt(888888) + 111111;
 
-		/* 이메일 보내기 */
+		// 2) 이메일 보내기
 		String setFrom = "joinusject@naver.com"; 		// 인증 번호를 전송할 이메일
 		String toMail = email; 					 		// 인증 번호를 수신할 이메일
 		String title = "회원가입 인증 이메일 입니다.";  // 이메일 제목
-		String content = "JoinUs 홈페이지를 방문해주셔서 감사합니다." + "<br><br>" + "인증 번호는 " + checkNum + "입니다." + "<br>"
+		String content = "JoinUs 홈페이지를 방문해주셔서 감사합니다." + "<br><br>" + "인증 번호는 [" + checkNum + "] 입니다." + "<br>"
 				+ "해당 인증번호를 인증번호 확인란에 기입하여 주세요."; // 이메일 내용
 
 		log.info("이메일 전송 준비 완료");
@@ -153,10 +155,6 @@ public class MemberController {
 		if (member == null) {
 			return "redirect:/member/signin";
 		}
-		
-		// log.info("최근 본 클럽 : {}", cookie.getValue());
-		
-		// String[] 배열을 Integer 타입의 리스트로 변환
 		
 		if(cookie != null) {
 			// 1) String[] 배열을 Integer[] 배열로 변환
@@ -208,9 +206,6 @@ public class MemberController {
 		log.info("model : {}", model);
 		log.info("interest : {}", interest);
 		
-		// 전달받은 추가정보(관심사)를 member_interests 테이블에 추가해야한다
-		// member_no, interest_no 필요
-		// 일단 이 기능은 MemberService에 추가
 		memberService.addInterest(member.getMember_no(), interest);
 
 		return "redirect:/";

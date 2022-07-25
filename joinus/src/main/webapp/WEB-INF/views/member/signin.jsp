@@ -20,22 +20,22 @@
         <div class="container contact px-lg-0" style="width: 60%">
             <div class="row g-0 mx-lg-0">
             	<div class="p-lg-5 ps-lg-0" align="center" >
-                	<h6 class="text-primary">Grouping</h6>
+                	<h6 class="text-primary">JOINUS</h6>
                      <h1 class="mb-4">로그인</h1>
                      <form action="/member/signin" method="post">
                          <div class="col-12" >
-                             <div class="form-floating" style="width: 50%;">
+                             <div class="form-floating w-50">
                                  <input type="email" class="form-control p-2 fs-2" id="email" name="email" placeholder="이메일 주소를 입력해주세요.">
                              </div>
                          </div><br>
                          <div class="col-12">
-                             <div class="form-floating" style="width: 50%;">
+                             <div class="form-floating w-50">
                                  <input type="password" class="form-control p-2 fs-2" id="password" name="password" placeholder="비밀번호를 입력해주세요.">
                              </div>
                          </div>
                          <br>
                          <div class="col-12" >
-                         	<input type="submit" value="login" class="btn btn-primary rounded-pill py-3 px-5 fs-2">
+                         	<input type="submit" value="login" class="btn btn-primary w-50 fs-2">
                          </div>
                          <br>
                      </form>

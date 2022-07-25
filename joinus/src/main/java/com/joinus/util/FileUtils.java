@@ -9,16 +9,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class FileUtils {
 
-	// uploadPath : 
 	public static String uploadFile(String uploadPath, MultipartFile file) throws IOException {
-		// UUID_파일명 형식
+		
 		String savedFileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-		// 경로는 어떤걸로 하지??
-		File target = new File(uploadPath, savedFileName); // 어느 경로 : realPath, 어떤 파일 : savedFileName
-
-		// DB가 아닌 현재 웹 서버에 저장
-		// DB에는 전체 경로명 + 파일명(UUID_파일명) 형식으로 전달
-		FileCopyUtils.copy(file.getBytes(), target); // 내용을 파일에 쓰는 동작
+		File target = new File(uploadPath, savedFileName);
+		FileCopyUtils.copy(file.getBytes(), target);
 		
 		return savedFileName;
 	}
@@ -34,6 +29,5 @@ public class FileUtils {
 //		return "";
 //		
 //	}
-	
 	
 }

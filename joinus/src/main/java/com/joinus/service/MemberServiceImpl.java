@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.joinus.domain.Criteria;
 import com.joinus.domain.MembersVo;
@@ -26,6 +27,7 @@ public class MemberServiceImpl implements MemberService {
 
 	// 회원가입 처리
 	@Override
+	@Transactional
 	public MembersVo join(MembersVo member) throws NoSuchAlgorithmException {
 		// 1) 먼저 회원을 등록
 		//  -1) 만약 소셜 로그인 회원일 경우 비밀번호를 설정
