@@ -182,6 +182,14 @@ public class ClubServiceImpl implements ClubService{
 		return dao.getMeetings_no(club_meeting_no);
 	}
 	
+	
+	//정모 참석
+	@Override
+	public int checkMeetingMemberStatus(Integer club_meeting_no, int member_no) {
+		
+		return dao.getMeetingMemberStatus(club_meeting_no,member_no);
+	}
+
 	//정모 수정
 	@Override
 	public Integer updateMeeting(Integer club_meeting_no, ClubMeetingsVo vo) {
@@ -221,17 +229,34 @@ public class ClubServiceImpl implements ClubService{
 		return dao.updateMeetingStatus(club_meeting_no, club_meeting_status);
 	}
 	
+	//정모 리스트
 	@Override
 	public List<ClubMeetingsVo> getMeetingList(Integer club_no, String status) {
 		
 		return dao.getMeetingList(club_no, status);
 	}
 	
+	//정모 참가
+	@Override
+	public void joinMeeting(Integer club_meeting_no, Integer club_no, Integer member_no) {
+		dao.joinMeeting(club_meeting_no,club_no,member_no);
+		
+	}
+	//정모 참석 취소
+	@Override
+	public void cancelMeeting(Integer club_meeting_no, Integer club_no, Integer member_no) {
+		dao.cancelMeeting(club_meeting_no,club_no,member_no);
+	}
+	
+	
+	@Override
+	public List<ClubMeetingsVo> checkMeetingDate(Integer club_no) {
+		
+		return dao.checkMeetingDate(club_no);
+	}
+	
 	
 	//===================================================================
-
-
-
 
 
 

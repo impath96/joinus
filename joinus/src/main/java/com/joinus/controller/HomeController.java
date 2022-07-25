@@ -3,7 +3,6 @@ package com.joinus.controller;
 import java.util.List;
 import java.util.Locale;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class HomeController {
 	
+
 	@Autowired
 	private MainService service;
 	
@@ -43,9 +43,9 @@ public class HomeController {
 			//로그인시 내 지역으로 모임 출력
 			
 			String[] array = member.getMember_location().split("\\s");
-			// 시+구 잘라내기		    
+			// 구 뽑아내기		    
 			for(int i=0;i<array.length;i++) {
-				String address = array[0] + " " + array[1];
+				String address = array[1];
 				
 				List<ClubsVo> vo4 = service.getMyClubs(address);
 				model.addAttribute("my", vo4);
@@ -74,7 +74,11 @@ public class HomeController {
 		return "/";
 	}
 			
-			
+	@GetMapping(value = "/joinus")
+	public String joinus(HttpSession session) {	
+		
+		return "/joinus";
+	}
 	
 	
 	

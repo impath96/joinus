@@ -85,6 +85,9 @@ import com.joinus.domain.MembersVo;
 		//정모 정보 가져오기(meeting_no)
 		public List<ClubMeetingsVo> getMeeting(Integer club_meeting_no);
 		
+		//정모 참석 상태
+		public int checkMeetingMemberStatus(Integer club_meeting_no, int member_no);
+		
 		//정모 수정
 		public Integer updateMeeting(Integer club_meeting_no, ClubMeetingsVo vo);
 		
@@ -105,7 +108,15 @@ import com.joinus.domain.MembersVo;
 		
 		//정모 리스트
 		public List<ClubMeetingsVo> getMeetingList(Integer club_no, String status);
-
+		
+		//정모참가
+		public void joinMeeting(Integer club_meeting_no, Integer club_no, Integer member_no);
+		
+		//정모 참석 취소
+		public void cancelMeeting(Integer club_meeting_no, Integer club_no, Integer member_no);
+		
+		//정모 일정 체크
+		public List<ClubMeetingsVo> checkMeetingDate(Integer club_no);
 
 	
 	//--------------------------------------------------------------
@@ -264,6 +275,11 @@ import com.joinus.domain.MembersVo;
 		// 클럽 리스트 - 최근 본 모임
 		public List<ClubsVo> getClubList(List<Integer> recentViewClub);
 
+
+
+		
+		
+		
 		
 
 

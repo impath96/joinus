@@ -395,7 +395,8 @@
 			    
 	               <div class="col-md-6 col-lg-4 wow fadeInUp d-flex flex-column " data-wow-delay="0.1s" >
 				       
-				       <div class="rounded shadow clubDetailBox" >
+				       <div class="rounded shadow clubDetailBox" onclick="location.href='${PageContext.request.contextPath }/club/${clubvo.club_no}/meeting/${meetings[i].club_meeting_no }'" 
+				       		style="cursor: pointer;">
 					
 		                   <h3 class="greenColor shadow-sm">${meetings[i].club_meeting_title }</h3>
 		                   <p class="MainTextSub"><b> &#128694; 인원 </b>${meetings[i].club_meeting_capacity }명</p>
@@ -519,16 +520,6 @@
     <!-- Team End -->
     
     <script type="text/javascript">
-  
-  //모임 게시판으로 이동
-  function listClubMember(){
-	  location.href='${PageContext.request.contextPath }/club/${clubvo.club_no}/boards/new';
-  }
-  // 모임 사진첩으로 이동
-  function listClubBoard(){
-	  location.href='${PageContext.request.contextPath }/club/${clubvo.club_no}/gallery';
-  }
-  
 	
 </script>
     
