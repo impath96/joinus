@@ -50,8 +50,6 @@
 								</c:choose>
 								
 								
-								<!-- <p>Stet stet justo dolor sed duo. Ut clita sea sit ipsum diam
-									lorem diam.</p> -->
 								<a class="small fw-medium bottom-right" href="/settings/member">프로필 수정하기<i
 									class="fa fa-arrow-right ms-2"></i></a>
 							</div>
@@ -66,7 +64,7 @@
 								<div class="box-content">
 									<c:forEach var="club" items="${clubList }">
 									<a href="${pageContext.request.contextPath }/club/${club.club_no}" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
-										<div class="club_name">${club.club_name }</div>
+										<div class="club_name">&nbsp;&#183; ${club.club_name }</div>
 									</a>
 									</c:forEach>
 								</div>
@@ -84,7 +82,7 @@
 								<div class="box-content">
 									<c:forEach var="recentViewClub" items="${recentViewClubList }">
 										<a href="" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
-											<div class="club_name">${recentViewClub.club_name }</div>
+											<div class="club_name">&nbsp;&#183;${recentViewClub.club_name }</div>
 										</a>
 									</c:forEach>
 								</div>
@@ -102,7 +100,7 @@
 								<div class="box-content">
 									<c:forEach var="myClub" items="${myClubList }">
 									<a href="${pageContext.request.contextPath }/club/${myClub.club_no}" class="club_item d-flex align-items-center mb-1" style="color:currentColor;">
-										<div class="club_name">${myClub.club_name }</div>
+										<div class="club_name">&nbsp;&#183; ${myClub.club_name }</div>
 									</a>
 									</c:forEach>
 								</div>

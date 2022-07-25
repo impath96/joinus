@@ -85,8 +85,8 @@
 				<div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
                     <div id="placeTypeSelect" class="service-item">
                     	<a href="${PageContext.request.contextPath}/place/placeList">
-	                        <div class="position-relative p-4 pt-0">
-	                            <div class="service-icon">
+	                        <div class="position-relative p-4 pt-0" style="text-align: -webkit-center;">
+	                            <div class="service-icon" style="margin-left: 1.5em;">
 	                                <img src="${PageContext.requeset.contextPath }/resources/img/기타시설.png" class="w-100 py-auto">
 	                            </div>
 	                            <h4 class="mb-3" style="margin-top: 1em;">비제휴시설</h4>
