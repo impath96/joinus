@@ -16,8 +16,6 @@ public class GoogleApi20 extends DefaultApi20 {
 		return InstanceHolder.instance;
 	}
 
-	////////////////////////////////////////////////////////////////////
-
 	@Override
 	public String getAccessTokenEndpoint() {
 		return "https://oauth2.googleapis.com/token";

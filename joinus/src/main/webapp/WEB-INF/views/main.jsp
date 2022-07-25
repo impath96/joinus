@@ -23,14 +23,6 @@
 	}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-<script type="text/javascript">
-
-$(document).ready(function(){
-	
-});
-
-
-</script>
 
 
 <body>
@@ -54,7 +46,7 @@ $(document).ready(function(){
                  
                  
                  
-                    <!-- 로그인 O : 맞춤추천 / 인기모임 / 급상승모임 / 이달의 모임 - 로그인 X : 인기모임 / 급상승모임 / 이달의 모임 -->
+                    <!-- 로그인 O : 지역맞춤 / 관심사맞춤 / 인기모임 / 회원많은모임 / 신규모임 - 로그인 X : 인기모임 / 회원많은모임 / 신규모임 -->
                     
                     
                     

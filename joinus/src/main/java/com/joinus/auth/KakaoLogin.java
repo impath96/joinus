@@ -40,11 +40,13 @@ public class KakaoLogin extends AuthLogin {
 		AccessTokenRequestParams params = new AccessTokenRequestParams(code);
 		params.addExtraParameter("client_id", authInfo.getClientId());
 		params.addExtraParameter("client_secret", authInfo.getClientSecret());
+		
 		return oauthService.getAccessToken(params);
 	}
 
 	@Override
 	public MembersVo parseResponse(Response response) throws JsonProcessingException, IOException {
+		
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode node = mapper.readTree(response.getBody());
 		
@@ -52,11 +54,13 @@ public class KakaoLogin extends AuthLogin {
 		System.out.println("node : " +node.toString());
 		String email = node.get("kakao_account").get("email") == null ? "미동의"
 				: node.get("kakao_account").get("email").textValue();
+		
 		String name = node.get("kakao_account").get("profile").get("nickname") == null ? "미동의"
 				: node.get("kakao_account").get("profile").get("nickname").textValue();
-		String picture = node.get("kakao_account").get("profile").get("profile_image_url") == null
-				? "default.jpg"
+		
+		String picture = node.get("kakao_account").get("profile").get("profile_image_url") == null ? "default.jpg"
 				: node.get("kakao_account").get("profile").get("profile_image_url").textValue();
+		
 		return MembersVo.builder()
 	    		.member_email(email)
 	    		.member_name(name)
