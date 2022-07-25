@@ -155,7 +155,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             class="nav-item nav-link"
             >Home</a
           >
-          <a href="project.html" class="nav-item nav-link">JOINUS</a>
+          <a href="${PageContext.request.contextPath }/joinus" class="nav-item nav-link">JOINUS</a>
           <a
             href="${PageContext.request.contextPath }/club/clubList"
             class="nav-item nav-link"

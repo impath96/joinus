@@ -74,7 +74,11 @@ public class HomeController {
 		return "/";
 	}
 			
-			
+	@GetMapping(value = "/joinus")
+	public String joinus(HttpSession session) {	
+		
+		return "/joinus";
+	}
 	
 	
 	

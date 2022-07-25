@@ -43,9 +43,7 @@
     				        dataType: 'json', //서버에서 보내줄 데이터 타입
     				        success: function(paymentvo){
     				        	console.log('데이터 저장 모두 완료!'); 
-    				        	 $('#add').append('예약완료');
-    				        	 $('#add2').append('고객님의 예약이 성공적으로 완료되었습니다');
-    				        	 $('#add3').append('5초 후 대관 예약 페이지로 이동합니다'); // 어디로 이동하지..
+    				        	 $('#add').slideDown();
     				        	 setTimeout(function(){
     				        		 location.href="${PageContext.request.contextPath }/"
     				        	 },5000);
@@ -69,17 +67,15 @@
  
     <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container text-center">
-            <div class="row justify-content-center">
-                <div class="col-lg-6" style="height: 500px;">
+                		
+              <div class="row g-4 text-center justify py-5 shadow m-md-5" id="add"  style="background-color: #F6F7F8; border-radius: 50px; display: none;">
                 		
                 		
-                		
-                		
-                    	<h2 id="add" class="sub2"> </h2>
-                    	<h5 id="add2" class="MainSubTitle"> </h5>
-                    	<h5 id="add3" class="MainSubTitle"> </h5>
+                    	<h2 class="sub2 " style="color:  #63cf8e;"> &#127881; 예약완료 &#127881;  </h2>
+                    	<h3 class="club_content">고객님의 예약이 성공적으로 완료되었습니다! </h3>
+                    	<h3 class="club_content">예약하신 정보로 정모생성이 가능합니다</h3>
+                    	<h3 class="club_content">5초 후 메인페이지로 이동합니다 </h3>
                     	
-                </div>
             </div>
         </div>
     </div>
