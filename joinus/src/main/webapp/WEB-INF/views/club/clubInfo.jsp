@@ -414,10 +414,10 @@
 			        	
 		       		 <c:choose>	
 							<c:when test="${empty meetingMbrs}">
-									<c:if test="${meetingCapa eq meetingFull}">
+									<c:if test="${meetingCapa eq meetingFull or meetingCapa < meetingFull }">
 			        					<div style="color: red; padding: 6px; font-size: 1.2em;">참석마감</div>
 			        				</c:if>
-			        				<c:if test="${meetingCapa ne meetingFull}">
+			        				<c:if test="${meetingCapa > meetingFull}">
 			        				<button id="JoinMeeting" class="btn btn-primary" value="${meetings[i].club_meeting_no}">참석하기</button>
 			        				</c:if>
                				</c:when>
