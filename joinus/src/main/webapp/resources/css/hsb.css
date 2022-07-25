@@ -39,6 +39,8 @@
 	display: -webkit-box;
 	-webkit-line-clamp:2;
 	-webkit-box-orient: vertical;
+	font-size: large;
+	font-weight: 500;
 }
 
 .clubBoardList_writer {
@@ -137,4 +139,9 @@
 .commentContent {
 	font-family: inherit;
 	font-size: inherit;
+}
+
+.font {
+	font-size: large;
+	font-weight: 500;
 }

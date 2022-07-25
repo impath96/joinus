@@ -24,11 +24,11 @@
 			
 			<div style="width: 70%;">
 				<img style="width: 95%; max-height: 550px;" src="${PageContext.request.contextPath }/resources/upload/place/${place.place_image}">
-				<div style="margin-top: 3em;">
+				<div style="margin-top: 3em;" class="font">
 					<pre class="boardContent">${place.place_content }</pre>
 				</div>
 			<hr>
-				<div id="partnerPlaceAddr" style="margin-bottom: 16px;">
+				<div id="partnerPlaceAddr" style="margin-bottom: 16px;" class="font">
 					${place.place_address }
 				</div>
 				

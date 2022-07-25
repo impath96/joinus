@@ -41,7 +41,6 @@
 		} else {
 // 			location.href= "/club/${club_no}/boards/"+club_board_no;
 			// 페이지정보 들고가기
-			alert("page : "+${page});
 			var url = document.location.href;
 			console.log(url);
 			var query = window.location.search;
@@ -82,17 +81,17 @@
 
 
 			<c:forEach var="board" items="${boardList }">
-				<div class="wow fadeIn" onclick="return linkContent(${board.clubBoardsVo.club_board_no});" style="cursor: pointer;">
+				<div class="wow fadeIn" onclick="return linkContent(${board.clubBoardsVo.club_board_no});" style="cursor: pointer; margin-top: 1em;">
 				<c:if test="${board.clubBoardsVo.club_board_image != null }">
 					<img src="${PageContext.request.contextPath }/resources/upload/boards/sm_${board.clubBoardsVo.club_board_image }" class="clubBoardList_smImage" style="height: 200px;">
 				</c:if>
-					<h5 class="mb-3" style="display: inline-block;">${board.clubBoardsVo.club_board_title }</h5><br>
+					<h3 class="mb-3" style="display: inline-block;">${board.clubBoardsVo.club_board_title }</h3><br>
 					<p class="clubBoardList_content">${board.clubBoardsVo.club_board_content }</p>
 					<div style="margin-bottom: 1em; display: table;">
 						<div style="display: inline-block; vertical-align: middle;">
 							<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${board.membersVo.member_image }">
 						</div>
-						<span style="display: table-cell;">
+						<span style="display: table-cell;" class="font">
 							<span class="clubBoardList_writer">${board.membersVo.member_name }</span>
 							
 							<c:if test="${board.clubBoardsVo.club_board_updatedate == null }">
@@ -103,8 +102,8 @@
 							</c:if>
 						</span>
 					</div>
-					<div>
-						<i class="bi bi-heart"></i> <span class="clubBoardList_likeCnt">${board.clubBoardsVo.club_board_likecnt }</span>
+					<div class="font">
+						<i class="bi 0bi-heart"></i> <span class="clubBoardList_likeCnt">${board.clubBoardsVo.club_board_likecnt }</span>
 						<i class="fa fa-comments fa-fw"></i> <span class=clubBoardList_commentCnt>${board.clubBoardsVo.club_board_commentcnt }</span>
 					</div>
 				</div>
@@ -138,21 +137,6 @@
 						</c:if>
 	                </ul>
 	        	</nav>
-<!-- 	        	<ul class="list-group list-group-horizontal"> -->
-<%-- 	        		<c:if test="${pm.prev }"> --%>
-<%-- 	        			<li><a href="${PageContext.request.contextPath }/club/${club_no }/boards?page=${pm.startPage-1}">&laquo;</a></li> --%>
-<%-- 	        		</c:if> --%>
-<%-- 	        		<c:forEach var ="idx" begin ="${pm.startPage }" end="${pm.endPage }"> --%>
-<%-- 	        			<li class="list-group-item" <c:out value="${pm.cri.page == idx? 'class=active':'' }"/>> --%>
-<%-- 	        			<a href = "${PageContext.request.contextPath }/club/${club_no }/boards?page=${idx}" >${idx }</a> --%>
-<!-- 	        			</li> -->
-<%-- 	        		</c:forEach> --%>
-	        		
-<%-- 	        		<c:if test="${pm.next && pm.endPage>0 }"> --%>
-<%-- 	        			<li> <a href ="${PageContext.request.contextPath }/club/${club_no }/boards?page=${pm.endPage+1}">&raquo;</a></li> --%>
-<%-- 	        		</c:if> --%>
-	        	
-<!-- 	        	</ul> -->
 	        </div>
 			
 			

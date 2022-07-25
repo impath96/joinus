@@ -172,10 +172,13 @@
 	<input type="hidden" name="club_board_no" value="${club_board_no }">
 </form>
 
-<div class="container-fluid overflow-hidden px-lg-0">
-	<div class="container contact px-lg-0" style="width: 60%">
-		<div class="row g-0 mx-lg-0">
-			<!-- 			<div class="col-lg-6 contact-text py-5 wow fadeIn" data-wow-delay="0.5s"> -->
+<!-- <div class="container-fluid overflow-hidden px-lg-0"> -->
+<!-- 	<div class="container contact px-lg-0" style="width: 60%"> -->
+<!-- 		<div class="row g-0 mx-lg-0"> -->
+<div class="container-xxl py-5">
+	<div class="container" style="color: black;">
+		<div class="row g-5">
+		
 			<div align="center" >
 				<h6 class="text-primary" style="margin-bottom: 2em;">${vo.clubsVo.club_name } ${vo.boardTypesVo.board_type_name }</h6>
 				<h1>${vo.clubBoardsVo.club_board_title }</h1>
@@ -184,9 +187,9 @@
 						<div class="col-md-12">
 							<div class="form-floating" style="float: left; display: table;">
 								<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${vo.membersVo.member_image }">
-								<span style="color: black; margin-left: 5px; display: table-cell; vertical-align: middle;">${vo.membersVo.member_name }</span>
+								<span style="color: black; margin-left: 5px; display: table-cell; vertical-align: middle;" class="font">${vo.membersVo.member_name }</span>
 							</div>
-							<div style="float: right;">
+							<div style="float: right;" class="font">
 								<c:if test="${vo.clubBoardsVo.club_board_updatedate == null }">
 									<span><fmt:formatDate value="${vo.clubBoardsVo.club_board_date }" pattern="yy.MM.dd HH:mm"/> </span>
 								</c:if>
@@ -197,7 +200,7 @@
 						</div> 
 						<div class="col-12">
 							<div class="form-floating" style="color: black;">
-								<pre class="boardContent">${vo.clubBoardsVo.club_board_content }</pre>
+								<pre class="boardContent font" style="font-size: x-large;">${vo.clubBoardsVo.club_board_content }</pre>
 							</div>
 							<c:if test="${vo.clubBoardsVo.club_board_image != null}">
 								<img src="${PageContext.request.contextPath }/resources/upload/boards/${vo.clubBoardsVo.club_board_image }" class="ContentImage">
@@ -216,7 +219,7 @@
 					
 					<hr style="margin-top: 3em;">
 					
-					<div style="text-align: left;">
+					<div style="text-align: left; font-size: x-large;" class="font">
 						<a id="like" href="#">
 							<c:if test="${checkLike == 0 }">
 								<i id="noLikeIcon" class="bi bi-heart"></i>
@@ -232,13 +235,13 @@
 					
 					<div style="text-align: left; margin-top: 1em;">
 						<c:if test="${likeCnt > 0 }">
-							<button type="button" class="likeMemberBtn btn btn-primary" id="likeMember" style="color:black;">${likeCnt }명이 좋아하셨습니다.</button>
+							<button type="button" class="likeMemberBtn btn btn-primary font" id="likeMember" style="color:black;">${likeCnt }명이 좋아하셨습니다.</button>
 							
 							<div id="likeMemberList" style="display: none;">
 								<c:forEach var="member" items="${likeList }">
 									<div style="margin: 1em; display: table;">
 										<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${member.membersVo.member_image }">
-										<span style="display: table-cell; vertical-align: middle;">${member.membersVo.member_name }</span>
+										<span style="display: table-cell; vertical-align: middle;" class="font">${member.membersVo.member_name }</span>
 									</div>
 								</c:forEach>
 							</div>
@@ -266,7 +269,7 @@
 								<div class="col-md-12">
 									<div class="form-floating" style="text-align: left; display: table; margin-inline-end:auto;">
 										<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${comment.membersVo.member_image }">
-										<div style="display: table-cell; vertical-align: middle;">
+										<div style="display: table-cell; vertical-align: middle;" class="font">
 											<span>${comment.membersVo.member_name }</span>
 											<small style="margin-left: 1em;">
 												<c:if test="${comment.boardCommentsVo.board_comment_updatedate == null }">
@@ -284,7 +287,7 @@
 											<input type="button" id="commentDelBtn${comment.boardCommentsVo.board_comment_no }" class="btn btn-primary py-2 mt-2 me-2" value="삭제">
 										</c:if>
 									</div>
-									<div id="comment_content">
+									<div id="comment_content" class="font">
 										<pre class="commentContent">${comment.boardCommentsVo.board_comment_content }</pre>
 									</div>
 								</div> 
@@ -301,7 +304,7 @@
 								</div>
 							</div>
 							
-							<hr>
+							<hr style="margin-top: 0;">
 							
 						</c:forEach>
 					</c:if>

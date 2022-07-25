@@ -106,15 +106,15 @@ option:disabled {background-color: Gainsboro;}
 			<div style="width: 70%;">
 				<img style="width: 95%; max-height: 550px;" src="${PageContext.request.contextPath }/resources/upload/partner_place/${partnerPlace.partner_place_image}">
 				<div style="margin-top: 3em;">
-					<pre class="boardContent">${partnerPlace.partner_place_content }</pre>
+					<pre class="boardContent font">${partnerPlace.partner_place_content }</pre>
 				</div>
 				
 				<hr class="partnerPlaceContentHr">
 				
-				<div style="margin-bottom: 16px;">
+				<div style="margin-bottom: 16px;" class="font">
 					<i class="fa fa-phone-alt me-3" aria-hidden="true"></i>${partnerPlace.partner_place_tel }
 				</div>
-				<div id="partnerPlaceAddr" style="margin-bottom: 16px;">
+				<div id="partnerPlaceAddr" style="margin-bottom: 16px;" class="font">
 					${partnerPlace.partner_place_address }
 				</div>
 				
