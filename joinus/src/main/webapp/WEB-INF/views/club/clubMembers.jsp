@@ -32,7 +32,7 @@
 <!-- 클럽 회원리스트 -->
 <div class="container px-4 py-5" id="icon-grid">
 	<div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-    	<h2 class="pb-2 border-bottom">${clubInfo[0].club_name} 멤버</h2>
+    	<h2 class="pb-2 border-bottom">[${clubInfo[0].club_name}] 모임 멤버</h2>
     	<c:if test="">
         <h5 class="text-end col-md-6 ms-auto"><a href="${PageContext.request.contextPath}/club/${clubInfo[0].club_no}/leave ">모임 나가기 <i class="fa fa-arrow-right ms-3"></i></a> </h5>
 		</c:if>
@@ -56,9 +56,15 @@
 			        <br>
 	          		<input type="hidden" name="ban_member_no_${status.index}" value="${vo.membersVo.member_no }">
 	          			<div>
-	          				<small class="opacity-50 text-nowrap">${vo.clubMembersVo.club_member_role }</small><br>
+	          			<c:choose>
+	          				<c:when test="${vo.clubMembersVo.club_member_role == 'admin'}">
+		          				<small class="opacity-50 text-nowrap">&#128081;모임장</small><br>
+	          				</c:when>
+	          				<c:when test="${vo.clubMembersVo.club_member_role == 'common'}">
+		          				<small class="opacity-50 text-nowrap">일반회원</small><br>
+	          				</c:when>
+	          			</c:choose>
 					        <small class="opacity-50 text-nowrap">모임가입일 : ${vo.clubMembersVo.club_member_regdate }</small>
-					        <small class="opacity-50 text-nowrap"></small><br>
 	          			</div>
 	        	</div>
 	        	<!-- 모임장 권한 -->

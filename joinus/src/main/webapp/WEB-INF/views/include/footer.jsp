@@ -6,8 +6,8 @@
                 <div class="col-lg-50 col-md-6">
                     <h5 class="text-white mb-4">About</h5>
                     <p class="mb-2"><i class="fa-brands fa-github me-3"></i>https://github.com/impath96/joinus.git</p>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>ITWill-Busan </p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>ITWILL-BUSAN</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>051 803 0909</p>
                     <div class="d-flex pt-2">
                         <a class="btn btn-square btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
                         <a class="btn btn-square btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
@@ -20,7 +20,7 @@
                     <i class="fa-solid fa-envelope me-3"></i> Kang SeongMin - xoxomini4@kakao.com <br>
                     <i class="fa-solid fa-envelope me-3"></i> Goh Eunbi - 3unbbb@gmail.com <br> 
                     <i class="fa-solid fa-envelope me-3"></i> Kim Minho - impath96@gmail.com <br>
-                    <i class="fa-solid fa-envelope me-3"></i> Kim SungBin - rlaqlstjd0206@naver.com <br>
+                    <i class="fa-solid fa-envelope me-3"></i> Kim SeongBin - rkawk0206@gmail.com <br>
                     <i class="fa-solid fa-envelope me-3"></i> Heo Subin - anmedi3623@naver.com <br>
                 </div>
 
@@ -30,11 +30,11 @@
             <div class="copyright">
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        © <a href="#">JoinUs</a>, All Right Reserved.
+                        © <a href="http://localhost:8088/">JoinUs</a>, All Right Reserved.
                     </div>
                     <div class="col-md-6 text-center text-md-end">
                         <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                        Designed By <a href="https://htmlcodex.com">HTML Codex</a>
+                         Designed By <a href="https://htmlcodex.com">HTML Codex</a>
                         <br>Distributed By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
                     </div>
                 </div>
