@@ -40,6 +40,33 @@
 						<div style="height:230px;">
 							<div class="service-content d-flex flex-column">
 								<h4 class="mb-2">${sessionScope.member.member_name }님 프로필</h4>
+								<c:if test="${sessionScope.member.member_image.contains(':') }">
+									<img alt="" class="thumbnail_image" src="${member.member_image }" width="160", height="160">
+								</c:if>
+								<c:if test="${!sessionScope.member.member_image.contains(':') }">
+									<img alt="" class="thumbnail_image" src="${pageContext.request.contextPath }/resources/upload/members/${member.member_image }"
+													width="160", height="160">
+								</c:if>
+								<div class="small fw-medium top-left-content" >
+								
+								<c:choose>
+									<c:when test="${sessionScope.member.member_tel eq null}">
+										&#128222; <small>등록된 전화번호가 없습니다.</small><br>
+									</c:when>
+									<c:otherwise>
+										&#128222; ${sessionScope.member.member_tel }<br>
+									</c:otherwise>
+								</c:choose>
+								<c:choose>
+									<c:when test="${sessionScope.member.member_location eq null}">
+										&#128681; <small>등록된 주소가 없습니다.</small>
+									</c:when>
+									<c:otherwise>
+										&#128681; ${sessionScope.member.member_location }
+									</c:otherwise>									
+								</c:choose>
+								</div>
+								
 								<c:choose>
 									<c:when test="${sessionScope.member.member_updatedate eq sessionScope.member.member_regdate}">
 										<small>회원가입일 : ${sessionScope.member.member_regdate }</small>
@@ -48,7 +75,6 @@
 										<small>회원정보수정일 : ${sessionScope.member.member_updatedate}</small>
 									</c:otherwise>
 								</c:choose>
-								
 								
 								<a class="small fw-medium bottom-right" href="/settings/member">프로필 수정하기<i
 									class="fa fa-arrow-right ms-2"></i></a>

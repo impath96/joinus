@@ -95,6 +95,12 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         right: 16px;
         bottom: 8px;
       }
+      .top-left-content {
+        position: absolute;
+        font-size: 1.25rem;
+        left: 40%;
+        top: 40%;
+      }
       .club_item {
         font-size: 1.25rem;
       }
