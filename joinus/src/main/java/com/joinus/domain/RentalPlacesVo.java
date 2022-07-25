@@ -9,7 +9,6 @@ public class RentalPlacesVo {
 	
 	private int rental_places_no;
 	private String reservation_no;
-	private int club_no;
 	private int member_no;
 	private int partner_place_no;
 	private int payment_no;

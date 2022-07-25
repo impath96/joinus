@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
 <%@ include file="../include/header.jsp"%>
@@ -23,7 +24,7 @@
 			dayNamesShort : ['일','월','화','수','목','금','토'],
 			dayNamesMin : ['일','월','화','수','목','금','토'],
 			yearSuffix : '년',
-			minDate : 0
+			minDate : 1	// 오늘은 선택X 내일부터 일자선택가능
 	}
 	
 	$(function(){
@@ -34,36 +35,64 @@
 		
 		$(':button').attr('class','btn btn-primary');
 		
-		
 		$('#subBtn').click(function(){
-			//alert('결제버튼클릭');
 			
 			if($('#rental_date').val() == ''){
 				$('#rental_date').focus();
 				return false;
 			}
-			if($('#rental_time').val() == ''){
-				$('#rental_time').focus();
+			if($('#rental_time_no').val() == ''){
+				$('#rental_time_no').focus();
 				return false;
 			}
 			if($('#memberCnt').val() == ''){
 				$('#memberCnt').focus();
 				return false;
 			}
- 			//alert("hidden price value : "+$('#totalPrice').val());
-			
+			if($('#memberCnt').val() > 20){
+				alert('최대 20명까지 가능합니다.');
+				$('#memberCnt').focus();
+				return false;
+			}
+ 			
  			// 모임장만 결제가 가능
  			if(${checkClubAdmin == 0}){
  				alert('모임장만 결제가 가능합니다.');
  				return false;
  			}
 			
+		});
+		
+		// 시간 선택 시 예약된 정보 비교 및 막기
+		$('#rental_time_no').click(function(){
+			// 처음은 disalbed 속성 다 풀기 (전에 disabled 속성이 선택되었을 경우 해제)
+			$('select option').removeAttr('disabled');
+
+			var timeList = [];
+			
+			$.ajax({
+				url : '${PageContext.request.contextPath }/rental/partnerPlaces/'+${partner_place_no}+'/dateCheck',
+				type : 'GET',
+				async : false,	// 전역변수에 데이터 저장
+				data : {'rental_date':$('#rental_date').val()},
+				success : function(data){
+					timeList = data;
+				}
+			});
+			console.log("해당 일자의 예약 시간대 : "+timeList);
+			
+			for(var i = 0; i < timeList.length; i++){
+				var timeNo = timeList[i];
+				$("select option[value*='"+timeNo+"']").prop('disabled', true);
+			}
+			
 			
 		});
 		
-	});
-
-
+		
+	});	// jQuery
+	
+	
 </script>
 
 <div class="container-xxl py-5">
@@ -77,7 +106,7 @@
 					<pre class="boardContent">${partnerPlace.partner_place_content }</pre>
 				</div>
 				
-				<hr>
+				<hr class="partnerPlaceContentHr">
 				
 				<div style="margin-bottom: 16px;">
 					<i class="fa fa-phone-alt me-3" aria-hidden="true"></i>${partnerPlace.partner_place_tel }
@@ -102,7 +131,6 @@
 				
 					<div>
 						<div style="font-size: x-large; float: left;">
-<!-- 							<i class="fa fa-check-circle text-primary me-3"></i> -->
 							${partnerPlace.partner_place_name }
 						</div>
 						<div style="color: #32C36C; text-align: right; margin-bottom: 2em;">
@@ -116,7 +144,7 @@
 					
 					
 					<div>
-					예약인원 <input type="number" class="form-control" id="memberCnt" name="memberCnt" required>
+					예약인원 <input type="number" class="form-control" id="memberCnt" name="memberCnt" max="20" required style="color: black;">
 					</div>
 					
 					<script type="text/javascript">
@@ -127,7 +155,7 @@
 							totalPrice = memberCnt * ${partnerPlace.partner_place_price} * 2
 // 							alert("totalPrice : "+ totalPrice);
 							document.getElementById("seePrice").innerHTML = totalPrice.toLocaleString();	// 보여줄 땐 천단위마다 콤마
-							$('#totalPrice').val(totalPrice);
+							$('#payment_price').val(totalPrice);
 							
 						});
 					</script>
@@ -136,15 +164,19 @@
 					<!-- 일자 -->
 					<div style="margin-bottom: 2em;">
 						날짜 선택 (아래의 버튼을 클릭해주세요)
-						<input class="form-control" id="rental_date" name="rental_date" autocomplete="off" readonly style="background-color: white;">
+						<input class="form-control" id="rental_date" name="rental_date" autocomplete="off" readonly style="background-color: white; color: black;">
 					</div>
 					
 					<!-- 시간 -->
 					<div style="margin-bottom: 2em;">
 						시간 선택
-						<select class="form-select" id="rental_time" name="rental_time">
+						<select class="form-select" id="rental_time_no" name="rental_time_no" style="color: black;">
 							<option value="">시간을 선택해주세요.</option>
-							<option value="1">10:00~12:00</option>
+							<option value="1"
+								<c:if test="${test =='1' }">
+									disabled
+								</c:if>
+							>10:00~12:00</option>
 							<option value="2">12:00~14:00</option>
 							<option value="3">14:00~16:00</option>
 							<option value="4">16:00~18:00</option>
@@ -157,7 +189,7 @@
 					<div>
 						총 결제금액<br>
 						<span id="seePrice"></span>
-						<input type="hidden" id="totalPrice" name="totalPrice">
+						<input type="hidden" id="payment_price" name="payment_price">
 					</div>
 					
 					<div class="payBtn">

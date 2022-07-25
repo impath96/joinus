@@ -95,7 +95,7 @@ public interface ClubDao {
 	public String getMeetingStatus(Integer club_meeting_no);
 	
 	//정모상태 수정
-	public String updateMeetingStatus(Integer club_meeting_no);
+	public String updateMeetingStatus(Integer club_meeting_no, String club_meeting_status);
 	
 	//정모 리스트
 	public List<ClubMeetingsVo> getMeetingList(Integer club_no, String status);
@@ -210,7 +210,9 @@ public interface ClubDao {
 	public MembersVo getMember(Integer num);
 	// 회원관심사
 	public InterestsVo interest(Integer num);
-		
+	// 벤당한 회원번호 가져오기
+	public List<Integer> getBanMember(Integer num);
+	
 	// 세부관심사리스트 가져오기
 	public List<InterestDetailsVo> getDetailName(Integer num);
 		
@@ -243,6 +245,9 @@ public interface ClubDao {
 	public List<ClubMembersVo> getClubMembers(Integer num);
 	// 모임 회원 정보 가져오기(특정)
 	public ClubMembersVo getClubMemberNo(Integer num,Integer num2);
+	// 모임 회원수 가져오기
+	public Integer clubMemberCount(Integer num);
+	
 	
 	// 모임 찜하기
 	public void clubDip(Integer num,Integer num2);
@@ -260,7 +265,9 @@ public interface ClubDao {
 	public void outMeeting(MeetingMembersVo vo);
 	// 정모 참석여부확인
 	public List<MeetingMembersVo> checkMeetingMember(Integer num,Integer num2);
-		
+	// 정모 참석 인원수
+	public List<Map<String, Integer>> MeetingMemberCnt(Integer num);
+	
 	
 	//게시글 리스트
 	public List<ClubBoardsVo> getBoards(Integer num);

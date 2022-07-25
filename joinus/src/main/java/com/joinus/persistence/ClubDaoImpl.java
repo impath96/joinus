@@ -1,5 +1,6 @@
 package com.joinus.persistence;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.joinus.domain.BoardCommentsVo;
@@ -32,7 +34,7 @@ import com.joinus.domain.MembersVo;
 @Repository
 public class ClubDaoImpl implements ClubDao{
 	
-	@Inject
+	@Autowired
 	private SqlSession sqlSession;
 	
 	static final String NAMESPACE ="com.joinus.mapper.ClubMapper";
@@ -169,12 +171,14 @@ public class ClubDaoImpl implements ClubDao{
 		param.put("club_no", club_no);
 		param.put("member_no", member_no);
 		
-		List<ClubMembersVo> vanMember = sqlSession.selectList(NAMESPACE+".ClubBan",param);
+		log.info(param+"");
 		
+		List<ClubMembersVo> vanMember = new ArrayList<ClubMembersVo>();
+		vanMember=sqlSession.selectList(NAMESPACE+".ClubBan",param);
 		log.info("vanMember : " + vanMember);
 		sqlSession.insert(NAMESPACE+".VanMemberInsert",vanMember);
 		log.info("회원정보 이동 완료");
-		sqlSession.delete(NAMESPACE+".ClubMemberBan",member_no);
+		sqlSession.delete(NAMESPACE+".ClubMemberBan",param);
 		log.info("강퇴완료");
 		
 	}
@@ -293,9 +297,13 @@ public class ClubDaoImpl implements ClubDao{
 	}
 	
 	@Override
-	public String updateMeetingStatus(Integer club_meeting_no) {
+	public String updateMeetingStatus(Integer club_meeting_no, String club_meeting_status) {
 		
-		return sqlSession.selectOne(NAMESPACE2+".UpdateMeetingStatus",club_meeting_no);
+		Map<String, Object> param= new HashMap<String, Object>();
+		param.put("club_meeting_no", club_meeting_no);
+		param.put("club_meeting_status", club_meeting_status);
+		
+		return sqlSession.selectOne(NAMESPACE2+".UpdateMeetingStatus",param);
 	}
 	
 	//정모 리스트
@@ -615,6 +623,12 @@ public class ClubDaoImpl implements ClubDao{
 				return sqlSession.selectOne(NAMESPACE+".getClubMemberNo", nummm);
 			}
 			
+			// 모임 회원수 가져오기
+			@Override
+			public Integer clubMemberCount(Integer num) {
+				return sqlSession.selectOne(NAMESPACE+".getClubMemberCNT", num);
+			}
+
 			//별점주기
 			@Override
 			public void clubGrade(ClubGradesVo vo) {
@@ -695,7 +709,18 @@ public class ClubDaoImpl implements ClubDao{
 				meetingMlist.put("member_no", num2);
 				return sqlSession.selectList(NAMESPACE2+".getMeetingMember", meetingMlist);
 			}
+			// 정모 참석 인원수
+			@Override
+			public List<Map<String, Integer>> MeetingMemberCnt(Integer num) {
+				List<Map<String, Integer>> list = sqlSession.selectList(NAMESPACE2+".getMeetingMemberCnt",num);
+				return list;
+			}
 
+			// 벤당한 회원번호 리스트 가져오기
+			@Override
+			public List<Integer> getBanMember(Integer num) {
+				return sqlSession.selectList(NAMESPACE+(".getBanMembers"), num);
+			}
 			@Override
 			public List<ClubsVo> recentViewClubList(List<Integer> recentViewClub) {
 				

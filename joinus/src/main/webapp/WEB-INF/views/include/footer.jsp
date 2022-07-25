@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-lg-50 col-md-6">
                     <h5 class="text-white mb-4">Contact Us</h5>
-                    <i class="fa-solid fa-envelope me-3"></i> Kang Sungmin - xoxomini4@kakao.com <br>
+                    <i class="fa-solid fa-envelope me-3"></i> Kang SeongMin - xoxomini4@kakao.com <br>
                     <i class="fa-solid fa-envelope me-3"></i> Goh Eunbi - 3unbbb@gmail.com <br> 
                     <i class="fa-solid fa-envelope me-3"></i> Kim Minho - impath96@gmail.com <br>
                     <i class="fa-solid fa-envelope me-3"></i> Kim SungBin - rlaqlstjd0206@naver.com <br>

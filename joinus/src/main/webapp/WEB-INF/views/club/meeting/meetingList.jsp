@@ -13,14 +13,14 @@
 <hr>           
 	<div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
 		<c:forEach var="meetingList" items="${meetingList_ing }">
-	      <div class="col" id="meetingList">
+	      <div class="col" id="meetingList"  onclick="location.href='${PageContext.request.contextPath }/club/${club_no}/meeting/${meetingList.club_meeting_no }'">
 	        <div class="card mb-4 rounded-3 shadow-sm">
 	          <div class="card-header py-3">
 	            <h4><a href="${PageContext.request.contextPath }/club/${club_no}/meeting/${meetingList.club_meeting_no }">
 	            ${meetingList.club_meeting_title }</a></h4>
 	          </div>
 	          <div class="card-body">
-	            <h4 class="card-title pricing-card-title">${meetingList.club_meeting_date }<small class="text-muted fw-light"></small></h4>
+	            <h6 class="card-title pricing-card-title">${meetingList.club_meeting_date }</h6>
 	            <ul class="list-unstyled mt-3 mb-4">
 	              <li>${meetingList.club_meeting_location }</li>
 	              <li>${meetingList.club_meeting_content }</li>
@@ -36,7 +36,7 @@
 	<hr><br>
 	<div class="row row-cols-1 row-cols-md-3 mb-3 text-center">	
 		<c:forEach var="meetingList" items="${meetingList_close }">
-	      <div class="col" id="meetingList">
+	      <div class="col" id="meetingList" onclick="location.href='${PageContext.request.contextPath }/club/${club_no}/meeting/${meetingList.club_meeting_no }'">
 	        <div class="card mb-4 rounded-3 shadow-sm">
 	          <div class="card-header py-3">
 	            <h4 class="my-0 fw-normal">
@@ -44,7 +44,7 @@
 	            ${meetingList.club_meeting_title }</a></h4>
 	          </div>
 	          <div class="card-body">
-	            <h4 class="card-title pricing-card-title">${meetingList.club_meeting_date }<small class="text-muted fw-light"></small></h4>
+	            <h6 class="card-title pricing-card-title">${meetingList.club_meeting_date }</h6>
 	            <ul class="list-unstyled mt-3 mb-4">
 	              <li>${meetingList.club_meeting_location }</li>
 	              <li>${meetingList.club_meeting_content }</li>
@@ -60,14 +60,14 @@
 	<hr><br>
 	<div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
 		<c:forEach var="meetingList" items="${meetingList_end }">
-	      <div class="col" id="meetingList">
+	      <div class="col" id="meetingList" onclick="location.href='${PageContext.request.contextPath }/club/${club_no}/meeting/${meetingList.club_meeting_no }'">
 	        <div class="card mb-4 rounded-3 shadow-sm">
 	          <div class="card-header py-3">
 	            <h4><a href="${PageContext.request.contextPath }/club/${club_no}/meeting/${meetingList.club_meeting_no }">
 	            ${meetingList.club_meeting_title }</a></h4>
 	          </div>
 	          <div class="card-body">
-	            <h4 class="card-title pricing-card-title">${meetingList.club_meeting_date }<small class="text-muted fw-light"></small></h4>
+	            <h6 class="card-title pricing-card-title">${meetingList.club_meeting_date }</h6>
 	            <ul class="list-unstyled mt-3 mb-4">
 	              <li>${meetingList.club_meeting_location }</li>
 	              <li>${meetingList.club_meeting_content }</li>

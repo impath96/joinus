@@ -31,13 +31,13 @@
       <!-- 참가인원 -->
       
       <div class="col-md-7 col-lg-8">
-        <form class="needs-validation" action ="" role ="form">
+        <form class="needs-validation" action ="" role ="form" method="get">
         <h4 class="mb-5">${meetingList[0].club_meeting_title}</h4>
           <div class="row g-3">
             <div class="col-12">
               <label for="address" class="form-label">🗓️ 날짜</label>
-              <input type="datetime" class="form-control" id="club_meeting_date" value="${meetingList[0].club_meeting_date}" disabled="disabled">
-            </div>
+              <input type="text" class="form-control" id="club_meeting_date" value='${meetingList[0].club_meeting_date}' disabled="disabled">
+              </div>
          
             
             <div class="col-12">
@@ -47,21 +47,15 @@
             
             <div class="col-12">
               <label for="address" class="form-label">🏩 장소</label>
-              	<div class="input-group">
-              		<input type="text" class="form-control" id="club_meeting_location" value="${meetingList[0].club_meeting_location}" disabled="disabled">
-              		<br>
+ 
+              		<input type="text" class="form-control mb-2" id="club_meeting_location" value="${meetingList[0].club_meeting_location}" disabled="disabled">
+
               		<input type="text" class="form-control" id="club_meeting_address" value="${meetingList[0].club_meeting_address}" disabled="disabled">
-            	</div>
+
             </div>
             
 			<div>
-				<p style="margin-top:-12px">
-				    <em class="link">
-				        <a href="javascript:void(0);" onclick="window.open('http://fiy.daum.net/fiy/map/CsGeneral.daum', '_blank', 'width=981, height=650')">
-				            혹시 주소 결과가 잘못 나오는 경우에는 여기에 제보해주세요. 
-				        </a>
-				    </em>
-				</p>
+				
 				<div id="map" style="width:100%;height:350px;"></div>
 				
 			</div> 
@@ -78,7 +72,7 @@
 
           <div class="row gy-3">
             <div class="col-md-6">
-              <input type="text" class="form-control" id="club_meeting_content" placeholder="" required="">
+              <input type="text" class="form-control" name="club_meeting_content" value="${meetingList[0].club_meeting_content}" placeholder="" required="">
               <div class="invalid-feedback">
                 Name on card is required
               </div>
@@ -90,7 +84,8 @@
           <hr class="my-4">
 	
 			<div class="margin">
-			
+			<c:set var="result" value="${result }"/>
+			<c:if test ="${result eq 2 }">
 			<div class="btn-group">
 			<button type="submit" class="btn btn-secondary btn-flat" id ="modify">수정하기</button>
 			</div>
@@ -104,16 +99,16 @@
 			
 			<c:if test="${meetingStatus eq '모집중'}">
 			<div class="btn-group">
-			<button type="submit" class="btn btn-success btn-flat" id ="colse">마감하기</button>
+			<button type="submit" class="btn btn-success btn-flat" id ="close">마감하기</button>
 			</div>
 			</c:if>
 			
 			<c:if test="${meetingStatus eq '마감'}">
 			<div class="btn-group">
-			<button type="submit" class="btn btn-success btn-flat" id ="colse">오픈하기</button>
+			<button type="submit" class="btn btn-success btn-flat" id ="reopen">오픈하기</button>
 			</div>
 			</c:if>
-			
+			</c:if>
 			</div>
 
 
@@ -203,8 +198,11 @@ $(function(){
 
 
 var check ='${check}';
-if(check == "UPStatus"){
+if(check == "Close"){
 	alert('정모가 마감되었습니다.');
+}
+if(check == "Reopen"){
+	alert('정모가 다시 열렸습니다.');
 }
 
 

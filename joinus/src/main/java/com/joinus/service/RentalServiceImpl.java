@@ -1,5 +1,6 @@
 package com.joinus.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -53,13 +54,39 @@ public class RentalServiceImpl implements RentalService {
 	}
 	
 	@Override
+	public List<RentalPlacesVo> getRentalPlaceDate(int partner_place_no) {
+		return dao.getRentalPlaceDate(partner_place_no);
+	}
+	
+	@Override
+	public List<Integer> getRentalTime(Date rental_date, Integer partner_place_no) {
+		return dao.getRentalTime(rental_date, partner_place_no);
+	}
+
+	@Override
 	public Integer pay(PaymentsVo vo) {
 		return dao.pay(vo);
 	}
 
 	@Override
-	public void place(RentalPlacesVo vo) {
-		dao.place(vo);
+	public void insertPlaceBeforePay(Date rental_date, int rentaltimeno) {
+		dao.insertPlaceBeforePay(rental_date, rentaltimeno);
+	}
+
+	@Override
+	public RentalPlacesVo getLatelyRentalPlace() {
+		return dao.getLatelyRentalPlace();
+	}
+
+	@Override
+	public int getRentalPlaceCnt() {
+		return dao.getRentalPlaceCnt();
+	}
+
+	@Override
+	public void updateLatelyRentalPlace(String reservation_no, int member_no, int partner_place_no,
+			int payment_no, int rental_places_no) {
+		dao.updateLatelyRentalPlace(reservation_no, member_no, partner_place_no, payment_no, rental_places_no);
 	}
 	
 	
