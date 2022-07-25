@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.joinus.domain.ClubsVo;
 import com.joinus.domain.InterestsVo;
@@ -223,7 +224,7 @@ public class MemberController {
 	// 일반적인 이메일 방식의 로그인
 	@PostMapping(value = "/signin")
 	public String signIn(@RequestParam("email") String email, @RequestParam("password") String password,
-			HttpSession session, Model model) {
+			HttpSession session, Model model, RedirectAttributes rattr) {
 		// 1) 입력받은 정보를 통해 실제 가입된 회원인지 확인
 		// 회원찾기에서 비밀번호 암호화까지 다 하자.
 		log.info("로그인 하는 회원 정보 : email = {}, password = {}", email, password);
@@ -232,8 +233,9 @@ public class MemberController {
 		// 만약 findMember가 null -> 이메일이나 비밀번호가 틀렸다는 의미
 		if (findMember == null) {
 			log.info("로그인 실패 : 일치하는 회원 존재 X ");
-			model.addAttribute("error", "로그인 실패");
-			return "member/signin";
+			// model.addAttribute("error", "이메일 또는 비밀번호를 잘못 입력했습니다.");
+			rattr.addFlashAttribute("error", "이메일 또는 비밀번호를 잘못 입력했습니다.");
+			return "redirect:/member/signin";
 		}
 
 		// 존재하는 회원일 경우 session에 해당 회원정보 저장

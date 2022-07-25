@@ -45,7 +45,7 @@ public class HomeController {
 			String[] array = member.getMember_location().split("\\s");
 			// 시+구 잘라내기		    
 			for(int i=0;i<array.length;i++) {
-				String address = array[0].substring(0, 5) + " " + array[1];
+				String address = array[0] + " " + array[1];
 				
 				List<ClubsVo> vo4 = service.getMyClubs(address);
 				model.addAttribute("my", vo4);
