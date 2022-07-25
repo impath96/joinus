@@ -92,6 +92,12 @@
 
 </select>
 
+<select id="getMeetingMemberStatus" resultType="int">
+ select meeting_member_no
+ from meeting_members
+ where club_meeting_no = #{club_meeting_no} and member_no = #{member_no}
+</select>
+
 
 <delete id="DeleteMeeting">
 	delete from club_meetings
@@ -103,6 +109,19 @@
 	where club_meeting_no = #{club_meeting_no}
 
 </delete>
+
+<delete id="CancelMeetingMember">
+	delete from meeting_members
+	where club_meeting_no = #{club_meeting_no} and
+			club_no = #{club_no} and
+			member_no = #{member_no}
+
+</delete>
+
+<insert id="InsertMeetingMember">
+	insert into meeting_members(club_meeting_no, club_no, member_no)
+	values (#{club_meeting_no}, #{club_no}, #{member_no})
+</insert>
 
 <select id="GetMeeting_no" resultType="ClubMeetingsVo">
 	select club_meeting_title, club_meeting_location, club_meeting_status, club_meeting_capacity, club_meeting_content,
@@ -178,6 +197,12 @@
 	select club_meeting_no, club_meeting_title, club_meeting_content, club_meeting_date, club_meeting_location, club_meeting_status
 	from club_meetings
 	where club_no=#{club_no} and club_meeting_status=#{status}
+</select>
+
+<select id="CheckMeetingDate" resultType="ClubMeetingsVo">
+select club_no, club_meeting_date
+from club_meetings
+where club_no=#{club_no} and club_meeting_date <![CDATA[<]]> now()
 </select>
 
 </mapper> 

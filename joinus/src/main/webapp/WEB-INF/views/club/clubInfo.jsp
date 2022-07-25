@@ -395,7 +395,7 @@
 			    
 	               <div class="col-md-6 col-lg-4 wow fadeInUp d-flex flex-column " data-wow-delay="0.1s" >
 				       
-				       <div class="rounded shadow clubDetailBox" >
+				       <div class="rounded shadow clubDetailBox" onclick="location.href='${PageContext.request.contextPath }/club/${clubvo.club_no}/meeting/${meetings[i].club_meeting_no }'">
 					
 		                   <h3 class="greenColor shadow-sm">${meetings[i].club_meeting_title }</h3>
 		                   <p class="MainTextSub"><b> &#128694; 인원 </b>${meetings[i].club_meeting_capacity }명</p>

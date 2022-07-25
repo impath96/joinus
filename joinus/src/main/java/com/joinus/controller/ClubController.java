@@ -127,13 +127,13 @@ public class ClubController {
 		log.info("clubMember() 호출");		
 		
 		//비회원
-		int result = 0;
+		Integer result = 0;
 		
 		if(session.getAttribute("member") != null) {
 			MembersVo member = (MembersVo) session.getAttribute("member");
 			log.info(member+"");
 			
-			int member_no =member.getMember_no();
+			Integer member_no =member.getMember_no();
 			result = service.checkClubRole(club_no, member_no);
 			//result = 3 : 클럽 미가입 회원
 			//result = 1 : 클럽 가입 회원
@@ -191,7 +191,7 @@ public class ClubController {
 		MembersVo member = (MembersVo) session.getAttribute("member");
 		log.info(member+"");
 		
-		int member_no =member.getMember_no();
+		Integer member_no =member.getMember_no();
 		
 		if(service.checkClubRole(club_no, member_no) == 2) {
 			rttr.addFlashAttribute("check","LEAVENOT");
@@ -270,7 +270,7 @@ public class ClubController {
 			MembersVo member = (MembersVo) session.getAttribute("member");
 			log.info(member+"");
 			
-			int member_no =member.getMember_no();
+			Integer member_no =member.getMember_no();
 			
 			List<MeetingTotalBean> rentalList = (List<MeetingTotalBean>)service.getRental(member_no);
 			log.info(rentalList+"");
@@ -293,13 +293,13 @@ public class ClubController {
 			log.info(vo+"");
 			
 			//비회원
-			int result = 0;
+			Integer result = 0;
 			
 			if(session.getAttribute("member") != null) {
 				MembersVo member = (MembersVo) session.getAttribute("member");
 				log.info(member+"");
 				
-				int member_no =member.getMember_no();
+				Integer member_no =member.getMember_no();
 				result = service.checkClubRole(club_no, member_no);
 				//result = 3 : 클럽 미가입 회원
 				//result = 1 : 클럽 가입 회원
@@ -322,26 +322,32 @@ public class ClubController {
 				@PathVariable("club_no") Integer club_no,
 				@PathVariable("club_meeting_no") Integer club_meeting_no) {
 			
-			log.info("meetingModifyGET() 호출");
+			log.info("meeting() 호출");
 			
 			//비회원
-			int result = 0;
+			Integer result = 0;
+			Integer meetingMemberStatus = 0;
 			
 			if(session.getAttribute("member") != null) {
 				MembersVo member = (MembersVo) session.getAttribute("member");
 				log.info(member+"");
 				
-				int member_no =member.getMember_no();
+				Integer member_no =member.getMember_no();
 				result = service.checkClubRole(club_no, member_no);
 				//result = 3 : 클럽 미가입 회원
 				//result = 1 : 클럽 가입 회원
 				//result = 2 : 클럽장
+				log.info("참석여부 체크");
+				meetingMemberStatus = service.checkMeetingMemberStatus(club_meeting_no,member_no);
+				//meetingMemberStatus = 1 : 참가중
+				//meetingMemberStatus = 0 : 미참가
 			}
 			
 			List<ClubMeetingsVo> meetingList = service.getMeeting(club_meeting_no);
 			List<MeetingTotalBean> meetingMember = service.getMeetingMember(club_meeting_no, club_no);
 			String meetingStatus = service.getMeetingStatus(club_meeting_no);
-
+			
+			log.info("result : "+result );
 			log.info(meetingList+"");
 			
 			List<ClubsVo> clubInfo = service.clubInfo(club_no);
@@ -351,6 +357,7 @@ public class ClubController {
 			model.addAttribute("meetingMember", meetingMember);
 			model.addAttribute("result", result);
 			model.addAttribute("meetingStatus", meetingStatus);
+			model.addAttribute("meetingMemberStatus", meetingMemberStatus);
 			return "/club/meeting/meetingContent";
 			
 		}
@@ -364,8 +371,8 @@ public class ClubController {
 			log.info("meetingModifyGET() 호출");
 			
 			//비회원
-			int result = 0;
-			int member_no = 0;
+			Integer result = 0;
+			Integer member_no = 0;
 			
 			if(session.getAttribute("member") != null) {
 				MembersVo member = (MembersVo) session.getAttribute("member");
@@ -403,13 +410,13 @@ public class ClubController {
 			log.info("meetingModifyPOST() 호출");
 			
 			//비회원
-			int result = 0;
+			Integer result = 0;
 			
 			if(session.getAttribute("member") != null) {
 				MembersVo member = (MembersVo) session.getAttribute("member");
 				log.info(member+"");
 				
-				int member_no =member.getMember_no();
+				Integer member_no =member.getMember_no();
 				result = service.checkClubRole(club_no, member_no);
 				//result = 3 : 클럽 미가입 회원
 				//result = 1 : 클럽 가입 회원
@@ -436,13 +443,13 @@ public class ClubController {
 			log.info("meetingDelete 호출");
 			
 			//비회원
-			int result = 0;
+			Integer result = 0;
 			
 			if(session.getAttribute("member") != null) {
 				MembersVo member = (MembersVo) session.getAttribute("member");
 				log.info(member+"");
 				
-				int member_no =member.getMember_no();
+				Integer member_no =member.getMember_no();
 				result = service.checkClubRole(club_no, member_no);
 				//result = 3 : 클럽 미가입 회원
 				//result = 1 : 클럽 가입 회원
@@ -482,6 +489,52 @@ public class ClubController {
 			
 			return "redirect:/club/{club_no}/meeting/{club_meeting_no}";
 		}
+		@RequestMapping(value="/{club_no}/meeting/{club_meeting_no}/end", method = RequestMethod.GET)
+		public String clubMeetingEnd(RedirectAttributes rttr,
+				@PathVariable("club_no") Integer club_no,
+				@PathVariable("club_meeting_no") Integer club_meeting_no, Model model){
+			String club_meeting_status = "완료";
+			service.updateMeetingStatus(club_meeting_no, club_meeting_status);
+			String meetingStatus = service.getMeetingStatus(club_meeting_no);
+			model.addAttribute("meetingStatus", meetingStatus);
+			rttr.addFlashAttribute("check", "END");
+			
+			return "redirect:/club/{club_no}/meeting/{club_meeting_no}";
+		}
+		
+		@RequestMapping(value="/{club_no}/meeting/{club_meeting_no}/join", method = RequestMethod.GET)
+		public String clubMeetingJoin(RedirectAttributes rttr, HttpSession session,
+				@PathVariable("club_no") Integer club_no,
+				@PathVariable("club_meeting_no") Integer club_meeting_no, Model model){
+			
+			MembersVo member = (MembersVo) session.getAttribute("member");
+			log.info(member+"");
+			
+			Integer member_no =member.getMember_no();
+			
+			service.joinMeeting(club_meeting_no,club_no,member_no );
+
+			rttr.addFlashAttribute("check", "JOIN");
+			
+			return "redirect:/club/{club_no}/meeting/{club_meeting_no}";
+		}
+		
+		@RequestMapping(value="/{club_no}/meeting/{club_meeting_no}/cancel", method = RequestMethod.GET)
+		public String clubMeetingCancel(RedirectAttributes rttr, HttpSession session,
+				@PathVariable("club_no") Integer club_no,
+				@PathVariable("club_meeting_no") Integer club_meeting_no, Model model){
+			
+			MembersVo member = (MembersVo) session.getAttribute("member");
+			log.info(member+"");
+			
+			Integer member_no =member.getMember_no();
+			
+			service.cancelMeeting(club_meeting_no,club_no,member_no );
+			
+			rttr.addFlashAttribute("check", "CANCEL");
+			
+			return "redirect:/club/{club_no}/meeting/{club_meeting_no}";
+		}
 		
 		@RequestMapping(value="/{club_no}/meetingList", method = RequestMethod.GET)
 		public String meetingListGET(Model model, HttpSession session,
@@ -490,13 +543,13 @@ public class ClubController {
 			log.info("meetingListGET() 호출");
 			
 			//비회원
-			int result = 0;
+			Integer result = 0;
 			
 			if(session.getAttribute("member") != null) {
 				MembersVo member = (MembersVo) session.getAttribute("member");
 				log.info(member+"");
 				
-				int member_no =member.getMember_no();
+				Integer member_no =member.getMember_no();
 				result = service.checkClubRole(club_no, member_no);
 				//result = 3 : 클럽 미가입 회원
 				//result = 1 : 클럽 가입 회원
