@@ -23,6 +23,7 @@ public abstract class AuthLogin {
 	protected OAuth20Service oauthService;
 	
 	public AuthLogin(AuthInfo authInfo) {
+		
 		this.oauthService = new ServiceBuilder(authInfo.getClientId())
 				.apiSecret(authInfo.getClientSecret())
 				.callback(authInfo.getRedirectUrl())
@@ -33,15 +34,6 @@ public abstract class AuthLogin {
 
 	public OAuth2AccessToken getAccessToken(String code) throws IOException, InterruptedException, ExecutionException {
 
-//		OAuthRequest request = new OAuthRequest(Verb.POST, oauthService.getApi().getAccessTokenEndpoint());
-//		request.addHeader(OAuthConstants.HEADER, OAuthConstants.BASIC + ' '
-//                + Base64.encode(String.format("%s:%s", oauthService.getApiKey(), oauthService.getApiSecret()).getBytes(Charset.forName("UTF-8"))));
-//        request.addParameter(OAuthConstants.REDIRECT_URI, oauthService.getCallback());
-//        request.addParameter(OAuthConstants.GRANT_TYPE, OAuthConstants.AUTHORIZATION_CODE);
-//        
-//      음... 카카오가 request를 파싱하는 방법이 다른건가? 왜 카카오만 안되지?
-//			request.addParameter를 해줘야 정상적으로  동작
-//		음...?
 		return this.oauthService.getAccessToken(code);
 	}
 
@@ -56,14 +48,14 @@ public abstract class AuthLogin {
 		return parseResponse(response);
 	}
 
-	// 이건 서로 다르게 구현해야할듯
 	public abstract MembersVo parseResponse(Response response) throws JsonProcessingException, IOException;
 
-	//
 	public Response requestMemberInfo(OAuth2AccessToken accessToken)
 			throws InterruptedException, ExecutionException, IOException {
+		
 		OAuthRequest request = new OAuthRequest(Verb.GET, getProfileEndPoint());
 		oauthService.signRequest(accessToken, request);
+		
 		return oauthService.execute(request);
 	}
 	

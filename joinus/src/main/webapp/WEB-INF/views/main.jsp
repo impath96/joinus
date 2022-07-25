@@ -23,14 +23,6 @@
 	}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-<script type="text/javascript">
-
-$(document).ready(function(){
-	
-});
-
-
-</script>
 
 
 <body>
@@ -46,7 +38,7 @@ $(document).ready(function(){
                 <h6 class="MainTextSub">함께하는, 보다 행복한 삶</h6>
             	<div ><img src="../resources/img/joinus.png" class="mainJoinus"></div><br>
                 <h1 class="mb-4">지금 바로 시작해보세요.</h1><hr>
-                <button class="btn btn-primary MainBtn m-5 py-3 joinClub" onclick="location.href='${PageContext.requeset.contextPath }/club/new'"> 모임만들기 </button>
+                <button class="btn btn-primary MainBtn m-5 py-3 joinClub joinbtn" onclick="location.href='${PageContext.requeset.contextPath }/club/new'"> 모임만들기 </button>
             </div><br><br>
           
           
@@ -77,7 +69,8 @@ $(document).ready(function(){
 						                   	<img src="../resources/img/joinus.png" class="w-100 py-auto"
 						                   	onclick="location.href='${PageContext.request.contextPath }/club/${my.club_no}'">
 						                 </c:if>
-					                        <div class="position-relative p-4 pt-0" style="height: 190px;">
+					                        <div class="position-relative p-4 pt-0" style="height: 190px;" 
+					                        onclick="location.href='${PageContext.request.contextPath }/club/${my.club_no}';">
 					                            <h4 class="mb-3 py-2 MainTextTitle">${my.club_name }</h4>
 					                            <p class="MainTextSub ">${my.club_content }</p>
 					                        </div>
@@ -107,7 +100,8 @@ $(document).ready(function(){
 						                <img src="../resources/img/joinus.png" class="w-100 py-auto mainImg"
 						                onclick="location.href='${PageContext.request.contextPath }/club/${in.club_no}'">
 						              </c:if>
-					                          <div class="position-relative p-4 pt-0" style="height: 190px;">
+					                          <div class="position-relative p-4 pt-0" style="height: 190px;"
+					                          onclick="location.href='${PageContext.request.contextPath }/club/${in.club_no}';">
 					                            <h4 class="mb-3 py-2 MainTextTitle">${in.club_name }</h4>
 					                            <p class="MainTextSub ">${in.club_content }</p>
 					                        </div>
@@ -126,7 +120,7 @@ $(document).ready(function(){
                          	<p class="MainSubTitle">회원들이 가장 많이 찜한 모임을 구경해보세요!</p><hr>
                           	</div>
 				            <div class="row g-4">              
-							<c:forEach var = "po" items="${popular }">
+							<c:forEach var = "po" items="${popular }" begin="0" end="9">
 				                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
 				                    
 				                    <div class="service-item rounded overflow-hidden Grrrr shadow">
@@ -138,7 +132,8 @@ $(document).ready(function(){
 						                 <img src="../resources/img/joinus.png" class="w-100 py-auto mainImg"
 						                 onclick="location.href='${PageContext.request.contextPath }/club/${po.club_no}'">
   			                           </c:if>
-					                   <div class="position-relative p-4 pt-0" style="height: 190px;">
+					                   <div class="position-relative p-4 pt-0" style="height: 190px;"
+					                   onclick="location.href='${PageContext.request.contextPath }/club/${po.club_no}';">
 					                            <h4 class="mb-3 py-2 MainTextTitle">${po.club_name }</h4>
 					                            <p class="MainTextSub ">${po.club_content }</p>
 				                        </div>
@@ -169,7 +164,8 @@ $(document).ready(function(){
 						                    	<img src="../resources/img/joinus.png" class="w-100 py-auto mainImg"
 						                    	onclick="location.href='${PageContext.request.contextPath }/club/${nu.club_no}'">
 						                    </c:if>
-					                         <div class="position-relative p-4 pt-0" style="height: 190px;">
+					                         <div class="position-relative p-4 pt-0" style="height: 190px;"
+					                         onclick="location.href='${PageContext.request.contextPath }/club/${nu.club_no}';">
 					                            <h4 class="mb-3 py-2 MainTextTitle">${nu.club_name }</h4>
 					                            <p class="MainTextSub ">${nu.club_content }</p>
 					                        </div>
@@ -178,7 +174,6 @@ $(document).ready(function(){
 				            </c:forEach>
 				                </div>
                    </div>
-				
 				
 				
 					<!-- 최근에 생성된 모임  -->
@@ -199,7 +194,8 @@ $(document).ready(function(){
 							                    	<img src="../resources/img/joinus.png" class="w-100 py-auto"
 							                    	onclick="location.href='${PageContext.request.contextPath }/club/${la.club_no}'">
 							                    </c:if>
-						                          <div class="position-relative p-4 pt-0" style="height: 190px;">
+						                          <div class="position-relative p-4 pt-0" style="height: 190px;"
+						                          onclick="location.href='${PageContext.request.contextPath }/club/${la.club_no}';">
 						                            <h4 class="mb-3 py-2 MainTextTitle">${la.club_name }</h4>
 						                            <p class="MainTextSub ">${la.club_content }</p>
 						                        </div>
@@ -208,14 +204,9 @@ $(document).ready(function(){
 					            </c:forEach>
 					        </div>
 	                   </div>
-
-
-
 		</div>
 		</div>
         </div>
     </body>
 	
-
-    
 <%@ include file="include/footer.jsp"%>

@@ -27,6 +27,27 @@
           </li>
         </ul>
         </c:forEach>
+      <div>
+      	<c:set var="meetingMemberStatus" value="${meetingMemberStatus }"/>
+			<c:if test ="${meetingMemberStatus eq 0 && (result eq 1 || result eq 2)}">
+				<div class="btn-group">
+					<button type="submit" class="btn btn-success btn-flat" id ="join">참가하기</button>
+				</div>
+			</c:if>
+			<c:if test ="${meetingMemberStatus eq 1 && (result eq 1 || result eq 2)}">
+				<div class="btn-group">
+					<button type="submit" class="btn btn-success btn-flat" id ="cancel">참가 취소하기</button>
+				</div>
+			</c:if>
+			<c:if test ="${result eq 0}">
+				<div class="" style="border: 1px;" onclick="location.href='${PageContext.request.contextPath }/club/${club_no}'">
+				<br>
+					<h5>모임에 가입하면 정모에 참가할 수 있어요!</h5>
+					<h5><a>모임에 가입하러 가기 👉 </a></h5>
+				<br>
+				</div>
+			</c:if>
+      </div>
       </div>
       <!-- 참가인원 -->
       
@@ -35,18 +56,18 @@
         <h4 class="mb-5">${meetingList[0].club_meeting_title}</h4>
           <div class="row g-3">
             <div class="col-12">
-              <label for="address" class="form-label">🗓️ 날짜</label>
+              <h4><label for="address" class="form-label">🗓️ 날짜 & 시간</label></h4> 
               <input type="text" class="form-control" id="club_meeting_date" value='${meetingList[0].club_meeting_date}' disabled="disabled">
               </div>
          
             
             <div class="col-12">
-              <label for="address" class="form-label">🙋 정원</label>
+              <h4><label for="address" class="form-label">🙋 정원</label></h4>
               <input type="number" class="form-control" name="club_meeting_capacity" value="${meetingList[0].club_meeting_capacity}" disabled="disabled">
             </div>
             
             <div class="col-12">
-              <label for="address" class="form-label">🏩 장소</label>
+              <h4><label for="address" class="form-label">🏩 장소</label></h4>
  
               		<input type="text" class="form-control mb-2" id="club_meeting_location" value="${meetingList[0].club_meeting_location}" disabled="disabled">
 
@@ -60,7 +81,7 @@
 				
 			</div> 
             <div class="col-12">
-              <label for="address2" class="form-label">참가비 <span class="text-muted">(선택)</span></label>
+              <h4><label for="address2" class="form-label">💲 참가비 <span class="text-muted">(선택)</span></label></h4>
               <input type="number" class="form-control" name="club_meeting_dues" value="${meetingList[0].club_meeting_dues}" disabled="disabled">
             </div>
 
@@ -68,11 +89,11 @@
 
           <hr class="my-4">
 
-          <h4 class="mb-3">추가 공지사항</h4>
+          <h4 class="mb-3">📝 메모</h4>
 
           <div class="row gy-3">
-            <div class="col-md-6">
-              <input type="text" class="form-control" name="club_meeting_content" value="${meetingList[0].club_meeting_content}" placeholder="" required="">
+            <div class="col-12">
+              <input type="text" class="form-control" name="club_meeting_content" value="${meetingList[0].club_meeting_content}" disabled="disabled" required="">
               <div class="invalid-feedback">
                 Name on card is required
               </div>
@@ -85,7 +106,9 @@
 	
 			<div class="margin">
 			<c:set var="result" value="${result }"/>
-			<c:if test ="${result eq 2 }">
+
+			
+			<c:if test ="${result eq 2 && (meetingStatus eq '모집중' || meetingStatus eq '마감')}">
 			<div class="btn-group">
 			<button type="submit" class="btn btn-secondary btn-flat" id ="modify">수정하기</button>
 			</div>
@@ -108,7 +131,19 @@
 			<button type="submit" class="btn btn-success btn-flat" id ="reopen">오픈하기</button>
 			</div>
 			</c:if>
+			
+			<c:if test="${meetingStatus eq '마감' || meetingStatus eq '모집중'}">
+			<div class="btn-group">
+			<button type="submit" class="btn btn-success btn-flat" id ="end">완료</button>
+			</div>
 			</c:if>
+			</c:if>
+			</div>
+			
+			<br>
+			
+			<div class="btn-group">
+			<button type="submit" class="btn btn-success btn-flat" id ="back">모임페이지로 돌아가기</button>
 			</div>
 
 
@@ -178,8 +213,14 @@ $(function(){
 	});
 	
 	$('#delete').click(function(){
+		var meetingdelete = confirm("정말 정모를 삭제하시겠어요?");
+		
+		if(meetingdelete){
 		formObj.attr("action", "/club/${clubInfo[0].club_no}/meeting/${meetingList[0].club_meeting_no}/delete");
 		formObj.submit();
+		}else{
+			
+		}
 	});
 	
 	$('#close').click(function(){
@@ -192,17 +233,51 @@ $(function(){
 		formObj.submit();
 	});
 	
+	$('#join').click(function(){
+		formObj.attr("action", "/club/${clubInfo[0].club_no}/meeting/${meetingList[0].club_meeting_no}/join");
+		formObj.submit();
+	});
 	
+	$('#cancel').click(function(){
+		formObj.attr("action", "/club/${clubInfo[0].club_no}/meeting/${meetingList[0].club_meeting_no}/cancel");
+		formObj.submit();
+	});
+	
+	$('#back').click(function(){
+		formObj.attr("action", "/club/${clubInfo[0].club_no}");
+		formObj.submit();
+	});
+	
+	$('#end').click(function(){
+		var end = confirm("정모 완료는 취소할 수 없어요! 정말 완료로 변경하시겠어요?");
+		
+		if(end){
+			formObj.attr("action", "/club/${clubInfo[0].club_no}/meeting/${meetingList[0].club_meeting_no}/end");
+			formObj.submit();
+		}else{
+			
+		}
+		
+	});
 	
 });//jquery
 
 
 var check ='${check}';
 if(check == "Close"){
-	alert('정모가 마감되었습니다.');
+	alert('정모가 마감됐어요!');
 }
 if(check == "Reopen"){
-	alert('정모가 다시 열렸습니다.');
+	alert('정모가 다시 열렸어요!');
+}
+if(check == "JOIN"){
+	alert('정모에 참가했어요!');
+}
+if(check == "CANCEL"){
+	alert('정모 참석을 취소했어요!');
+}
+if(check == "END"){
+	alert('정모가 완료 됐어요!');
 }
 
 

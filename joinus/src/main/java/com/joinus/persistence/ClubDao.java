@@ -79,6 +79,9 @@ public interface ClubDao {
 	//정모 정보 가져오기
 	public List<ClubMeetingsVo> getMeetings_no(Integer club_meeting_no);
 	
+	//정모 참가 
+	public int getMeetingMemberStatus(Integer club_meeting_no, int member_no);
+
 	//정모 수정하기
 	public Integer updateMeeting(Integer club_meeting_no, ClubMeetingsVo vo);
 	
@@ -99,7 +102,15 @@ public interface ClubDao {
 	
 	//정모 리스트
 	public List<ClubMeetingsVo> getMeetingList(Integer club_no, String status);
+	
+	//정모 참가
+	public void joinMeeting(Integer club_meeting_no, Integer club_no, Integer member_no);
 
+	//정모 참가 취소
+	public void cancelMeeting(Integer club_meeting_no, Integer club_no, Integer member_no);
+	
+	//정모 날짜 확인
+	public List<ClubMeetingsVo> checkMeetingDate(Integer club_no);
 	
 	//=========================고은비=========================
 	
@@ -274,6 +285,12 @@ public interface ClubDao {
 
 	public List<ClubsVo> recentViewClubList(List<Integer> recentViewClub);
 
+
+
+
+
+	
+	
 
 
 

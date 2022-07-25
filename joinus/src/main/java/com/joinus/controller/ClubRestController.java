@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.joinus.domain.ClubMeetingsVo;
 import com.joinus.domain.ClubTotalBean;
 import com.joinus.domain.Criteria;
 import com.joinus.domain.InterestDetailsVo;
@@ -41,10 +42,8 @@ public class ClubRestController {
 		
 		log.info("rentalList -REST 호출");
 		//멤버정보 가져오기
-		//MembersVo member = (MembersVo) session.getAttribute("member");
-		//int member_no =member.getMember_no();
-		
-		int member_no = 124;
+		MembersVo member = (MembersVo) session.getAttribute("member");
+		int member_no =member.getMember_no();
 		
 		//예약정보 불러오기
 		List<MeetingTotalBean> rentalList = (List<MeetingTotalBean>)service.getRental(member_no);
@@ -161,6 +160,25 @@ public class ClubRestController {
 			} catch (Exception e) {
 				entity = new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
 			}
+		
+		return entity;
+		
+	}
+	
+	@RequestMapping(value="/{club_no}/meeting/end", method = RequestMethod.GET)
+	public ResponseEntity<List<ClubMeetingsVo>> clubMeetingDateREST(
+			@PathVariable("club_no") Integer club_no, Model model,HttpSession session) {
+		
+		log.info("clubMeetingDateREST 호출");
+
+		ResponseEntity<List<ClubMeetingsVo>> entity = null;
+		List<ClubMeetingsVo> MeetingDate= service.checkMeetingDate(club_no);
+		
+		try {
+			entity = new ResponseEntity<List<ClubMeetingsVo>>(MeetingDate, HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 		
 		return entity;
 		

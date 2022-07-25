@@ -16,8 +16,6 @@ public class KakaoApi20 extends DefaultApi20 {
 		return InstanceHolder.instance;
 	}
 	
-	////////////////////////////////////////////////////////////////////
-
 	@Override
 	public String getAccessTokenEndpoint() {
 		return "https://kauth.kakao.com/oauth/token";

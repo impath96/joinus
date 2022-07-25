@@ -52,11 +52,13 @@
 <body> 
 <!-- 정모 -->
 <div class="container px-5">
-	<div class="row g-5">
+	<div class="row g-5 py-5">
       <div class="col-md-5 col-lg-4 order-md-last">
         <h4 class="d-flex justify-content-between align-items-center mb-1">
           <span class="text-primary">예약 정보</span>
         </h4>
+          <c:set var="rentalList" value="${rentalList }"/>
+          <c:if test="${!empty rentalList}">
           <small class="text-mute">버튼을 누르면 자동으로 적용 됩니다.</small> 
        <c:forEach var = "vo" items="${rentalList }" varStatus="status">
         <ul class="list-group mb-3">
@@ -70,6 +72,17 @@
           </li>
         </ul>
         </c:forEach>
+        </c:if>
+        <c:if test="${empty rentalList}">
+        <ul class="list-group mb-3">
+          <li class="list-group-item d-flex justify-content-between lh-sm" >
+            <div onclick="location.href='${PageContext.request.contextPath }/rental/partnerPlace'">
+              <h6 class="my-2">예약 정보가 없습니다.</h6> <br>
+              <h6 class="my-2">모임 장소 예약하러 가기 👉</h6>
+            </div>
+          </li>
+        </ul>
+        </c:if>
       </div>
       
       
@@ -79,7 +92,7 @@
           <div class="row g-3">
           
             <div class="col-12">
-              <label for="firstName" class="form-label">제목</label>
+              <h4><label for="firstName" class="form-label">제목</label></h4>
               <input type="text" class="form-control" name="club_meeting_title" value="" required="">
               <div class="invalid-feedback">
                 Valid first name is required.
@@ -87,7 +100,7 @@
             </div>
             
             <div class="col-12">
-              <label for="address" class="form-label">🗓️ 날짜</label>
+              <h4><label for="address" class="form-label">🗓️ 날짜 & 시간</label></h4>
               <input type="text" class="form-control" id="datetimepicker" name="club_meeting_date" value="" required="">
               <div class="invalid-feedback">
                 Please enter your shipping address.
@@ -103,7 +116,7 @@
             </div> -->
             
             <div class="col-12">
-              <label for="address" class="form-label">🙋 정원</label>
+              <h4><label for="address" class="form-label">🙋 정원</label></h4>
               <input type="number" class="form-control" name="club_meeting_capacity" required="">
               <div class="invalid-feedback">
                 Please enter your shipping address.
@@ -113,7 +126,7 @@
 
             <div>
             <div class="col-12">
-              <label for="address" class="form-label">🏩 장소</label>
+              <h4><label for="address" class="form-label">🏩 장소</label></h4>
               	<div class="input-group py-2">
               		<input type="text" class="form-control" id="club_meeting_location" name="club_meeting_location">
              		<button type="button" class="btn btn-secondary" id ="search">검색하기</button>
@@ -137,7 +150,7 @@
        
       
             <div class="col-12">
-              <label for="address2" class="form-label">참가비 <span class="text-muted"></span></label>
+             <h4> <label for="address2" class="form-label">💲 참가비 <span class="text-muted"></span></label></h4>
               <input type="number" class="form-control" name="club_meeting_dues" placeholder="Apartment or suite" required="">
               <div class="invalid-feedback">
                 Name on card is required
@@ -148,10 +161,10 @@
 
           <hr class="my-4">
 
-          <h4 class="mb-3">추가 공지사항</h4>
+          <h4 class="mb-3">📝 메모</h4>
 
           <div class="row gy-3">
-            <div class="col-md-6">
+            <div class="col-12">
               <input type="text" class="form-control" name="club_meeting_content" placeholder="" required="">
               <div class="invalid-feedback">
                 Name on card is required
@@ -379,6 +392,7 @@ $(function(){
 		
 			//console.log($(this).attr('id')); 
 			var rental_places_no = $(this).attr('id');
+
 		
 		$.ajax({
 			
@@ -396,10 +410,10 @@ $(function(){
 				var rental_address = data[0].partnerPlacesVo.partner_place_address;
 				var rental_time = data[0].rentalPlacesVo.rental_time;
 				
-				$('#club_meeting_date').attr('value',rental_date);
+				$('#datetimepicker').attr('value',rental_date);
 				$('#club_meeting_location').attr('value',rental_place);
 				$('#club_meeting_address').attr('value',rental_address);
-				$('#club_meeting_time').attr('value',rental_time);
+
 				
 				location = $('input#club_meeting_address').val();
 				

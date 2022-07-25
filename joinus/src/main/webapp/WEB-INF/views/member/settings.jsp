@@ -128,7 +128,7 @@
 											<option value="${interest.interest_no }" <c:if test="${interest.interest_no == memberInterest.interest_no }">selected</c:if>>${interest.interest_name }</option>
 			  							</c:forEach>
 									</select>
-								<button type="button" class="e-interest-save" class="btn btn-primary fs-3 mb-4" style="width:100%;">저장하기</button>
+								<button type="button" class="e-interest-save btn btn-primary fs-3 w-100">저장하기</button>
 								</div>
 							</div>
 						</div>

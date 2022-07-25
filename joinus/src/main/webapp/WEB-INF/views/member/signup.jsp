@@ -190,27 +190,31 @@
 					<h2 class="mb-4 fs-1" >회원가입</h2>
 					<form:form modelAttribute="member" method="POST" action="/member/signup" class="w-75">
 						<div class="col-12 my-3">
-							<div class="py-3">
+							<div class="pt-3">
 								<label for="member_email" class="form-label">이메일</label>
-								<form:input path="member_email" type="email" class="form-control p-2 fs-2 mb-4" id="member_email"/>
-								<form:errors cssStyle="color: red;" path="member_email"/>
-								<button class="btn btn-primary py-3 px-5 w-100"
-									type="button" id="email_auth_btn">인증번호 받기</button>
+								<div class="d-flex">
+									<form:input path="member_email" type="email" class="form-control p-2 fs-2 me-3" id="member_email"/>
+									<form:errors cssStyle="color: red;" path="member_email"/>
+									<button class="btn btn-primary w-50 fs-3"
+										type="button" id="email_auth_btn">인증번호 받기</button>
+								</div>
 							</div>
 						</div>
 						<div class="col-12 my-3">
-							<div class="py-3">
+							<div class="pt-3">
 								<label for="member_email" class="form-label">이메일 인증</label>
-								<input type="text" class="form-control mb-4 p-2 fs-2" id="email_auth_key"
-									maxlength="6">
-								<button class="btn btn-primary py-3 px-5 w-100"
-									type="button" id="email_auth_confirm">이메일 인증</button>
+								<div class="d-flex">
+									<input type="text" class="form-control p-2 fs-2 me-3" id="email_auth_key"
+										maxlength="6">
+									<button class="btn btn-primary w-50 fs-3"
+										type="button" id="email_auth_confirm">이메일 인증</button>
+								</div>
 							</div>
 						</div>
 						<div class="col-12 mt-3">
 							<div class="py-3">
 								<label for="member_email" class="form-label">비밀번호</label>
-								<form:input path="member_pass" type="password" class="form-control p-2 fs-2" id="member_pass" />
+								<form:input path="member_pass" type="password" class="form-control p-2 fs-2 mb-2" id="member_pass" />
 								<div class="password-error-check d-flex flex-column d-none">
 				          			<span class="text-danger password-character">영문 대소문자/숫자/특수 문자 3가지 필수 조합</span>
 				          			<span class="text-danger password-length">8자 이상 20자 이하 입력</span>
@@ -219,25 +223,25 @@
 							</div>
 						</div>
 						<div class="col-12 mb-3">
-							<div class="py-3">
+							<div class="pt-3">
 								<label for="member_email" class="form-label">비밀번호 재확인</label>
-								<input type="password" class="form-control px-2 pb-2 fs-2 mb-4" id="member_passConfirm">
+								<input type="password" class="form-control px-2 pb-2 fs-2 mb-2" id="member_passConfirm">
 								<div class="password-confirm-check d-flex flex-column d-none">
 				          			<span class="text-danger password-confirm">비밀번호가 일치하지 않습니다.</span>
 	        					</div>
-								<button class="btn btn-primary py-3 px-5 w-100"
+								<button class="btn btn-primary px-5 w-100 mt-2 fs-3"
 									type="button" id="pass_confirm">비밀번호 확인</button>
 							</div>
 						</div>
 						<div class="col-12 my-3">
-							<div class="py-3">
+							<div class="pt-3">
 								<label for="member_email" class="form-label">이름</label>
 								<form:input path="member_name" type="text" class="form-control p-2 fs-2 mb-4" id="member_name"/>
 								<form:errors cssStyle="color: red;" path="member_name" />
 							</div>
 						</div>
 						<div class="col-12 my-3">
-							<div class="py-3">
+							<div class="pt-3">
 								<label for="member_email" class="form-label">주소</label>
 								<form:input path="member_location" type="text" class="form-control p-2 fs-2 mb-4" id="member_location" onclick="searchLocation()"/>
 								<form:errors cssStyle="color: red;" path="member_location" />
@@ -245,15 +249,16 @@
 						</div>
 						<div class="col-12 my-3">
 							<input type="submit" value="회원가입"
-								class="btn btn-primary py-3 px-5 mb-4 w-100 e-submit" disabled>
+								class="btn btn-primary mb-4 w-100 e-submit fs-3" disabled>
 						</div>
 						<hr>
- 						<div class="col-12 my-3">
-							<a href="https://kauth.kakao.com/oauth/authorize?client_id=e56b53633c44d91056a98f83b04e7bfe&redirect_uri=http://localhost:8088/oauth/kakao&response_type=code">
-								<img alt="카카오 로그인" src="${pageContext.request.contextPath }/resources/img/kakao_login.png">
+ 						<div class="col-12 my-3 d-flex">
+							<a href="https://kauth.kakao.com/oauth/authorize?client_id=e56b53633c44d91056a98f83b04e7bfe&redirect_uri=http://localhost:8088/oauth/kakao&response_type=code" class="d-inline-flex w-50 p-4">
+								<img alt="카카오 로그인" src="${pageContext.request.contextPath }/resources/img/kakao_login.png" class="w-100">
 							</a>
-							<a href="https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&prompt=consent&response_type=code&client_id=463761723189-9objhtfnhck66j6bbvi2h0b7hmgnpsf9.apps.googleusercontent.com&redirect_uri=http://localhost:8088/oauth/google&scope=https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email">
-								<img alt="구글 로그인" src="${pageContext.request.contextPath }/resources/img/google_login.png">
+							<a href="https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&prompt=consent&response_type=code&client_id=463761723189-9objhtfnhck66j6bbvi2h0b7hmgnpsf9.apps.googleusercontent.com&redirect_uri=http://localhost:8088/oauth/google&scope=https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email"
+								class="d-inline-flex w-50 p-4">
+								<img alt="구글 로그인" src="${pageContext.request.contextPath }/resources/img/google_login.png" class="w-100">
 							</a>
 						</div>
 					</form:form>

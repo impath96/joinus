@@ -20,7 +20,7 @@
 		font-weight: 900;
 		border-bottom: #6c757da8 dotted 1px;
 		padding: 15px;
-		
+		word-break: keep-all;		
 	}
 	.MainTextSub {
 		text-align: center;
@@ -41,6 +41,16 @@
 	.mainGroup {
 		margin-bottom: 150px;
 	 }
+	.textGnW {
+		margin: 0 0 0 170px;
+		padding: 6px;
+		text-align: center;
+	 	font-style: italic;
+		color: #32C36C;
+		border-radius: 10px;
+		vertical-align: middle;
+		width: 50%;
+	}
 	
 	
 	
@@ -302,6 +312,40 @@
 		
 		.mNbSize {
 			padding: 100px;
+		}
+		
+		.greenFont {
+			color: #32C36C;
+		}
+		
+		.joinusP {
+			width: 250px; 
+			height: 250px; 
+			border-radius: 300px;
+			padding: 20px;
+		}
+		
+		.joinusGreenBox {
+			width:230px;
+			background-color: #63cf8e;
+			color:white;
+			font-size: 1.2em;
+			font-weight: 800;
+			border-radius: 8px 8px 2px 2px;
+			padding: 5px;
+			box-shadow: 0.25rem 0 0 rgb(0 0 0 / 8%);
+			cursor: pointer;
+			margin: 0px;
 			
-			
+		}
+		.joinusGreenBox2 {
+			margin: 0px;
+			width:230px;
+			background-color: #F6F7F8;
+			font-size: 1.1em;
+			font-weight: 800;
+			border-radius: 2px 2px 8px 8px;
+			padding: 5px;
+			box-shadow: 0.25rem 0 0 rgb(0 0 0 / 8%);
+			cursor: pointer;
 		}
