@@ -162,6 +162,23 @@ public class ClubDaoImpl implements ClubDao{
 			
 		return (Integer)result;
 	}
+	
+	
+
+	@Override
+	public int getMeetingMemberStatus(Integer club_meeting_no, int member_no) {
+		Map<String, Object> param= new HashMap<String, Object>();
+		param.put("club_meeting_no", club_meeting_no);
+		param.put("member_no", member_no);
+		log.info("param : " + param);
+
+		if(sqlSession.selectOne(NAMESPACE2+".getMeetingMemberStatus", param) != null ) {
+			return 1;
+		}else {
+			return 0;
+		}
+		
+	}
 
 	//클럽 강퇴하기
 	@Override
@@ -317,9 +334,40 @@ public class ClubDaoImpl implements ClubDao{
 		return sqlSession.selectList(NAMESPACE2+".GetMeetingList", param);
 	}
 	
+	//정모 참가
+	@Override
+	public void joinMeeting(Integer club_meeting_no, Integer club_no, Integer member_no) {
+		
+		Map<String, Object> param= new HashMap<String, Object>();
+		param.put("club_meeting_no", club_meeting_no);
+		param.put("club_no", club_no);
+		param.put("member_no", member_no);
+		
+		sqlSession.update(NAMESPACE2+".InsertMeetingMember", param);
+		
+	}
+	
+	@Override
+	public void cancelMeeting(Integer club_meeting_no, Integer club_no, Integer member_no) {
+		Map<String, Object> param= new HashMap<String, Object>();
+		param.put("club_meeting_no", club_meeting_no);
+		param.put("club_no", club_no);
+		param.put("member_no", member_no);
+
+		sqlSession.update(NAMESPACE2+".CancelMeetingMember", param);
+		
+	}
+	
+	@Override
+	public List<ClubMeetingsVo> checkMeetingDate(Integer club_no) {
+		List<ClubMeetingsVo> date =  sqlSession.selectList(NAMESPACE2+".CheckMeetingDate",club_no);
+		log.info(date+"");
+		return date;
+	}
+	
+	
+	
 //=======================허수빈=============================================================
-
-
 
 
 	@Override

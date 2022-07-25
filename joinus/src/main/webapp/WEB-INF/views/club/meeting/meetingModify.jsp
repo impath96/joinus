@@ -89,7 +89,7 @@
             </div>
             
             <div class="col-12">
-              <label for="address" class="form-label">🗓️ 날짜</label>
+              <label for="address" class="form-label">🗓️ 날짜 & 시간</label>
               <input type="text" class="form-control" id="datetimepicker" name="club_meeting_date" value='${meetingList[0].club_meeting_date}'  required="">
               <div class="invalid-feedback">
                 Please enter your shipping address.
@@ -141,7 +141,7 @@
           <h4 class="mb-3">추가 공지사항</h4>
 
 			<div class="row gy-3">
-	            <div class="col-md-6">
+	            <div class="col-12">
 	              <input type="text" class="form-control" id="club_meeting_content" name="club_meeting_content" value="${meetingList[0].club_meeting_content}" placeholder="" required="">
 	              <div class="invalid-feedback">
 	                Name on card is required
@@ -415,10 +415,9 @@ var location = $('input#club_meeting_location').val();
 				var rental_address = data[0].partnerPlacesVo.partner_place_address;
 				var rental_time = data[0].rentalPlacesVo.rental_time;
 				
-				$('#club_meeting_date').attr('value',rental_date);
+				$('#datetimepicker').attr('value',rental_date);
 				$('#club_meeting_location').attr('value',rental_place);
 				$('#club_meeting_address').attr('value',rental_address);
-				$('#club_meeting_time').attr('value',rental_time);
 				
 				location = $('input#club_meeting_address').val();
 				
