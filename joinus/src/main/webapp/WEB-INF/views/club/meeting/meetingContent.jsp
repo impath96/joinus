@@ -43,7 +43,7 @@
 				<div class="" style="border: 1px;" onclick="location.href='${PageContext.request.contextPath }/club/${club_no}'">
 				<br>
 					<h5>모임에 가입하면 정모에 참가할 수 있어요!</h5>
-					<a><h5>모임에 가입하러 가기 👉 </h5></a>
+					<h5><a>모임에 가입하러 가기 👉 </a></h5>
 				<br>
 				</div>
 			</c:if>

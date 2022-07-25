@@ -138,7 +138,6 @@
 							<br>
 							<br>
                             <a class="small fw-medium" href="${PageContext.request.contextPath }/club/${vo.clubsVo.club_no}">클럽 상세 페이지<i class="fa fa-arrow-right ms-2"></i></a>
-                            <p>${vo.clubsVo.club_content }</p>
                         </div>
                     </div>
                 </div>
