@@ -40,7 +40,7 @@
 					style="width: 250px; height: 250px; border-radius: 300px; margin-right: 10px;" class="shadow-sm">
 				<img alt="" src="../resources/img/pic3.png"
 					 style="width: 250px; height: 250px; border-radius: 300px; margin-right: 10px;" class="shadow-sm">
-				<img alt="" src="../resources/img/pic4.png" 
+				<img alt="" src="${pageContext.request.contextPath }/resources/upload/members/김성빈.jpg"
 					style="width: 250px; height: 250px; border-radius: 300px; margin-right: 10px;" class="shadow-sm">	
 				<img alt="" src="../resources/img/pic5.png" 
 					style="width: 250px; height: 250px; border-radius: 300px; " class="shadow-sm">	
@@ -57,8 +57,8 @@
 					<p class="joinusGreenBox2">impath96@gmail.com</p>
 				</div>
 				<div style="width: 260px; height: 250px;"  class="text-center">
-					 <p class="joinusGreenBox">Kim SungBin</p>
-					 <p class="joinusGreenBox2">rlaqlstjd0206@naver.com</p>
+					 <p class="joinusGreenBox">Kim SeongBin</p>
+					 <p class="joinusGreenBox2">rkawk0206@gmail.com</p>
 				</div>
 				<div style="width: 260px; height: 250px;"  class="text-center">
 					 <p class="joinusGreenBox">Heo Subin</p>

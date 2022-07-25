@@ -82,6 +82,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     <style type="text/css">
       .service-item {
         height: 100%;
+        cursor: pointer;
       }
       .service-icon {
         margin: 24px 24px 0 0;
@@ -94,6 +95,12 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         font-size: 1.25rem;
         right: 16px;
         bottom: 8px;
+      }
+      .top-left-content {
+        position: absolute;
+        font-size: 1.25rem;
+        left: 40%;
+        top: 40%;
       }
       .club_item {
         font-size: 1.25rem;
