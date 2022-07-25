@@ -76,7 +76,7 @@
 										</a>
 									</c:forEach>
 								</div>
-								<a class="small fw-medium bottom-right" href="">내 모임 전체보기<i
+								<a class="small fw-medium bottom-right" href="">최근 본 모임 전체보기<i
 									class="fa fa-arrow-right ms-2"></i></a>
 							</div>
 						</div>
