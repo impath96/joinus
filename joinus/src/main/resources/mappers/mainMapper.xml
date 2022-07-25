@@ -22,7 +22,7 @@
 		(select interest_no from member_interests where member_no=#{member_no}) ) limit 6
 	</select>
 	<select id="getMyClubs" resultType="ClubsVo">
-	select * from clubs where club_location = #{member_location} order by club_regdate desc limit 6
+	select * from clubs where club_location like concat('%',#{member_location},'%') order by club_regdate desc limit 6
 	</select>
 	
 
