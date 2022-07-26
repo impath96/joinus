@@ -14,7 +14,7 @@
 		<br>
 		<br>
 	<!-- 이달의 모임 -->
-	   <div class="container-xxl py-5">
+	   <div class="container-xxl py-5 mb-5" >
         <div class="container">
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                 <h1 class="mb-4">이달의 모임</h1>
@@ -48,7 +48,7 @@
             <div class="row g-3">
                 <div class="col-md-6 py-2 px-5 wow fadeIn" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeIn;">
                     <div class="d-flex align-items-center mb-4">
-                        <h1 class="mb-0" data-toggle="counter-up">3453</h1>
+                        <h1 class="mb-0 py-5" data-toggle="counter-up">3453</h1>
                         <h2>명이 함께하고 있습니다!</h2>
                     </div>
                     <span> JoinUs는 경남권 전용 소모임 커뮤니티입니다. <br>
@@ -147,7 +147,7 @@
         </div>
         <div class="d-flex justify-content-center py-3 mt-5">
         	<nav aria-label="Page navigation" class="">
-        		<ul class="pagination justify-content-end mb-0 h-100">
+        		<ul class="pagination justify-content-end mb-0 h-100 list-group list-group-horizontal">
 	                	<c:if test="${pm.prev }">
 		                	<li class="page-item">
 		                    	<a class="page-link p-0 d-inline-flex h-100 align-items-center" href="${PageContext.request.contextPath }/club/clubList?page=${pm.startPage-1}" aria-label="Previous">
@@ -161,7 +161,7 @@
 	                 				>
 	                 			<a class="page-link d-inline-block p-3" href="${PageContext.request.contextPath }/club/clubList?page=${idx}">${idx }</a>
 	                 		</li>
-						</c:forEach>
+						</c:forEach> 
 						<c:if test="${pm.next && pm.endPage > 0 }">
 		                  	<li class="page-item">
 		                    	<a class="page-link p-0 d-inline-flex h-100 align-items-center" href="${PageContext.request.contextPath }/club/clubList?page=${pm.endPage+1}" aria-label="Next">
