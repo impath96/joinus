@@ -23,7 +23,11 @@
 	}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-
+<script>
+if('${isAdmin}'){
+	alert('${isAdmin}');
+}
+</script>
 
 <body>
     

@@ -4,7 +4,9 @@
 
 <%@ include file="../../include/header.jsp"%>
 <%@ include file="../../include/club_header.jsp" %>
-
+<style>
+  .ck-editor__editable { height: 400px; }
+</style>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 
 <script type="text/javascript">

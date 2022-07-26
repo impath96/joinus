@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../../include/header.jsp"%>
+<%@ include file="../../include/club_header.jsp" %>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ce8d060125bcc89e0c25ee69f6b5c7b0&libraries=services"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -29,6 +30,7 @@
         </c:forEach>
       <div>
       	<c:set var="meetingMemberStatus" value="${meetingMemberStatus }"/>
+      	<c:if test="${meetingStatus eq '모집중'}">
 			<c:if test ="${meetingMemberStatus eq 0 && (result eq 1 || result eq 2)}">
 				<div class="btn-group">
 					<button type="submit" class="btn btn-success btn-flat" id ="join">참가하기</button>
@@ -43,10 +45,11 @@
 				<div class="" style="border: 1px;" onclick="location.href='${PageContext.request.contextPath }/club/${club_no}'">
 				<br>
 					<h5>모임에 가입하면 정모에 참가할 수 있어요!</h5>
-					<h5><a>모임에 가입하러 가기 👉 </a></h5>
+					<h5><a>모임에 가입하러 가기 👉</a></h5>
 				<br>
 				</div>
 			</c:if>
+		</c:if>	
       </div>
       </div>
       <!-- 참가인원 -->
@@ -106,7 +109,7 @@
 	
 			<div class="margin">
 			<c:set var="result" value="${result }"/>
-
+			<c:set var="meetingStatus" value="${meetingStatus }"/>
 			
 			<c:if test ="${result eq 2 && (meetingStatus eq '모집중' || meetingStatus eq '마감')}">
 			<div class="btn-group">
@@ -118,7 +121,7 @@
 			</div>
 			
 			
-			<c:set var="meetingStatus" value="${meetingStatus }"/>
+
 			
 			<c:if test="${meetingStatus eq '모집중'}">
 			<div class="btn-group">
