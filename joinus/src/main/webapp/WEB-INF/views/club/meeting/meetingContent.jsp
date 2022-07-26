@@ -237,9 +237,44 @@ $(function(){
 	});
 	
 	$('#join').click(function(){
-		formObj.attr("action", "/club/${clubInfo[0].club_no}/meeting/${meetingList[0].club_meeting_no}/join");
-		formObj.submit();
-	});
+	 	formObj.attr("action", "/club/${clubInfo[0].club_no}/meeting/${meetingList[0].club_meeting_no}/join");
+		formObj.submit(); 
+	
+		/*
+			if(confirm("정모에 참석하시겠어요?") == true){
+				
+				$.ajax({
+					url:'${pageContext.request.contextPath}/club/${clubInfo[0].club_no}/meeting/${meetingList[0].club_meeting_no}/join',
+					type:'POST',
+					data: {
+						'club_no' : '${clubInfo[0].club_no}',
+						'member_no' : '${member_no}',
+						'club_meeting_no' : '${meetingList[0].club_meeting_no}'
+						},
+					dataType: 'json',
+					success: function(data){
+							
+						if(data == true){
+							alert(' 정모참석 신청이 완료되었습니다! ');
+							 console.log("정모신청완료");
+						}
+						if(data == false){
+							alert('죄송합니다 인원초과로 정모가 마감되었습니다');
+						}
+					},
+					fail: function(){
+			              alert('정모참석 신청이 마감되었습니다');
+			        }
+
+			        });
+			    
+			}else{
+			        return false;
+			    } 
+		*/
+	
+			});
+		
 	
 	$('#cancel').click(function(){
 		formObj.attr("action", "/club/${clubInfo[0].club_no}/meeting/${meetingList[0].club_meeting_no}/cancel");

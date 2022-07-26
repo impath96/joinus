@@ -178,7 +178,6 @@
 				        }
 
 				        });
-							alert(' 정모참석 신청이 완료되었습니다! ');
 							location.reload();
 				    
 				}else{

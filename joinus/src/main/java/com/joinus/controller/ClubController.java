@@ -366,6 +366,7 @@ public class ClubController {
 				
 				Integer member_no =member.getMember_no();
 				result = service.checkClubRole(club_no, member_no);
+				model.addAttribute("member_no", member_no);
 				//result = 3 : 클럽 미가입 회원
 				//result = 1 : 클럽 가입 회원
 				//result = 2 : 클럽장
