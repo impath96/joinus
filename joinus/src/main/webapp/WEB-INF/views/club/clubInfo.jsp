@@ -178,7 +178,6 @@
 				        }
 
 				        });
-							alert(' 정모참석 신청이 완료되었습니다! ');
 							location.reload();
 				    
 				}else{
@@ -443,7 +442,7 @@
                     			</c:when>
 	                    		<c:when test="${tmp < 1}">
 	                    			<c:if test="${meetingCapa eq meetingFull}">
-			        					<button id="JoinMeeting" class="btn btn-primary">참석마감</button>
+			        					<div style="color: red; padding: 6px; font-size: 1.2em;">참석마감</div>
 			        				</c:if>
 			        				<c:if test="${meetingCapa ne meetingFull}">
 	                    			  <button id="JoinMeeting" class="btn btn-primary" value="${meetings[i].club_meeting_no}">참석하기</button>
