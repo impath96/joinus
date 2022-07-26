@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.joinus.domain.BoardCommentsVo;
-import com.joinus.domain.BoardCriteria;
 import com.joinus.domain.BoardLikesVo;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
@@ -379,7 +378,7 @@ public class ClubDaoImpl implements ClubDao{
 
 
 	@Override
-	public List<BoardTotalBean> getBoardListAll(Integer club_no, BoardCriteria cri) {
+	public List<BoardTotalBean> getBoardListAll(Integer club_no, Criteria cri) {
 		log.info(" getBoardListAll() 호출 ");
 		log.info("@@@@@@"+club_no+", "+cri);
 		Map<String, Object> param = new HashMap<String, Object>();
@@ -390,13 +389,13 @@ public class ClubDaoImpl implements ClubDao{
 		return sqlSession.selectList(NAMESPACE+".getBoardListAll", param);
 	}
 	@Override
-	public Integer getTotalBoardCnt(int club_no) {
+	public Integer getTotalBoardCnt(Integer club_no) {
 		return sqlSession.selectOne(NAMESPACE+".totalBoardCnt", club_no);
 	}
 	
 	
 	@Override
-	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no, BoardCriteria cri) {
+	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no, Criteria cri) {
 		log.info(" getBoardList() 호출 ");
 		log.info("@@@@@@"+club_no+", "+board_type_no+", "+cri);
 		
@@ -410,7 +409,7 @@ public class ClubDaoImpl implements ClubDao{
 	}
 	
 	@Override
-	public Integer getTypeBoardCnt(int club_no, int board_type_no) {
+	public Integer getTypeBoardCnt(Integer club_no, Integer board_type_no) {
 		Map<String, Integer> param = new HashMap<String, Integer>();
 		param.put("club_no", club_no);
 		param.put("board_type_no", board_type_no);
@@ -444,17 +443,17 @@ public class ClubDaoImpl implements ClubDao{
 	}
 
 	@Override
-	public int getCommentCnt(int club_board_no) {
+	public int getCommentCnt(Integer club_board_no) {
 		return sqlSession.selectOne(NAMESPACE+".commentCnt", club_board_no);
 	}
 
 	@Override
-	public List<BoardTotalBean> getCommentList(int club_board_no) {
+	public List<BoardTotalBean> getCommentList(Integer club_board_no) {
 		return sqlSession.selectList(NAMESPACE+".getCommentList", club_board_no);
 	}
 
 	@Override
-	public void updateCommentCnt(int club_board_no) {
+	public void updateCommentCnt(Integer club_board_no) {
 		sqlSession.update(NAMESPACE+".updateCommentCnt", club_board_no);
 	}
 
@@ -464,22 +463,22 @@ public class ClubDaoImpl implements ClubDao{
 	}
 
 	@Override
-	public void deleteComment(int board_comment_no) {
+	public void deleteComment(Integer board_comment_no) {
 		sqlSession.delete(NAMESPACE+".deleteComment", board_comment_no);
 	}
 
 	@Override
-	public void decreaseCommentCnt(int club_board_no) {
+	public void decreaseCommentCnt(Integer club_board_no) {
 		sqlSession.update(NAMESPACE+".decreaseCommentCnt", club_board_no);
 	}
 
 	@Override
-	public int getLikeCnt(int club_board_no) {
+	public int getLikeCnt(Integer club_board_no) {
 		return sqlSession.selectOne(NAMESPACE+".likeCnt", club_board_no);
 	}
 
 	@Override
-	public int checkLike(int club_board_no, int member_no) {
+	public int checkLike(Integer club_board_no, Integer member_no) {
 		Map<String, Integer> param = new HashMap<String, Integer>();
 		param.put("club_board_no", club_board_no);
 		param.put("member_no", member_no);
@@ -488,7 +487,7 @@ public class ClubDaoImpl implements ClubDao{
 	}
 
 	@Override
-	public List<BoardTotalBean> getLikeList(int club_board_no) {
+	public List<BoardTotalBean> getLikeList(Integer club_board_no) {
 		return sqlSession.selectList(NAMESPACE+".boardLikeList", club_board_no);
 	}
 
@@ -498,12 +497,12 @@ public class ClubDaoImpl implements ClubDao{
 	}
 
 	@Override
-	public void increaseLikeCnt(int club_board_no) {
+	public void increaseLikeCnt(Integer club_board_no) {
 		sqlSession.update(NAMESPACE+".increaseLikeCnt", club_board_no);
 	}
 
 	@Override
-	public void cancelLike(int club_board_no, int member_no) {
+	public void cancelLike(Integer club_board_no, Integer member_no) {
 		Map<String, Integer> param = new HashMap<String, Integer>();
 		param.put("club_board_no", club_board_no);
 		param.put("member_no", member_no);
@@ -512,12 +511,12 @@ public class ClubDaoImpl implements ClubDao{
 	}
 
 	@Override
-	public void decreaseLikeCnt(int club_board_no) {
+	public void decreaseLikeCnt(Integer club_board_no) {
 		sqlSession.update(NAMESPACE+".decreaseLikeCnt", club_board_no);
 	}
 	
 	@Override
-	public int checkClubMember(int club_no, int member_no) {
+	public int checkClubMember(Integer club_no, Integer member_no) {
 		Map<String, Integer> param = new HashMap<String, Integer>();
 		param.put("club_no", club_no);
 		param.put("member_no", member_no);
@@ -526,12 +525,12 @@ public class ClubDaoImpl implements ClubDao{
 	}
 	
 	@Override
-	public int checkClubAdmin(int member_no) {
+	public int checkClubAdmin(Integer member_no) {
 		return sqlSession.selectOne(NAMESPACE+".checkClubAdmin", member_no);
 	}
 	
 	@Override
-	public String getClubAdminAddr(int member_no) {
+	public String getClubAdminAddr(Integer member_no) {
 		return sqlSession.selectOne(NAMESPACE+".getClubAdminAddr", member_no);
 	}
 	
