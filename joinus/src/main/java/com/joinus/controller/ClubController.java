@@ -1135,6 +1135,12 @@ public class ClubController {
 				  model.addAttribute("club_no", club_no); 
 				  //모임관심사 저장
 				  service.newClubInterest(club_no,interDetail.getInterest_no(),interDetail.getInterest_detail_no()); 
+				  //모임 별점주기
+				  ClubGradesVo grade = new ClubGradesVo();
+				  grade.setClub_grade_rate(5); //모임장은 자동5점
+				  grade.setClub_no(club_no);
+				  grade.setMember_no(member.getMember_no());
+				  service.clubGrade(grade);
 				  //모임가입
 				  ClubMembersVo members = new ClubMembersVo(); 
 				  members.setClub_no(club_no);
