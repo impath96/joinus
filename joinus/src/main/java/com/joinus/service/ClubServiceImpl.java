@@ -574,6 +574,12 @@ public class ClubServiceImpl implements ClubService{
 		public List<Map<String, Integer>> getMeetingMemberCnt(Integer num) {
 			return dao.MeetingMemberCnt(num);
 		}
+		
+
+		@Override
+		public List<Map<String, Integer>> getMemberCapa(Integer num, Integer num2) {
+			return dao.getMemberCapa(num, num2);
+		}
 
 		// 벤당한 회원번호 리스트 가져오기
 		@Override

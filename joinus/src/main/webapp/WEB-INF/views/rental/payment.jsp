@@ -55,7 +55,7 @@
 					console.log("검증..데이터 저장 실패"); 
 			});
 		}else{
-                alert('결제에 실패했습니다'+'에러코드 : '+rsp.error_code+'에러 메시지 : '+rsp.error_message);
+                alert('결제에 실패했습니다. 다시 한 번 시도해주세요');
             }
 		});
 	});
