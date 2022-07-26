@@ -110,7 +110,7 @@ public interface ClubDao {
 	public void cancelMeeting(Integer club_meeting_no, Integer club_no, Integer member_no);
 	
 	//정모 날짜 확인
-	public List<ClubMeetingsVo> checkMeetingDate(Integer club_no);
+	public Integer checkMeetingDate(Integer club_no);
 	
 	//=========================고은비=========================
 	

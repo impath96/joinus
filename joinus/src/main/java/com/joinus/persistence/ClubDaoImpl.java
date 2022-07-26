@@ -357,10 +357,10 @@ public class ClubDaoImpl implements ClubDao{
 	}
 	
 	@Override
-	public List<ClubMeetingsVo> checkMeetingDate(Integer club_no) {
-		List<ClubMeetingsVo> date =  sqlSession.selectList(NAMESPACE2+".CheckMeetingDate",club_no);
-		log.info(date+"");
-		return date;
+	public Integer checkMeetingDate(Integer club_no) {
+		Integer cnt =  sqlSession.selectOne(NAMESPACE2+".CheckMeetingDate",club_no);
+		log.info(cnt+"");
+		return cnt;
 	}
 	
 	

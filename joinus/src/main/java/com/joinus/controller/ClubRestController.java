@@ -166,16 +166,16 @@ public class ClubRestController {
 	}
 	
 	@RequestMapping(value="/{club_no}/meeting/end", method = RequestMethod.GET)
-	public ResponseEntity<List<ClubMeetingsVo>> clubMeetingDateREST(
+	public ResponseEntity<Integer> clubMeetingDateREST(
 			@PathVariable("club_no") Integer club_no, Model model,HttpSession session) {
 		
 		log.info("clubMeetingDateREST 호출");
 
-		ResponseEntity<List<ClubMeetingsVo>> entity = null;
-		List<ClubMeetingsVo> MeetingDate= service.checkMeetingDate(club_no);
+		ResponseEntity<Integer> entity = null;
+		Integer MeetingDate= service.checkMeetingDate(club_no);
 		
 		try {
-			entity = new ResponseEntity<List<ClubMeetingsVo>>(MeetingDate, HttpStatus.OK);
+			entity = new ResponseEntity<Integer>(MeetingDate, HttpStatus.OK);
 		} catch (Exception e) {
 			entity = new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}

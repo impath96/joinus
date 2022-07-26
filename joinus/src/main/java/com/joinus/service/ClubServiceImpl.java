@@ -248,7 +248,7 @@ public class ClubServiceImpl implements ClubService{
 	
 	
 	@Override
-	public List<ClubMeetingsVo> checkMeetingDate(Integer club_no) {
+	public Integer checkMeetingDate(Integer club_no) {
 		
 		return dao.checkMeetingDate(club_no);
 	}
