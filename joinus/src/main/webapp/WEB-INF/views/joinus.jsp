@@ -19,7 +19,7 @@
                 <h6 class="MainTextSub">세상의 모든 취미</h6>
                 <h3 class="greenFont"> JOINUS에서 나와 같은 관심사, 나와 같은 지역의 멤버들과 함께해요!</h3>
                 <hr><br>
-               <p class="MainTextSub"> JOINUS는 지역별 관심사별 오프라인 모임을 할 수 있는 커뮤니티 플랫폼서비스입니다.<br>
+               <p class="MainSubTitle"> JOINUS는 지역별 관심사별 오프라인 모임을 할 수 있는 커뮤니티 플랫폼서비스입니다.<br>
 				함께 책을 읽고 토론하는 독서모임부터, 서핑을 사랑하는 서퍼모임, UMF·Spectrum·WDF등<br>
 				페스티벌 마니아 모임, 함께 모여 배우는 공예 핸드메이드 모임, 주말엔 봉사활동하는 봉사모임,<br>
 				서로 배우고 시너지를 내는 창업모임 같은 다양한 모임들이 활동하고 있습니다.<br>
