@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../../include/header.jsp"%>
+<%@ include file="../../include/club_header.jsp" %>
+
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ce8d060125bcc89e0c25ee69f6b5c7b0&libraries=services"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
@@ -455,6 +457,25 @@ $(function(){
 	jQuery.datetimepicker.setLocale('kr');
 
 
+</script>
+
+<script>
+var max = ${clubInfo[0].club_capacity }; 
+//console.log(max);
+
+$(document).on("keyup", "input[name^=club_meeting_capacity]", function() {
+    var val= $(this).val();
+
+    if(val.replace(/[0-9]/g, "").length > 0) {
+        alert("숫자만 입력해 주세요.");
+        $(this).val('');
+    }
+
+    if(val < 1 || val > max) {
+        alert("모임의 정원까지만 만날 수 있어요! \n회원님의 모임 정원은 "+max+"명 이예요!");
+        $(this).val('');
+    }
+}); 
 </script>
 
 <%@ include file="../../include/footer.jsp"%>

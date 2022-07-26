@@ -105,8 +105,8 @@ $(function(){
 			//console.log(data);
 			console.log(data.length);
 			
-			if(data != null){
-			alert("기한이 지난 정모가 있습니다! 상세페이지에서 완료로 상태를 바꿔 주세요!");
+			if(data > 0){
+			alert("기한이 지난 정모가 있습니다! \n상세페이지에서 완료로 상태를 바꿔 주세요!");
 			}
 		
 		}
