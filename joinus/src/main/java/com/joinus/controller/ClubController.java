@@ -148,7 +148,38 @@ public class ClubController {
 		model.addAttribute("clubMemberList",service.clubMemberListAll(club_no));
 		model.addAttribute("result", result);
 		
-		return "/club/clubMembers";
+		return "club/clubMembers";
+	}
+	
+	//http://localhost:8088/club/1/clubAdmin
+	@RequestMapping(value="/{club_no}/clubAdmin", method = RequestMethod.GET)
+	public String clubAdmin(Model model, 
+			@PathVariable("club_no") Integer club_no, HttpSession session) throws Exception{
+		log.info("clubAdmin() 호출");		
+		
+		//비회원
+		Integer result = 0;
+		
+		if(session.getAttribute("member") != null) {
+			MembersVo member = (MembersVo) session.getAttribute("member");
+			log.info(member+"");
+			
+			Integer member_no =member.getMember_no();
+			result = service.checkClubRole(club_no, member_no);
+			//result = 3 : 클럽 미가입 회원
+			//result = 1 : 클럽 가입 회원
+			//result = 2 : 클럽장
+		}
+		
+		List<ClubsVo> clubInfo = service.clubInfo(club_no);
+		
+		log.info("result : "+result);
+		model.addAttribute("clubInfo", clubInfo);
+		model.addAttribute("club_no",club_no);
+		model.addAttribute("clubMemberList",service.clubMemberListAll(club_no));
+		model.addAttribute("result", result);
+		
+		return "club/clubAdmin";
 	}
 	
 	

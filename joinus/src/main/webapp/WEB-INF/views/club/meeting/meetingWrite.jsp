@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ include file="../../include/header.jsp"%>
+<%@ include file="../../include/club_header.jsp" %>
+
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ce8d060125bcc89e0c25ee69f6b5c7b0&libraries=services"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
@@ -121,7 +123,7 @@
               <div class="invalid-feedback">
                 Please enter your shipping address.
               </div>
-            </div>
+            </div> 
             
 
             <div>
@@ -379,20 +381,17 @@ $(function(){
 		    infowindow.open(map, marker);
 		}
 		
-	
 		 // 검색결과 목록의 자식 Element를 제거하는 함수입니다
 		function removeAllChildNods(el) {   
 		    while (el.hasChildNodes()) {
 		        el.removeChild (el.lastChild);
 		    }
 		}
-		 
 	
 	$("input[name^='rental']").on('click', function(e){
 		
 			//console.log($(this).attr('id')); 
 			var rental_places_no = $(this).attr('id');
-
 		
 		$.ajax({
 			
@@ -400,7 +399,6 @@ $(function(){
 			type : 'GET',
 			contentType : "application/json",
 			success : function(data){
-			//alert('갔다옴');
 				//console.log(data);
 				//console.log(data[0].partnerPlacesVo.partner_place_name);
 				//console.log(data[0].rentalPlacesVo.rental_date);
@@ -413,7 +411,6 @@ $(function(){
 				$('#datetimepicker').attr('value',rental_date);
 				$('#club_meeting_location').attr('value',rental_place);
 				$('#club_meeting_address').attr('value',rental_address);
-
 				
 				location = $('input#club_meeting_address').val();
 				
@@ -423,7 +420,6 @@ $(function(){
 		});//ajax
 	
 	});//적용하기 버튼 클릭
-	
 	
 	$("button[id^='search']").on('click',function(e){
 		//alert('버튼 클릭');
@@ -437,9 +433,7 @@ $(function(){
 		//$("input[id^='club_meeting_address']").attr('value');
 		// 키워드로 장소를 검색합니다
 	});
-	
-	
-	
+		
 	
 });//jquery
 
@@ -459,6 +453,25 @@ $(function(){
 	jQuery.datetimepicker.setLocale('kr');
 
 
+</script>
+
+<script>
+var max = ${clubInfo[0].club_capacity }; 
+//console.log(max);
+
+$(document).on("keyup", "input[name^=club_meeting_capacity]", function() {
+    var val= $(this).val();
+
+    if(val.replace(/[0-9]/g, "").length > 0) {
+        alert("숫자만 입력해 주세요.");
+        $(this).val('');
+    }
+
+    if(val < 1 || val > max) {
+        alert("모임의 정원까지만 만날 수 있어요! \n회원님의 모임 정원은 "+max+"명 이예요!");
+        $(this).val('');
+    }
+}); 
 </script>
 
 

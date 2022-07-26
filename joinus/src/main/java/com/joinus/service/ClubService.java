@@ -116,7 +116,7 @@ import com.joinus.domain.MembersVo;
 		public void cancelMeeting(Integer club_meeting_no, Integer club_no, Integer member_no);
 		
 		//정모 일정 체크
-		public List<ClubMeetingsVo> checkMeetingDate(Integer club_no);
+		public Integer checkMeetingDate(Integer club_no);
 
 	
 	//--------------------------------------------------------------
