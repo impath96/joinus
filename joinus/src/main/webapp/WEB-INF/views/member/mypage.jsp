@@ -6,7 +6,7 @@
 
 <body>
 	<!-- Contact Start -->
-	<div class="container-xxl py-5">
+	<div class="container-xxl  p-0 mt-5">
 		<div class="container p-0">
 			<div class="row">
 			<div class="col-2 p-0">
@@ -14,7 +14,7 @@
 					<div class="menu">
 						<p class="text-secondary fs-3">HOME</p>
 						<ul class="menu-list m-0 p-0 mb-3" style="list-style:none;">
-							<li><a href="" class="text-dark fs-3"><span>마이페이지</span></a></li>
+							<li><a href="${pageContext.request.contextPath}/member/mypage" class="text-dark fs-3"><span>마이페이지</span></a></li>
 							<c:if test="${sessionScope.member.member_authority eq 'admin' }">
 								<li><a href="${pageContext.request.contextPath }/admin" class="text-dark fs-3"><span>관리자페이지</span></a></li>
 							</c:if>

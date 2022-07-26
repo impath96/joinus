@@ -43,5 +43,5 @@ public interface MemberDao {
 	public void deleteMember(List<Integer> idList);
 
 	public void updateLocation(String parsedLocation, int member_no);
-	
+
 }
