@@ -617,14 +617,25 @@ public class ClubController {
 	// http://localhost:8088/club/46/boards/new
 	// 게시판글쓰기
 	@RequestMapping(value = "/{club_no}/boards/new", method = RequestMethod.GET)
-	public String boardWriteGet(@PathVariable("club_no") Integer club_no, HttpSession session) {
+	public String boardWriteGet(@PathVariable("club_no") Integer club_no, HttpSession session, Model model) {
 		log.info(" boardWriteGet() 호출 ");
 		log.info(" club_no : "+club_no);
+		
+		Integer result = 0;
 		
 		// 로그인안했으면 로그인페이지로
 		if(session.getAttribute("member") == null) {
 			return "redirect:/member/signin";
+		} else {
+			MembersVo member = (MembersVo) session.getAttribute("member");
+			Integer member_no = member.getMember_no();
+			result = service.checkClubRole(club_no, member_no);
+			//result = 3 : 클럽 미가입 회원
+			//result = 1 : 클럽 가입 회원
+			//result = 2 : 클럽장
 		}
+		
+		model.addAttribute("result", result);
 		
 		return "/club/boards/boardWrite";
 	}
@@ -724,16 +735,22 @@ public class ClubController {
 		model.addAttribute("pm", pageMarker);
 		
 		// 모임원일 때만 글쓰기 버튼이 보이도록 제어(1:모임가입O / 0:모임가입X / -1:로그인X)
-		int checkMember = -1;
+		Integer checkMember = -1;
+		Integer result = 0;
 		
 		if(session.getAttribute("member") != null) {
 			MembersVo member = (MembersVo) session.getAttribute("member");
 			Integer member_no = member.getMember_no();
 			checkMember = service.checkClubMember(club_no, member_no);
+			result = service.checkClubRole(club_no, member_no);
+			//result = 3 : 클럽 미가입 회원
+			//result = 1 : 클럽 가입 회원
+			//result = 2 : 클럽장
 		}
 		
 		log.info("모임원 확인 : "+checkMember);
 		model.addAttribute("checkMember", checkMember);
+		model.addAttribute("result", result);
 		
 		return "/club/boards/boardList";
 			
@@ -759,16 +776,22 @@ public class ClubController {
 		model.addAttribute("pm", pageMaker);
 		
 		// 모임원일 때만 글쓰기 버튼이 보이도록 제어(1:모임가입O / 0:모임가입X / -1:로그인X)
-		int checkMember = -1;
+		Integer checkMember = -1;
+		Integer result = 0;
 		
 		if(session.getAttribute("member") != null) {
 			MembersVo member = (MembersVo) session.getAttribute("member");
 			Integer member_no = member.getMember_no();
 			checkMember = service.checkClubMember(club_no, member_no);
+			result = service.checkClubRole(club_no, member_no);
+			//result = 3 : 클럽 미가입 회원
+			//result = 1 : 클럽 가입 회원
+			//result = 2 : 클럽장
 		}
 		
 		log.info("모임원 확인 : "+checkMember);
 		model.addAttribute("checkMember", checkMember);
+		model.addAttribute("result", result);
 		
 		return "/club/boards/boardList";
 	}
@@ -785,14 +808,20 @@ public class ClubController {
 		
 		// 모임원이 아니면 상세보기가 안되도록 제어(1:모임가입O / 0:모임가입X / -1:로그인X)
 		Integer checkMember = -1;
+		Integer result = 0;
 		
 		if(session.getAttribute("member") != null) {
 			MembersVo member = (MembersVo) session.getAttribute("member");
 			Integer member_no = member.getMember_no();
 			checkMember = service.checkClubMember(club_no, member_no);
+			result = service.checkClubRole(club_no, member_no);
+			//result = 3 : 클럽 미가입 회원
+			//result = 1 : 클럽 가입 회원
+			//result = 2 : 클럽장
 		}
 		
 		model.addAttribute("checkMember", checkMember);
+		model.addAttribute("result", result);
 		
 		return "/club/boards/boardGallery";
 	}
@@ -815,6 +844,18 @@ public class ClubController {
 		Integer commentCnt = service.getCommentCnt(club_board_no);
 		model.addAttribute("commentCnt", commentCnt);
 		
+		Integer result = 0;
+		
+		if(session.getAttribute("member") != null) {
+			MembersVo member = (MembersVo) session.getAttribute("member");
+			Integer member_no = member.getMember_no();
+			result = service.checkClubRole(club_no, member_no);
+			//result = 3 : 클럽 미가입 회원
+			//result = 1 : 클럽 가입 회원
+			//result = 2 : 클럽장
+		}
+		
+		
 		// 해당글의 댓글이 있는지 체크(댓글리스트 가져오기)
 		if(commentCnt > 0) {
 			model.addAttribute("commentList", service.getCommentList(club_board_no));
@@ -835,6 +876,7 @@ public class ClubController {
 		
 		// 좋아요 멤버리스트
 		model.addAttribute("likeList", service.getLikeList(club_board_no));
+		model.addAttribute("result", result);
 		
 		
 		return "/club/boards/boardContent";
@@ -844,12 +886,24 @@ public class ClubController {
 	// http://localhost:8088/club/53/boards/17/modify
 	// 게시글 수정
 	@RequestMapping(value = "/{club_no}/boards/{club_board_no}/modify", method = RequestMethod.GET)
-	public String modifyBoardGet(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no, Model model) {
+	public String modifyBoardGet(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no, Model model, HttpSession session) {
 		log.info(" modifyBoardGet() 호출 ");
 		log.info("club_no : "+club_no);
 		log.info("club_board_no : "+club_board_no);
+		
+		Integer result = 0;
+		
+		if(session.getAttribute("member") != null) {
+			MembersVo member = (MembersVo) session.getAttribute("member");
+			Integer member_no = member.getMember_no();
+			result = service.checkClubRole(club_no, member_no);
+			//result = 3 : 클럽 미가입 회원
+			//result = 1 : 클럽 가입 회원
+			//result = 2 : 클럽장
+		}
 	
 		model.addAttribute("board", service.getBoardContent(club_board_no));
+		model.addAttribute("result", result);
 	
 		return "/club/boards/boardModify";
 	}
@@ -876,7 +930,7 @@ public class ClubController {
 		log.info("club_no : "+club_no);
 		
 		service.deleteBoard(club_board_no);
-		rttr.addFlashAttribute("result", "DELOK");
+		rttr.addFlashAttribute("check", "DELOK");
 		
 		return "redirect:/club/"+club_no+"/boards";
 	}
