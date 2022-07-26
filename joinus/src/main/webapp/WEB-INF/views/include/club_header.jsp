@@ -10,7 +10,7 @@
             <li class="mx-2"  onclick="location.href='${PageContext.request.contextPath}/club/'+${club_no}+'/gallery'">사진첩</li>
             <li class="mx-2"  onclick="location.href='${PageContext.request.contextPath}/club/'+${club_no}+'/meetingList'">정모기록</li>
             <li class="mx-2"  onclick="location.href='${PageContext.request.contextPath}/club/'+${club_no}+'/clubMembers'">모임멤버</li>
-            <c:if test ="${result == 2 }">
+            <c:if test="${clubmemberRole == 'admin' or result == 2}">
             <li class="mx-2"  onclick="location.href='${PageContext.request.contextPath}/club/'+${club_no}+'/clubAdmin'">모임관리</li>
             </c:if>
             </ul>
