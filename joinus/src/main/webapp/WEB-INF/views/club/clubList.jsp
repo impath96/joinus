@@ -147,10 +147,10 @@
         </div>
         <div class="d-flex justify-content-center py-3 mt-5">
         	<nav aria-label="Page navigation" class="">
-        		<ul class="pagination justify-content-end mb-0 h-100">
+        		<ul class="pagination justify-content-end mb-0">
 	                	<c:if test="${pm.prev }">
 		                	<li class="page-item">
-		                    	<a class="page-link p-0 d-inline-flex h-100 align-items-center" href="${PageContext.request.contextPath }/club/clubList?page=${pm.startPage-1}" aria-label="Previous">
+		                    	<a class="page-link p-0 d-inline-flex align-items-center" style="height:100%;" href="${PageContext.request.contextPath }/club/clubList?page=${pm.startPage-1}" aria-label="Previous">
 		                      		<span aria-hidden="true"><i class="fa-solid fa-angles-left px-3 py-3"></i></span>
 		                    	</a>
 		                  	</li>
@@ -164,7 +164,7 @@
 						</c:forEach>
 						<c:if test="${pm.next && pm.endPage > 0 }">
 		                  	<li class="page-item">
-		                    	<a class="page-link p-0 d-inline-flex h-100 align-items-center" href="${PageContext.request.contextPath }/club/clubList?page=${pm.endPage+1}" aria-label="Next">
+		                    	<a class="page-link p-0 d-inline-flex align-items-center" style="height:100%;"href="${PageContext.request.contextPath }/club/clubList?page=${pm.endPage+1}" aria-label="Next">
 		                      		<span aria-hidden="true"><i class="fa-solid fa-angles-right px-3 py-3"></i></span>
 		                    	</a>
 		                  	</li>
