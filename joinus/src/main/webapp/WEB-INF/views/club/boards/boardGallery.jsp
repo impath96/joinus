@@ -17,13 +17,13 @@
 		} else if(${checkMember == -1}){
 			location.href = "/member/signin";
 		} else {
-			location.href= "/club/${club_no}/boards/"+club_board_no;
+			location.href= "/club/${club_no}/boards/"+club_board_no+"?page=1";
 		}
 	}
 
 </script>
 
-	
+
 <!-- Projects Start -->
 <div class="container-xxl py-5">
 	<div class="container">
