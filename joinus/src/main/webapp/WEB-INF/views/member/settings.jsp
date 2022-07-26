@@ -81,11 +81,35 @@
 
 <body>
 	<!-- Contact Start -->
-	<div class="container-fluid bg-light overflow-hidden px-lg-0"
-		style="margin: 6rem 0;">
-		<div class="container quote px-lg-0">
+	<div class="container-fluid bg-light overflow-hidden px-lg-0">
+		<div class="container px-lg-0">
 			<div class="row g-0 mx-lg-0">
-				<div class="col-lg-6 py-5 wow fadeIn mx-auto"
+			<div class="col-2 p-0 mt-5 pt-5">
+				<aside class="sidebar_left ">
+					<div class="menu">
+						<p class="text-secondary fs-3">HOME</p>
+						<ul class="menu-list m-0 p-0 mb-3" style="list-style:none;">
+							<li><a href="${pageContext.request.contextPath}/member/mypage" class="text-dark fs-3"><span>마이페이지</span></a></li>
+							<c:if test="${sessionScope.member.member_authority eq 'admin' }">
+								<li><a href="${pageContext.request.contextPath }/admin" class="text-dark fs-3"><span>관리자페이지</span></a></li>
+							</c:if>
+						</ul>
+						<p class="text-secondary fs-3">모임 관리</p>
+						<ul class="menu-list m-0 p-0 mb-3" style="list-style:none;">
+							<li><a href="${pageContext.request.contextPath}/member/my-clublist" class="text-dark fs-3"><span>전체 모임</span></a></li>
+							<li><a href="" class="text-dark fs-3"><span>내가 찜한 모임</span></a></li>
+							<li><a href="" class="text-dark fs-3"><span>최근 본 모임</span></a></li>
+						</ul>
+						<p class="text-secondary fs-3">설정</p>
+						<ul class="menu-list m-0 p-0 mb-3" style="list-style:none;">
+							<li><a href="${pageContext.request.contextPath}/settings/member" class="text-dark fs-3"><span>프로필</span></a></li>
+						</ul>
+					</div>
+				</aside>
+			</div>
+			<div class="col-10">
+			<div class="row">
+				<div class="col-lg-10 py-5 wow fadeIn mx-auto"
 					data-wow-delay="0.5s"
 					style="visibility: visible; animation-delay: 0.5s; animation-name: fadeIn;">
 					<div class="p-lg-5 pe-lg-0">
@@ -158,6 +182,8 @@
 							<input type="button" class="btn btn-primary fs-3 e-leave" style="width:100%;" value="탈퇴하기"/>
 						</div>
 					</div>
+				</div>
+				</div>
 				</div>
 			</div>
 		</div>

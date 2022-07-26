@@ -137,10 +137,5 @@ public class MemberDaoImpl implements MemberDao {
 		sqlSession.update(NAMESPACE+".updateLocation", paramMap);
 	}
 	
-	
-	
-	
-	
-	
 
 }
