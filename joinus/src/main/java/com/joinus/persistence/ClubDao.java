@@ -279,7 +279,7 @@ public interface ClubDao {
 	// 정모 참석 인원수 리스트
 	public List<Map<String, Integer>> MeetingMemberCnt(Integer num);
 	// 정모 참석 인원수 특정
-	public Map<String, Integer> getMemberCapa(Integer num,Integer num2);
+	public List<Map<String, Integer>> getMemberCapa(Integer num,Integer num2);
 	
 	
 	//게시글 리스트
