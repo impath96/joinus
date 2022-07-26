@@ -47,4 +47,6 @@ public interface MemberService {
 
 	public void updateLocation(String parsedLocation, int member_no);
 
+	public MembersVo addLocation(String locationName, int member_no);
+
 }
