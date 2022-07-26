@@ -168,7 +168,7 @@
 		select a.club_meeting_capacity as clubCapa, count(b.member_no) as memberCnt
 		from club_meetings a join meeting_members b
 		on (a.club_meeting_no = b.club_meeting_no)
-		where a.club_meeting_no = =#{club_meeting_no} and a.club_no =#{club_no}
+		where a.club_meeting_no=#{club_meeting_no} and a.club_no=#{club_no}
 	</select>
 	
 	

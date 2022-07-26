@@ -581,7 +581,7 @@ public class ClubServiceImpl implements ClubService{
 		
 
 		@Override
-		public Map<String, Integer> getMemberCapa(Integer num, Integer num2) {
+		public List<Map<String, Integer>> getMemberCapa(Integer num, Integer num2) {
 			return dao.getMemberCapa(num, num2);
 		}
 

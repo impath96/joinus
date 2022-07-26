@@ -766,12 +766,14 @@ public class ClubDaoImpl implements ClubDao{
 
 			
 			@Override
-			public Map<String, Integer> getMemberCapa(Integer num, Integer num2) {
+			public List<Map<String, Integer>> getMemberCapa(Integer num, Integer num2) {
 				Map<String, Integer> numbers = new HashMap<String, Integer>();
 				numbers.put("club_meeting_no", num);
 				numbers.put("club_no", num2);
 				
-				return (Map<String, Integer>)sqlSession.selectList(NAMESPACE2+".getMemberCapa",numbers);
+				List<Map<String, Integer>> map = sqlSession.selectList(NAMESPACE2+".getMemberCapa",numbers);
+				
+				return map;
 			}
 
 			// 벤당한 회원번호 리스트 가져오기

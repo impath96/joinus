@@ -160,11 +160,19 @@
 							'club_meeting_no' : meeting_no
 							},
 						dataType: 'json',
-						success: function(){
-							 console.log("성공");
+						success: function(data){
+								
+							if(data == true){
+							alert(' 정모참석 신청이 완료되었습니다! ');
+								 console.log("정모신청완료");
+								 location.reload();
+							}
+							if(data == false){
+								alert('죄송합니다 인원초과로 정모가 마감되었습니다');
+							}
 						},
-						fail: function(data){
-				              alert('failed');
+						fail: function(){
+				              alert('정모참석 신청이 마감되었습니다');
 							location.reload();
 
 				        }
