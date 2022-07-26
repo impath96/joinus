@@ -1137,6 +1137,12 @@ public class ClubController {
 				  model.addAttribute("club_no", club_no); 
 				  //모임관심사 저장
 				  service.newClubInterest(club_no,interDetail.getInterest_no(),interDetail.getInterest_detail_no()); 
+				  //모임 별점주기
+				  ClubGradesVo grade = new ClubGradesVo();
+				  grade.setClub_grade_rate(5); //모임장은 자동5점
+				  grade.setClub_no(club_no);
+				  grade.setMember_no(member.getMember_no());
+				  service.clubGrade(grade);
 				  //모임가입
 				  ClubMembersVo members = new ClubMembersVo(); 
 				  members.setClub_no(club_no);
@@ -1372,24 +1378,24 @@ public class ClubController {
 		// 정모참석 ajax (상세페이지에서 alert창 띄움)
 				@ResponseBody
 				@RequestMapping(value = "/{club_no}/meeting/{meeting_no}/join",method=RequestMethod.POST)
-				public boolean joinMeeting(@ModelAttribute MeetingMembersVo vo) {
+				public Boolean joinMeeting(@ModelAttribute MeetingMembersVo vo	) {
+					List<Map<String, Integer>> map = service.getMemberCapa(vo.getClub_meeting_no(), vo.getClub_no());
+					int clubCapa = Integer.parseInt(String.valueOf(map.get(0).get("clubCapa")));
+					int memberCnt = Integer.parseInt(String.valueOf(map.get(0).get("memberCnt")));
+					log.info("정모 참석하기 ajax 호출!");
+					log.info("정모 정원 : "+ clubCapa+"명");
+					log.info("정모 참가 인원 : "+memberCnt+"명");
+					
+					if(clubCapa < memberCnt) {
+						log.info("인원마감 정모참석불가");
+						return false;
+					}
+					if(clubCapa > memberCnt) {
+						service.joinMeeting(vo);
+						log.info("정모참석 신청 완료");
+					}
+					return true;
 						
-						List<Map<String, Integer>> map = service.getMemberCapa(vo.getClub_meeting_no(), vo.getClub_no());
-						int clubCapa = Integer.parseInt(String.valueOf(map.get(0).get("clubCapa")));
-						int memberCnt = Integer.parseInt(String.valueOf(map.get(0).get("memberCnt")));
-						log.info("정모 참석하기 ajax 호출!");
-						log.info("정모 정원 : "+ clubCapa+"명");
-						log.info("정모 참가 인원 : "+memberCnt+"명");
-						
-						if(clubCapa < memberCnt) {
-							log.info("인원마감 정모참석불가");
-							return false;
-						}
-						if(clubCapa > memberCnt) {
-							service.joinMeeting(vo);
-							log.info("정모참석 신청 완료");
-						}
-						return true;
 					}
 		// 정모참석취소 ajax (상세페이지에서 alert창 띄움)
 				@ResponseBody
