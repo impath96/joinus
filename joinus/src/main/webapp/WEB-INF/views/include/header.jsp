@@ -122,6 +122,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
       #logout {
         font-size: 30;
       }
+  	  .ck-editor__editable { height: 400px; }
     </style>
   </head>
 
