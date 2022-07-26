@@ -12,6 +12,7 @@
 // 	alert("모임원 체크 : "+${checkMember});
 	
 	$(document).ready(function(){
+// 		console.log(${boardList});
 		
 		$('#all').click(function(){
 			$(location).attr('href','/club/${club_no}/boards');
@@ -92,10 +93,15 @@
 					<div class="clubBoardList_content">${board.clubBoardsVo.club_board_content }</div>
 					<div style="margin-bottom: 1em; display: table;">
 						<div style="display: inline-block; vertical-align: middle;">
-							<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${board.membersVo.member_image }">
+							<c:if test="${!board.membersVo.member_image.contains(':') }">
+								<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${board.membersVo.member_image }">
+							</c:if>
+							<c:if test="${board.membersVo.member_image.contains(':') }">
+			                    <img alt="" class="boardContent_writeImage" src="${board.membersVo.member_image }" style="padding: 0; border: none;">
+			                </c:if>
 						</div>
 						<span style="display: table-cell;" class="font">
-							<span class="clubBoardList_writer">${board.membersVo.member_name }</span>
+							<span class="clubBoardList_writer">${board.membersVo.member_name }&#128081;</span>
 							
 							<c:if test="${board.clubBoardsVo.club_board_updatedate == null }">
 								<span><fmt:formatDate value="${board.clubBoardsVo.club_board_date }" pattern="yy.MM.dd HH:mm"/> </span>

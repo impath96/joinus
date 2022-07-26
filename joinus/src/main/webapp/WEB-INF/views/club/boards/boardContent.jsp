@@ -185,7 +185,12 @@
 					<div class="row g-3">
 						<div class="col-md-12">
 							<div class="form-floating" style="float: left; display: table;">
-								<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${vo.membersVo.member_image }">
+								<c:if test="${!vo.membersVo.member_image.contains(':') }">
+									<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${vo.membersVo.member_image }">
+								</c:if>
+								<c:if test="${vo.membersVo.member_image.contains(':') }">
+									<img alt="" class="boardContent_writeImage" src="${vo.membersVo.member_image }">
+								</c:if>
 								<span style="color: black; margin-left: 5px; display: table-cell; vertical-align: middle;" class="font">${vo.membersVo.member_name }</span>
 							</div>
 							<div style="float: right;" class="font">
@@ -239,7 +244,12 @@
 							<div id="likeMemberList" style="display: none;">
 								<c:forEach var="member" items="${likeList }">
 									<div style="margin: 1em; display: table;">
-										<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${member.membersVo.member_image }">
+										<c:if test="${!member.membersVo.member_image.contains(':') }">
+											<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${member.membersVo.member_image }">
+										</c:if>
+										<c:if test="${member.membersVo.member_image.contains(':') }">
+											<img alt="" class="boardContent_writeImage" src="${member.membersVo.member_image }">
+										</c:if>
 										<span style="display: table-cell; vertical-align: middle;" class="font">${member.membersVo.member_name }</span>
 									</div>
 								</c:forEach>
@@ -267,7 +277,12 @@
 							
 								<div class="col-md-12">
 									<div class="form-floating" style="text-align: left; display: table; margin-inline-end:auto;">
-										<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${comment.membersVo.member_image }">
+										<c:if test="${!comment.membersVo.member_image.contains(':') }">
+											<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${comment.membersVo.member_image }">
+										</c:if>
+										<c:if test="${comment.membersVo.member_image.contains(':') }">
+											<img alt="" class="boardContent_writeImage" src="${comment.membersVo.member_image }">
+										</c:if>
 										<div style="display: table-cell; vertical-align: middle;" class="font">
 											<span>${comment.membersVo.member_name }</span>
 											<small style="margin-left: 1em;">
