@@ -88,7 +88,8 @@
 					<img src="${PageContext.request.contextPath }/resources/upload/boards/sm_${board.clubBoardsVo.club_board_image }" class="clubBoardList_smImage" style="height: 200px;">
 				</c:if>
 					<h3 class="mb-3" style="display: inline-block;">${board.clubBoardsVo.club_board_title }</h3><br>
-					<p class="clubBoardList_content">${board.clubBoardsVo.club_board_content }</p>
+<%-- 					<p class="clubBoardList_content">${board.clubBoardsVo.club_board_content }</p> --%>
+					<div class="clubBoardList_content">${board.clubBoardsVo.club_board_content }</div>
 					<div style="margin-bottom: 1em; display: table;">
 						<div style="display: inline-block; vertical-align: middle;">
 							<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${board.membersVo.member_image }">
