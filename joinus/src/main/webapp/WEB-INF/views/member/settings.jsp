@@ -89,6 +89,7 @@
 					data-wow-delay="0.5s"
 					style="visibility: visible; animation-delay: 0.5s; animation-name: fadeIn;">
 					<div class="p-lg-5 pe-lg-0">
+						<h1 class="text-center mb-5">프로필 설정</h1>
 						<form action="/settings/profile" id="profile-form" method="post" enctype="multipart/form-data" class="d-flex flex-column justify-content-center align-items-center p-4 my-4 border border-dark ">
 							<div class="d-flex align-items-stretch justify-content-start position-relative">
 								<label class="file-label d-flex flex-column align-items-stretch justify-content-start position-relative ">

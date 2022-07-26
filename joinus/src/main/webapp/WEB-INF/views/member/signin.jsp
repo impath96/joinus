@@ -35,7 +35,7 @@
                          </div>
                          <br>
                          <div class="col-12" >
-                         	<input type="submit" value="login" class="btn btn-primary w-50 fs-2">
+                         	<input type="submit" value="로그인" class="btn btn-primary w-50 fs-2">
                          </div>
                          <br>
                      </form>
