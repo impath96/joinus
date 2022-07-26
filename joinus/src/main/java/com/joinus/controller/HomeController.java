@@ -31,12 +31,10 @@ public class HomeController {
 		model.addAttribute("popular", vo1);
 		List<ClubsVo> vo2 = service.getMostRecentClub();
 		model.addAttribute("latest", vo2);
-		log.info("신규모임리스트 : ", vo2);
 		List<ClubsVo> vo3 = service.getMostNumerousClub();
 		model.addAttribute("Numerous", vo3);
 		
 		MembersVo member = (MembersVo)session.getAttribute("member");
-		log.info("member : {}", member);
 		
 		if(member != null) {
 			
