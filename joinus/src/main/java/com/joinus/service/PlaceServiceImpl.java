@@ -82,15 +82,15 @@ public class PlaceServiceImpl implements PlaceService{
 			obj.put("class_category", class_category.get(i).text());
 			obj.put("class_price", class_price.get(i).text().substring(0,2)+class_price.get(i).text().substring(3,6));
 			obj.put("class_number", class_number.get(i).attr("abs:href").substring(34));
-			log.info("obj: "+obj);
+//			log.info("obj: "+obj);
 			
-			classList.add(obj);
+			classList.add(obj); 
 		}
-		log.info("class_title: "+class_title);
-		log.info("class_image: "+class_image);
-		log.info("class_category: "+class_category);
-		log.info("class_price: "+class_price);
-		log.info("class_number: "+class_number);
+//		log.info("class_title: "+class_title);
+//		log.info("class_image: "+class_image);
+//		log.info("class_category: "+class_category);
+//		log.info("class_price: "+class_price);
+//		log.info("class_number: "+class_number);
 		
 		log.info("classList: "+classList);
 		
