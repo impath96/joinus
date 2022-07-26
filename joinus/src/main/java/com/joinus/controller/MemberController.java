@@ -194,11 +194,18 @@ public class MemberController {
 	}
 	
 	@PostMapping(value="/more-info")
-	public String moreInfoPost(HttpSession session, Model model, @RequestParam("interest") int interest) {
+	public String moreInfoPost(HttpSession session, Model model, @RequestParam("interest") int interest, @RequestParam("location_name") String locationName) {
 		
 		MembersVo member = (MembersVo)session.getAttribute("member");
 		memberService.addInterest(member.getMember_no(), interest);
 
+		// 소셜 로그인으로 회원가입한 회원일 경우 주소 정보를 추가로 등록
+		if(locationName != null) {
+			MembersVo returnMember = memberService.addLocation(locationName, member.getMember_no());
+			session.setAttribute("member", returnMember);
+			
+		}
+		
 		return "redirect:/";
 	}
 	

@@ -66,7 +66,7 @@ public class OauthController {
 			// 바로 로그인 처리 -> 이미 회원가입 되어있는 사용자라는 의미
 			if (session.getAttribute("member") != null) {
 				// 그런데 이제 access_token 만료 기간이 종료되었을 때도 고려해야하는데??
-				return "redirect:/member/mypage";
+				return "redirect:/";
 			}
 
 			// 리팩토링 될거 같은데?
@@ -100,7 +100,7 @@ public class OauthController {
 
 			session.setAttribute("member", findMember);
 
-			return "redirect:/member/mypage";
+			return "redirect:/";
 		}
 
 	

@@ -161,4 +161,26 @@ public class MemberServiceImpl implements MemberService {
 		memberDao.updateLocation(parsedLocation, member_no);
 	}
 
+	@Override
+	public MembersVo addLocation(String locationName, int member_no) {
+		
+		String parsedLocation = parseLocation(locationName);
+		memberDao.updateLocation(parsedLocation, member_no);
+		
+		MembersVo member = memberDao.selectMemberByNo(member_no);
+		
+		return member;
+	}
+	
+	// 다른 곳에서 동일한 기능 사용 -> 추후 Util 클래스로 분리
+	private String parseLocation(String location_name) {
+		
+		String[] part = location_name.split(" ");
+		String savedLocation = part[0];
+		for (int i = 1; i < 3; i++) {
+			savedLocation += " " + part[i];
+		}
+		return savedLocation;
+	}
+
 }
