@@ -160,17 +160,24 @@
 							'club_meeting_no' : meeting_no
 							},
 						dataType: 'json',
-						success: function(){
-							 console.log("성공");
+						success: function(data){
+								
+							if(data == true){
+							alert(' 정모참석 신청이 완료되었습니다! ');
+								 console.log("정모신청완료");
+								 location.reload();
+							}
+							if(data == false){
+								alert('죄송합니다 인원초과로 정모가 마감되었습니다');
+							}
 						},
-						fail: function(data){
-				              alert('failed');
+						fail: function(){
+				              alert('정모참석 신청이 마감되었습니다');
 							location.reload();
 
 				        }
 
 				        });
-							alert(' 정모참석 신청이 완료되었습니다! ');
 							location.reload();
 				    
 				}else{
@@ -229,23 +236,23 @@
     			<!-- About Start  모임 설명 -->
     			<div class="row g-4 text-center justify">
                     
-                       <c:if test="${!empty clubvo.club_image }">
-							<img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${clubvo.club_image}" id="club_image" class="shadow-lg">
+		                     
+                 	    <c:if test="${!empty clubvo.club_image }">
+							<img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${clubvo.club_image}" id="club_image" class="shadow"><br>
 						</c:if>
-                    
-                        <h1 class="mb-4 my-sm-5" id="club_name">${clubvo.club_name }
-						
-							<!-- 찜기능 -->	
+                  			  <!-- 찜기능 -->	
 							 <c:if test="${!empty member_no}">	
 		                        <c:if test="${empty dipMember }">
-			                        <img src="../resources/img/heart.png" id="Dip">
+			                      	  <p class="joinusBox3"><img src="../resources/img/heart.png" id="Dip" ><p>
 		                        </c:if>
 		                       <c:forEach var="dip" items="${dipMember}">
 		                        <c:if test="${dip eq member_no }">
-			                        <img src="../resources/img/heartt.png"  id="DDone">
+			                     	   <p class="joinusBox3"><img src="../resources/img/heartt.png"  id="DDone" ></p>
 		                        </c:if>
 		                       </c:forEach>
 		                     </c:if>
+                    
+                        <h1 class="mb-4 my-sm-5" id="club_name">${clubvo.club_name }
                         </h1>
     			 </div>
     		
@@ -253,15 +260,16 @@
                <!--  모임멤버면 별점, 별점 후 평균값 / 멤버가 아니면 가입하기 버튼 /  --> 
 				
 			<c:if test="${!empty member_no}"><!-- 회원인 경우만 출력 -->
-			<!-- <div class="clubDetailBox" > -->
-			
-						<c:forEach var="ban" items="${ban }">
-							<c:if test="${ graded eq '0' &&  clubmember eq '0' && ban ne member_no}">
-								<!-- <div class="btn btn-primary rounded-pill py-3 px-5 marginForInfo_join" id="joinClub">가입하기</div> -->
+					<c:set var="loop_flag" value="false" />
+					<c:forEach var="items" items="${ban }" varStatus="status">
+						<c:if test="${not loop_flag }">
+							<c:if test="${ graded eq '0' &&  clubmember eq '0' && items ne member_no}">
 								<div class="clubInfo_tag" >
 									<div class="clubInfo_Box marginForInfo_join" id="joinClub">모임가입하기</div>
 								</div>
+								<c:set var="loop_flag" value="true" />
 							</c:if>
+						</c:if>
 						</c:forEach>
 				
 					<!-- 모임X 벤 당한 회원은 가입버튼X -->
@@ -288,7 +296,8 @@
 					
 					 <!-- 모임O / 별점O -->
               		<c:if test="${ graded ne '0' && clubmember ne '0'}">
-              		<div class="clubInfo_tag" >   
+              		  <!-- 찜기능 -->	
+              		  <div class="clubInfo_tag" > 
 						<h6 class="marginForInfo fontGreen clubInfo_Box " style="width:350px;">
 							우리모임 평균별점은? <br> (참여자수 : ${gradeAvgCnt[0].cnt}명)
 							
@@ -414,10 +423,10 @@
 			        	
 		       		 <c:choose>	
 							<c:when test="${empty meetingMbrs}">
-									<c:if test="${meetingCapa eq meetingFull}">
+									<c:if test="${meetingCapa eq meetingFull or meetingCapa < meetingFull }">
 			        					<div style="color: red; padding: 6px; font-size: 1.2em;">참석마감</div>
 			        				</c:if>
-			        				<c:if test="${meetingCapa ne meetingFull}">
+			        				<c:if test="${meetingCapa > meetingFull}">
 			        				<button id="JoinMeeting" class="btn btn-primary" value="${meetings[i].club_meeting_no}">참석하기</button>
 			        				</c:if>
                				</c:when>
@@ -433,7 +442,7 @@
                     			</c:when>
 	                    		<c:when test="${tmp < 1}">
 	                    			<c:if test="${meetingCapa eq meetingFull}">
-			        					<button id="JoinMeeting" class="btn btn-primary">참석마감</button>
+			        					<div style="color: red; padding: 6px; font-size: 1.2em;">참석마감</div>
 			        				</c:if>
 			        				<c:if test="${meetingCapa ne meetingFull}">
 	                    			  <button id="JoinMeeting" class="btn btn-primary" value="${meetings[i].club_meeting_no}">참석하기</button>

@@ -23,18 +23,22 @@
 	}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-
+<script>
+if('${isAdmin}'){
+	alert('${isAdmin}');
+}
+</script>
 
 <body>
     
    <!-- Projects Start -->
-    <div class="container-xxl py-5 ">
+    <div class="container-xxl py-5 mt-5">
         <div class="container"> 
         
         
         
         
-            <div class="text-center mx-auto mb-5 py-5" >
+            <div class="text-center mx-auto mb-5 py-5 mt-5" >
                 <h6 class="MainTextSub">함께하는, 보다 행복한 삶</h6>
             	<div ><img src="../resources/img/joinus.png" class="mainJoinus"></div><br>
                 <h1 class="mb-4">지금 바로 시작해보세요.</h1><hr>

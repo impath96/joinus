@@ -4,7 +4,9 @@
 
 <%@ include file="../../include/header.jsp"%>
 <%@ include file="../../include/club_header.jsp" %>
-
+<style>
+  .ck-editor__editable { height: 400px; }
+</style>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 
 <script type="text/javascript">
@@ -87,7 +89,7 @@
 					<input type="hidden" name="member_no" value="${sessionScope.member.member_no }">
 					<div class="row g-3">
 						<div class="col-md-4">
-							<select class="form-select" style="height: 55px;"
+							<select class="form-select" style="height: 55px; color: black;"
 								id="board_type_no" name="board_type_no">
 								<option selected value="">게시글 카테고리</option>
 								<option value="1">자유글</option>
@@ -97,7 +99,7 @@
 						</div>
 						<div class="col-md-8">
 							<div class="form-floating">
-								<input type="text" class="form-control" id="club_board_title"
+								<input type="text" style="color: black;" class="form-control" id="club_board_title"
 									name="club_board_title" placeholder="title"> <label
 									for="club_board_title">제목</label>
 							</div>

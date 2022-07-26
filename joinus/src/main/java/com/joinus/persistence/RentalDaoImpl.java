@@ -8,8 +8,6 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.joinus.domain.LocationCityVo;
@@ -25,10 +23,9 @@ public class RentalDaoImpl implements RentalDao {
 	
 	static final String NAMESPACE = "com.joinus.mapper.RentalMapper";
 	
-	private static final Logger log = LoggerFactory.getLogger(RentalDaoImpl.class);
 
 	@Override
-	public PartnerPlacesVo getPartnerPlaceContent(int partner_place_no) {
+	public PartnerPlacesVo getPartnerPlaceContent(Integer partner_place_no) {
 		return sqlSession.selectOne(NAMESPACE+".getPlaceContent", partner_place_no);
 	}
 
@@ -62,7 +59,7 @@ public class RentalDaoImpl implements RentalDao {
 	}
 	
 	@Override
-	public List<RentalPlacesVo> getRentalPlaceDate(int partner_place_no) {
+	public List<RentalPlacesVo> getRentalPlaceDate(Integer partner_place_no) {
 		return sqlSession.selectList(NAMESPACE+".getRentalPlaceDate", partner_place_no);
 	}
 	
@@ -81,7 +78,7 @@ public class RentalDaoImpl implements RentalDao {
 	}
 
 	@Override
-	public void insertPlaceBeforePay(Date rental_date, int rentaltimeno) {
+	public void insertPlaceBeforePay(Date rental_date, Integer rentaltimeno) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("rental_date", rental_date);
 		param.put("rental_time_no", rentaltimeno);
@@ -100,8 +97,8 @@ public class RentalDaoImpl implements RentalDao {
 	}
 
 	@Override
-	public void updateLatelyRentalPlace(String reservation_no, int member_no, int partner_place_no,
-			int payment_no, int rental_places_no) {
+	public void updateLatelyRentalPlace(String reservation_no, Integer member_no, Integer partner_place_no,
+			Integer payment_no, Integer rental_places_no) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("reservation_no", reservation_no);
 		param.put("member_no", member_no);
