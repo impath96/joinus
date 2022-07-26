@@ -81,7 +81,7 @@
           <div class="row g-3">
           
             <div class="col-12">
-              <label for="firstName" class="form-label">제목</label>
+             <h4> <label for="firstName" class="form-label">제목</label></h4>
               <input type="text" class="form-control" name="club_meeting_title" value="${meetingList[0].club_meeting_title}"  required="">
               <div class="invalid-feedback">
                 Valid first name is required. 
@@ -89,7 +89,7 @@
             </div>
             
             <div class="col-12">
-              <label for="address" class="form-label">🗓️ 날짜 & 시간</label>
+              <h4><label for="address" class="form-label">🗓️ 날짜 & 시간</label></h4>
               <input type="text" class="form-control" id="datetimepicker" name="club_meeting_date" value='${meetingList[0].club_meeting_date}'  required="">
               <div class="invalid-feedback">
                 Please enter your shipping address.
@@ -97,7 +97,7 @@
             </div>
             
             <div class="col-12">
-              <label for="address" class="form-label">🙋 정원</label>
+              <h4><label for="address" class="form-label">🙋 정원</label></h4>
               <input type="number" class="form-control" name="club_meeting_capacity" value="${meetingList[0].club_meeting_capacity}"  required="">
               <div class="invalid-feedback">
                 Please enter your shipping address.
@@ -107,7 +107,7 @@
             
             <div>
             <div class="col-12">
-              <label for="address" class="form-label">🏩 장소</label>
+              <h4><label for="address" class="form-label">🏩 장소</label></h4>
               	<div class="input-group py-2">
               		<input type="text" class="form-control" id="club_meeting_location" name="club_meeting_location" value="${meetingList[0].club_meeting_location}" >
              		<button type="button" class="btn btn-secondary" id ="search">검색하기</button>
@@ -130,7 +130,7 @@
             </div>
             
             <div class="col-12">
-              <label for="address2" class="form-label">참가비 <span class="text-muted"></span></label>
+             <h4> <label for="address2" class="form-label">💲 참가비 <span class="text-muted"></span></label></h4>
               <input type="number" class="form-control" name="club_meeting_dues" value="${meetingList[0].club_meeting_dues}"  required="">
             </div>
 
@@ -138,7 +138,7 @@
 
           <hr class="my-4">
 
-          <h4 class="mb-3">추가 공지사항</h4>
+          <h4 class="mb-3">📝 메모</h4>
 
 			<div class="row gy-3">
 	            <div class="col-12">

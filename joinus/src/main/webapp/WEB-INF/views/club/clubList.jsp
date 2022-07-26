@@ -31,7 +31,6 @@
                     <div class="testimonial-text text-center rounded p-4">
                         <p>${month.clubsVo.club_content }</p>
                         <h5 class="mb-1">${month.clubsVo.club_name }</h5>
-                        <span class="fst-italic">Profession</span>
                     </div>
                 </div>
                 </c:forEach>
@@ -121,6 +120,7 @@
                     <a class="small fw-medium" href="${PageContext.request.contextPath }/club/${vo.clubsVo.club_no}">
                         <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${vo.clubsVo.club_image}" class="w-100 py-auto"></a>
                         <div class="position-relative p-4 pt-0">
+                    </a>
                             <div class="service-icon">
                             <!-- 클럽관심사 아이콘  -->
                                 <img src="${PageContext.requeset.contextPath }/resources/upload/interests/${vo.interestsVo.interest_icon }" class="w-100 py-auto">
