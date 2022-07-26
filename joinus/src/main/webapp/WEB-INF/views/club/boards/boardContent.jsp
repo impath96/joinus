@@ -11,11 +11,6 @@
 
 	$(document).ready(function(){
 		
-		// 글을 상세보기 할 때 그 때의 세션값 확인(나중에 지우기)
-// 		var sessionMember = ${sessionScope.member.member_no};
-// 		alert("접속한 member_no : "+sessionMember);
-// 		alert("글 작성자 member_no : "+${vo.membersVo.member_no});
-		
 		// 폼태그 정보
 		var formObj = $('form[role="form"]');
 		console.log(formObj);
@@ -31,7 +26,7 @@
 			}
 		});
 		$('#backBtn').click(function(){
-			location.href = "/club/${club_no}/boards";
+			location.href = "/club/${club_no}/boards?page=${page}";
 		});
 		
 		// 댓글등록버튼
@@ -64,8 +59,6 @@
 		$('.btn').click(function(){
 			var id_check = $(this).attr('id');
 			var board_comment_no = id_check.substring(12);
-// 			alert(id_check);
-// 			alert(board_comment_no);
 			
 			$('.comment'+board_comment_no).hide();
 			$('#commentUpForm'+board_comment_no).show();
@@ -107,8 +100,6 @@
 // 			alert(id_check);
 			if(id_check.substring(0, 13) == 'commentDelBtn'){
 				var board_comment_no = id_check.substring(13);
-// 				alert('삭제버튼');
-// 				alert(board_comment_no);
 
 				if(confirm('댓글을 삭제하시겠습니까?')){
 					$.ajax({
@@ -128,18 +119,14 @@
 		
 		// 좋아요
 		$('#like').click(function(){{
-// 			alert('좋아요클릭');
 			var like_check = ${checkLike};
-// 			alert("좋아요 확인 : "+like_check);
 			
 			if(like_check == 1){
-// 				alert('좋아요 누른 회원');
 				// 좋아요 취소
 				$.ajax({
 					type : "post",
 					url : "${pageContext.request.contextPath}/club/${club_no}/boards/${club_board_no}/likeDown",
 					success : function(){
-// 						alert('좋아요 취소');
 						location.reload();
 					},
 					erorr : function error(){
@@ -148,7 +135,6 @@
 				});
 			} else {
 				// 좋아요 안누른 회원
-// 				alert('좋아요 안누른 회원');
 				// 좋아요
 				$.ajax({
 					type : "post",
@@ -185,22 +171,29 @@
 	<input type="hidden" name="club_board_no" value="${club_board_no }">
 </form>
 
-<div class="container-fluid overflow-hidden px-lg-0">
-	<div class="container contact px-lg-0" style="width: 60%">
-		<div class="row g-0 mx-lg-0">
-			<!-- 			<div class="col-lg-6 contact-text py-5 wow fadeIn" data-wow-delay="0.5s"> -->
-			<div class="p-lg-5" align="center" >
+<!-- <div class="container-fluid overflow-hidden px-lg-0"> -->
+<!-- 	<div class="container contact px-lg-0" style="width: 60%"> -->
+<!-- 		<div class="row g-0 mx-lg-0"> -->
+<div class="container-xxl py-5">
+	<div class="container" style="color: black;">
+		<div class="row g-5">
+		
+			<div align="center" >
 				<h6 class="text-primary" style="margin-bottom: 2em;">${vo.clubsVo.club_name } ${vo.boardTypesVo.board_type_name }</h6>
-<%-- 				<h1 class="clubWrite_mb-4">${vo.clubBoardsVo.club_board_title }</h1> --%>
 				<h1>${vo.clubBoardsVo.club_board_title }</h1>
 				<br>
 					<div class="row g-3">
 						<div class="col-md-12">
-							<div class="form-floating" style="float: left">
-								<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${vo.membersVo.member_image }">
-								<span style="color: black; margin-left: 5px;">${vo.membersVo.member_name }</span>
+							<div class="form-floating" style="float: left; display: table;">
+								<c:if test="${!vo.membersVo.member_image.contains(':') }">
+									<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${vo.membersVo.member_image }">
+								</c:if>
+								<c:if test="${vo.membersVo.member_image.contains(':') }">
+									<img alt="" class="boardContent_writeImage" src="${vo.membersVo.member_image }">
+								</c:if>
+								<span style="color: black; margin-left: 5px; display: table-cell; vertical-align: middle;" class="font">${vo.membersVo.member_name }<c:if test="${vo.clubMembersVo.club_member_role == 'admin' }">&#128081;</c:if></span>
 							</div>
-							<div style="float: right;">
+							<div style="float: right;" class="font">
 								<c:if test="${vo.clubBoardsVo.club_board_updatedate == null }">
 									<span><fmt:formatDate value="${vo.clubBoardsVo.club_board_date }" pattern="yy.MM.dd HH:mm"/> </span>
 								</c:if>
@@ -211,7 +204,7 @@
 						</div> 
 						<div class="col-12">
 							<div class="form-floating" style="color: black;">
-								<pre class="boardContent" style="margin-top: 2em;">${vo.clubBoardsVo.club_board_content }</pre>
+								<pre class="boardContent font" style="font-size: x-large;">${vo.clubBoardsVo.club_board_content }</pre>
 							</div>
 							<c:if test="${vo.clubBoardsVo.club_board_image != null}">
 								<img src="${PageContext.request.contextPath }/resources/upload/boards/${vo.clubBoardsVo.club_board_image }" class="ContentImage">
@@ -230,7 +223,7 @@
 					
 					<hr style="margin-top: 3em;">
 					
-					<div style="text-align: left;">
+					<div style="text-align: left; font-size: x-large;" class="font">
 						<a id="like" href="#">
 							<c:if test="${checkLike == 0 }">
 								<i id="noLikeIcon" class="bi bi-heart"></i>
@@ -246,13 +239,18 @@
 					
 					<div style="text-align: left; margin-top: 1em;">
 						<c:if test="${likeCnt > 0 }">
-							<button type="button" class="likeMemberBtn btn btn-primary" id="likeMember" style="color:black;">${likeCnt }명이 좋아하셨습니다.</button>
+							<button type="button" class="likeMemberBtn btn btn-primary font" id="likeMember" style="color:black;">${likeCnt }명이 좋아하셨습니다.</button>
 							
 							<div id="likeMemberList" style="display: none;">
 								<c:forEach var="member" items="${likeList }">
-									<div style="margin: 1em;">
-										<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${member.membersVo.member_image }">
-										${member.membersVo.member_name }
+									<div style="margin: 1em; display: table;">
+										<c:if test="${!member.membersVo.member_image.contains(':') }">
+											<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${member.membersVo.member_image }">
+										</c:if>
+										<c:if test="${member.membersVo.member_image.contains(':') }">
+											<img alt="" class="boardContent_writeImage" src="${member.membersVo.member_image }">
+										</c:if>
+										<span style="display: table-cell; vertical-align: middle;" class="font">${member.membersVo.member_name }<c:if test="${member.clubMembersVo.club_member_role == 'admin' }">&#128081;</c:if></span>
 									</div>
 								</c:forEach>
 							</div>
@@ -263,7 +261,7 @@
 					
 					<div class="comments_form" style="margin: 30px 0;">
 						<div>
-							<textarea class="form-control" name="board_comment_content" id="board_comment_content"
+							<textarea class="form-control" style="color: black;" name="board_comment_content" id="board_comment_content"
 								rows="3" placeholder="댓글을 입력해주세요." required></textarea>
 								<div style="text-align: right;">
 									<button type="button" class="btn btn-primary py-2 mt-2 me-2" id="commentBtn">등록</button>
@@ -278,17 +276,24 @@
 							<article class="comment${comment.boardCommentsVo.board_comment_no }">
 							
 								<div class="col-md-12">
-									<div class="form-floating" style="text-align: left;">
-										<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${comment.membersVo.member_image }">
-										<span style="color: black; margin-left: 5px;">${comment.membersVo.member_name }</span>
-										<small style="margin-left: 1em;">
-											<c:if test="${comment.boardCommentsVo.board_comment_updatedate == null }">
-												<span><fmt:formatDate value="${comment.boardCommentsVo.board_comment_date }" pattern="yy.MM.dd HH:mm"/> </span>
-											</c:if>
-											<c:if test="${comment.boardCommentsVo.board_comment_updatedate != null }">
-												<span><fmt:formatDate value="${comment.boardCommentsVo.board_comment_updatedate }" pattern="yy.MM.dd HH:mm"/> </span>
-											</c:if>
-										</small>
+									<div class="form-floating" style="text-align: left; display: table; margin-inline-end:auto;">
+										<c:if test="${!comment.membersVo.member_image.contains(':') }">
+											<img class="boardContent_writeImage" src="${PageContext.request.contextPath }/resources/upload/members/${comment.membersVo.member_image }">
+										</c:if>
+										<c:if test="${comment.membersVo.member_image.contains(':') }">
+											<img alt="" class="boardContent_writeImage" src="${comment.membersVo.member_image }">
+										</c:if>
+										<div style="display: table-cell; vertical-align: middle;" class="font">
+											<span>${comment.membersVo.member_name }<c:if test="${comment.clubMembersVo.club_member_role == 'admin' }">&#128081;</c:if></span>
+											<small style="margin-left: 1em;">
+												<c:if test="${comment.boardCommentsVo.board_comment_updatedate == null }">
+													<span><fmt:formatDate value="${comment.boardCommentsVo.board_comment_date }" pattern="yy.MM.dd HH:mm"/> </span>
+												</c:if>
+												<c:if test="${comment.boardCommentsVo.board_comment_updatedate != null }">
+													<span><fmt:formatDate value="${comment.boardCommentsVo.board_comment_updatedate }" pattern="yy.MM.dd HH:mm"/> </span>
+												</c:if>
+											</small>
+										</div>
 									</div>
 									<div class="form-group pull-right" style="float: right;">
 										<c:if test="${sessionScope.member.member_no == comment.membersVo.member_no }">
@@ -296,8 +301,8 @@
 											<input type="button" id="commentDelBtn${comment.boardCommentsVo.board_comment_no }" class="btn btn-primary py-2 mt-2 me-2" value="삭제">
 										</c:if>
 									</div>
-									<div id="comment_content">
-										${comment.boardCommentsVo.board_comment_content }
+									<div id="comment_content" class="font">
+										<pre class="commentContent">${comment.boardCommentsVo.board_comment_content }</pre>
 									</div>
 								</div> 
 							
@@ -305,7 +310,7 @@
 							
 							<!-- 댓글수정폼 -->
 							<div id="commentUpForm${comment.boardCommentsVo.board_comment_no }" style="display: none;">
-								<textarea class="form-control" name="commentUp${comment.boardCommentsVo.board_comment_no }"
+								<textarea class="form-control" style="color: black;" name="commentUp${comment.boardCommentsVo.board_comment_no }"
 									id="commentUp${comment.boardCommentsVo.board_comment_no }" rows="3" required>${comment.boardCommentsVo.board_comment_content }</textarea>
 								<div>
 									<input type="button" id="commentUpCompleteBtn${comment.boardCommentsVo.board_comment_no }" class="button btn btn-secondary btn-default float-right py-2 my-4" value="수정">
@@ -313,7 +318,7 @@
 								</div>
 							</div>
 							
-							<hr>
+							<hr style="margin-top: 0;">
 							
 						</c:forEach>
 					</c:if>

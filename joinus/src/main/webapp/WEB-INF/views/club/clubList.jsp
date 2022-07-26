@@ -81,7 +81,7 @@
         	<!-- 카테고리 -->
             <div class="row mt-n2 wow fadeInUp" data-wow-delay="0.3s">
                 <div class="text-center py-5 border-dark">
-                    <ul class="list-inline mb-3" style="font-size : 1.3rem;" id="portfolio-flters">
+                    <ul class="list-inline m-3 py-5" style="font-size : 1.3rem;" id="portfolio-flters">
                         <li class="mx-2 active fw-bold"><a href="/club/clubList">전체</a></li>
                         <li class="mx-2 fw-bold"><a href="/club/clubList?interest_no=1">요리/제조</a></li>
                         <li class="mx-2 fw-bold"><a href="/club/clubList?interest_no=2">봉사활동</a></li>

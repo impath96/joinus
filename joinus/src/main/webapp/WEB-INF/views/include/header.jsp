@@ -122,6 +122,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
       #logout {
         font-size: 30;
       }
+  	  .ck-editor__editable { height: 400px; }
     </style>
   </head>
 
@@ -171,6 +172,9 @@ uri="http://java.sun.com/jsp/jstl/core"%>
           <a 
           	href="${PageContext.request.contextPath }/rental/partnerPlace" 
          	class="nav-item nav-link">PLACE</a>
+          <a 
+          	href="${PageContext.request.contextPath }/place/classList" 
+         	class="nav-item nav-link">CLASS</a>
           <!--  <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                     <div class="dropdown-menu bg-light m-0">

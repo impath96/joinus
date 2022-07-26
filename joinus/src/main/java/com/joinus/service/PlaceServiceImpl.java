@@ -1,9 +1,15 @@
 package com.joinus.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -44,51 +50,107 @@ public class PlaceServiceImpl implements PlaceService{
 	}
 
 	
-/////////////////////////////////////크롤링//////////////////////////////
+/////////////////////////////////////클래스 리스트 크롤링//////////////////////////////
+	@Override
+	public JSONArray classList() {
+		
+		log.info("원데이 클래스 목록 불러오기");
+
+		String url = "https://www.umclass.com/plan/28?page=1";
+		Document doc = null;
+
+		try {
+			doc = Jsoup.connect(url).get();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+//		log.info(doc.toString());
+		
+		Elements class_title = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll span.plan-item-name");
+		Elements class_image = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll div.class-list-img-height.classPlan-lazy");
+		Elements class_category = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll .plan-sub-info span:nth-child(2)");
+		Elements class_price = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll .plan-area-mt > div > span:nth-child(2)");
+		Elements class_number = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll a");
+		
+		JSONArray classList = new JSONArray();
+
+		for (int i = 0; i < class_title.size(); i++) {
+			JSONObject obj = new JSONObject();
+
+			obj.put("class_title", class_title.get(i).text());
+			obj.put("class_image", class_image.get(i).attr("data-original"));
+			obj.put("class_category", class_category.get(i).text());
+			obj.put("class_price", class_price.get(i).text().substring(0,2)+class_price.get(i).text().substring(3,6));
+			obj.put("class_number", class_number.get(i).attr("abs:href").substring(34));
+//			log.info("obj: "+obj);
+			
+			classList.add(obj); 
+		}
+//		log.info("class_title: "+class_title);
+//		log.info("class_image: "+class_image);
+//		log.info("class_category: "+class_category);
+//		log.info("class_price: "+class_price);
+//		log.info("class_number: "+class_number);
+		
+		log.info("classList: "+classList);
+		
+		return classList;
+	}
+/////////////////////////////////////클래스 리스트 크롤링//////////////////////////////
+	
+	
+/////////////////////////////////////클래스 크롤링//////////////////////////////
 //	@Override
-//	public JSONArray blogList() {
+//	public JSONArray classContent() {
 //		
-//		log.info("service : 숙소목록불러오기");
-//
-////		int pagenum = 1;
-////		String url = "https://shareit.kr/search/venue?area=&date=&eventType=&venueType=&minPrice=0&maxPrice=-1&minPeople=0&maxPeople=-1&equip=&amenity=&approve=true&realtime=true&order=recent&page="+pagenum+"&keyword=%EB%B6%80%EC%82%B0";
-//		String url = "https://blog.naver.com/spacecloud";
-//
+//		log.info("원데이 클래스 목록 불러오기");
+//		
+//		int number = 0;
+//		String url = "https://www.umclass.com/classInfo/"+number;
 //		Document doc = null;
-//
+//		
 //		try {
 //			doc = Jsoup.connect(url).get();
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
-//		log.info(doc.toString());
+////		log.info(doc.toString());
 //		
-//		Elements place_title = doc.select(".sc-czvXZf dlesvJ > p"); //시설명
-//		Elements place_img = doc.select(".sc-kszsmc cOVJyJ > img");    //시설사진
-//		Elements place_category = doc.select(".sc-cBIgVh gxRDfj > p");   //시설분류
-//		Elements place_address = doc.select("p.sc-jHwEDs juVgEZ");  //시설주소
+//		Elements class_title = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll span.plan-item-name");
+//		Elements class_image = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll div.class-list-img-height.classPlan-lazy");
+//		Elements class_category = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll .plan-sub-info span:nth-child(2)");
+////		Elements class_address = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll");
+//		Elements class_price = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll .plan-area-mt > div > span:nth-child(2)");
+//		Elements class_number = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll .plan-area-mt > div > span:nth-child(2)");
 //		
-//		// JSON 형태 정보 저장
-//		JSONArray placeList = new JSONArray();
-//
-//		for (int i = 0; i < place_title.size(); i++) {
-//			// JSONObject에 키:값 형태로 데이터 저장
+//		
+//		JSONArray classContent = new JSONArray();
+//		
+//		for (int i = 0; i < class_title.size(); i++) {
 //			JSONObject obj = new JSONObject();
-//
-//			obj.put("place_title", place_title.get(i).text());
-//			obj.put("place_img", place_img.get(i).attr("data-original"));
-//			obj.put("place_category", place_category.get(i).text());
-//			obj.put("place_address", place_address.get(i).text());
-//
+//			
+//			obj.put("class_title", class_title.get(i).text());
+//			obj.put("class_image", class_image.get(i).attr("data-original"));
+//			obj.put("class_category", class_category.get(i).text());
+////			obj.put("class_address", class_address.get(i).text());
+//			obj.put("class_price", class_price.get(i).text().substring(2)+class_price.get(i).text().substring(6));
+//			obj.put("class_number", class_number.get(i).text().substring(34));
 //			log.info("obj: "+obj);
 //			
-//			placeList.add(obj);
+//			classContent.add(obj);
 //		}
-//		System.out.println("placeList : " + placeList);
+//		log.info("class_title: "+class_title);
+//		log.info("class_image: "+class_image);
+//		log.info("class_category: "+class_category);
+////		log.info("class_address: "+class_address);
+//		log.info("class_price: "+class_price);
+//		log.info("class_number: "+class_number);
 //		
-//		return placeList;
+//		log.info("classContent: "+classContent);
+//		
+//		return classContent;
 //	}
-/////////////////////////////////////크롤링//////////////////////////////
+/////////////////////////////////////클래스 크롤링//////////////////////////////
 
 	
 

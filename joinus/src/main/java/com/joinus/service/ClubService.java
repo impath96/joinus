@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.joinus.domain.BoardCommentsVo;
-import com.joinus.domain.BoardCriteria;
 import com.joinus.domain.BoardLikesVo;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
@@ -117,19 +116,22 @@ import com.joinus.domain.MembersVo;
 		
 		//정모 일정 체크
 		public Integer checkMeetingDate(Integer club_no);
+		
+		//정모 참석 회원 수
+		public Integer getMeetingMemberCount(Integer club_meeting_no);
 
 	
 	//--------------------------------------------------------------
 	
 	public void writeBoard(ClubBoardsVo vo);
 	   
-	public List<BoardTotalBean> getBoardListAll(Integer club_no, BoardCriteria cri);
+	public List<BoardTotalBean> getBoardListAll(Integer club_no, Criteria cri);
 	
-	public Integer getTotalBoardCnt(int club_no);
+	public Integer getTotalBoardCnt(Integer club_no);
 	   
-	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no, BoardCriteria cri);
+	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no, Criteria cri);
 	
-	public Integer getTypeBoardCnt(int club_no, int board_type_no);
+	public Integer getTypeBoardCnt(Integer club_no, Integer board_type_no);
 	   
 	public List<ClubBoardsVo> getBoardImageList(Integer club_no);
 	   
@@ -147,52 +149,52 @@ import com.joinus.domain.MembersVo;
 	public void writeComment(BoardCommentsVo vo);
 	
 	// 댓글수
-	public int getCommentCnt(int club_board_no);
+	public int getCommentCnt(Integer club_board_no);
 	
 	// 댓글 출력
-	public List<BoardTotalBean> getCommentList(int club_board_no);
+	public List<BoardTotalBean> getCommentList(Integer club_board_no);
 	
 	// 댓글수 + 1
-	public void updateCommentCnt(int club_board_no);
+	public void updateCommentCnt(Integer club_board_no);
 	
 	// 댓글 수정
 	public void updateComment(BoardCommentsVo vo);
 	
 	// 댓글 삭제
-	public void deleteComment(int board_comment_no);
+	public void deleteComment(Integer board_comment_no);
 	
 	// 댓글수 - 1
-	public void decreaseCommentCnt(int club_board_no);
+	public void decreaseCommentCnt(Integer club_board_no);
 	
 	// 좋아요수
-	public int getLikeCnt(int club_board_no);
+	public int getLikeCnt(Integer club_board_no);
 	
 	// 좋아요 눌렀는지 확인(1:좋아요O / 0:좋아요X)
-	public int checkLike(int club_board_no, int member_no);
+	public int checkLike(Integer club_board_no, Integer member_no);
 	
 	// 좋아요 멤버 리스트
-	public List<BoardTotalBean> getLikeList(int club_board_no);
+	public List<BoardTotalBean> getLikeList(Integer club_board_no);
 	
 	// 좋아요 등록
 	public void insertLike(BoardLikesVo vo);
 	
 	// 좋아요수 + 1
-	public void increaseLikeCnt(int club_board_no);
+	public void increaseLikeCnt(Integer club_board_no);
 	
 	// 좋아요 취소
-	public void cancelLike(int club_board_no, int member_no);
+	public void cancelLike(Integer club_board_no, Integer member_no);
 	
 	// 좋아요수 - 1
-	public void decreaseLikeCnt(int club_board_no);
+	public void decreaseLikeCnt(Integer club_board_no);
 	
 	// 모임원이 맞는지 확인(1:모임가입O / 0:모임가입X)
-	public int checkClubMember(int club_no, int member_no);
+	public int checkClubMember(Integer club_no, Integer member_no);
 	
 	// 모임장인지 체크( 값이 0보다 크면 모임장)
-	public int checkClubAdmin(int member_no);
+	public int checkClubAdmin(Integer member_no);
 	
 	// 모임장 주소
-	public String getClubAdminAddr(int member_no);
+	public String getClubAdminAddr(Integer member_no);
 	
 		
 	
@@ -275,6 +277,8 @@ import com.joinus.domain.MembersVo;
 		
 		// 클럽 리스트 - 최근 본 모임
 		public List<ClubsVo> getClubList(List<Integer> recentViewClub);
+
+
 
 
 

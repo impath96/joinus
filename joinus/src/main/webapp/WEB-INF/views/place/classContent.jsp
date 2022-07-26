@@ -12,22 +12,19 @@
 <div class="container-xxl py-5">
 	<div class="container" style="color: black;">
 		<div class="row g-5">
-			<h1 id="placeName">${place.place_name } <small>(비제휴)</small></h1>
-<%-- 			<a href="${PageContext.request.contextPath }/place/placeList" style="color: black;">
-	            <small>더 많은 제휴시설 보러가기 <i class="fa fa-arrow-right ms-3"></i> 
-	        </small></a> --%>
+			<h1 id="placeName">${classContent.class_title }</h1>
 			
 			<div style="width: 70%;">
-				<img style="width: 95%; max-height: 550px;" src="${PageContext.request.contextPath }/resources/upload/place/${place.place_image}">
-				<div style="margin-top: 3em;" class="font">
-					<pre class="boardContent">${place.place_content }</pre>
+				<img style="width: 95%; max-height: 550px;" src="${classContent.class_image}">
+				<div style="margin-top: 3em;">
+					<pre class="boardContent">${classContent.class_content }</pre>
 				</div>
 				<hr class="partnerPlaceContentHr">
 <%-- 				<div style="margin-bottom: 16px;">
 					<i class="fa fa-phone-alt me-3" aria-hidden="true"></i>${place.place_tel }
 				</div> --%>
 				<div id="placeAddr" style="margin-bottom: 16px;">
-					${place.place_address }
+					${classContent.class_address }
 					<div class="map_wrap py-2" style="padding-right: 3em; margin-bottom:16px;">
 						<div id="map" style="width:100%; height:400px;"></div>
 					</div>
@@ -37,17 +34,17 @@
 			
 			<div style="width: 30%; border: 1px solid #32C36C; padding-top: 1em; height: 70%;">
 				<form name="fr" action="" method="post">
-					<input type="hidden" name="partner_place_no" value="${place_no }">
-					<input type="hidden" name="partner_place_name" value="${place.place_name }">
-				 	<input type="hidden" name="partner_place_price" value="${place.place_price }">
+					<input type="hidden" name="partner_place_no" value="${class_no }">
+					<input type="hidden" name="partner_place_name" value="${classContent.class_title }">
+				 	<input type="hidden" name="partner_place_price" value="${classContent.class_price }">
 				
 					<div>
 						<div style="font-size: x-large; float: left;">
-							${place.place_name }
+							${classContent.class_title }
 						</div>
  						<div style="color: #32C36C; text-align: right; margin-bottom: 2em;">
  							<span style="font-size: x-large;">
-								<fmt:setLocale value="ko_KR"/><fmt:formatNumber type="currency" value="${place.place_price }" />
+								<fmt:setLocale value="ko_KR"/><fmt:formatNumber type="currency" value="${classContent.class_price }" />
 								<br>
 							</span>
 							<span style="color: #9B9B9B;"> /시간</span>
@@ -55,25 +52,21 @@
 					</div>
 					
 					<div style="margin-bottom: 2em;">
-						<i class="fa fa-phone-alt me-3" aria-hidden="true"></i>${place.place_tel }
-					</div>
-					
-					<div style="margin-bottom: 2em;">
 						날짜 선택
 						<select class="form-select" id="rental_time" disabled="disabled">
-							<option value="">해당 시설에 문의해주세요.</option>
+							<option value="">해당 클래스에 문의해주세요.</option>
 						</select>
 					</div>
 					
 					<div style="margin-bottom: 2em;">
 						시간 선택
 						<select class="form-select" id="rental_time" disabled="disabled">
-							<option value="">해당 시설에 문의해주세요.</option>
+							<option value="">해당 클래스에 문의해주세요.</option>
 						</select>
 					</div>
 					
 					<div class="payBtn">
-						<input type="submit" class="btn btn-primary rounded-pill py-3 px-5" id="subBtn" value="비제휴 시설입니다." disabled="disabled">
+						<input type="submit" class="btn btn-primary rounded-pill py-3 px-5" id="subBtn" value="비제휴 클래스입니다." disabled="disabled">
 					</div>
 				</form>
 			</div>
@@ -85,7 +78,7 @@
 <script>
 	var placeAddr = document.getElementById("placeAddr").innerText;
 	var placeName =  document.getElementById("placeName").innerText;
-	var notice = "<br>해당업체에 문의 해주세요."
+	var notice = "<br>해당클래스에 문의 해주세요."
 	
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	mapOption = {

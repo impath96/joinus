@@ -28,9 +28,12 @@
           </li>
         </ul>
         </c:forEach>
+        
       <div>
       	<c:set var="meetingMemberStatus" value="${meetingMemberStatus }"/>
-      	<c:if test="${meetingStatus eq '모집중'}">
+      	<c:set var="maxMember" value="${meetingList[0].club_meeting_capacity }"/>
+      	<c:set var="nowMember" value="${meetingMemberCnt }"></c:set>
+      	<c:if test="${meetingStatus eq '모집중' && maxMember > nowMember}">
 			<c:if test ="${meetingMemberStatus eq 0 && (result eq 1 || result eq 2)}">
 				<div class="btn-group">
 					<button type="submit" class="btn btn-success btn-flat" id ="join">참가하기</button>
