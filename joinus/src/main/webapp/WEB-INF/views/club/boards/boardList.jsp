@@ -12,7 +12,6 @@
 // 	alert("모임원 체크 : "+${checkMember});
 	
 	$(document).ready(function(){
-// 		console.log(${boardList});
 		
 		$('#all').click(function(){
 			$(location).attr('href','/club/${club_no}/boards');
@@ -101,7 +100,7 @@
 			                </c:if>
 						</div>
 						<span style="display: table-cell;" class="font">
-							<span class="clubBoardList_writer">${board.membersVo.member_name }&#128081;</span>
+							<span class="clubBoardList_writer">${board.membersVo.member_name }<c:if test="${board.clubMembersVo.club_member_role == 'admin' }">&#128081;</c:if></span>
 							
 							<c:if test="${board.clubBoardsVo.club_board_updatedate == null }">
 								<span><fmt:formatDate value="${board.clubBoardsVo.club_board_date }" pattern="yy.MM.dd HH:mm"/> </span>

@@ -129,6 +129,7 @@
 <resultMap type="BoardTotalBean" id="boardListMap">
 	<collection property="membersVo" resultMap="membersMap"/>
 	<collection property="clubBoardsVo" resultMap="clubBoardsMap" />
+	<collection property="clubMembersVo" resultMap="clubMembersMap"></collection>
 </resultMap>
 
 <resultMap type="BoardTotalBean" id="boardContentMap">
@@ -136,16 +137,19 @@
 	<collection property="clubsVo" resultMap="clubsMap"></collection>
 	<collection property="membersVo" resultMap="membersMap"></collection>
 	<collection property="boardTypesVo" resultMap="boardTypesMap"></collection>
+	<collection property="clubMembersVo" resultMap="clubMembersMap"></collection>
 </resultMap>
 
 <resultMap type="BoardTotalBean" id="boardCommentMap">
 	<collection property="membersVo" resultMap="membersMap"></collection>
 	<collection property="boardCommentsVo" resultMap="boardCommentsMap"></collection>
+	<collection property="clubMembersVo" resultMap="clubMembersMap"></collection>
 </resultMap>
 
 <resultMap type="BoardTotalBean" id="boardLikeMemberMap">
 	<collection property="membersVo" resultMap="membersMap"></collection>
 	<collection property="boardLikesVo" resultMap="boardLikesMap"></collection>
+	<collection property="clubMembersVo" resultMap="clubMembersMap"></collection>
 </resultMap>
 
 <select id="ClubMemberList" resultMap="ClubMemberListMap">
@@ -324,10 +328,12 @@
 	
 	<select id="getBoardListAll" resultMap="boardListMap">
 		<![CDATA[
-		select b.club_board_no, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate, b.club_board_likecnt, b.club_board_commentcnt
+		select distinct b.club_board_no, cm.club_member_role, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate, b.club_board_likecnt, b.club_board_commentcnt
 		from club_boards b
 		join members m
 			on (b.member_no = m.member_no)
+		join club_members cm
+			on (m.member_no = cm.member_no)
 		where b.club_no = #{club_no}
 		order by club_board_no desc
 		limit #{pageStart}, #{perPageNum}
@@ -341,10 +347,12 @@
 	
 	
 	<select id="getBoardList" resultMap="boardListMap">
-		select b.club_board_no, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate, b.club_board_likecnt, b.club_board_commentcnt
+		select distinct b.club_board_no, cm.club_member_role, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate, b.club_board_likecnt, b.club_board_commentcnt
 		from club_boards b
 		join members m
 			on (b.member_no = m.member_no)
+		join club_members cm
+			on (m.member_no = cm.member_no)
 		where b.club_no = #{club_no} and b.board_type_no = #{board_type_no}
 		order by club_board_no desc
 		limit #{pageStart}, #{perPageNum}
@@ -440,7 +448,7 @@
 
 <!-- ================================= -->
 	<select id="getBoardContent" resultMap="boardContentMap">
-		select c.club_name, b.board_type_no, bt.board_type_name, m.member_no, m.member_name, m.member_image, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate 
+		select distinct c.club_name, b.board_type_no, bt.board_type_name, m.member_no, m.member_name, m.member_image, cm.club_member_role, b.club_board_title, b.club_board_content, b.club_board_image, b.club_board_date, b.club_board_updatedate 
 		from club_boards b
 		join board_types bt
 			on (b.board_type_no = bt.board_type_no)
@@ -448,6 +456,8 @@
 			on (b.club_no = c.club_no)
 		join members m
 			on (b.member_no = m.member_no)
+		join club_members cm
+			on (m.member_no = cm.member_no)
 		where club_board_no = #{club_board_no}
 	</select>
 	
@@ -478,10 +488,12 @@
 
 	<!-- 댓글 출력 -->
 	<select id="getCommentList" resultMap="boardCommentMap">
-		select bc.board_comment_no, m.member_no, m.member_name, m.member_image, bc.board_comment_content, bc.board_comment_date, bc.board_comment_updatedate
+		select distinct bc.board_comment_no, m.member_no, m.member_name, m.member_image, cm.club_member_role, bc.board_comment_content, bc.board_comment_date, bc.board_comment_updatedate
 		from board_comments bc
 		join members m
 			on (bc.member_no = m.member_no)
+		join club_members cm
+			on (m.member_no = cm.member_no)
 		where club_board_no = #{club_board_no}
 	</select>
 	
@@ -523,10 +535,12 @@
 	
 	<!-- 좋아요한 멤버리스트 -->
 	<select id="boardLikeList" resultMap="boardLikeMemberMap">
-		select m.member_name, m.member_image
+		select distinct m.member_name, m.member_image, cm.club_member_role
 		from board_likes bl
 		join members m
 			on (bl.member_no = m.member_no)
+		join club_members cm
+			on (m.member_no = cm.member_no)
 		where club_board_no = #{club_board_no}
 	</select>
 	
