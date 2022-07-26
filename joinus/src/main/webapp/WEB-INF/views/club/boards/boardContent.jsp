@@ -10,7 +10,6 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
-// 		alert("page : "+${page});
 		
 		// 폼태그 정보
 		var formObj = $('form[role="form"]');
@@ -27,7 +26,7 @@
 			}
 		});
 		$('#backBtn').click(function(){
-			location.href = "/club/${club_no}/boards";
+			location.href = "/club/${club_no}/boards?page=${page}";
 		});
 		
 		// 댓글등록버튼
