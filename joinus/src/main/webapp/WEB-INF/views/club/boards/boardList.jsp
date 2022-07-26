@@ -37,7 +37,9 @@
 			alert('모임가입을 해주세요.');			
 			return false;
 		} else if(${checkMember == -1}){
-			location.href = "/member/signin";
+			if(confirm('로그인 후 이용가능합니다.')){
+				location.href = "/member/signin";
+			}
 		} else {
 // 			location.href= "/club/${club_no}/boards/"+club_board_no;
 			// 페이지정보 들고가기
@@ -103,7 +105,7 @@
 						</span>
 					</div>
 					<div class="font">
-						<i class="bi 0bi-heart"></i> <span class="clubBoardList_likeCnt">${board.clubBoardsVo.club_board_likecnt }</span>
+						<i class="bi bi-heart"></i> <span class="clubBoardList_likeCnt">${board.clubBoardsVo.club_board_likecnt }</span>
 						<i class="fa fa-comments fa-fw"></i> <span class=clubBoardList_commentCnt>${board.clubBoardsVo.club_board_commentcnt }</span>
 					</div>
 				</div>

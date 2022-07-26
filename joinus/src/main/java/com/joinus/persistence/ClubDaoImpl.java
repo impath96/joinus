@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.joinus.domain.BoardCommentsVo;
-import com.joinus.domain.BoardCriteria;
 import com.joinus.domain.BoardLikesVo;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
@@ -398,7 +397,7 @@ public class ClubDaoImpl implements ClubDao{
 	
 	
 	@Override
-	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no, BoardCriteria cri) {
+	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no, Criteria cri) {
 		log.info(" getBoardList() 호출 ");
 		log.info("@@@@@@"+club_no+", "+board_type_no+", "+cri);
 		

@@ -44,9 +44,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.joinus.domain.BoardCommentsVo;
-import com.joinus.domain.BoardCriteria;
 import com.joinus.domain.BoardLikesVo;
-import com.joinus.domain.BoardPageMaker;
 import com.joinus.domain.ClubBoardsVo;
 import com.joinus.domain.ClubGradesVo;
 import com.joinus.domain.ClubMeetingsVo;
@@ -714,7 +712,7 @@ public class ClubController {
 	// 게시글리스트(게시글유형별)
 	@RequestMapping(value = "/{club_no}/boards/type/{board_type_no}", method = RequestMethod.GET)
 	public String boardListTypeGet(@PathVariable("club_no") Integer club_no, @PathVariable("board_type_no") Integer board_type_no, 
-			Model model, BoardCriteria cri, HttpSession session) {
+			Model model, Criteria cri, HttpSession session) {
 		log.info(" boardListTypeGet() 호출 ");
 		log.info("club_no : "+club_no);
 		log.info("board_type_no : "+board_type_no);
@@ -722,7 +720,7 @@ public class ClubController {
 		model.addAttribute("club_no", club_no);
 		
 		model.addAttribute("boardList", service.getBoardList(club_no, board_type_no, cri));
-		BoardPageMaker pageMaker = new BoardPageMaker();
+		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(service.getTypeBoardCnt(club_no, board_type_no));
 		log.info(pageMaker+"");

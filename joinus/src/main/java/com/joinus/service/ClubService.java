@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.joinus.domain.BoardCommentsVo;
-import com.joinus.domain.BoardCriteria;
 import com.joinus.domain.BoardLikesVo;
 import com.joinus.domain.BoardTotalBean;
 import com.joinus.domain.ClubBoardsVo;
@@ -127,7 +126,7 @@ import com.joinus.domain.MembersVo;
 	
 	public Integer getTotalBoardCnt(Integer club_no);
 	   
-	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no, BoardCriteria cri);
+	public List<BoardTotalBean> getBoardList(Integer club_no, Integer board_type_no, Criteria cri);
 	
 	public Integer getTypeBoardCnt(Integer club_no, Integer board_type_no);
 	   
