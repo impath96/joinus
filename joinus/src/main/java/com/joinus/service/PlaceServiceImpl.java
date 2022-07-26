@@ -51,55 +51,55 @@ public class PlaceServiceImpl implements PlaceService{
 
 	
 /////////////////////////////////////클래스 리스트 크롤링//////////////////////////////
-//	@Override
-//	public JSONArray classList() {
-//		
-//		log.info("원데이 클래스 목록 불러오기");
-//
-//		String url = "https://www.umclass.com/plan/28?page=1";
-//		Document doc = null;
-//
-//		try {
-//			doc = Jsoup.connect(url).get();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-////		log.info(doc.toString());
-//		
-//		Elements class_title = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll span.plan-item-name");
-//		Elements class_image = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll div.class-list-img-height.classPlan-lazy");
-//		Elements class_category = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll .plan-sub-info span:nth-child(2)");
-//		Elements class_price = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll .plan-area-mt > div > span:nth-child(2)");
-//		Elements class_number = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll a");
-//		
-//		JSONArray classList = new JSONArray();
-//
-//		for (int i = 0; i < class_title.size(); i++) {
-//			JSONObject obj = new JSONObject();
-//
-//			obj.put("class_title", class_title.get(i).text());
-//			obj.put("class_image", class_image.get(i).attr("data-original"));
-//			obj.put("class_category", class_category.get(i).text());
-//			obj.put("class_price", class_price.get(i).text());
-//			obj.put("class_number", class_number.get(i).attr("abs:href").substring(4));
-//			log.info("obj: "+obj);
-//			
-//			classList.add(obj);
-//		}
-//		log.info("class_title: "+class_title);
-//		log.info("class_image: "+class_image);
-//		log.info("class_category: "+class_category);
-//		log.info("class_price: "+class_price);
-//		log.info("class_number: "+class_number);
-//		
-//		log.info("classList: "+classList);
-//		
-//		return classList;
-//	}
-///////////////////////////////////////클래스 리스트 크롤링//////////////////////////////
-//	
-//	
-///////////////////////////////////////클래스 크롤링//////////////////////////////
+	@Override
+	public JSONArray classList() {
+		
+		log.info("원데이 클래스 목록 불러오기");
+
+		String url = "https://www.umclass.com/plan/28?page=1";
+		Document doc = null;
+
+		try {
+			doc = Jsoup.connect(url).get();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+//		log.info(doc.toString());
+		
+		Elements class_title = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll span.plan-item-name");
+		Elements class_image = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll div.class-list-img-height.classPlan-lazy");
+		Elements class_category = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll .plan-sub-info span:nth-child(2)");
+		Elements class_price = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll .plan-area-mt > div > span:nth-child(2)");
+		Elements class_number = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll a");
+		
+		JSONArray classList = new JSONArray();
+
+		for (int i = 0; i < class_title.size(); i++) {
+			JSONObject obj = new JSONObject();
+
+			obj.put("class_title", class_title.get(i).text());
+			obj.put("class_image", class_image.get(i).attr("data-original"));
+			obj.put("class_category", class_category.get(i).text());
+			obj.put("class_price", class_price.get(i).text().substring(0,2)+class_price.get(i).text().substring(3,6));
+			obj.put("class_number", class_number.get(i).attr("abs:href").substring(34));
+			log.info("obj: "+obj);
+			
+			classList.add(obj);
+		}
+		log.info("class_title: "+class_title);
+		log.info("class_image: "+class_image);
+		log.info("class_category: "+class_category);
+		log.info("class_price: "+class_price);
+		log.info("class_number: "+class_number);
+		
+		log.info("classList: "+classList);
+		
+		return classList;
+	}
+/////////////////////////////////////클래스 리스트 크롤링//////////////////////////////
+	
+	
+/////////////////////////////////////클래스 크롤링//////////////////////////////
 //	@Override
 //	public JSONArray classContent() {
 //		
@@ -119,7 +119,7 @@ public class PlaceServiceImpl implements PlaceService{
 //		Elements class_title = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll span.plan-item-name");
 //		Elements class_image = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll div.class-list-img-height.classPlan-lazy");
 //		Elements class_category = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll .plan-sub-info span:nth-child(2)");
-//		Elements class_address = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll");
+////		Elements class_address = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll");
 //		Elements class_price = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll .plan-area-mt > div > span:nth-child(2)");
 //		Elements class_number = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll .plan-area-mt > div > span:nth-child(2)");
 //		
@@ -132,9 +132,9 @@ public class PlaceServiceImpl implements PlaceService{
 //			obj.put("class_title", class_title.get(i).text());
 //			obj.put("class_image", class_image.get(i).attr("data-original"));
 //			obj.put("class_category", class_category.get(i).text());
-//			obj.put("class_address", class_address.get(i).text());
-//			obj.put("class_price", class_price.get(i).text());
-//			obj.put("class_number", class_number.get(i).text());
+////			obj.put("class_address", class_address.get(i).text());
+//			obj.put("class_price", class_price.get(i).text().substring(2)+class_price.get(i).text().substring(6));
+//			obj.put("class_number", class_number.get(i).text().substring(34));
 //			log.info("obj: "+obj);
 //			
 //			classContent.add(obj);
@@ -142,7 +142,7 @@ public class PlaceServiceImpl implements PlaceService{
 //		log.info("class_title: "+class_title);
 //		log.info("class_image: "+class_image);
 //		log.info("class_category: "+class_category);
-//		log.info("class_address: "+class_address);
+////		log.info("class_address: "+class_address);
 //		log.info("class_price: "+class_price);
 //		log.info("class_number: "+class_number);
 //		

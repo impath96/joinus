@@ -23,12 +23,12 @@ public interface PlaceService {
 	// 제휴시설 상세보기
 	public PlacesVo getPlaceContent(int place_no);
 	
-//	// 원데이클래스 리스트 크롤링
-//	public JSONArray classList();
-//
-//	// 원데이클래스 본문 크롤링
+	// 원데이클래스 리스트 크롤링
+	public JSONArray classList();
+
+	// 원데이클래스 본문 크롤링
 //	public JSONArray classContent();
-//	
+	
 	
 	
 }
