@@ -251,13 +251,15 @@ public class ClubServiceImpl implements ClubService{
 	}
 	
 	
+	@Override
+	public Integer getMeetingMemberCount(Integer club_meeting_no) {
+		// TODO Auto-generated method stub
+		return dao.getMeetingMemberCnt(club_meeting_no);
+	}
+	
 	//===================================================================
 
-
-
-
-
-
+	
 	@Override
 	public void writeBoard(ClubBoardsVo vo) {
 		dao.writeBoard(vo);

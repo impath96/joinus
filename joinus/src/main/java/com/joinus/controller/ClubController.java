@@ -377,6 +377,7 @@ public class ClubController {
 			List<ClubMeetingsVo> meetingList = service.getMeeting(club_meeting_no);
 			List<MeetingTotalBean> meetingMember = service.getMeetingMember(club_meeting_no, club_no);
 			String meetingStatus = service.getMeetingStatus(club_meeting_no);
+			Integer meetingMemberCnt = service.getMeetingMemberCount(club_meeting_no);
 			
 			log.info("result : "+result );
 			log.info(meetingList+"");
@@ -389,6 +390,7 @@ public class ClubController {
 			model.addAttribute("result", result);
 			model.addAttribute("meetingStatus", meetingStatus);
 			model.addAttribute("meetingMemberStatus", meetingMemberStatus);
+			model.addAttribute("meetingMemberCnt", meetingMemberCnt);
 			return "/club/meeting/meetingContent";
 			
 		}

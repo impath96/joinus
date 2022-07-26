@@ -116,6 +116,9 @@ import com.joinus.domain.MembersVo;
 		
 		//정모 일정 체크
 		public Integer checkMeetingDate(Integer club_no);
+		
+		//정모 참석 회원 수
+		public Integer getMeetingMemberCount(Integer club_meeting_no);
 
 	
 	//--------------------------------------------------------------
@@ -274,6 +277,8 @@ import com.joinus.domain.MembersVo;
 		
 		// 클럽 리스트 - 최근 본 모임
 		public List<ClubsVo> getClubList(List<Integer> recentViewClub);
+
+
 
 
 

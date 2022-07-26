@@ -111,6 +111,9 @@ public interface ClubDao {
 	//정모 날짜 확인
 	public Integer checkMeetingDate(Integer club_no);
 	
+	//정모 참가 인원
+	public Integer getMeetingMemberCnt(Integer club_meeting_no);
+	
 	//=========================고은비=========================
 	
 	
@@ -285,6 +288,8 @@ public interface ClubDao {
 	public List<ClubBoardsVo> getBoards(Integer num);
 
 	public List<ClubsVo> recentViewClubList(List<Integer> recentViewClub);
+
+
 
 
 
