@@ -46,14 +46,11 @@ public class PlaceServiceImpl implements PlaceService{
 	
 /////////////////////////////////////크롤링//////////////////////////////
 //	@Override
-//	public JSONArray blogList() {
+//	public JSONArray classList() {
 //		
-//		log.info("service : 숙소목록불러오기");
+//		log.info("service : 원데이 클래스 목록 불러오기");
 //
-////		int pagenum = 1;
-////		String url = "https://shareit.kr/search/venue?area=&date=&eventType=&venueType=&minPrice=0&maxPrice=-1&minPeople=0&maxPeople=-1&equip=&amenity=&approve=true&realtime=true&order=recent&page="+pagenum+"&keyword=%EB%B6%80%EC%82%B0";
 //		String url = "https://blog.naver.com/spacecloud";
-//
 //		Document doc = null;
 //
 //		try {
@@ -63,30 +60,30 @@ public class PlaceServiceImpl implements PlaceService{
 //		}
 //		log.info(doc.toString());
 //		
-//		Elements place_title = doc.select(".sc-czvXZf dlesvJ > p"); //시설명
-//		Elements place_img = doc.select(".sc-kszsmc cOVJyJ > img");    //시설사진
-//		Elements place_category = doc.select(".sc-cBIgVh gxRDfj > p");   //시설분류
-//		Elements place_address = doc.select("p.sc-jHwEDs juVgEZ");  //시설주소
+//		Elements class_title = doc.select(".sc-czvXZf dlesvJ > p");
+//		Elements class_image = doc.select(".sc-kszsmc cOVJyJ > img");
+//		Elements class_category = doc.select(".sc-cBIgVh gxRDfj > p");
+//		Elements class_address = doc.select("p.sc-jHwEDs juVgEZ");
+//		Elements class_price = doc.select("");
 //		
-//		// JSON 형태 정보 저장
-//		JSONArray placeList = new JSONArray();
+//		JSONArray classList = new JSONArray();
 //
-//		for (int i = 0; i < place_title.size(); i++) {
-//			// JSONObject에 키:값 형태로 데이터 저장
+//		for (int i = 0; i < class_title.size(); i++) {
 //			JSONObject obj = new JSONObject();
 //
-//			obj.put("place_title", place_title.get(i).text());
-//			obj.put("place_img", place_img.get(i).attr("data-original"));
-//			obj.put("place_category", place_category.get(i).text());
-//			obj.put("place_address", place_address.get(i).text());
+//			obj.put("class_title", class_title.get(i).text());
+//			obj.put("class_image", class_image.get(i).attr("data-original"));
+//			obj.put("class_category", class_category.get(i).text());
+//			obj.put("class_address", class_address.get(i).text());
+//			obj.put("class_price", class_price.get(i).text());
 //
 //			log.info("obj: "+obj);
 //			
-//			placeList.add(obj);
+//			classList.add(obj);
 //		}
-//		System.out.println("placeList : " + placeList);
+//		System.out.println("classList : " + classList);
 //		
-//		return placeList;
+//		return classList;
 //	}
 /////////////////////////////////////크롤링//////////////////////////////
 

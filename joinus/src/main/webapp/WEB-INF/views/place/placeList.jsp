@@ -33,7 +33,7 @@
 			<div class="row g-4">
 				<c:forEach var="place" items="${placeList }">
 	                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s" onclick=" location.href='/place/${place.place_no}'; " style="cursor: pointer;">
-	                    <div class="service-item rounded overflow-hidden" style="height: auto;">
+	                    <div class="service-item rounded overflow-hidden shadow" style="height: auto;">
 	                        <img src="${PageContext.requeset.contextPath }/resources/upload/place/${place.place_image}" class="w-100 py-auto" style="height: 225px;">
 	                        <div class="position-relative p-4 pt-0">
 	                            <h4 class="mb-3 py-2">${place.place_name }</h4>

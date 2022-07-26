@@ -21,7 +21,7 @@ public interface PlaceService {
 	// 제휴시설 상세보기
 	public PlacesVo getPlaceContent(int place_no);
 	
-	// 블로그 내용 크롤링
-//	public JsonArray blogList();
+	// 원데이클래스 크롤링
+//	public JsonArray classList();
 	
 }

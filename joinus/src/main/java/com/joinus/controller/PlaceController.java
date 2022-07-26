@@ -2,11 +2,9 @@ package com.joinus.controller;
 
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,17 +21,17 @@ public class PlaceController {
 	
 	private static final Logger log = LoggerFactory.getLogger(PlaceController.class);
 	
-	@Inject
+	@Autowired
 	private PlaceService placeService;
 	
-//	@RequestMapping(value = "/placeBlogListCrawl", method = RequestMethod.GET)
-//	public void placeBlogListGET(Model model) throws IOException {
-//		log.info(" placeListGET() 호출 ");
+//	@RequestMapping(value = "/classList", method = RequestMethod.GET)
+//	public void classListGET(Model model) throws IOException {
+//		log.info(" classListGET() 호출 ");
 //		
 //		//service에서 저장한 크롤링 정보들을 JSONArray형태로 저장
-//		JSONArray blogList = service.blogList();
+//		JSONArray classList = placeService.classList();
 //
-//		model.addAttribute("blogList", blogList);
+//		model.addAttribute("classList", classList);
 //	}
 	
 	
@@ -45,13 +43,13 @@ public class PlaceController {
 		
 		List<PlacesVo> placeList = null;
 		location = "0";
-		log.info(" location(지역정보) : "+location);
+//		log.info(" location(지역정보) : "+location);
 		if(location.equals("0")) {
-			log.info(" [location == 0] => 시설목록(비제휴) 전체 출력 ");
+//			log.info(" [location == 0] => 시설목록(비제휴) 전체 출력 ");
 			placeList = placeService.getPlaceList();
 		} else if (!location.equals("0")) {
 			placeList = placeService.getCityPlaceList(location);
-			log.info("placeList : "+placeList);
+//			log.info("placeList : "+placeList);
 		}
 		
 		for(PlacesVo vo : placeList) {
