@@ -40,7 +40,7 @@
 					style="width: 250px; height: 250px; border-radius: 300px; margin-right: 10px;" class="shadow-sm">
 				<img alt="" src="../resources/img/pic3.png"
 					 style="width: 250px; height: 250px; border-radius: 300px; margin-right: 10px;" class="shadow-sm">
-				<img alt="" src="${pageContext.request.contextPath }/resources/upload/members/김성빈.jpg"
+				<img alt="" src="${pageContext.request.contextPath }/resources/upload/members/ksb.jpg"
 					style="width: 250px; height: 250px; border-radius: 300px; margin-right: 10px;" class="shadow-sm">	
 				<img alt="" src="../resources/img/pic5.png" 
 					style="width: 250px; height: 250px; border-radius: 300px; " class="shadow-sm">	

@@ -366,7 +366,7 @@ public class ClubDaoImpl implements ClubDao{
 	@Override
 	public Integer getMeetingMemberCnt(Integer club_meeting_no) {
 		
-		return sqlSession.selectOne(NAMESPACE2+".MeetingMemberCnt", club_meeting_no);
+		return sqlSession.selectOne(NAMESPACE2+".CntMeetingMember", club_meeting_no);
 	}
 	
 //=======================허수빈=============================================================

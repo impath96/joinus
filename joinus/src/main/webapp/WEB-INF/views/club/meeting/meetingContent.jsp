@@ -32,14 +32,20 @@
       <div>
       	<c:set var="meetingMemberStatus" value="${meetingMemberStatus }"/>
       	<c:set var="maxMember" value="${meetingList[0].club_meeting_capacity }"/>
-      	<c:set var="nowMember" value="${meetingMemberCnt }"></c:set>
-      	<c:if test="${meetingStatus eq '모집중' && maxMember > nowMember}">
-			<c:if test ="${meetingMemberStatus eq 0 && (result eq 1 || result eq 2)}">
-				<div class="btn-group">
-					<button type="submit" class="btn btn-success btn-flat" id ="join">참가하기</button>
-				</div>
+      	<c:set var="nowMember" value="${meetingMemberCnt }"/>
+      	<c:set var="result" value="${result }"/>
+
+      	<c:if test="${meetingStatus eq '모집중' || meetingStatus eq '마감'}">
+      	
+			<c:if test ="${meetingMemberStatus eq 0 &&(result eq 1 || result eq 2) && meetingStatus eq '모집중'}">
+				<c:if test ="${maxMember gt nowMember}">
+					<div class="btn-group">
+						<button type="submit" class="btn btn-success btn-flat" id ="join">참가하기</button>
+					</div>
+ 				</c:if>	
 			</c:if>
-			<c:if test ="${meetingMemberStatus eq 1 && (result eq 1 || result eq 2)}">
+			
+			<c:if test ="${meetingMemberStatus eq 1 &&(result eq 1 || result eq 2)}">
 				<div class="btn-group">
 					<button type="submit" class="btn btn-success btn-flat" id ="cancel">참가 취소하기</button>
 				</div>

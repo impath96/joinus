@@ -380,7 +380,9 @@ public class ClubController {
 			Integer meetingMemberCnt = service.getMeetingMemberCount(club_meeting_no);
 			
 			log.info("result : "+result );
-			log.info(meetingList+"");
+			log.info("meetingMemberStatus : " + meetingMemberStatus);
+			log.info("meetingMemberCnt : "+meetingMemberCnt);
+			log.info("meetingStatus : "+meetingStatus);
 			
 			List<ClubsVo> clubInfo = service.clubInfo(club_no);
 			//log.info(clubInfo+"");
