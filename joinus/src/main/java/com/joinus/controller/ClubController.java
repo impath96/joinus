@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
@@ -1312,9 +1313,24 @@ public class ClubController {
 		// 정모참석 ajax (상세페이지에서 alert창 띄움)
 				@ResponseBody
 				@RequestMapping(value = "/{club_no}/meeting/{meeting_no}/join",method=RequestMethod.POST)
-				public void joinMeeting(@ModelAttribute MeetingMembersVo vo) {
-						service.joinMeeting(vo);
-						log.info("정모참석 신청이 완료되었습니다");
+				public boolean joinMeeting(@ModelAttribute MeetingMembersVo vo) {
+						
+						List<Map<String, Integer>> map = service.getMemberCapa(vo.getClub_meeting_no(), vo.getClub_no());
+						int clubCapa = Integer.parseInt(String.valueOf(map.get(0).get("clubCapa")));
+						int memberCnt = Integer.parseInt(String.valueOf(map.get(0).get("memberCnt")));
+						log.info("정모 참석하기 ajax 호출!");
+						log.info("정모 정원 : "+ clubCapa+"명");
+						log.info("정모 참가 인원 : "+memberCnt+"명");
+						
+						if(clubCapa < memberCnt) {
+							log.info("인원마감 정모참석불가");
+							return false;
+						}
+						if(clubCapa > memberCnt) {
+							service.joinMeeting(vo);
+							log.info("정모참석 신청 완료");
+						}
+						return true;
 					}
 		// 정모참석취소 ajax (상세페이지에서 alert창 띄움)
 				@ResponseBody

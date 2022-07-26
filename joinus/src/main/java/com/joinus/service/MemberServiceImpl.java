@@ -17,13 +17,15 @@ import com.joinus.domain.MyClubDto;
 import com.joinus.persistence.MemberDao;
 import com.joinus.util.SHA256;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class MemberServiceImpl implements MemberService {
 
 	@Inject
 	MemberDao memberDao;
 
-	private static final Logger log = LoggerFactory.getLogger(MemberServiceImpl.class);
 
 	// 회원가입 처리
 	@Override
@@ -33,21 +35,21 @@ public class MemberServiceImpl implements MemberService {
 		//  -1) 만약 소셜 로그인 회원일 경우 비밀번호를 설정
 		//  -2) 일반 이메일 회원가입 회원일 경우 이미지 URL, 회원가입 타입 설정(default.jpg, 'common')
 		String password = "";
+		
 		if (member.getMember_signup_type() == null) {
 			member.setMember_image("default.jpg");
 			member.setMember_signup_type("joinus");
 			password = SHA256.encrypt(member.getMember_pass());
-			member.setMember_pass(password);			
 		} else {
 			password = SHA256.encrypt(UUID.randomUUID().toString());
-			member.setMember_pass(password);
 		}
+		member.setMember_pass(password);
 		
 		memberDao.insertMember(member);
 
 		// 2) 등록된 회원 다시 꺼내오고(session에 회원번호 저장하기 위해서)
 		MembersVo selectMember = memberDao.selectMemberByEmail(member.getMember_email());
-		log.info("꺼내온 member : {}", selectMember);
+		// log.info("꺼내온 member : {}", selectMember);
 
 		return selectMember;
 	}
@@ -55,9 +57,9 @@ public class MemberServiceImpl implements MemberService {
 	// 회원 이메일로 회원 찾기
 	@Override
 	public MembersVo findMemberByEmail(String member_email) {
-		log.info("전달받은 이메일 주소 : {}", member_email);
+		
 		MembersVo findMember = memberDao.selectMemberByEmail(member_email);
-		log.info("이메일을 통해 회원 정보 조회 : {}", findMember);
+		
 		return findMember;
 	}
 
@@ -73,7 +75,7 @@ public class MemberServiceImpl implements MemberService {
 	// 이미지 변경 
 	@Override
 	public void updateImage(String savedFileName, int member_no) {
-		log.info("회원 프로필 사진 변경 savedFileName : {}, member_no : {}", savedFileName, member_no);
+		
 		memberDao.updateImage(savedFileName, member_no);
 	}
 
@@ -83,13 +85,15 @@ public class MemberServiceImpl implements MemberService {
 
 		// 패스워드를 SHA-256으로 변환
 		String encryptedPassword = "";
+		
 		try {
 			encryptedPassword = SHA256.encrypt(password);
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		log.info("암호화된 패스워드: "+encryptedPassword);
+		
+		// log.info("암호화된 패스워드: "+encryptedPassword);
 		MembersVo member = memberDao.selectMember(email, encryptedPassword);
 			
 		return member;
@@ -126,6 +130,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public List<MyClubDto> getMyClubList(int member_no) {
+		
 		List<MyClubDto> list = memberDao.myClubList(member_no);
 		
 		return list;
@@ -140,6 +145,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int getTotalCount() {
+		
 		return memberDao.getTotalCount();
 	}
 
@@ -153,7 +159,28 @@ public class MemberServiceImpl implements MemberService {
 	public void updateLocation(String parsedLocation, int member_no) {
 		
 		memberDao.updateLocation(parsedLocation, member_no);
+	}
+
+	@Override
+	public MembersVo addLocation(String locationName, int member_no) {
 		
+		String parsedLocation = parseLocation(locationName);
+		memberDao.updateLocation(parsedLocation, member_no);
+		
+		MembersVo member = memberDao.selectMemberByNo(member_no);
+		
+		return member;
+	}
+	
+	// 다른 곳에서 동일한 기능 사용 -> 추후 Util 클래스로 분리
+	private String parseLocation(String location_name) {
+		
+		String[] part = location_name.split(" ");
+		String savedLocation = part[0];
+		for (int i = 1; i < 3; i++) {
+			savedLocation += " " + part[i];
+		}
+		return savedLocation;
 	}
 
 }

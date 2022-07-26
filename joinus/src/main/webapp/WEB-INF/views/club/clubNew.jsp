@@ -2,11 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp"%>
 <link href="${PageContext.request.contextPath }/resources/css/ksm.css" rel="stylesheet">
-
+<style>
+  .ck-editor__editable { height: 400px; }
+</style>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-
-
-
 <script type="text/javascript">
 
 $(document).ready(function(){

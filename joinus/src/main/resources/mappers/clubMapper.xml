@@ -623,7 +623,8 @@
 	</insert>
 	
 	<insert id="clubGrade">
-		insert i c4k5yuk7777777777777777777777777777777777 grade_rate})
+		insert into club_grades(club_no,member_no,club_grade_rate)
+		values(#{club_no},#{member_no},#{club_grade_rate})
 	</insert>
 	
 	<insert id="clubDip">

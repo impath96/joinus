@@ -275,8 +275,10 @@ public interface ClubDao {
 	public void outMeeting(MeetingMembersVo vo);
 	// 정모 참석여부확인
 	public List<MeetingMembersVo> checkMeetingMember(Integer num,Integer num2);
-	// 정모 참석 인원수
+	// 정모 참석 인원수 리스트
 	public List<Map<String, Integer>> MeetingMemberCnt(Integer num);
+	// 정모 참석 인원수 특정
+	public List<Map<String, Integer>> getMemberCapa(Integer num,Integer num2);
 	
 	
 	//게시글 리스트

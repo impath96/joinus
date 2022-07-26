@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
-
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -761,6 +759,18 @@ public class ClubDaoImpl implements ClubDao{
 			public List<Map<String, Integer>> MeetingMemberCnt(Integer num) {
 				List<Map<String, Integer>> list = sqlSession.selectList(NAMESPACE2+".getMeetingMemberCnt",num);
 				return list;
+			}
+
+			
+			@Override
+			public List<Map<String, Integer>> getMemberCapa(Integer num, Integer num2) {
+				Map<String, Integer> numbers = new HashMap<String, Integer>();
+				numbers.put("club_meeting_no", num);
+				numbers.put("club_no", num2);
+				
+				List<Map<String, Integer>> map = sqlSession.selectList(NAMESPACE2+".getMemberCapa",numbers);
+				
+				return map;
 			}
 
 			// 벤당한 회원번호 리스트 가져오기
