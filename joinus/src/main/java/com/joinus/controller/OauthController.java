@@ -6,8 +6,6 @@ import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,8 +22,11 @@ import com.joinus.auth.KakaoLogin;
 import com.joinus.domain.MembersVo;
 import com.joinus.service.MemberService;
 
-@RequestMapping("/oauth/*")
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
+@RequestMapping("/oauth/*")
 public class OauthController {
 	
 	@Autowired
@@ -35,8 +36,11 @@ public class OauthController {
 	@Autowired
 	private MemberService memberService;
 	
-	private static final Logger log = LoggerFactory.getLogger(OauthController.class);
-
+	/* 문제점
+	 * 1) OauthController에 너무 많은 로직이 들어있다.
+	 *    추후 OauthService를 만들어서 Controller보다 Service 쪽에 로직 구현하기
+	 */
+	
 	// 소셜 로그인 처리
 		@GetMapping(value = "/{service}")
 		public String oauthSignIn(@PathVariable("service") String service

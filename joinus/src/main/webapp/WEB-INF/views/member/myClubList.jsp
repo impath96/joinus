@@ -6,7 +6,7 @@
 
 <body>
 	<!-- Contact Start -->
-	<h2 class="text-center mt-5">내 모임 페이지</h2>
+	<h2 class="text-center fs-1 my-5">내 모임 페이지</h2>
 	<div class="container-xxl py-5">
 		<div class="container">
 		<div class="row g-4">
@@ -36,8 +36,8 @@
 		<div class="col-10">
 		<div class="row g-4">
 		<c:forEach var="myClub" items="${myClubList }">
-			<div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
-				<div class="service-item rounded overflow-hidden">
+			<div class="col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.1s">
+				<div class="service-item rounded overflow-hidden shadow">
 					<!-- 클럽 대표 이미지 -->
 					<img
 						src="${PageContext.requeset.contextPath }/resources/upload/clubs/${myClub.club_image}"

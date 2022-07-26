@@ -6,7 +6,7 @@
 
 <body>
 	<!-- Contact Start -->
-	<div class="container-xxl py-5">
+	<div class="container-xxl  p-0 mt-5">
 		<div class="container p-0">
 			<div class="row">
 			<div class="col-2 p-0">
