@@ -1,10 +1,27 @@
 package com.joinus.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Service
+import com.joinus.domain.LocationCityVo;
+import com.joinus.domain.PlacesVo;
+
 public interface PlaceService {
+	
+//	public JSONArray placeList();
+	
+	// 시설 목록(비제휴)
+	public List<PlacesVo> getPlaceList();
+	
+	// 부산 (구) 리스트
+	public List<LocationCityVo> getBusanGuList();
+	
+	// (구) 별 제휴시설리스트
+	public List<PlacesVo> getCityPlaceList(String place_address);
+	
+	// 제휴시설 상세보기
+	public PlacesVo getPlaceContent(int place_no);
+	
+	// 블로그 내용 크롤링
+//	public JsonArray blogList();
 	
 }

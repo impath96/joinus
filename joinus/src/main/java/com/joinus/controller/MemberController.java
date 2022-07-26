@@ -27,9 +27,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.joinus.domain.ClubsVo;
 import com.joinus.domain.InterestsVo;
@@ -39,8 +39,10 @@ import com.joinus.domain.PasswordCheckDto;
 import com.joinus.service.ClubService;
 import com.joinus.service.InterestService;
 import com.joinus.service.MemberService;
-import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping(value = "/member/*")
 public class MemberController {
@@ -54,13 +56,9 @@ public class MemberController {
 	@Autowired
 	private ClubService clubService;
 
-	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
-
 	// 회원가입 페이지 이동
 	@GetMapping("signup")
 	public String signup(Model model, HttpSession session) {
-
-		log.info("회원가입 페이지 이동  @@@@@@@@@@@@@@@@@@");
 
 		model.addAttribute("member", new MembersVo());
 		
@@ -93,12 +91,9 @@ public class MemberController {
 			return "/member/signup";
 		}
 				
-		log.info("회원가입 처리 동작 실행 @@@@@@@@@@@@@@");
 		// 실제로 저장할 주소 (뒤에 상세 주소는 제거)
 		String parsedLocation = parseLocation(member.getMember_location());
 		member.setMember_location(parsedLocation);
-		
-		log.info("DB에 저장할 회원 정보 : {}", member);
 		
 		// DB에서 회원_no를 auto_increment했기 때문에 이 정보를 포함한 회원 정보를 session에 담아야 한다.
 		MembersVo joinMember = memberService.join(member);
@@ -127,7 +122,6 @@ public class MemberController {
 		String content = "JoinUs 홈페이지를 방문해주셔서 감사합니다." + "<br><br>" + "인증 번호는 [" + checkNum + "] 입니다." + "<br>"
 				+ "해당 인증번호를 인증번호 확인란에 기입하여 주세요."; // 이메일 내용
 
-		log.info("이메일 전송 준비 완료");
 		try {
 
 			MimeMessage message = mailSender.createMimeMessage();
@@ -141,7 +135,7 @@ public class MemberController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		log.info("이메일 전송 완료");
+		
 		return Integer.toString(checkNum);
 
 	}
@@ -149,6 +143,7 @@ public class MemberController {
 	// 마이 페이지로 이동
 	@GetMapping("/mypage")
 	public String mypage(HttpSession session, Model model, @CookieValue(value = "recentViewClub", required = false) Cookie cookie) {
+		
 		MembersVo member = (MembersVo) session.getAttribute("member");
 
 		// 1) 세션값이 존재하지 않으면 로그인 페이지로 이동
@@ -170,6 +165,7 @@ public class MemberController {
 			
 			model.addAttribute("recentViewClubList", recentViewClubList);
 		}
+		
 		// 내 모임 리스트 - 제한 5개
 		List<ClubsVo> clubList = clubService.getClubListByMemberNo(member.getMember_no(), 5);
 		log.info("clubList : {}", clubList);
@@ -178,11 +174,9 @@ public class MemberController {
 		List<ClubsVo> myClubList = clubService.getMyClubList(member.getMember_no(), 5);
 		log.info("myClubList : {}", myClubList);
 		
-		// 최근 본 모임 리스트...는 어떻게 구현하지?? 쿠키??
-		// CookieGenerator cg = new CookieGenerator();
-		
 		model.addAttribute("clubList", clubList);
 		model.addAttribute("myClubList", myClubList);
+		
 		return "/member/mypage";
 	}
 
@@ -200,14 +194,18 @@ public class MemberController {
 	}
 	
 	@PostMapping(value="/more-info")
-	public String moreInfoPost(HttpSession session, Model model, @RequestParam("interest") int interest) {
-		MembersVo member = (MembersVo)session.getAttribute("member");
-		log.info("member : {}", member);
-		log.info("model : {}", model);
-		log.info("interest : {}", interest);
+	public String moreInfoPost(HttpSession session, Model model, @RequestParam("interest") int interest, @RequestParam("location_name") String locationName) {
 		
+		MembersVo member = (MembersVo)session.getAttribute("member");
 		memberService.addInterest(member.getMember_no(), interest);
 
+		// 소셜 로그인으로 회원가입한 회원일 경우 주소 정보를 추가로 등록
+		if(locationName != null) {
+			MembersVo returnMember = memberService.addLocation(locationName, member.getMember_no());
+			session.setAttribute("member", returnMember);
+			
+		}
+		
 		return "redirect:/";
 	}
 	
@@ -223,17 +221,16 @@ public class MemberController {
 	// 일반적인 이메일 방식의 로그인
 	@PostMapping(value = "/signin")
 	public String signIn(@RequestParam("email") String email, @RequestParam("password") String password,
-			HttpSession session, Model model) {
+			HttpSession session, Model model, RedirectAttributes rattr) {
+		
 		// 1) 입력받은 정보를 통해 실제 가입된 회원인지 확인
 		// 회원찾기에서 비밀번호 암호화까지 다 하자.
-		log.info("로그인 하는 회원 정보 : email = {}, password = {}", email, password);
 		MembersVo findMember = memberService.signIn(email, password);
 
 		// 만약 findMember가 null -> 이메일이나 비밀번호가 틀렸다는 의미
 		if (findMember == null) {
-			log.info("로그인 실패 : 일치하는 회원 존재 X ");
-			model.addAttribute("error", "로그인 실패");
-			return "member/signin";
+			rattr.addFlashAttribute("error", "이메일 또는 비밀번호를 잘못 입력했습니다.");
+			return "redirect:/member/signin";
 		}
 
 		// 존재하는 회원일 경우 session에 해당 회원정보 저장
@@ -246,9 +243,10 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping(value="/reset-pass",  produces = "application/text; charset=UTF-8")
 	public ResponseEntity<String> resetPassword(@RequestBody PasswordCheckDto passwordCheckDto, HttpSession session) {
-		log.info("전달받은 비밀번호 : {}", passwordCheckDto);
+		
 		MembersVo member = (MembersVo)session.getAttribute("member");
 		ResponseEntity<String> response = null;
+		
 		if(!passwordCheckDto.equalsPassword(member.getMember_pass())) {
 			response = new ResponseEntity<String>("비밀번호를 확인해 주세요", HttpStatus.INTERNAL_SERVER_ERROR);
 			return response;
@@ -261,7 +259,7 @@ public class MemberController {
 		}
 		response = new ResponseEntity<String>("정상적으로 처리", HttpStatus.OK);
 		MembersVo resetMember = memberService.resetPassword(member.getMember_no(), passwordCheckDto.getNewPassword());
-		log.info("비밀번호 변경된 사용자 정보 : {}", resetMember);
+		
 		session.setAttribute("member", resetMember);
 		return response;
 	}
@@ -270,16 +268,13 @@ public class MemberController {
 	@PostMapping(value = "/leave", produces = "application/text; charset=UTF-8")
 	public String leave(HttpSession session) {
 		
-		// 탈퇴시 어떠한 작업을 할것인가???
-		
 		session.invalidate();
 		
 		return "탈퇴완료";
 	}
+	
 	@GetMapping(value = "/signout")
 	public String signout(HttpSession session) {
-		
-		// 탈퇴시 어떠한 작업을 할것인가???
 		
 		session.invalidate();
 		
@@ -288,6 +283,7 @@ public class MemberController {
 	
 	@GetMapping(value = "/my-clublist")
 	public String myClubList(HttpSession session, Model model) {
+		
 		MembersVo member = (MembersVo)session.getAttribute("member");
 
 		if(member == null) {
@@ -296,6 +292,7 @@ public class MemberController {
 		
 		List<MyClubDto> list = memberService.getMyClubList(member.getMember_no());
 		model.addAttribute("myClubList", list);
+		
 		return "/member/myClubList";
 	}
 

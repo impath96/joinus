@@ -2,27 +2,47 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../include/header.jsp"%>
+<style>
+		#location::placeholder {
+		color : 9B9B9B;
+	}
+</style>
 <body>
 	<!-- Contact Start -->
 	<div class="container-fluid bg-light overflow-hidden px-lg-0">
 		<div class="container contact px-lg-0" style="width: 60%">
 			<div class="row g-0 mx-lg-0">
 				<div class="p-lg-5 ps-lg-0" align="center">
-					<h6 class="text-primary">Grouping</h6>
+					<h6 class="text-primary">JOINUS</h6>
 					<h1 class="mb-4">추가정보(필수)</h1>
 					<form action="${pageContext.request.contextPath }/member/more-info" name="form" method="post">
 						<div class="col-12">
-							<div class="form-floating" style="width:50%;">
+							<div class="form-floating w-50">
 								<select name = "interest" id="interest" class="form-select form-select-lg mb-3 pt-2" aria-label="interest">
 		  							<option selected>관심사 선택</option>
 		  							<c:forEach var="interest" items="${interestList}">
 										<option value="${interest.interest_no }">${interest.interest_name }</option>
 		  							</c:forEach>
-									
 								</select>
 							</div>
 						</div>
 						<br>
+						<c:if test="${sessionScope.member.member_signup_type != 'joinus' }">
+							<div class="col-12 mb-5">
+								<div class="form-floating w-50">
+									<input type="text" class="input form-control p-3 fs-5" id="location" name="location_name"
+											placeholder="주소를 입력해주세요" value="${sessionScope.member.member_location }" onclick="searchLocation()" >
+								</div>
+							</div>
+						</c:if>
+						<c:if test="${sessionScope.member.member_signup_type == 'joinus' }">
+							<div class="col-12 mb-5">
+								<div class="form-floating w-50">
+									<input type="hidden" class="input form-control p-3 fs-5" id="location" name="location_name"
+											placeholder="주소를 입력해주세요" value="${sessionScope.member.member_location }" onclick="searchLocation()" >
+								</div>
+							</div>
+						</c:if>
 						<div class="col-12">
 							<input type="submit" value="다음"
 								class="btn btn-primary rounded-pill py-3 px-5">
