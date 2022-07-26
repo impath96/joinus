@@ -2,6 +2,8 @@ package com.joinus.service;
 
 import java.util.List;
 
+import org.json.simple.JSONArray;
+
 import com.joinus.domain.LocationCityVo;
 import com.joinus.domain.PlacesVo;
 
@@ -21,7 +23,12 @@ public interface PlaceService {
 	// 제휴시설 상세보기
 	public PlacesVo getPlaceContent(int place_no);
 	
-	// 원데이클래스 크롤링
-//	public JsonArray classList();
+//	// 원데이클래스 리스트 크롤링
+//	public JSONArray classList();
+//
+//	// 원데이클래스 본문 크롤링
+//	public JSONArray classContent();
+//	
+	
 	
 }

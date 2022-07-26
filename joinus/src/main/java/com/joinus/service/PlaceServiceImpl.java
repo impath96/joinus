@@ -1,9 +1,15 @@
 package com.joinus.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -44,13 +50,13 @@ public class PlaceServiceImpl implements PlaceService{
 	}
 
 	
-/////////////////////////////////////크롤링//////////////////////////////
+/////////////////////////////////////클래스 리스트 크롤링//////////////////////////////
 //	@Override
 //	public JSONArray classList() {
 //		
-//		log.info("service : 원데이 클래스 목록 불러오기");
+//		log.info("원데이 클래스 목록 불러오기");
 //
-//		String url = "https://blog.naver.com/spacecloud";
+//		String url = "https://www.umclass.com/plan/28?page=1";
 //		Document doc = null;
 //
 //		try {
@@ -58,13 +64,13 @@ public class PlaceServiceImpl implements PlaceService{
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
-//		log.info(doc.toString());
+////		log.info(doc.toString());
 //		
-//		Elements class_title = doc.select(".sc-czvXZf dlesvJ > p");
-//		Elements class_image = doc.select(".sc-kszsmc cOVJyJ > img");
-//		Elements class_category = doc.select(".sc-cBIgVh gxRDfj > p");
-//		Elements class_address = doc.select("p.sc-jHwEDs juVgEZ");
-//		Elements class_price = doc.select("");
+//		Elements class_title = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll span.plan-item-name");
+//		Elements class_image = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll div.class-list-img-height.classPlan-lazy");
+//		Elements class_category = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll .plan-sub-info span:nth-child(2)");
+//		Elements class_price = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll .plan-area-mt > div > span:nth-child(2)");
+//		Elements class_number = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll a");
 //		
 //		JSONArray classList = new JSONArray();
 //
@@ -74,18 +80,77 @@ public class PlaceServiceImpl implements PlaceService{
 //			obj.put("class_title", class_title.get(i).text());
 //			obj.put("class_image", class_image.get(i).attr("data-original"));
 //			obj.put("class_category", class_category.get(i).text());
-//			obj.put("class_address", class_address.get(i).text());
 //			obj.put("class_price", class_price.get(i).text());
-//
+//			obj.put("class_number", class_number.get(i).attr("abs:href").substring(4));
 //			log.info("obj: "+obj);
 //			
 //			classList.add(obj);
 //		}
-//		System.out.println("classList : " + classList);
+//		log.info("class_title: "+class_title);
+//		log.info("class_image: "+class_image);
+//		log.info("class_category: "+class_category);
+//		log.info("class_price: "+class_price);
+//		log.info("class_number: "+class_number);
+//		
+//		log.info("classList: "+classList);
 //		
 //		return classList;
 //	}
-/////////////////////////////////////크롤링//////////////////////////////
+///////////////////////////////////////클래스 리스트 크롤링//////////////////////////////
+//	
+//	
+///////////////////////////////////////클래스 크롤링//////////////////////////////
+//	@Override
+//	public JSONArray classContent() {
+//		
+//		log.info("원데이 클래스 목록 불러오기");
+//		
+//		int number = 0;
+//		String url = "https://www.umclass.com/classInfo/"+number;
+//		Document doc = null;
+//		
+//		try {
+//			doc = Jsoup.connect(url).get();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+////		log.info(doc.toString());
+//		
+//		Elements class_title = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll span.plan-item-name");
+//		Elements class_image = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll div.class-list-img-height.classPlan-lazy");
+//		Elements class_category = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll .plan-sub-info span:nth-child(2)");
+//		Elements class_address = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll");
+//		Elements class_price = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll .plan-area-mt > div > span:nth-child(2)");
+//		Elements class_number = doc.select(".classPlan-contents-list .listitempage .classPlan-view.class-list-view.event-scroll .plan-area-mt > div > span:nth-child(2)");
+//		
+//		
+//		JSONArray classContent = new JSONArray();
+//		
+//		for (int i = 0; i < class_title.size(); i++) {
+//			JSONObject obj = new JSONObject();
+//			
+//			obj.put("class_title", class_title.get(i).text());
+//			obj.put("class_image", class_image.get(i).attr("data-original"));
+//			obj.put("class_category", class_category.get(i).text());
+//			obj.put("class_address", class_address.get(i).text());
+//			obj.put("class_price", class_price.get(i).text());
+//			obj.put("class_number", class_number.get(i).text());
+//			log.info("obj: "+obj);
+//			
+//			classContent.add(obj);
+//		}
+//		log.info("class_title: "+class_title);
+//		log.info("class_image: "+class_image);
+//		log.info("class_category: "+class_category);
+//		log.info("class_address: "+class_address);
+//		log.info("class_price: "+class_price);
+//		log.info("class_number: "+class_number);
+//		
+//		log.info("classContent: "+classContent);
+//		
+//		return classContent;
+//	}
+/////////////////////////////////////클래스 크롤링//////////////////////////////
 
 	
 

@@ -1,7 +1,9 @@
 package com.joinus.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.json.simple.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,16 +26,29 @@ public class PlaceController {
 	@Autowired
 	private PlaceService placeService;
 	
+	
+//	// 원데이클래스 리스트 크롤링
+//	// http://localhost:8088/place/classList	
 //	@RequestMapping(value = "/classList", method = RequestMethod.GET)
 //	public void classListGET(Model model) throws IOException {
 //		log.info(" classListGET() 호출 ");
 //		
-//		//service에서 저장한 크롤링 정보들을 JSONArray형태로 저장
 //		JSONArray classList = placeService.classList();
 //
 //		model.addAttribute("classList", classList);
 //	}
-	
+//	
+//	
+//	// 원데이클래스 본문 크롤링
+//	@RequestMapping(value = "/class/{class_no}", method = RequestMethod.GET)
+//	public void classContentGET(Model model) {
+//		log.info(" classContentGET() 호출");
+//		
+//		JSONArray classContent = placeService.classList();
+//		
+//		model.addAttribute("classContent", classContent);
+//	}
+//	
 	
 	// 시설 목록(비제휴)
 	// http://localhost:8088/place/placeList
