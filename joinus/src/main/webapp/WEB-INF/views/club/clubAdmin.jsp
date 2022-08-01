@@ -12,7 +12,7 @@
 	<div class="row featurette py-5">
 		<div class="col-md-7 order-md-2">
         	<h1 class="featurette-headin py-3">${clubInfo[0].club_name} </h1>
-        	<h3 class="featurette-heading">${clubInfo[0].club_content}</h3>
+        	<pre><h3 class="featurette-heading">${clubInfo[0].club_content}</h3></pre>
       	</div>
 	    <div class="col-md-5 order-md-1">
 	    	<img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${clubInfo[0].club_image}" class="w-100 py-auto"> 

@@ -135,13 +135,15 @@
                             </div>
                             <a class="small fw-medium" href="${PageContext.request.contextPath }/club/${vo.clubsVo.club_no}">
                             <h4 class="mt-3 py-2">${vo.clubsVo.club_name }</h4></a>
+                           	<div>
                            	<c:set var = "club_content" value ="${vo.clubsVo.club_content }"></c:set>
                            	<c:if test="${fn:length(club_content) > 50}">
-                           	<c:out value="${fn:substring(club_content,0,49)}"/>...
+                           	<c:out value="${fn:substring(club_content,0,49)}" escapeXml="false"/>...
                            	</c:if>
                            	<c:if test="${fn:length(club_content) <=50}">
-                           	<c:out value="${club_content}"></c:out>
+                            <c:out value="${club_content}" escapeXml="false"></c:out>
                            	</c:if>
+                           	</div>
 							<br>
 							<br>
 							<br>

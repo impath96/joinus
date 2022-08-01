@@ -303,19 +303,11 @@
 <update id="ClubUpdate">
 	update clubs
 	set
-	<if test="#{clubsvo.club_name} != null">
 	  club_name = #{clubsvo.club_name},
-	 </if>
-	 
-	<if test="#{clubsvo.club_content} != null">
 	  club_content = #{clubsvo.club_content},
-	 </if>
-
-	<if test="#{clubsvo.club_image} != null">
 	  club_image = #{clubsvo.club_image}
-	 </if>
 
-	where (club_no = #{club_no})
+	where club_no = #{club_no}
 
 </update>
 
