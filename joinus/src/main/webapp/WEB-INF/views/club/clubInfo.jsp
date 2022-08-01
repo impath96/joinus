@@ -327,9 +327,6 @@
 					
                 </c:if>
          
-               
-               
-               
                 <div class="row g-0 mx-lg-0 shadow-sm" >
                  	      
                  	      	<div class="clubDetailBox" style="width:636px;">
@@ -365,19 +362,10 @@
          	               <h4 id="club_content" style="white-space: pre-wrap;">${clubvo.club_content }</h4>
          	               		</div>
 						 </div>
-					 
 				</div>
-			
-         
-            
           </div>
           </div>      
                 
-                
-                
-                
-                
-
  	<!-- 정모 -->
  	 <div class="container-xxl py-5 ">
         <div class="container"> 			
@@ -392,9 +380,6 @@
 	                </c:if>
            			 </div><hr><br><br>
            		
-     
-     
-     
    		  <!-- 정모 정보 출력 -->
            <c:if test="${!empty meetings}" >
  			<div class="row g-4 text-center justify" >

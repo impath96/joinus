@@ -15,7 +15,7 @@
         	<h3 class="featurette-heading">${clubInfo[0].club_content}</h3>
       	</div>
 	    <div class="col-md-5 order-md-1">
-	    	<img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${clubInfo[0].club_image}" class="w-100 py-auto">
+	    	<img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${clubInfo[0].club_image}" class="w-100 py-auto"> 
 	    </div>
     </div>
     <!-- 클럽정보 수정하기 -->

@@ -117,16 +117,24 @@
                 <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="shadow service-item rounded overflow-hidden" onclick="location.href='${PageContext.request.contextPath }/club/${vo.clubsVo.club_no}'">
                     <!-- 클럽 대표 이미지 -->
-                    <a class="small fw-medium" href="${PageContext.request.contextPath }/club/${vo.clubsVo.club_no}">
-                        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${vo.clubsVo.club_image}" class="w-100 py-auto"></a>
+                        <c:if test="${!empty vo.clubsVo.club_image}">
+					        <img src="${PageContext.requeset.contextPath }/resources/upload/clubs/${vo.clubsVo.club_image}" class="w-100 py-auto mainImg"
+					            onclick="location.href='${PageContext.request.contextPath }/club/${vo.clubsVo.club_no}'">
+				        </c:if>
+						<c:if test="${empty vo.clubsVo.club_image}">
+						     <img src="../resources/img/joinus.png" class="w-100 py-auto"
+						         onclick="location.href='${PageContext.request.contextPath }/club/${vo.clubsVo.club_no}'">
+						</c:if>
+                        
+                        
+                        
                         <div class="position-relative p-4 pt-0">
-                    </a>
                             <div class="service-icon">
                             <!-- 클럽관심사 아이콘  -->
                                 <img src="${PageContext.requeset.contextPath }/resources/upload/interests/${vo.interestsVo.interest_icon }" class="w-100 py-auto">
                             </div>
                             <a class="small fw-medium" href="${PageContext.request.contextPath }/club/${vo.clubsVo.club_no}">
-                            <h4 class="mt-3 py-2">${vo.clubsVo.club_name }</h4> </a>
+                            <h4 class="mt-3 py-2">${vo.clubsVo.club_name }</h4></a>
                            	<c:set var = "club_content" value ="${vo.clubsVo.club_content }"></c:set>
                            	<c:if test="${fn:length(club_content) > 50}">
                            	<c:out value="${fn:substring(club_content,0,49)}"/>...
