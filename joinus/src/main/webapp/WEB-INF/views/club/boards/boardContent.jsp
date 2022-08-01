@@ -191,7 +191,10 @@
 								<c:if test="${vo.membersVo.member_image.contains(':') }">
 									<img alt="" class="boardContent_writeImage" src="${vo.membersVo.member_image }">
 								</c:if>
-								<span style="color: black; margin-left: 5px; display: table-cell; vertical-align: middle;" class="font">${vo.membersVo.member_name }<c:if test="${vo.clubMembersVo.club_member_role == 'admin' }">&#128081;</c:if></span>
+								<span style="color: black; margin-left: 5px; display: table-cell; vertical-align: middle;" class="font">
+									${vo.membersVo.member_name }
+<%-- 									<c:if test="${vo.clubMembersVo.club_member_role == 'admin' }">&#128081;</c:if> --%>
+								</span>
 							</div>
 							<div style="float: right;" class="font">
 								<c:if test="${vo.clubBoardsVo.club_board_updatedate == null }">
@@ -250,7 +253,10 @@
 										<c:if test="${member.membersVo.member_image.contains(':') }">
 											<img alt="" class="boardContent_writeImage" src="${member.membersVo.member_image }">
 										</c:if>
-										<span style="display: table-cell; vertical-align: middle;" class="font">${member.membersVo.member_name }<c:if test="${member.clubMembersVo.club_member_role == 'admin' }">&#128081;</c:if></span>
+										<span style="display: table-cell; vertical-align: middle;" class="font">
+											${member.membersVo.member_name }
+<%-- 											<c:if test="${member.clubMembersVo.club_member_role == 'admin' }">&#128081;</c:if> --%>
+										</span>
 									</div>
 								</c:forEach>
 							</div>
@@ -284,7 +290,10 @@
 											<img alt="" class="boardContent_writeImage" src="${comment.membersVo.member_image }">
 										</c:if>
 										<div style="display: table-cell; vertical-align: middle;" class="font">
-											<span>${comment.membersVo.member_name }<c:if test="${comment.clubMembersVo.club_member_role == 'admin' }">&#128081;</c:if></span>
+											<span>
+												${comment.membersVo.member_name }
+<%-- 												<c:if test="${comment.clubMembersVo.club_member_role == 'admin' }">&#128081;</c:if> --%>
+											</span>
 											<small style="margin-left: 1em;">
 												<c:if test="${comment.boardCommentsVo.board_comment_updatedate == null }">
 													<span><fmt:formatDate value="${comment.boardCommentsVo.board_comment_date }" pattern="yy.MM.dd HH:mm"/> </span>

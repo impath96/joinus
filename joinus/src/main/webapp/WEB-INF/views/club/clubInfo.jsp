@@ -493,7 +493,7 @@
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="team-item rounded overflow-hidden">
                             <img src="${PageContext.requeset.contextPath }/resources/upload/boards/${b.club_board_image}" 
-                            onclick="location.href='${PageContext.requeset.contextPath }/club/${clubvo.club_no}/boards/${b.club_board_no}'" 
+                            onclick="location.href='${PageContext.requeset.contextPath }/club/${clubvo.club_no}/boards/${b.club_board_no}?page=1'" 
                             id="club_board_image">
                     </div>
                 </div>

@@ -728,7 +728,7 @@ public class ClubController {
 	// http://localhost:8088/club/46/boards?page=1
 	// 게시글리스트
 	@RequestMapping(value = "/{club_no}/boards", method = RequestMethod.GET)
-	public String boardListAllGet(@PathVariable("club_no") Integer club_no, Model model, Criteria cri, HttpSession session) {
+	public String boardListAllGet(@PathVariable("club_no") Integer club_no, Model model, Criteria cri, HttpSession session, @ModelAttribute("page") String page) {
 		log.info(" boardListAllGet() 호출 ");
 		log.info("club_no : "+club_no);
 		
@@ -837,7 +837,7 @@ public class ClubController {
 	// 게시글 상세보기 (조건 - 모임가입한 사람만 확인가능:list에서 처리)
 	@RequestMapping(value = "/{club_no}/boards/{club_board_no}", method = RequestMethod.GET)
 	public String boardContentGet(@PathVariable("club_no") Integer club_no, @PathVariable("club_board_no") Integer club_board_no, 
-			Model model, HttpSession session, @ModelAttribute("page") Integer page) {
+			Model model, HttpSession session, @ModelAttribute("page") String page) {
 		log.info(" boardContentGet() 호출 ");
 		log.info(service.getBoardContent(club_board_no)+"");
 		log.info("@@@@@@@@@page : "+page);
@@ -882,6 +882,7 @@ public class ClubController {
 		// 좋아요 멤버리스트
 		model.addAttribute("likeList", service.getLikeList(club_board_no));
 		model.addAttribute("result", result);
+		
 		
 		
 		return "/club/boards/boardContent";

@@ -13,6 +13,5 @@ public class BoardTotalBean {
 	private BoardTypesVo boardTypesVo;
 	private BoardCommentsVo boardCommentsVo;
 	private BoardLikesVo boardLikesVo;
-	private ClubMembersVo clubMembersVo;
 
 }
