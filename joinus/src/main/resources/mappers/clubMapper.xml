@@ -84,12 +84,6 @@
 	
 </resultMap>
 
-<!-- boardList(MembersVo, ClubBoardVo) -->
-<!-- <resultMap type="MembersVo" id="membersMap"> -->
-<!-- 	<id property="member_no" column="member_no"/> -->
-<!-- 	<id property="member_name" column="member_name"/> -->
-<!-- </resultMap> -->
-
 <resultMap type="ClubBoardsVo" id="clubBoardsMap">
 	<id property="club_board_no" column="club_board_no"/>
 	<id property="club_no" column="club_no"/>

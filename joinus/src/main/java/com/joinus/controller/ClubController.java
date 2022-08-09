@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.jsoup.select.Evaluator.IsEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -241,6 +242,20 @@ public class ClubController {
 			
 			log.info("clubModifyGET 이동");
 			
+			//비회원
+			Integer result = 0;
+			
+			if(session.getAttribute("member") != null) {
+				MembersVo member = (MembersVo) session.getAttribute("member");
+				log.info(member+"");
+				
+				Integer member_no =member.getMember_no();
+				result = service.checkClubRole(club_no, member_no);
+				//result = 3 : 클럽 미가입 회원
+				//result = 1 : 클럽 가입 회원
+				//result = 2 : 클럽장
+			}
+			
 			List<ClubsVo> clubInfo = service.clubInfo(club_no);
 			log.info("club_no : "+ club_no);
 			
@@ -253,7 +268,7 @@ public class ClubController {
 		@RequestMapping(value = "/{club_no}/modify", method=RequestMethod.POST)
 		public String clubModifyPOST(@PathVariable("club_no") Integer club_no,
 				HttpSession session, RedirectAttributes rttr, Model model, ClubsVo clubsvo,
-				MultipartFile file, HttpServletRequest request) throws IOException{
+				MultipartFile file, HttpServletRequest request, String null_image) throws IOException{
 			
 			log.info("clubModifyPOST 호출");
 			
@@ -279,6 +294,10 @@ public class ClubController {
 			clubsvo.setClub_image(savedFileName);
 			log.info("사진저장 완료");
 			
+			}
+			
+			if(file.isEmpty()) {
+				clubsvo.setClub_image(null_image);
 			}
 			
 			log.info(clubsvo+"");

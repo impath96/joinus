@@ -57,6 +57,8 @@
 				<input type="file" class="file-input" name="file">
 				<span class="file-cta">
 						<img alt="" id="club_image" class="w-75 pb-5" src="${PageContext.requeset.contextPath }/resources/upload/clubs/${clubInfo[0].club_image}">
+						<input type="hidden" name="null_image" value="${clubInfo[0].club_image}">
+
 				</span>
 			</label>
 	    </div>
